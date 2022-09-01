@@ -1,0 +1,11 @@
+export module AtlasInterfaces;
+export import :IAllocator;
+export import :IAnalysable;
+export import :ICloneable;
+export import :IConverter;
+export import :IEnumerable;
+export import :IExecutable;
+export import :IHashable;
+export import :IInvokable;
+export import :ISearchable;
+export import :ISortable;

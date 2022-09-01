@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{885657b5-14f2-4e45-9846-37a554b3b867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Adapters">
+      <UniqueIdentifier>{42176835-54f3-4ecb-86d5-2dd12d58a325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Variadic">
+      <UniqueIdentifier>{8e483090-340e-49e6-81d1-ce76b60e4575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModuleInterfaces">
+      <UniqueIdentifier>{f29fd6ce-3d21-4cf7-bc2a-0cc8f632e177}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Adapters.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Variadic.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Adapters\CountAdapter.ixx">
+      <Filter>Modules\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Adapters\ClearAdapter.ixx">
+      <Filter>Modules\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Adapters\ContainAdapter.ixx">
+      <Filter>Modules\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Adapters\ContainAllAdapter.ixx">
+      <Filter>Modules\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Adapters\EqualityAdapter.ixx">
+      <Filter>Modules\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Adapters\HashAdapter.ixx">
+      <Filter>Modules\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Variadic\VariadicContainChecker.ixx">
+      <Filter>Modules\Variadic</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Variadic\VariadicCounter.ixx">
+      <Filter>Modules\Variadic</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Variadic\VariadicConditionChecker.ixx">
+      <Filter>Modules\Variadic</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Variadic\VariadicConditionCounter.ixx">
+      <Filter>Modules\Variadic</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Validation\Ensure.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Validation.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

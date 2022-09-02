@@ -298,12 +298,6 @@ export namespace Atlas
 		}
 
 		private:
-		DataType* GetLocation( const unsigned int index )
-		{
-			return &_allocator[index];
-		}
-        
-		private:
 		void ValidateIndex(const unsigned int index ) const
 		{
 			if constexpr ( Configuration::EnableArgumentCheck )

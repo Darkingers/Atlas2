@@ -8,6 +8,7 @@ export namespace Atlas
 {
 	class DLLApi IHashable
 	{
+		public:
 		virtual unsigned int GetHash( ) const  = 0;
 	};
 }

@@ -10,7 +10,7 @@ export namespace Atlas
 	class DLLApi VariadicCounter
 	{
 	    public: template<typename DataType, typename... Args>
-		inline static constexpr auto Count(const DataType& current, const Args&... arguments) 
+		inline static auto Count(const DataType& current, const Args&... arguments) 
 		{
 			using Counter = CountAdapter<DataType>;
 

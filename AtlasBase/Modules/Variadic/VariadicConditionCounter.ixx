@@ -12,7 +12,7 @@ export namespace Atlas
 	class DLLApi VariadicConditionCounter
 	{
 		public: template<typename ConditionType, typename... Args>
-		inline static constexpr auto CountAny(const CollectionType& collection, const Args&... conditions ) 
+		inline static auto CountAny(const CollectionType& collection, const Args&... conditions ) 
 		{
 			using IteratorType = DeduceConstIteratorType<CollectionType>;
 			using Checker = VariadicConditionChecker<DataType>;
@@ -31,7 +31,7 @@ export namespace Atlas
 		}
 
 		public: template<typename ConditionType, typename... Args>
-		inline static constexpr auto CountAll(const CollectionType& collection,const Args&... conditions ) 
+		inline static auto CountAll(const CollectionType& collection,const Args&... conditions ) 
 		{
 			using IteratorType = DeduceConstIteratorType<CollectionType>;
 			using Checker = VariadicConditionChecker<DataType>;

@@ -10,7 +10,7 @@ export namespace Atlas
 	template<typename DataType>
 	class DLLApi LinkNode
 	{
-		private: using LinkNodeType = LinkNode<DataType>;
+		/*private: using LinkNodeType = LinkNode<DataType>;
 
 		public: DataType Data;
 		public: LinkNodeType* Next;
@@ -650,6 +650,6 @@ export namespace Atlas
 			{
 				return last->Add( arguments... );
 			}
-		}
+		}*/
 	};
 }

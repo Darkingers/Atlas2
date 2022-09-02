@@ -19,12 +19,12 @@ export namespace Atlas
 
 
 		public:
-		unsigned int BinarySearch( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType value ,const ComparatorType comparator = Default::Comparator ) const final
+		unsigned int BinarySearch( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType value ,const ComparatorType& comparator = Default::Comparator ) const final
 		{
 			return Search::BinarySearch( This( ) , inclusiveFrom , exclusiveTo , value , comparator );
 		}
 		public: 
-		unsigned int BinarySearch( const DataType value ,const ComparatorType comparator = Default::Comparator )const  final
+		unsigned int BinarySearch( const DataType& value ,const ComparatorType& comparator = Default::Comparator )const  final
 		{
 			return Search::BinarySearch( This( ) , value , comparator );
 		}
@@ -35,18 +35,18 @@ export namespace Atlas
 			return Search::LinearSearch( This( ) , inclusiveFrom , exclusiveTo , value , comparator );
 		}
 		public: 
-		unsigned int LinearSearch( const DataType value , const ComparatorType comparator = Default::Comparator )const  final
+		unsigned int LinearSearch( const DataType& value , const ComparatorType& comparator = Default::Comparator )const  final
 		{
 			return Search::LinearSearch( This( ) , value , comparator );
 		}
 
 		public:
-		unsigned int JumpSearch( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType value , const ComparatorType comparator = Default::Comparator ) const final
+		unsigned int JumpSearch( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType& value , const ComparatorType& comparator = Default::Comparator ) const final
 		{
 			return Search::JumpSearch( This( ) , inclusiveFrom , exclusiveTo , value , comparator );
 		}
 		public: 
-		unsigned int JumpSearch( const DataType value , const ComparatorType comparator = Default::Comparator )const  final
+		unsigned int JumpSearch( const DataType value , const ComparatorType& comparator = Default::Comparator )const  final
 		{
 			return Search::JumpSearch( This( ) , value , comparator );
 		}

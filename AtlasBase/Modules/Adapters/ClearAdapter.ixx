@@ -13,7 +13,7 @@ export namespace Atlas
 		public std::false_type
 	{
 	    public:
-		inline static constexpr void Clear(ClearedType& instance)
+		inline static void Clear(ClearedType& instance)
 		{
 			throw AdapterResolveException("Could not resolve ClearAdapter", &instance);
 		}
@@ -27,7 +27,7 @@ export namespace Atlas
 		private: static constexpr bool NoExcept = noexcept ( std::declval<ClearedType>.clear( ) );
 		
 	    public:
-		inline static constexpr void Clear(ClearedType& instance) noexcept ( NoExcept)
+		inline static void Clear(ClearedType& instance) noexcept ( NoExcept)
 		{
 			instance.clear();
 		}
@@ -41,7 +41,7 @@ export namespace Atlas
 		private: static constexpr bool NoExcept = noexcept ( std::declval<ClearedType>.Clear( ) );
 
 	    public:
-		inline static constexpr void Clear(ClearedType& instance) noexcept ( NoExcept)
+		inline static void Clear(ClearedType& instance) noexcept ( NoExcept)
 		{
 			instance.Clear();
 		}

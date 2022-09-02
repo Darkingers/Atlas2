@@ -10,5 +10,5 @@ export namespace Atlas
 	class DLLApi Table
 	{
 
-	}
+	};
 }

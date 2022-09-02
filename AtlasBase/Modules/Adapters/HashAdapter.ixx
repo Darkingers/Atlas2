@@ -13,7 +13,7 @@ export namespace Atlas
 		public std::false_type
 	{
 	    public:
-		inline static constexpr auto GetHash(const DataType& instance)
+		inline static auto GetHash(const DataType& instance)
 		{
 			throw AdapterResolveException( "Could not resolve HashAdapter", &instance);
 		}
@@ -30,7 +30,7 @@ export namespace Atlas
 
 
 		public:
-		inline static constexpr auto GetHash(const DataType& instance) noexcept( NoExcept )
+		inline static auto GetHash(const DataType& instance) noexcept( NoExcept )
 		{
 			return Hash(instance);
 		}
@@ -44,7 +44,7 @@ export namespace Atlas
 		private: static constexpr bool NoExcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
 			
 	    public:
-		inline static constexpr auto GetHash(const DataType& instance)  noexcept( NoExcept )
+		inline static auto GetHash(const DataType& instance)  noexcept( NoExcept )
 		{
 			return instance.GetHash();
 		}

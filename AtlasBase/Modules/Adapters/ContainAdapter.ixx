@@ -30,7 +30,7 @@ export namespace Atlas
 		private: static constexpr bool NoExcept = noexcept ( std::declval<CollectionType>.Contains( std::declval<DataType>( ) ) );
 
 	    public:
-		inline static constexpr bool Contains(const CollectionType& collection, const DataType& contained) noexcept ( NoExcept )
+		inline static bool Contains(const CollectionType& collection, const DataType& contained) noexcept ( NoExcept )
 		{
 			return collection.Contains(contained);
 		}
@@ -50,7 +50,7 @@ export namespace Atlas
 
 
 		public:
-		inline constexpr bool Contains( const CollectionType& collection , const DataType& contained ) noexcept( NoExcept )
+		inline bool Contains( const CollectionType& collection , const DataType& contained ) noexcept( NoExcept )
 		{
 			const auto endIterator = std::cend( collection );
 

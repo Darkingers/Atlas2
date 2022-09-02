@@ -21,7 +21,7 @@ export namespace Atlas
 			private: using ComparatorType = Comparator<DataType>;
 
 			public:
-			static void MergeSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator)
+			static void MergeSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator)
 			{
 				if ( inclusiveFrom >= exclusiveTo )
 				{
@@ -38,7 +38,7 @@ export namespace Atlas
 			}
 			
 			public: 
-			static void QuickSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator )
+			static void QuickSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator )
 			{
 				if ( inclusiveFrom < exclusiveTo )
 				{
@@ -50,7 +50,7 @@ export namespace Atlas
 			}
 
 			public:
-			static void HeapSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator )
+			static void HeapSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator )
 			{
 				for ( unsigned int i = exclusiveTo / 2 - 1; i >= inclusiveFrom; )
 				{
@@ -66,7 +66,7 @@ export namespace Atlas
 			}
 
 			public:
-			static void SelectionSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator )
+			static void SelectionSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator )
 			{
 				unsigned int minPos;
 
@@ -87,7 +87,7 @@ export namespace Atlas
 			}
 
 			public: 
-			static void InsertionSort( CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType comparator ) 
+			static void InsertionSort( CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
 			{
 				using DataType = DeduceCollectionIndexedType<CollectionType , unsigned int>;
 
@@ -142,7 +142,7 @@ export namespace Atlas
 			}
 
 			private:
-			static void Merge( CollectionType& collection , const unsigned int left , const unsigned int middle , const unsigned int right , const ComparatorType comparator )
+			static void Merge( CollectionType& collection , const unsigned int left , const unsigned int middle , const unsigned int right , const ComparatorType& comparator )
 			{
 				const unsigned int leftSize = middle - left + 1;
 				const unsigned int rightSize = right - middle;
@@ -239,7 +239,7 @@ export namespace Atlas
 	class DLLApi Sort
 	{		
 		public: template<typename CollectionType, typename unsigned int, typename ComparatorType>
-		static void MergeSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator = Default::Comparator )
+		static void MergeSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator = Default::Comparator )
 		{
 			Sort::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -252,7 +252,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ComparatorType>
-		static void MergeSort( CollectionType& collection, ComparatorType comparator = Default::Comparator ) 
+		static void MergeSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
 			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
 			if ( collectionSize < 2 )
@@ -264,7 +264,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename unsigned int, typename ComparatorType>
-		static void QuickSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator = Default::Comparator )
+		static void QuickSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator = Default::Comparator )
 		{
 			Sort::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -277,7 +277,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ComparatorType>
-		static void QuickSort( CollectionType& collection, const ComparatorType comparator = Default::Comparator )
+		static void QuickSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
 			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
 			if ( collectionSize < 2 )
@@ -289,7 +289,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename unsigned int, typename ComparatorType>
-		static void HeapSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator = Default::Comparator )
+		static void HeapSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator = Default::Comparator )
 		{ 
 			Sort::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -302,7 +302,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ComparatorType>
-		static void HeapSort( CollectionType& collection, const ComparatorType comparator = Default::Comparator )
+		static void HeapSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
 			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
 			if ( collectionSize < 2 )
@@ -314,7 +314,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename unsigned int, typename ComparatorType>
-		static void SelectionSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator = Default::Comparator )
+		static void SelectionSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator = Default::Comparator )
 		{
 			Sort::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -327,7 +327,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ComparatorType>
-		static void SelectionSort( CollectionType& collection, const ComparatorType comparator = Default::Comparator )
+		static void SelectionSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
 			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
 			if ( collectionSize < 2 )
@@ -339,7 +339,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename unsigned int, typename ComparatorType>
-		static void InsertionSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType comparator = Default::Comparator ) 
+		static void InsertionSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator = Default::Comparator )
 		{
 			Sort::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -352,7 +352,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ComparatorType>
-		static void InsertionSort( CollectionType& collection, const ComparatorType comparator = Default::Comparator ) 
+		static void InsertionSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
 			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
 			if ( collectionSize < 2 )

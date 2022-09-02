@@ -24,7 +24,7 @@ export namespace Atlas
 			private: using ConstIteratorType = DeduceConstIteratorType<CollectionType>;
 
 			public: template<typename TargetCollectionType> requires IsSame<DataType, DeduceCollectionContainedType<TargetCollectionType>>
-			inline static ConstIteratorType Copy( const CollectionType&& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType&& destination )
+			inline static ConstIteratorType Copy( const CollectionType&& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
 			{
 				using TargetIteratorType = DeduceIteratorType<TargetCollectionType>;
 
@@ -32,11 +32,9 @@ export namespace Atlas
 				TargetIteratorType target = std::begin( destination );
 				std::advance( source , copyStart );
 
-				for ( unsigned int i = 0 ; i< copySize; ++i )
+				for ( unsigned int i = 0 ; i< copySize; ++i, std::advance( source , 1 ) )
 				{
 					( *target ) = ( *source );
-
-					std::advance( source , 1 );
 				}
 
 				return source;
@@ -53,17 +51,14 @@ export namespace Atlas
 				IteratorType copyTo = std::begin( collection );
 				std::advance( copyTo , shiftStart );
 
-				for ( unsigned int i = 0; i < shiftSize; ++i )
+				for ( unsigned int i = 0; i < shiftSize; ++i, std::advance( copyTo , 1 ), std::advance( copyFrom , 1 ) )
 				{
 					(*copyTo) = (*copyFrom);
-
-				    std::advance( copyTo , 1 );
-					std::advance( copyFrom , 1 );
 				}
 			}
 
 			public: template<typename... Args>
-			inline static IteratorType ReplaceFrom( IteratorType& iterator , const DataType& data , const Args&&... arguments )
+			inline static IteratorType ReplaceFrom( IteratorType& iterator , const DataType& data , Args&&... arguments )
 			{
 				( *iterator ) = data;
 
@@ -71,7 +66,7 @@ export namespace Atlas
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args>( arguments )... );
+					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args&&>( arguments )... );
 				}
 				else
 				{
@@ -80,7 +75,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... Args>
-			inline static IteratorType ReplaceFrom( IteratorType& iterator , DataType&& data , const Args&&... arguments )
+			inline static IteratorType ReplaceFrom( IteratorType& iterator , DataType&& data , Args&&... arguments )
 			{
 				( *iterator ) = std::move( data );
 
@@ -88,7 +83,7 @@ export namespace Atlas
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args>( arguments )... );
+					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args&&>( arguments )... );
 				}
 				else
 				{
@@ -97,24 +92,21 @@ export namespace Atlas
 			}
 
 			public: template<typename SourceCollectionType , typename... Args>
-			inline static IteratorType ReplaceFrom( IteratorType& iterator , const SourceCollectionType& collection , const Args&&... arguments )
+			inline static IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType& collection , Args&&... arguments )
 			{
 				using CollectionIteratorType = DeduceConstIteratorType<SourceCollectionType>;
 
 				CollectionIteratorType current = std::cbegin( collection );
 				const CollectionIteratorType end = std::cend( collection );
 
-				for ( ; current != end;)
+				for ( ; current != end; std::advance( current , 1 ), std::advance( iterator , 1 ) )
 				{
 					( *iterator ) = *current;
-
-					std::advance( current , 1 );
-					std::advance( iterator , 1 );
 				}
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args>( arguments )... );
+					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args&&>( arguments )... );
 				}
 				else
 				{
@@ -123,24 +115,21 @@ export namespace Atlas
 			}
 
 			public: template<typename SourceCollectionType , typename... Args>
-			inline static IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType&& collection , const Args&&... arguments )
+			inline static IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType&& collection , Args&... arguments )
 			{
 				using CollectionIteratorType = DeduceConstIteratorType<SourceCollectionType>;
 
 				CollectionIteratorType current = std::cbegin( collection );
 				const CollectionIteratorType end = std::cend( collection );
 
-				for ( ; current != end; )
+				for ( ; current != end; std::advance( current , 1 ), std::advance( iterator , 1 ) )
 				{
 					( *iterator ) = std::move( *current );
-
-					std::advance( current , 1 );
-					std::advance( iterator , 1 );
 				}
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args>( arguments )... );
+					return DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args&&>( arguments )... );
 				}
 				else
 				{
@@ -149,7 +138,7 @@ export namespace Atlas
 			}
 
 			public: template<typename CurrentCollectionType , typename... Args> requires IsIterableWith<CollectionType , DataType>
-			inline static bool Contains(const CollectionType& collection, const CurrentCollectionType& current , const Args&&... arguments ) 
+			inline static bool Contains(const CollectionType& collection, const CurrentCollectionType& current , const Args&... arguments ) 
 			{
 				bool contains = ContainAllAdapter<CollectionType , CurrentCollectionType>::ContainsAll( collection , current );
 
@@ -159,12 +148,12 @@ export namespace Atlas
 				}
 				else
 				{
-					return contains && DataFunctions<CollectionType>::Contains( collection, std::forward<Args>( arguments )... );
+					return contains && DataFunctions<CollectionType>::Contains( collection, std::forward<const Args&>( arguments )... );
 				}
 			}
 
 			public: template<typename CurrentType , typename... Args> requires IsA<CollectionType , DataType>
-			inline static bool Contains( const CollectionType& collection , const CurrentType& current , const Args&&... arguments ) 
+			inline static bool Contains( const CollectionType& collection , const CurrentType& current , const Args&... arguments ) 
 			{
 				bool contains = ContainAdapter<CollectionType , CurrentType>::Contains( collection , current );
 
@@ -174,7 +163,7 @@ export namespace Atlas
 				}
 				else
 				{
-					return contains && DataFunctions<CollectionType>::Contains( collection, std::forward<Args>( arguments )... );
+					return contains && DataFunctions<CollectionType>::Contains( collection, std::forward<const Args&>( arguments )... );
 				}
 			}
 		
@@ -186,14 +175,12 @@ export namespace Atlas
 
 				unsigned int count = 0;
 
-				for ( ; iterator != end; )
+				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<Args>( arguments )... ))
+					if ( VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						++count;
 					}
-
-					std::advance( iterator , 1 );
 				}
 
 				return count;
@@ -205,14 +192,12 @@ export namespace Atlas
 				ConstIteratorType iterator = std::cbegin( collection );
 				const ConstIteratorType end = std::cend( collection );
 
-				for ( ; iterator != end; )
+				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if (!VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<Args>( arguments )... ))
+					if (!VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return false;
 					}
-
-					std::advance( iterator , 1 );
 				}
 
 				return true;
@@ -224,14 +209,12 @@ export namespace Atlas
 				ConstIteratorType iterator = std::cbegin( collection );
 				const ConstIteratorType end = std::cend( collection );
 
-				for ( ; iterator != end; )
+				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<Args>( arguments )... ))
+					if ( VariadicConditionChecker<DataType>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return true;
 					}
-
-					std::advance( iterator , 1 );
 				}
 
 				return false;
@@ -243,14 +226,12 @@ export namespace Atlas
 				ConstIteratorType iterator = std::cbegin( collection );
 				const ConstIteratorType end = std::cend( collection );
 
-				for ( ; iterator != end; )
+				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<Args>( arguments )... ))
+					if ( VariadicConditionChecker<DataType>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return &(*iterator );
 					}
-
-					std::advance( iterator , 1 );
 				}
 
 				throw NotFoundException( "No element found matching the given condition!" );
@@ -262,14 +243,12 @@ export namespace Atlas
 				ConstIteratorType iterator = std::cbegin( collection );
 				const ConstIteratorType end = std::cend( collection );
 
-				for ( ; iterator != end; )
+				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<Args>( arguments )... ))
+					if ( VariadicConditionChecker<DataType>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return &( *iterator );
 					}
-
-					std::advance( iterator , 1 );
 				}
 
 				return nullptr;
@@ -280,7 +259,7 @@ export namespace Atlas
 	class DLLApi DataFunctions
 	{
 		public: template<typename CollectionType, typename TargetCollectionType>
-		inline static auto Copy( const CollectionType&& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType&& destination )
+		inline static auto Copy( const CollectionType& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
 		{
 			if constexpr ( Configuration::EnableArgumentCheck  )
 			{
@@ -307,7 +286,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType , typename TargetCollectionType>
-		inline static auto Copy( const CollectionType&& collection , const unsigned int copySize , TargetCollectionType&& destination )
+		inline static auto Copy( const CollectionType& collection , const unsigned int copySize , TargetCollectionType& destination )
 		{
 			if constexpr ( Configuration::EnableArgumentCheck )
 			{
@@ -365,43 +344,43 @@ export namespace Atlas
 			Iterator iterator = std::begin( collection );
 			std::advance( index );
 
-			return Implementation::DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args>( arguments )... );
+			return Implementation::DataFunctions<CollectionType>::ReplaceFrom( iterator , std::forward<Args&&>( arguments )... );
 		}
 
 		public: template<typename CollectionType, typename... Args>
-		inline static bool Contains( const CollectionType& collection , const Args&&... arguments ) 
+		inline static bool Contains( const CollectionType& collection , const Args&... arguments ) 
 		{
-			return Implementation::DataFunctions<CollectionType>::Contains( collection , std::forward<Args>( arguments )... );
+			return Implementation::DataFunctions<CollectionType>::Contains( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
 		inline static unsigned int Count( const CollectionType& collection , const Args&... arguments ) 
 		{
-			return Implementation::DataFunctions<CollectionType>::Count( collection , std::forward<Args>( arguments )... );
+			return Implementation::DataFunctions<CollectionType>::Count( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
 		inline static bool All( const CollectionType& collection , const Args&... arguments ) 
 		{
-			return Implementation::DataFunctions<CollectionType>::All( collection , std::forward<Args>( arguments )... );
+			return Implementation::DataFunctions<CollectionType>::All( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
 		inline static bool Any( const CollectionType& collection , const Args&... arguments ) 
 		{
-			return Implementation::DataFunctions<CollectionType>::Any( collection , std::forward<Args>( arguments )... );
+			return Implementation::DataFunctions<CollectionType>::Any( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
-		DeduceCollectionContainedType<CollectionType>& First( const CollectionType& collection , const Args&... arguments )
+		inline static DeduceCollectionContainedType<CollectionType>& First( const CollectionType& collection , const Args&... arguments )
 		{
-			return Implementation::DataFunctions<CollectionType>::First( collection , std::forward<Args>( arguments )... );
+			return Implementation::DataFunctions<CollectionType>::First( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
-		DeduceCollectionContainedType<CollectionType>* FirstOrNullptr( const CollectionType& collection , const Args&... arguments ) 
+		inline static  DeduceCollectionContainedType<CollectionType>* FirstOrNullptr( const CollectionType& collection , const Args&... arguments )
 		{
-			return Implementation::DataFunctions<CollectionType>::FirstOrNullptr( collection , std::forward<Args>( arguments )... );
+			return Implementation::DataFunctions<CollectionType>::FirstOrNullptr( collection , std::forward<const Args&>( arguments )... );
 		}
 	};
 }

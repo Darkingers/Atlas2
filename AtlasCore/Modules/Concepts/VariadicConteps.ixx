@@ -20,4 +20,16 @@ export namespace Atlas
 
 	template<typename RequiredType , typename... TestedType>
 	concept IsNone = !IsAny<RequiredType , TestedType...>;
+
+	template<unsigned int Index, typename... Args>
+	concept IsMore = sizeof...( Args ) > Index;
+
+	template<unsigned int Index , typename... Args>
+	concept IsLess = sizeof...( Args ) < Index;
+
+	template<unsigned int Index , typename... Args>
+	concept IsMoreOrEqual = sizeof...( Args ) >= Index;
+
+	template<unsigned int Index , typename... Args>
+	concept IsLessOrEqual = sizeof...( Args ) <= Index;
 }

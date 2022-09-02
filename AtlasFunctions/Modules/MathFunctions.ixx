@@ -17,13 +17,13 @@ export namespace Atlas
 		class MathFunctions
 		{
 			private: template<typename... Args>
-			static DataType Minimum( const DataType&& previousMin , const DataType&& current , const Args&&... arguments ) 
+			inline static DataType Minimum( const DataType& previousMin , const DataType& current , const Args&... arguments )
 			{
 				DataType min = static_cast<DataType>( previousMin < current ? previousMin : current );
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return MathFunctions<DataType>::Minimum<DataType>( min , std::forward<Args>( arguments )... );
+					return MathFunctions<DataType>::Minimum<DataType>( min , std::forward<const Args&>( arguments )... );
 				}
 				else
 				{
@@ -32,13 +32,13 @@ export namespace Atlas
 			}
 
 			private: template<typename... Args>
-			static DataType Maximum( const DataType&& previousMax , const DataType&& current , const Args&&... arguments ) 
+			inline static DataType Maximum( const DataType& previousMax , const DataType& current , const Args&... arguments )
 			{
 				DataType max = static_cast<DataType>( previousMax > current ? previousMax : current );
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return MathFunctions<DataType>::Maximum<DataType>( max , std::forward<Args>( arguments )... );
+					return MathFunctions<DataType>::Maximum<DataType>( max , std::forward<const Args&>( arguments )... );
 				}
 				else
 				{
@@ -47,15 +47,15 @@ export namespace Atlas
 			}
 
 			public: template<typename DataType>
-			static DataType SquareRoot( const DataType&& data )
+			inline static DataType SquareRoot( const DataType& data )
 			{
-				return static_cast<DataType>( sqrt( std::forward<DataType>( data ) ));
+				return static_cast<DataType>( sqrt( data ));
 			}
 		
 			public: template<typename DataType>
-			static DataType Pow( const DataType&& data , const DataType&& exponental ) 
+			inline static DataType Pow( const DataType& data , const DataType& exponental )
 			{
-				return static_cast<DataType>( std::pow( std::forward<DataType>( data ) , std::forward<DataType>( exponental ) ) );
+				return static_cast<DataType>( std::pow(data, exponental) );
 			}
 		};
 	}
@@ -63,36 +63,36 @@ export namespace Atlas
 	class DLLApi MathFunctions
 	{
 		public: template<typename... Args>
-		static DeduceIndexedArgumentType<0,Args...> Maximum(const Args&&... arguments ) 
+		inline static DeduceIndexedArgumentType<0,Args...> Maximum(const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
-			return Implementation::MathFunctions<IndexedArgumentType<0 , Args...>>::Maximum( std::forward<Args>( arguments )... );
+			return Implementation::MathFunctions<IndexedArgumentType<0 , Args...>>::Maximum( std::forward<const Args&>( arguments )... );
 		}
 			   
 		public: template<typename... Args>
-		static DeduceIndexedArgumentType<0 , Args...> Minimum( const Args&&... arguments ) 
+		inline static DeduceIndexedArgumentType<0 , Args...> Minimum( const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
-			return Implementation::MathFunctions<IndexedArgumentType<0 , Args...>>::Minimum( std::forward<Args>( arguments )... );
+			return Implementation::MathFunctions<IndexedArgumentType<0 , Args...>>::Minimum( std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename DataType>
-		static DataType SquareRoot( const DataType&& data )
+		inline static DataType SquareRoot( const DataType& data )
 		{
 			if constexpr ( Configuration::EnableArgumentCheck )
 			{
 				Ensure::IsPositive( data );
 			}
 
-			return Implementation::MathFunctions<DataType>::SquareRoot( std::forward<DataType>( data ) );
+			return Implementation::MathFunctions<DataType>::SquareRoot( data );
 		}
 
 		public: template<typename DataType>
-		static DataType Pow( const DataType&& data, const DataType&& exponental ) 
+		inline static DataType Pow( const DataType& data, const DataType& exponental ) 
 		{
-			return Implementation::MathFunctions<DataType>::Pow( std::forward<DataType>( data ), std::forward<DataType>( exponental ) );
+			return Implementation::MathFunctions<DataType>::Pow( data, exponental );
 		}
 	};
 }

@@ -45,5 +45,14 @@
     <ClCompile Include="Modules\IEnumerable.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\ICloneable.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\IHashable.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\IIterator.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

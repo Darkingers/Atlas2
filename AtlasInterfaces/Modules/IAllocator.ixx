@@ -8,17 +8,22 @@ export module AtlasInterfaces:IAllocator;
 
 export namespace Atlas
 {
-	template<typename Data>
+	template<typename DataType>
 	class DLLApi IAllocator
 	{
+		public:
 		virtual ~IAllocator()  = 0;
 
+		public:
 		virtual unsigned int GetSize( ) const  = 0;
 
+		public:
 		virtual void Allocate( const unsigned int newSize ) = 0;
 
+		public:
 		virtual void Empty( )  =0 ;
 
-		virtual Data& operator[]( const unsigned int index ) = 0;
+		public:
+		virtual DataType& operator[]( const unsigned int index ) = 0;
 	};
 }

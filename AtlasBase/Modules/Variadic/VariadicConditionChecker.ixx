@@ -10,7 +10,7 @@ export namespace Atlas
 	class DLLApi VariadicConditionChecker
 	{
 		public: template<typename ConditionType, typename... Args>
-		inline static constexpr bool Any( const DataType& data, const ConditionType& condition, const Args&... arguments ) 
+		inline static bool Any( const DataType& data, const ConditionType& condition, const Args&... arguments ) 
 		{
 			using Checker = VariadicConditionChecker<DataType>;
 
@@ -27,7 +27,7 @@ export namespace Atlas
 		}
 
 		public: template<typename ConditionType, typename... Args>
-		inline static constexpr bool All( const DataType& data, const ConditionType& condition, const Args&... arguments ) 
+		inline static bool All( const DataType& data, const ConditionType& condition, const Args&... arguments ) 
 		{
 			using Checker = VariadicConditionChecker<DataType>;
 

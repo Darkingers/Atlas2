@@ -12,7 +12,7 @@ export namespace Atlas
 		public std::true_type
 	{
 		public:
-		inline static constexpr auto Count(const CountedType& instance) noexcept
+		inline static auto Count(const CountedType& instance) noexcept
 		{
 			return 1;
 		}
@@ -26,7 +26,7 @@ export namespace Atlas
 		private: static constexpr bool NoExcept = noexcept ( std::declval<CountedType>( ).size( ) );
 
 	    public:
-		inline static constexpr auto Count(const CountedType& instance) noexcept( NoExcept )
+		inline static auto Count(const CountedType& instance) noexcept( NoExcept )
 		{
 			return instance.size( );
 		}
@@ -40,7 +40,7 @@ export namespace Atlas
 		private: static constexpr bool NoExcept = noexcept ( std::declval<CountedType>( ).Count( ) );
 
 	    public:
-		inline static constexpr auto Count(const CountedType& instance) noexcept( NoExcept )
+		inline static auto Count(const CountedType& instance) noexcept( NoExcept )
 		{
 			return instance.Count();
 		}

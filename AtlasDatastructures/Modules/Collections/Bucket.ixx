@@ -20,7 +20,7 @@ export namespace Atlas
 		class DLLApi Bucket:
 			public IHashable
 		{
-			private: using BucketType = Bucket<KeyType , ValueType , Slots>;
+			/*private: using BucketType = Bucket<KeyType , ValueType , Slots>;
 			private: using PairType = Pair<KeyType , ValueType >;
 			private: using LinkType = LinkNode<PairType>;
 
@@ -201,7 +201,7 @@ export namespace Atlas
 			ValueType& operator[]( const KeyType& key )
 			{
 				return Get( key );
-			}
+			}*/
 		};
 	}
 }

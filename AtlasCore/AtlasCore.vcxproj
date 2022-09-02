@@ -160,11 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Configuration.ixx" />
-    <ClCompile Include="Modules\Exceptions\AdapterResolveException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\ValidationException.ixx" />
+    <ClCompile Include="Modules\General\Extended.ixx" />
     <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx" />
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
       <SubType>
@@ -180,53 +176,8 @@
     <ClCompile Include="Definitions.ixx" />
     <ClCompile Include="Modules\Definitions\TypeDeducers.ixx" />
     <ClCompile Include="Modules\Definitions\TypeDefinitions.ixx" />
-    <ClCompile Include="Exceptions.ixx" />
-    <ClCompile Include="Modules\Exceptions\AbortRequestedException.ixx" />
-    <ClCompile Include="Modules\Exceptions\AccessException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\AlreadyExistsException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\ArgumentException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\DLLException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\Exception.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\IncompatibleTypeException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\InvalidOperationException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\NotFoundException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\NotImplementedException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\NullException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\TimeoutException.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="TypeInfo.ixx" />
+    <ClCompile Include="General.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h" />

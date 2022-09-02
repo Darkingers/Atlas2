@@ -192,6 +192,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Modules\IIterator.ixx" />
     <ClCompile Include="Modules\ISearchable.ixx">
       <SubType>
       </SubType>

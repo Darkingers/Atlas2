@@ -161,6 +161,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Adapters.ixx" />
+    <ClCompile Include="Exceptions.ixx" />
+    <ClCompile Include="Modules\Exceptions\AbortRequestedException.ixx" />
+    <ClCompile Include="Modules\Exceptions\AccessException.ixx" />
+    <ClCompile Include="Modules\Exceptions\AdapterResolveException.ixx" />
+    <ClCompile Include="Modules\Exceptions\AlreadyExistsException.ixx" />
+    <ClCompile Include="Modules\Exceptions\ArgumentException.ixx" />
+    <ClCompile Include="Modules\Exceptions\DLLException.ixx" />
+    <ClCompile Include="Modules\Exceptions\Exception.ixx" />
+    <ClCompile Include="Modules\Exceptions\IncompatibleTypeException.ixx" />
+    <ClCompile Include="Modules\Exceptions\InvalidOperationException.ixx" />
+    <ClCompile Include="Modules\Exceptions\NotFoundException.ixx" />
+    <ClCompile Include="Modules\Exceptions\NotImplementedException.ixx" />
+    <ClCompile Include="Modules\Exceptions\NullException.ixx" />
+    <ClCompile Include="Modules\Exceptions\TimeoutException.ixx" />
+    <ClCompile Include="Modules\Exceptions\ValidationException.ixx" />
     <ClCompile Include="Modules\Validation\Ensure.ixx">
       <SubType>
       </SubType>

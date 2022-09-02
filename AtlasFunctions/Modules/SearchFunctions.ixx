@@ -107,7 +107,7 @@ export namespace Atlas
 	class DLLApi Search
 	{
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int BinarySearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value, const Comparator<DataType> comparator = Default::Comparator ) 
+		static unsigned int BinarySearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value, const Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Search::Validate( collection, inclusiveFrom , exclusiveTo );
 
@@ -115,13 +115,13 @@ export namespace Atlas
 		}
 		
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int BinarySearch( const CollectionType& collection, const DataType value, const Comparator<DataType> comparator = Default::Comparator ) 
+		static unsigned int BinarySearch( const CollectionType& collection, const DataType& value, const Comparator<DataType>& comparator = Default::Comparator )
 		{
 			return Implementation::Search<CollectionType>::BinarySearch( collection, 0, CountAdapter<CollectionType>::Count( collection ), value, comparator );
 		}
 
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int LinearSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value , const Comparator<DataType> comparator ) 
+		static unsigned int LinearSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value , const Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Search::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -129,13 +129,13 @@ export namespace Atlas
 		}
 		
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int LinearSearch( const CollectionType& collection, const DataType value, const Comparator<DataType> comparator = Default::Comparator ) 
+		static unsigned int LinearSearch( const CollectionType& collection, const DataType& value, const Comparator<DataType>& comparator = Default::Comparator )
 		{
 			return Implementation::Search<CollectionType>::LinearSearch( collection, 0, CountAdapter<CollectionType>::Count( collection ), value, comparator );
 		}
 
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int JumpSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value , const Comparator<DataType> comparator = Default::Comparator ) 
+		static unsigned int JumpSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value , const Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Search::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -143,7 +143,7 @@ export namespace Atlas
 		}
 		
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int JumpSearch( const CollectionType& collection, const DataType value, const Comparator<DataType> comparator = Default::Comparator ) 
+		static unsigned int JumpSearch( const CollectionType& collection, const DataType& value, const Comparator<DataType>& comparator = Default::Comparator )
 		{
 			return Implementation::Search<CollectionType>::JumpSearch( collection, 0, CountAdapter<CollectionType>::Count( collection ), value, comparator );
 		}

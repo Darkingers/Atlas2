@@ -17,15 +17,15 @@ export namespace Atlas
 
 
 		public: template<typename... Args>
-		bool Contains( const Args&&... arguments ) const  final
+		bool Contains( const Args&... arguments ) const  final
 		{
-			return DataFunctions::Contains( This( ) , std::forward<Args>( arguments )... );
+			return DataFunctions::Contains( This( ) , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template< typename... Args>
 		unsigned int Count( const Args&... arguments ) const  final
 		{
-			return DataFunctions::Count( This( ) , std::forward<Args>( arguments )... );
+			return DataFunctions::Count( This( ) , std::forward<const Args&>( arguments )... );
 		}
 
 		public: 
@@ -37,25 +37,25 @@ export namespace Atlas
 		public: template<typename... Args>
 		bool All(  const Args&... arguments ) const  final
 		{
-			return DataFunctions::All( This( ) , std::forward<Args>( arguments )... );
+			return DataFunctions::All( This( ) , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename... Args>
 		bool Any( const Args&... arguments ) const  final
 		{
-			return DataFunctions::Any( This( ) , std::forward<Args>( arguments )... );
+			return DataFunctions::Any( This( ) , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename... Args>
 		DataType& First(  const Args&... arguments )const final
 		{
-			return DataFunctions::First( This() , std::forward<Args>( arguments )... );
+			return DataFunctions::First( This() , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename... Args>
 		DataType* FirstOrNullptr(  const Args&... arguments )const  final
 		{
-			return DataFunctions::FirstOrNullptr( This( ) , std::forward<Args>( arguments )... );
+			return DataFunctions::FirstOrNullptr( This( ) , std::forward<const Args&>( arguments )... );
 		}
 
 		private:

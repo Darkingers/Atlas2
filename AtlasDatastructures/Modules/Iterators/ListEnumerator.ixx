@@ -3,14 +3,16 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasIterators:ListEnumerator;
+import AtlasInterfaces;
 import :LinkNode;
 
 export namespace Atlas
 {
 	template<typename DataType>
 	class DLLApi ListEnumerator :
+        public IIterator<DataType>
 	{
-        private: using IteratorType = ListEnumerator<DataType>;
+      /*  private: using IteratorType = ListEnumerator<DataType>;
         private: using NodeType = LinkNode<DataType>;
 
         public: using iterator_category = std::bidirectional_iterator_tag;
@@ -74,6 +76,6 @@ export namespace Atlas
         friend bool operator!= ( const IteratorType& a , const IteratorType& b )
         {
             return a._current != b._current;
-        };
+        };*/
 	};
 }

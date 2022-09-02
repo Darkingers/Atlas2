@@ -12,7 +12,7 @@ export namespace Atlas
 	class DLLApi VariadicContainChecker
 	{
 		public: template<typename... Args> requires IsSame<Args, DataType>
-		inline static constexpr bool Any(const DataType& data, const DataType& current, const Args&... arguments) 
+		inline static bool Any(const DataType& data, const DataType& current, const Args&... arguments) 
 		{
 			using Checker = VariadicContainChecker<DataType>;
 
@@ -29,7 +29,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename... Args> requires IsSame<Args, DataType>
-		inline static constexpr bool All(const DataType& data, const DataType& current , const Args&... arguments ) 
+		inline static bool All(const DataType& data, const DataType& current , const Args&... arguments ) 
 		{
 			using Checker = VariadicContainChecker<DataType>;
 
@@ -46,7 +46,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename... Args> requires ContainAdapter<CollectionType, DataType>::value
-		inline static constexpr bool Any(const DataType& data, const CollectionType& collection, const Args&... arguments ) 
+		inline static bool Any(const DataType& data, const CollectionType& collection, const Args&... arguments ) 
 		{
 			using Checker = VariadicContainChecker<DataType>;
 
@@ -63,7 +63,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename... Args>requires ContainAdapter<CollectionType , DataType>::value
-		inline static constexpr bool All(const DataType& data , const CollectionType& collection , const Args&... arguments ) 
+		inline static bool All(const DataType& data , const CollectionType& collection , const Args&... arguments ) 
 		{
 			using Checker = VariadicContainChecker<DataType>;
 

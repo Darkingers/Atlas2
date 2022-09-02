@@ -3,11 +3,13 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasIterators:ContinousMemoryIterator;
+import AtlasInterfaces;
 
 export namespace Atlas
 {
     template<typename DataType>
-    class DLLApi ContinousMemoryIterator
+    class DLLApi ContinousMemoryIterator :
+        public IIterator<DataType>
     {
         private: using IteratorType = ContinousMemoryIterator<DataType>;
 

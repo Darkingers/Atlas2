@@ -16,7 +16,7 @@ export namespace Atlas
 		public std::false_type
 	{
 	    public:
-		inline static constexpr bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer)
+		inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer)
 		{
 			throw AdapterResolveException( "Could not resolve ContainAdapter", &collection);
 		}
@@ -34,11 +34,11 @@ export namespace Atlas
 			   	
 		private: static constexpr bool NoExceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
 		private: static constexpr bool NoExceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool NoExceptContains = noexcept ( ContainAdapter<CollectionType , DataType>::Contains( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) )
+		private: static constexpr bool NoExceptContains = noexcept ( ContainAdapter<CollectionType , DataType>::Contains( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) );
 		private: static constexpr bool NoExcept = NoExceptBegin && NoExceptEnd && NoExceptContains;
 
 		public:
-		inline static constexpr bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( NoExcept )
+		inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( NoExcept )
 		{
 			IteratorType current = std::cbegin(containedContainer);
 			const IteratorType end = std::cend(containedContainer);

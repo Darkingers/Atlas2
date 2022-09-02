@@ -254,7 +254,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ComparatorType>
 		static void MergeSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
-			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int collectionSize = Adapter::Count( collection );
 			if ( collectionSize < 2 )
 			{
 				return;
@@ -279,7 +279,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ComparatorType>
 		static void QuickSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
-			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int collectionSize = Adapter::Count( collection );
 			if ( collectionSize < 2 )
 			{
 				return;
@@ -304,7 +304,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ComparatorType>
 		static void HeapSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
-			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int collectionSize = Adapter::Count( collection );
 			if ( collectionSize < 2 )
 			{
 				return;
@@ -329,7 +329,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ComparatorType>
 		static void SelectionSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
-			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int collectionSize = Adapter::Count( collection );
 			if ( collectionSize < 2 )
 			{
 				return;
@@ -354,7 +354,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ComparatorType>
 		static void InsertionSort( CollectionType& collection, const ComparatorType& comparator = Default::Comparator )
 		{
-			const unsigned int collectionSize = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int collectionSize = Adapter::Count( collection );
 			if ( collectionSize < 2 )
 			{
 				return;
@@ -368,7 +368,7 @@ export namespace Atlas
 		{
 			if constexpr ( Configuration::EnableArgumentCheck )
 			{
-				const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+				const unsigned int count = Adapter::Count( collection );
 
 				Ensure::IsMore( count , 0 );
 				Ensure::PositiveRange( inclusiveFrom , exclusiveTo );

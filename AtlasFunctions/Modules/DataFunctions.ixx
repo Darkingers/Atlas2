@@ -10,7 +10,7 @@ import AtlasValidation;
 import AtlasExceptions;
 import AtlasConfiguration;
 import AtlasTypeInfo;
-import AtlasVariadic;
+import AtlasVariadics;
 
 export namespace Atlas
 {
@@ -140,7 +140,7 @@ export namespace Atlas
 			public: template<typename CurrentCollectionType , typename... Args> requires IsIterableWith<CollectionType , DataType>
 			inline static bool Contains(const CollectionType& collection, const CurrentCollectionType& current , const Args&... arguments ) 
 			{
-				bool contains = ContainAllAdapter<CollectionType , CurrentCollectionType>::ContainsAll( collection , current );
+				bool contains = Adapter::ContainsAll( collection , current );
 
 				if constexpr ( sizeof...( arguments ) == 0 )
 				{
@@ -155,7 +155,7 @@ export namespace Atlas
 			public: template<typename CurrentType , typename... Args> requires IsA<CollectionType , DataType>
 			inline static bool Contains( const CollectionType& collection , const CurrentType& current , const Args&... arguments ) 
 			{
-				bool contains = ContainAdapter<CollectionType , CurrentType>::Contains( collection , current );
+				bool contains = Adapter::Contains( collection , current );
 
 				if constexpr ( sizeof...( arguments ) == 0 )
 				{
@@ -177,7 +177,7 @@ export namespace Atlas
 
 				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
+					if ( Variadic::AllFulFills( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						++count;
 					}
@@ -194,7 +194,7 @@ export namespace Atlas
 
 				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if (!VariadicConditionChecker<const DataType&>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
+					if (!Variadic::AllFulFills( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return false;
 					}
@@ -211,7 +211,7 @@ export namespace Atlas
 
 				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<DataType>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
+					if ( Variadic::AllFulFills( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return true;
 					}
@@ -228,7 +228,7 @@ export namespace Atlas
 
 				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<DataType>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
+					if ( Variadic::AllFulFills( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return &(*iterator );
 					}
@@ -245,7 +245,7 @@ export namespace Atlas
 
 				for ( ; iterator != end; std::advance( iterator , 1 ) )
 				{
-					if ( VariadicConditionChecker<DataType>::All( ( *iterator ) , std::forward<const Args&>( arguments )... ))
+					if ( Variadic::AllFulFills( ( *iterator ) , std::forward<const Args&>( arguments )... ))
 					{
 						return &( *iterator );
 					}
@@ -268,7 +268,7 @@ export namespace Atlas
 			
 				if constexpr ( !Type<CollectionType>::IsPointer )
 				{
-					const unsigned int sourceCount = CountAdapter<CollectionType>::Count( collection );
+					const unsigned int sourceCount = Adapter::Count( collection );
 
 					Ensure::IsLess( copyStart , sourceCount );
 					Ensure::IsLess( copyStart + copySize , sourceCount );
@@ -276,7 +276,7 @@ export namespace Atlas
 
 				if constexpr ( !Type<TargetCollectionType>::IsPointer )
 				{
-					const unsigned int destinationCount = CountAdapter<TargetCollectionType>::Count( collection );
+					const unsigned int destinationCount = Adapter::Count( collection );
 
 					Ensure::IsLess( copySize , destinationCount );
 				}
@@ -294,14 +294,14 @@ export namespace Atlas
 
 				if constexpr ( !Type<CollectionType>::IsPointer )
 				{
-					const unsigned int sourceCount = CountAdapter<CollectionType>::Count( collection );
+					const unsigned int sourceCount = Adapter::Count( collection );
 
 					Ensure::IsLess( copySize , sourceCount );
 				}
 
 				if constexpr ( !Type<TargetCollectionType>::IsPointer )
 				{
-					const unsigned int destinationCount = CountAdapter<TargetCollectionType>::Count( collection );
+					const unsigned int destinationCount = Adapter::Count( collection );
 
 					Ensure::IsLess( copySize , destinationCount );
 				}
@@ -322,7 +322,7 @@ export namespace Atlas
 
 				if constexpr ( !Type<CollectionType>::IsPointer )
 				{
-					const unsigned int sourceCount = CountAdapter<CollectionType>::Count( collection );
+					const unsigned int sourceCount = Adapter::Count( collection );
 
 					Ensure::IsLess( shiftStart , sourceCount );
 					Ensure::IsLess( shiftStart + shiftOffset , sourceCount );

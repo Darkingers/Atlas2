@@ -30,7 +30,7 @@
     <ClCompile Include="Adapters.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Variadic.ixx">
+    <ClCompile Include="Variadics.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Adapters\CountAdapter.ixx">
@@ -51,16 +51,16 @@
     <ClCompile Include="Modules\Adapters\HashAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadic\VariadicContainChecker.ixx">
+    <ClCompile Include="Modules\Variadics\ContainChecker.ixx">
       <Filter>Modules\Variadic</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadic\VariadicCounter.ixx">
+    <ClCompile Include="Modules\Variadics\Counter.ixx">
       <Filter>Modules\Variadic</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadic\VariadicConditionChecker.ixx">
+    <ClCompile Include="Modules\Variadics\ConditionChecker.ixx">
       <Filter>Modules\Variadic</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadic\VariadicConditionCounter.ixx">
+    <ClCompile Include="Modules\Variadics\ConditionCounter.ixx">
       <Filter>Modules\Variadic</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Validation\Ensure.ixx">
@@ -112,6 +112,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Exceptions.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Adapters\Adapter.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Variadics\Variadic.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

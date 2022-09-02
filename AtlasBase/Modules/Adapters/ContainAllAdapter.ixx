@@ -9,23 +9,21 @@ import AtlasExceptions;
 import :ContainAdapter;
 
 
-export namespace Atlas
+export namespace Atlas::Adapters
 {
-	template<typename CollectionType, typename ContainedCollectionType>
+	template<typename CollectionType , typename ContainedCollectionType>
 	class DLLApi ContainAllAdapter :
 		public std::false_type
 	{
-	    public:
-		inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer)
+		public:
+		inline static bool ContainsAll( const CollectionType& collection , const ContainedCollectionType& containedContainer )
 		{
-			throw AdapterResolveException( "Could not resolve ContainAdapter", &collection);
+			throw AdapterResolveException( "Could not resolve ContainAdapter" , &collection );
 		}
 	};
-
+	
 	template<typename CollectionType, typename ContainedCollectionType>
-		requires IsSame<
-			DeduceCollectionContainedType<CollectionType>, 
-			DeduceCollectionContainedType<ContainedCollectionType>>
+		requires IsSame<DeduceCollectionContainedType<CollectionType>, DeduceCollectionContainedType<ContainedCollectionType>>
 	class DLLApi ContainAllAdapter<CollectionType, ContainedCollectionType> :
 		public std::true_type
 	{
@@ -40,12 +38,12 @@ export namespace Atlas
 		public:
 		inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( NoExcept )
 		{
-			IteratorType current = std::cbegin(containedContainer);
-			const IteratorType end = std::cend(containedContainer);
+			auto current = std::cbegin(containedContainer);
+			const auto end = std::cend(containedContainer);
 
 			for (; current != end; std::advance(current,1))
 			{
-				if (!ContainAdapter<CollectionType, DataType>::Contains(collection, *current))
+				if (!ContainAdapter<CollectionType,DataType>::Contains(collection, *current))
 				{
 					return false;
 				}

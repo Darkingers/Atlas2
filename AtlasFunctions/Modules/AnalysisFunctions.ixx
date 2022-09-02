@@ -259,7 +259,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static DataType Maximum( const CollectionType& collection, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -277,7 +277,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ConverterType, typename DataType = DeduceCollectionContainedType<CollectionType>, typename ConvertResultType = DeduceReturnType<ConverterType,DataType>>
 		inline static ConvertResultType Maximum( const CollectionType& collection , const ConverterType& converter , const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -295,7 +295,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename IteratorType = DeduceConstBeginIteratorType<CollectionType>, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static IteratorType MaximumBy( const CollectionType& collection, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 			
 			Analysis::Validate( count );
 
@@ -313,7 +313,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ConverterType, typename IteratorType = DeduceConstBeginIteratorType<CollectionType>, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static IteratorType MaximumBy( const CollectionType& collection, const ConverterType& converter, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 			
 			Analysis::Validate( count );
 
@@ -331,7 +331,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static DataType Minimum( const CollectionType& collection, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -349,7 +349,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ConverterType, typename DataType = DeduceCollectionContainedType<CollectionType>, typename ConvertResultType = DeduceReturnType<ConverterType, DataType>>
 		inline static ConvertResultType Minimumn( const CollectionType& collection, const ConverterType& converter, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -367,7 +367,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename IteratorType = DeduceConstBeginIteratorType<CollectionType>, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static constexpr IteratorType MinimumBy( const CollectionType& collection, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -385,7 +385,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ConverterType, typename IteratorType = DeduceConstBeginIteratorType<CollectionType>, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static constexpr IteratorType MinimumBy( const CollectionType& collection, const ConverterType& converter, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -403,7 +403,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static constexpr DataType Sum( const CollectionType& collection )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -421,7 +421,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ConverterType, typename DataType = DeduceCollectionContainedType<CollectionType>, typename ConvertResultType = DeduceReturnType<ConverterType, DataType>>
 		inline static constexpr ConvertResultType Sum( const CollectionType& collection, const ConverterType& converter )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -439,7 +439,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename DataType = DeduceCollectionContainedType<CollectionType>>
 		inline static constexpr DataType Average( const CollectionType& collection )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 
@@ -457,7 +457,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename ConverterType, typename DataType = DeduceCollectionContainedType<CollectionType>, typename ConvertResultType = DeduceReturnType<ConverterType, DataType>>
 		inline static constexpr ConvertResultType Average( const CollectionType& collection, const ConverterType& converter )
 		{
-			const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
 			Analysis::Validate( count );
 

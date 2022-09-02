@@ -162,6 +162,10 @@
   <ItemGroup>
     <ClCompile Include="Adapters.ixx" />
     <ClCompile Include="Exceptions.ixx" />
+    <ClCompile Include="Modules\Adapters\Adapter.ixx">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Modules\Exceptions\AbortRequestedException.ixx" />
     <ClCompile Include="Modules\Exceptions\AccessException.ixx" />
     <ClCompile Include="Modules\Exceptions\AdapterResolveException.ixx" />
@@ -186,15 +190,16 @@
     <ClCompile Include="Modules\Adapters\CountAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\EqualityAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\HashAdapter.ixx" />
+    <ClCompile Include="Modules\Variadics\Variadic.ixx" />
     <ClCompile Include="Validation.ixx">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Variadic.ixx" />
-    <ClCompile Include="Modules\Variadic\VariadicContainChecker.ixx" />
-    <ClCompile Include="Modules\Variadic\VariadicCounter.ixx" />
-    <ClCompile Include="Modules\Variadic\VariadicConditionChecker.ixx" />
-    <ClCompile Include="Modules\Variadic\VariadicConditionCounter.ixx" />
+    <ClCompile Include="Variadics.ixx" />
+    <ClCompile Include="Modules\Variadics\ContainChecker.ixx" />
+    <ClCompile Include="Modules\Variadics\Counter.ixx" />
+    <ClCompile Include="Modules\Variadics\ConditionChecker.ixx" />
+    <ClCompile Include="Modules\Variadics\ConditionCounter.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtlasCore\AtlasCore.vcxproj">

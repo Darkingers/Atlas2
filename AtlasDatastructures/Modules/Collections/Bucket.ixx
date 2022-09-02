@@ -2,7 +2,7 @@ module;
 
 #include "../../../Macros/Macros.h"
 
-export module AtlasCollections:HashMap;
+export module AtlasCollections:Bucket;
 import AtlasDefinitions;
 import AtlasInterfaces;
 import AtlasValidation;

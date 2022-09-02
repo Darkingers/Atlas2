@@ -24,8 +24,8 @@ export namespace Atlas
 	using Converter = LambdaFunction<ConversionType , ConvertedType>;
 
 	template<typename ComparedType>
-	using Comparator = LambdaFunction<int , const ComparedType&& , const ComparedType&&>;
+	using Comparator = LambdaFunction<int , const ComparedType&, const ComparedType&>;
 
 	template<typename DataType>
-	using Condition = LambdaFunction<bool , const DataType&&>;
+	using Condition = LambdaFunction<bool , const DataType&>;
 }

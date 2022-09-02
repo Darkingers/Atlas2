@@ -2,7 +2,7 @@ module;
 
 #include "../../Macros/Macros.h"
 
-export module AtlasInterfaces:IAllocator;
+export module AtlasInterfaces:IIterator;
 
 export namespace Atlas
 {

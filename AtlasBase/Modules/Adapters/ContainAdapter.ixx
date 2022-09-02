@@ -8,17 +8,16 @@ import AtlasConcepts;
 import AtlasDefinitions;
 import AtlasExceptions;
 
-
-export namespace Atlas
+export namespace Atlas::Adapters
 {
-	template<typename CollectionType, typename DataType>
+	template<typename CollectionType , typename DataType>
 	class DLLApi ContainAdapter :
 		public std::false_type
 	{
-	    public:
-		inline static constexpr bool Contains(const CollectionType&&collection, const DataType& contained)
+		public:
+		inline static constexpr bool Contains( const CollectionType&& collection , const DataType& contained )
 		{
-			throw AdapterResolveException( "Could not resolve ContainAdapter", &collection);
+			throw AdapterResolveException( "Could not resolve ContainAdapter" , &collection );
 		}
 	};
 

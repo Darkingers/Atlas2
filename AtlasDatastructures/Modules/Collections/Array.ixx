@@ -13,7 +13,7 @@ import AtlasValidation;
 import AtlasConfiguration;
 import AtlasMemoryFunctions;
 import AtlasDataFunctions;
-import AtlasVariadic;
+import AtlasVariadics;
 
 
 export namespace Atlas
@@ -134,7 +134,7 @@ export namespace Atlas
 		{
 			const unsigned int index = GetSize( );
 
-			Reserve( VariadicCounter::Count( std::forward<Args>( arguments )... ) );
+			Reserve( Variadic::Count( std::forward<Args>( arguments )... ) );
 
 			DataFunctions::ReplaceFrom( *this, index , std::forward<Args>( arguments )... );
 
@@ -188,7 +188,7 @@ export namespace Atlas
 		{
 			ValidateIndex( index );
 
-			const unsigned int inserted = VariadicCounter::Count( std::forward<Args>( arguments )... );
+			const unsigned int inserted = Variadic::Count( std::forward<Args>( arguments )... );
 			ShiftRight( index , inserted );
 
 			DataFunctions::ReplaceFrom( *this , index , std::forward<Args>( arguments )... );
@@ -212,7 +212,7 @@ export namespace Atlas
 		{
 			ValidateIndex( index );
 
-			const unsigned int replaced = VariadicCounter::Count( std::forward<Args>( arguments )... );
+			const unsigned int replaced = Variadic::Count( std::forward<Args>( arguments )... );
 
 			if constexpr ( DoEventHandling )
 			{
@@ -305,6 +305,12 @@ export namespace Atlas
 				Ensure::IsPositive( index );
 				Ensure::IsLess( index , GetSize( ) );
 			}
+		}
+
+		private:
+		inline DataType* GetLocation( const unsigned int index ) const
+		{
+			return &_allocator[0];
 		}
     };
 }

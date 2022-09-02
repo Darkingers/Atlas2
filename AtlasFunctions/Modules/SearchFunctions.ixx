@@ -10,6 +10,7 @@ import AtlasMathFunctions;
 import AtlasDefaultFunctions;
 import AtlasValidation;
 import AtlasConfiguration;
+import AtlasAdapters;
 
 export namespace Atlas
 {
@@ -117,7 +118,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename DataType>
 		static unsigned int BinarySearch( const CollectionType& collection, const DataType& value, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			return Implementation::Search<CollectionType>::BinarySearch( collection, 0, CountAdapter<CollectionType>::Count( collection ), value, comparator );
+			return Implementation::Search<CollectionType>::BinarySearch( collection, 0, Adapter::Count( collection ), value, comparator );
 		}
 
 		public: template<typename CollectionType, typename DataType>
@@ -131,7 +132,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename DataType>
 		static unsigned int LinearSearch( const CollectionType& collection, const DataType& value, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			return Implementation::Search<CollectionType>::LinearSearch( collection, 0, CountAdapter<CollectionType>::Count( collection ), value, comparator );
+			return Implementation::Search<CollectionType>::LinearSearch( collection, 0, Adapter::Count( collection ), value, comparator );
 		}
 
 		public: template<typename CollectionType, typename DataType>
@@ -145,7 +146,7 @@ export namespace Atlas
 		public: template<typename CollectionType, typename DataType>
 		static unsigned int JumpSearch( const CollectionType& collection, const DataType& value, const Comparator<DataType>& comparator = Default::Comparator )
 		{
-			return Implementation::Search<CollectionType>::JumpSearch( collection, 0, CountAdapter<CollectionType>::Count( collection ), value, comparator );
+			return Implementation::Search<CollectionType>::JumpSearch( collection, 0, Adapter::Count( collection ), value, comparator );
 		}
 	
 		private: template<typename CollectionType>
@@ -153,7 +154,7 @@ export namespace Atlas
 		{
 			if constexpr ( Configuration::EnableArgumentCheck )
 			{
-				const unsigned int count = CountAdapter<CollectionType>::Count( collection );
+				const unsigned int count = Adapter::Count( collection );
 
 				Ensure::IsMore( count , 0 );
 				Ensure::PositiveRange( inclusiveFrom , exclusiveTo );

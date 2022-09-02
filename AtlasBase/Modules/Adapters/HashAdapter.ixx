@@ -6,19 +6,19 @@ export module AtlasAdapters:HashAdapter;
 import AtlasConcepts;
 import AtlasExceptions;
 
-export namespace Atlas
+export namespace Atlas::Adapters
 {
 	template<typename DataType>
 	class DLLApi HashAdapter :
 		public std::false_type
 	{
-	    public:
-		inline static auto GetHash(const DataType& instance)
+		public:
+		inline static auto GetHash( const DataType& instance )
 		{
-			throw AdapterResolveException( "Could not resolve HashAdapter", &instance);
+			throw AdapterResolveException( "Could not resolve HashAdapter" , &instance );
 		}
 	};
-
+	
 	template<typename DataType>
 		requires IsStandardHashable<DataType>
 	class DLLApi HashAdapter<DataType> :

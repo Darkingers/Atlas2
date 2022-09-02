@@ -2,23 +2,21 @@ module;
 
 #include "../../../Macros/Macros.h"
 
-export module AtlasVariadic:VariadicCounter;
+export module AtlasVariadics:Counter;
 import AtlasAdapters;
 
-export namespace Atlas
+export namespace Atlas::Variadics
 {
-	class DLLApi VariadicCounter
+	class DLLApi Counter
 	{
 	    public: template<typename DataType, typename... Args>
 		inline static auto Count(const DataType& current, const Args&... arguments) 
 		{
-			using Counter = CountAdapter<DataType>;
-
-			const auto count = Counter::Count( current );
+			const auto count = Adapter::Count( current );
 
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
-				return count + VariadicCounter::Count( std::forward<const Args&>( arguments )... );
+				return count + Counter::Count( std::forward<const Args&>( arguments )... );
 			}
 			else
 			{

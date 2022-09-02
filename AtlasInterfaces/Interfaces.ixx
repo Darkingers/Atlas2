@@ -7,5 +7,6 @@ export import :IEnumerable;
 export import :IExecutable;
 export import :IHashable;
 export import :IInvokable;
+export import :IIterator;
 export import :ISearchable;
 export import :ISortable;

@@ -6,19 +6,19 @@ export module AtlasAdapters:EqualityAdapter;
 import AtlasConcepts;
 import AtlasExceptions;
 
-export namespace Atlas
+export namespace Atlas::Adapters
 {
-	template<typename TypeA, typename TypeB>
+	template<typename TypeA , typename TypeB>
 	class DLLApi EqualityAdapter :
 		public std::false_type
 	{
-	    public:
-		inline static bool Equals(const TypeA& a, const TypeB& b)
+		public:
+		inline static bool Equals( const TypeA& a , const TypeB& b )
 		{
-			throw AdapterResolveException( "Could not resolve EqualityAdapter");
+			throw AdapterResolveException( "Could not resolve EqualityAdapter" );
 		}
 	};
-
+	
 	template<typename TypeA, typename TypeB>
 		requires HasEqualOperator<TypeA, TypeB>
 	class DLLApi EqualityAdapter<TypeA, TypeB> :

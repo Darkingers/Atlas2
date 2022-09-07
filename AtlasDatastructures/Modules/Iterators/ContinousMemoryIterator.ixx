@@ -30,30 +30,52 @@ export namespace Atlas
 
         }
 
+        public:
+        ~ContinousMemoryIterator( ) final
+        {
+
+        }
+
         public: 
-        DataType& operator*() 
+        DataType& operator*() final
         { 
             return *_current;
         }
 
         public: 
-        DataType* operator->() 
+        DataType* operator->() final
         { 
             return _current;
         }
 
         public: 
-        IteratorType& operator++() 
+        IteratorType& operator++()  final
         {
             _current++;
             return *this; 
         }
 
         public:
-        IteratorType operator++( int )
+        IteratorType operator++( int ) final
         { 
-            IteratorType tmp = *this; ++( *this );
+            IteratorType tmp = *this;
+            ++( *this );
             return tmp; 
+        }
+
+        public:
+        IteratorType& operator--( )  final
+        {
+            _current--;
+            return *this;
+        }
+
+        public:
+        IteratorType operator--( int ) final
+        {
+            IteratorType tmp = *this;
+            --( *this );
+            return tmp;
         }
 
         friend bool operator== ( const IteratorType& a, const IteratorType& b ) 

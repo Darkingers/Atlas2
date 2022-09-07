@@ -24,7 +24,7 @@ export namespace Atlas
 			private: using ConstIteratorType = DeduceConstIteratorType<CollectionType>;
 
 			public: template<typename TargetCollectionType> requires IsSame<DataType, DeduceCollectionContainedType<TargetCollectionType>>
-			inline static ConstIteratorType Copy( const CollectionType&& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
+			inline static ConstIteratorType Copy( const CollectionType& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
 			{
 				using TargetIteratorType = DeduceIteratorType<TargetCollectionType>;
 
@@ -115,7 +115,7 @@ export namespace Atlas
 			}
 
 			public: template<typename SourceCollectionType , typename... Args>
-			inline static IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType&& collection , Args&... arguments )
+			inline static IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType&& collection , Args&&... arguments )
 			{
 				using CollectionIteratorType = DeduceConstIteratorType<SourceCollectionType>;
 

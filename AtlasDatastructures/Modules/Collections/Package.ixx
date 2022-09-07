@@ -5,6 +5,7 @@ module;
 export module AtlasCollections:Package;
 import AtlasValidation;
 import AtlasConfiguration;
+import AtlasDataFunctions;
 
 export namespace Atlas
 {
@@ -46,4 +47,28 @@ export namespace Atlas
 			}
 		}
 	};
+
+
+	template<typename DataType>
+	Package<DataType> CreatePackage( const DataType* location , const unsigned int size , bool copy )
+	{
+		if constexpr ( Configuration::EnableArgumentCheck )
+		{
+			Ensure::IsPositive( size );
+			Ensure::IsNotNull( location );
+		}
+
+		if constexpr ( copy )
+		{
+			Package<DataType> package( size );
+
+			DataFunctions::Copy( location , size , package.Data );
+
+			return package;
+		}
+		else
+		{
+			return Package<DataType>( location , size , false );
+		}
+	}
 }

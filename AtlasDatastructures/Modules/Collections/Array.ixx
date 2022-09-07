@@ -14,6 +14,7 @@ import AtlasConfiguration;
 import AtlasMemoryFunctions;
 import AtlasDataFunctions;
 import AtlasVariadics;
+import :Package;
 
 
 export namespace Atlas
@@ -40,11 +41,11 @@ export namespace Atlas
 
 
 		public: template<typename... Args>
-		ArrayBase( Args... arguments ) 
+		ArrayBase( Args&&... arguments ) 
 		{
 			if constexpr (sizeof...(arguments) > 0 )
 			{
-				ArrayType::Add( arguments... );
+				ArrayType::Add( std::forward<Args&&>( arguments )... );
 			}
 		}
 
@@ -57,7 +58,7 @@ export namespace Atlas
 		public:
 		inline const unsigned int GetHash() const 
 		{
-			return Memory::GetHash( _allocator.GetLocation(), GetSize( ) ) ^ Memory::GetHash(*this, sizeof(ArrayType) );
+			return Memory::GetHash( ArrayType::GetLocation(0), ArrayType::GetSize( ) ) ^ Memory::GetHash(*this, sizeof(ArrayType) );
 		}
 
 		public: 
@@ -67,15 +68,15 @@ export namespace Atlas
 		}
 		
 		public: 
-		inline const DataType& GetConst( const unsigned int position ) const 
+		inline const DataType& GetConst( const unsigned int index ) const
 		{
-			return _allocator[position];
+			return ( *this )[index];
 		}
 		
 		public:
 		inline DataType& Get( const unsigned int index ) 
 		{
-			return _allocator[index];
+			return ( *this )[index];
 		}
 
 		public:
@@ -86,28 +87,31 @@ export namespace Atlas
 				Ensure::IsPositive( newSize );
 			}
 
-			if ( newSize == GetSize( ) )
+			if ( newSize == ArrayType::GetSize( ) )
 			{
 				return *this;
 			}
 
-			if constexpr ( DoEventHandling )
+			const int removed = ArrayType::GetSize( ) - newSize;
+			
+			if constexpr ( DoEventHandling)
 			{
-				if ( newSize < GetSize( ) && GetSize( )>0 )
+				if ( removed > 0 )
 				{
-					EventHandler::ItemsRemoved
-					(
-						Iterator( GetLocation( newSize ) ) ,
-						Iterator( GetLocation( GetSize( ) ) )
-					);
+					auto removedItems = CreatePackage( ArrayType::GetLocation( newSize ) , removed , true );
+
+					_allocator.Allocate( newSize );
+
+					EventHandlerType::InvokeRemoved( std::move(removedItems) );
+				}
+				else
+				{
+					_allocator.Allocate( newSize );
 				}
 			}
-
-			_allocator.Allocate( newSize );
-
-			if constexpr ( DoEventHandling )
+			else
 			{
-				EventHandler::Invoke( );
+				_allocator.Allocate( newSize );
 			}
 
 			*this;
@@ -116,7 +120,7 @@ export namespace Atlas
 		public:
 		ArrayType& Reserve( const unsigned int reservedSize ) 
 		{
-			Resize( GetSize( ) + reservedSize );
+			ArrayType::Resize( ArrayType::GetSize( ) + reservedSize );
 
 			return *this;
 		}
@@ -124,7 +128,7 @@ export namespace Atlas
 		public:
 		ArrayType& Trim( const unsigned int trimSize ) 
 		{
-			Resize( GetSize( ) - trimSize );
+			ArrayType::Resize( ArrayType::GetSize( ) - trimSize );
 
 			return *this;
 		}
@@ -132,34 +136,29 @@ export namespace Atlas
 		public: template<typename... Args>
 		ArrayType& Add( Args&&... arguments ) 
 		{
-			const unsigned int index = GetSize( );
+			const unsigned int index = ArrayType::GetSize( );
+			const unsigned int added = Variadic::Count( std::forward<const Args&>( arguments )... );
 
-			Reserve( Variadic::Count( std::forward<Args>( arguments )... ) );
+			ArrayType::Reserve( added );
 
-			DataFunctions::ReplaceFrom( *this, index , std::forward<Args>( arguments )... );
+			DataFunctions::ReplaceFrom( *this, index , std::forward<Args&&>( arguments )... );
 
 			if constexpr ( DoEventHandling )
 			{
-				EventHandler::ItemsAdded
-				(
-					Iterator( GetLocation( index ) ) ,
-					Iterator( GetLocation( GetSize( ) ) )
-				);
-
-				EventHandler::Invoke( );
+				EventHandlerType::InvokeAdded( CreatePackage( ArrayType::GetLocation( index ) , added , true ) );
 			}
 
 			return *this;
 		}
 
 		public: template<typename... Args>
-		ArrayType& Remove( const Args&&... arguments ) 
+		ArrayType& Remove( const Args&... arguments ) 
 		{
 			unsigned int removed = 0;
 
-			for ( unsigned int i = 0; i < GetSize( ); ++i )
+			for ( unsigned int i = 0; i < ArrayType::GetSize( ); ++i )
 			{
-				if ( VariadicConditionChecker<const DataType&>::Any( _allocator[i] , std::forward<Args>( arguments )... ) )
+				if ( Variadic::AnyFulfills( _allocator[i] , std::forward<const Args&>( arguments )... ) )
 				{
 					++removed;
 				}
@@ -178,7 +177,7 @@ export namespace Atlas
 				}
 			}
 
-			Trim( removed );
+			ArrayType::Trim( removed );
 
 			return *this;
 		}
@@ -186,22 +185,17 @@ export namespace Atlas
 		public: template<typename... Args>
 		ArrayType& Insert( const unsigned int index , Args&&... arguments ) 
 		{
-			ValidateIndex( index );
+			ArrayType::ValidateIndex( index );
 
-			const unsigned int inserted = Variadic::Count( std::forward<Args>( arguments )... );
-			ShiftRight( index , inserted );
+			const unsigned int inserted = Variadic::Count( std::forward<Args&&>( arguments )... );
+			
+			ArrayType::ShiftRight( index , inserted );
 
-			DataFunctions::ReplaceFrom( *this , index , std::forward<Args>( arguments )... );
+			DataFunctions::ReplaceFrom( *this , index , std::forward<Args&&>( arguments )... );
 
 			if constexpr ( DoEventHandling )
 			{
-				EventHandler::ItemsAdded
-				(
-						Iterator( GetLocation( index ) ) ,
-						Iterator( GetLocation( index + inserted ) )
-				);
-
-				EventHandler::Invoke( );
+				EventHandlerType::InvokeAdded( CreatePackage( ArrayType::GetLocation( index ) , inserted , true ) );
 			}
 
 			return *this;
@@ -210,30 +204,23 @@ export namespace Atlas
 		public: template<typename... Args>
 		ArrayType& ReplaceFrom( const unsigned int index , Args&&... arguments ) 
 		{
-			ValidateIndex( index );
+			ArrayType::ValidateIndex( index );
 
-			const unsigned int replaced = Variadic::Count( std::forward<Args>( arguments )... );
+			const unsigned int replaced = Variadic::Count( std::forward<const Args&>( arguments )... );
 
-			if constexpr ( DoEventHandling )
+			if constexpr (DoEventHandling )
 			{
-				EventHandler::ItemsRemoved
-				(
-						Iterator( GetLocation( index ) ) ,
-						Iterator( GetLocation( index + replaced ) )
-				);
+				auto removed = CreatePackage( GetLocation( index ) , replaced , true );
+
+				DataFunctions::ReplaceFrom( *this , index , std::forward<Args&&>( arguments )... );
+
+				auto added = CreatePackage( GetLocation( index ) , replaced , true );
+
+				EventHandlerType::Invoke( std::move( added ) , std::move( removed ) );
 			}
-
-			DataFunctions::ReplaceFrom( *this , index , std::forward<Args>( arguments )... );
-
-			if constexpr ( DoEventHandling )
+			else
 			{
-				EventHandler::ItemsAdded
-				(
-						Iterator( GetLocation( index ) ) ,
-						Iterator( GetLocation( index + replaced ) )
-				);
-
-				EventHandler::Invoke( );
+				DataFunctions::ReplaceFrom( *this , index , std::forward<Args&&>( arguments )... );
 			}
 
 			return *this;
@@ -242,7 +229,7 @@ export namespace Atlas
 		public:
 		ArrayType& Clear( ) 
 		{
-			Trim( GetSize( ) );
+			ArrayType::Trim( GetSize( ) );
 
 			return  *this;
 		}
@@ -250,7 +237,7 @@ export namespace Atlas
 		public:
 		ArrayType& ShiftLeft( const unsigned int index , const unsigned int offset ) 
 		{
-			Shift( index , GetSize( ) - index , -offset );
+			ArrayType::Shift( index , GetSize( ) - index , -offset );
 
 			return  *this;
 		}
@@ -258,7 +245,7 @@ export namespace Atlas
 		public:
 		ArrayType& ShiftRight( const unsigned int index , const unsigned int offset ) 
 		{
-			Shift( index , GetSize( ) - index , offset );
+			ArrayType::Shift( index , GetSize( ) - index , offset );
 
 			return   *this;
 		}
@@ -271,19 +258,21 @@ export namespace Atlas
 				if ( offset < 0 )
 				{
 					const unsigned int start = index + offset;
-					EventHandler::ItemsRemoved
-					(
-							Iterator( GetLocation( start ) ) ,
-							Iterator( GetLocation( start + size ) )
-					);
+
+					auto removed = CreatePackage( GetLocation( start ) , size, true );
+					
+					DataFunctions::Shift( *this , index , size , offset );
+
+					EventHandlerType::InvokeRemoved( std::move( removed ) );
+				}
+				else
+				{
+					DataFunctions::Shift( *this , index , size , offset );
 				}
 			}
-
-			DataFunctions::Shift( *this , index , size , offset );
-
-			if constexpr ( DoEventHandling )
+			else
 			{
-				EventHandler::Invoke( );
+				DataFunctions::Shift( *this , index , size , offset );
 			}
 
 			return  *this;
@@ -292,7 +281,7 @@ export namespace Atlas
 		public:
 		DataType& operator[]( const unsigned int index )
 		{
-			ValidateIndex( index );
+			ArrayType::ValidateIndex( index );
 
 			return _allocator[index];
 		}
@@ -310,7 +299,7 @@ export namespace Atlas
 		private:
 		inline DataType* GetLocation( const unsigned int index ) const
 		{
-			return &_allocator[0];
+			return &_allocator[index];
 		}
     };
 }

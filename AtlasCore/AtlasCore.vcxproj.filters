@@ -1,75 +1,79 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{e5f74c58-6395-475b-b8cf-9f6f5bbd5628}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Modules\Concepts">
+      <UniqueIdentifier>{c0793cf1-7aef-4b73-ac85-9a65aff183d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Definitions">
+      <UniqueIdentifier>{90283045-5d11-4f24-ad3d-cbf08acc1eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Type">
+      <UniqueIdentifier>{c503b12a-85a4-49c0-b83c-268b936f69d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\General">
+      <UniqueIdentifier>{25ed7509-b7e4-4aba-830d-b40e599bb184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Macros">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TypeInfo.ixx">
+    <ClCompile Include="Modules\TypeInfo.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Definitions.ixx">
+    <ClCompile Include="Modules\Definitions.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Concepts.ixx">
+    <ClCompile Include="Modules\Concepts.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Concepts\BasicConcepts.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Concepts\VariadicConteps.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\BasicTypeInfo.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Concepts\RelationalConcepts.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Concepts</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Concepts\FunctionalConcepts.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Concepts</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\Concepts\RelationalConcepts.ixx">
+      <Filter>Modules\Concepts</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\VariadicTypeInfo.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Definitions\TypeDefinitions.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\Concepts\VariadicConteps.ixx">
+      <Filter>Modules\Concepts</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Definitions\TypeDeducers.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Definitions\TypeDefinitions.ixx">
+      <Filter>Modules\Definitions</Filter>
     </ClCompile>
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Type</Filter>
     </ClCompile>
-    <ClCompile Include="Configuration.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx">
+      <Filter>Modules\Type</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\General\Extended.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\TypeInfo\VariadicTypeInfo.ixx">
+      <Filter>Modules\Type</Filter>
     </ClCompile>
-    <ClCompile Include="General.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\TypeInfo\BasicTypeInfo.ixx">
+      <Filter>Modules\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Configuration.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Meta.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Meta\Extended.ixx">
+      <Filter>Modules\General</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">
-      <Filter>Header Files</Filter>
+      <Filter>Macros</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

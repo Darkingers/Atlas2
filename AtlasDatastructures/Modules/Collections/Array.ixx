@@ -8,7 +8,7 @@ import AtlasInterfaces;
 import AtlasConcepts;
 import AtlasExceptions;
 import AtlasIterators;
-import AtlasTraits;
+import AtlasCollectionTraits;
 import AtlasValidation;
 import AtlasConfiguration;
 import AtlasMemoryFunctions;
@@ -19,20 +19,21 @@ import :Package;
 
 export namespace Atlas
 {
-	template<typename DataType , template<typename> typename Allocator , template<typename> typename EventHandler>
-	requires IsDerivedFrom<Allocator<DataType>, IAllocator<DataType>>
+	template<typename DataType , template<typename> typename AllocatorTemplate , template<typename> typename EventHandlerTemplate>
+	requires IsDerivedFrom<AllocatorTemplate<DataType>, IAllocator<DataType>>
 	class DLLApi ArrayBase :
-		public Searchable<ArrayBase<DataType,Allocator,EventHandler>>,
-		public Sortable<ArrayBase<DataType , Allocator , EventHandler>>,
-		public Analysable<ArrayBase<DataType , Allocator , EventHandler>>,
-		public Enumerable<ArrayBase<DataType , Allocator , EventHandler>>,		
-		public EventHandler<DataType>,
-		public IHashable 
+		public Trait::Searchable<ArrayBase<DataType, AllocatorTemplate , EventHandlerTemplate>>,
+		public Trait::Sortable<ArrayBase<DataType , AllocatorTemplate , EventHandlerTemplate>>,
+		public Trait::Analysable<ArrayBase<DataType , AllocatorTemplate , EventHandlerTemplate>>,
+		public Trait::Enumerable<ArrayBase<DataType , AllocatorTemplate , EventHandlerTemplate>>,
+		public Interface::IHashable,
+		public EventHandlerTemplate<DataType>
+
 	{		
-		private: using ArrayType = ArrayBase<DataType, Allocator, EventHandler>;
-		private: using AllocatorType = Allocator<DataType>;
+		private: using ArrayType = ArrayBase<DataType, EventHandlerTemplate , EventHandlerTemplate>;
+		private: using AllocatorType = EventHandlerTemplate<DataType>;
 		private: using IteratorType = ContinousMemoryIterator<DataType>;
-		private: using EventHandlerType = EventHandler<DataType>;
+		private: using EventHandlerType = EventHandlerTemplate<DataType>;
 
 		private: inline static constexpr bool DoEventHandling = EventHandlerType::value;
 		

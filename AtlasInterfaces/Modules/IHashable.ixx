@@ -4,7 +4,7 @@ module;
 
 export module AtlasInterfaces:IHashable;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	class DLLApi IHashable
 	{

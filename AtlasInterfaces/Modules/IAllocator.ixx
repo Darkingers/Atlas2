@@ -6,7 +6,7 @@ module;
 
 export module AtlasInterfaces:IAllocator;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename DataType>
 	class DLLApi IAllocator

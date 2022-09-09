@@ -4,7 +4,7 @@ module;
 
 export module AtlasInterfaces:IExecutable;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename ReturnType>
 	class DLLApi IExecutable

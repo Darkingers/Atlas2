@@ -5,12 +5,12 @@ module;
 export module AtlasInterfaces:IEnumerable;
 import AtlasDefinitions;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename DataType>
 	class DLLApi IEnumerable
 	{
-		private: using ConditionType = Condition<DataType>;
+		private: using ConditionType = Definition::Condition<DataType>;
 
 		public: 
 		virtual bool Contains( const DataType&& data )const  = 0;

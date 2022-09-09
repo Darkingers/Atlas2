@@ -17,8 +17,8 @@ export namespace Atlas
 		template<typename CollectionType>
 		class Sort
 		{
-			private: using DataType = DeduceCollectionIndexedType<CollectionType , unsigned int>;
-			private: using ComparatorType = Comparator<DataType>;
+			private: using DataType = Deduce::CollectionIndexedType<CollectionType , unsigned int>;
+			private: using ComparatorType = Definition::Comparator<DataType>;
 
 			public:
 			static void MergeSort( CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator)
@@ -89,8 +89,6 @@ export namespace Atlas
 			public: 
 			static void InsertionSort( CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
 			{
-				using DataType = DeduceCollectionIndexedType<CollectionType , unsigned int>;
-
 				unsigned int i = inclusiveFrom + 1;
 				unsigned int j;
 
@@ -192,8 +190,6 @@ export namespace Atlas
 			private:
 			static unsigned int Partition( CollectionType& collection , const unsigned int left , const unsigned int right , const ComparatorType comparator )
 			{
-				using DataType = DeduceCollectionIndexedType<CollectionType , unsigned int>;
-
 				const DataType pivot = collection[right];
 				unsigned int i = left - 1;
 

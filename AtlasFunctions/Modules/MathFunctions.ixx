@@ -63,19 +63,19 @@ export namespace Atlas
 	class DLLApi MathFunctions
 	{
 		public: template<typename... Args>
-		inline static DeduceIndexedArgumentType<0,Args...> Maximum(const Args&... arguments )
+		inline static auto Maximum(const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
-			return Implementation::MathFunctions<IndexedArgumentType<0 , Args...>>::Maximum( std::forward<const Args&>( arguments )... );
+			return Implementation::MathFunctions<Deduce::IndexedArgumentType<0 , Args...>>::Maximum( std::forward<const Args&>( arguments )... );
 		}
 			   
 		public: template<typename... Args>
-		inline static DeduceIndexedArgumentType<0 , Args...> Minimum( const Args&... arguments )
+		inline static auto Minimum( const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
-			return Implementation::MathFunctions<IndexedArgumentType<0 , Args...>>::Minimum( std::forward<const Args&>( arguments )... );
+			return Implementation::MathFunctions<Deduce::IndexedArgumentType<0 , Args...>>::Minimum( std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename DataType>

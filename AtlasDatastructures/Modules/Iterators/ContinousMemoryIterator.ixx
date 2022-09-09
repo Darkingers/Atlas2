@@ -9,7 +9,7 @@ export namespace Atlas
 {
     template<typename DataType>
     class DLLApi ContinousMemoryIterator :
-        public IIterator<DataType>
+        public Interface::IIterator<DataType>
     {
         private: using IteratorType = ContinousMemoryIterator<DataType>;
 

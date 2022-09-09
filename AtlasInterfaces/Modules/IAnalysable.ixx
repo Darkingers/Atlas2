@@ -6,12 +6,12 @@ export module AtlasInterfaces:IAnalysable;
 import AtlasDefinitions;
 import AtlasDefaultFunctions;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename DataType>
 	class DLLApi IAnalysable
 	{
-		private: using ComparatorType = Comparator<DataType>;
+		private: using ComparatorType = Definition::Comparator<DataType>;
 
 		public: 
 		virtual DataType Maximum( const ComparatorType comparator = Default::Comparator ) const = 0;

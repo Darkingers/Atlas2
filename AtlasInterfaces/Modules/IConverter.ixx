@@ -4,12 +4,12 @@ module;
 
 export module AtlasInterfaces:IConverter;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename DataType, typename ConvertedDataType>
 	class DLLApi IConverter
 	{
 		public:
-		virtual ConvertedDataType Convert( DataType&& data ) const = 0;
+		virtual ConvertedDataType Convert( DataType& data ) const = 0;
 	};
 }

@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{9e1e58c3-0710-4caa-b789-18f4438b7688}</UniqueIdentifier>
     </Filter>
@@ -48,50 +36,50 @@
     <ClCompile Include="Modules\Allocators\SimpleAllocator.ixx">
       <Filter>Modules\Allocators</Filter>
     </ClCompile>
-    <ClCompile Include="Allocators.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\Allocators.ixx">
+      <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Collections.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\Collections.ixx">
+      <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Iterators.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\Iterators.ixx">
+      <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Queries.ixx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Collections\Bucket.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\Queries.ixx">
+      <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\BinaryTree.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Collections\Bucket.ixx">
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\Graph.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\Grid.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\LinkNode.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\List.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\Pair.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\RedBlackTree.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\Table.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Collections\Tree.ixx">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Collections</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Iterators\ListEnumerator.ixx">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\Iterators\ListIterator.ixx">
+      <Filter>Modules\Iterators</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

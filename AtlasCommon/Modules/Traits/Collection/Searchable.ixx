@@ -1,21 +1,21 @@
 module;
 
-#include "../../../Macros/Macros.h"
+#include "../../../../Macros/Macros.h"
 
-export module AtlasTraits:Searchable;
+export module AtlasCollectionTraits:Searchable;
 import AtlasDefinitions;
 import AtlasDefaultFunctions;
 import AtlasSearchFunctions;
 import AtlasInterfaces;
 
-export namespace Atlas
+export namespace Atlas::Trait
 {
 	template<typename DerivedType>
 	class DLLApi Searchable:
-		public ISearchable<DeduceCollectionContainedType<DerivedType>>
+		public Interface::ISearchable<Deduce::CollectionContainedType<DerivedType>>
 	{
-		private: using DataType = DeduceCollectionContainedType<DerivedType>;
-		private: using ComparatorType = Comparator<DataType>;
+		private: using DataType = Deduce::CollectionContainedType<DerivedType>;
+		private: using ComparatorType = Definition::Comparator<DataType>;
 
 
 		public:
@@ -52,7 +52,7 @@ export namespace Atlas
 		}
 
 		private:
-		DerivedType& This( ) const 
+		inline const DerivedType& This( ) const
 		{
 			return static_cast<DerivedType&>( *this );
 		}

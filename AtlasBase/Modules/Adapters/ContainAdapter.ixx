@@ -15,41 +15,41 @@ export namespace Atlas::Adapters
 		public std::false_type
 	{
 		public:
-		inline static constexpr bool Contains( const CollectionType&& collection , const DataType& contained )
+		inline static constexpr bool Contains( const CollectionType& collection , const DataType& contained )
 		{
 			throw AdapterResolveException( "Could not resolve ContainAdapter" , &collection );
 		}
 	};
 
-	template<typename CollectionType, typename DataType>
-		requires HasContainFunction<CollectionType, DataType>
+	template<typename CollectionType, typename DataType> 
+		requires Concept::HasContainFunction<CollectionType, DataType>
 	class DLLApi ContainAdapter<CollectionType, DataType> :
 		public std::true_type
 	{
-		private: static constexpr bool NoExcept = noexcept ( std::declval<CollectionType>.Contains( std::declval<DataType>( ) ) );
+		private: static constexpr bool IsNoExcept = noexcept ( std::declval<CollectionType>.Contains( std::declval<DataType>( ) ) );
 
 	    public:
-		inline static bool Contains(const CollectionType& collection, const DataType& contained) noexcept ( NoExcept )
+		inline static bool Contains(const CollectionType& collection, const DataType& contained) noexcept ( IsNoExcept )
 		{
 			return collection.Contains(contained);
 		}
 	};
 
 	template<typename CollectionType, typename DataType>
-		requires IsIterableWith<CollectionType, DataType>
+		requires Concept::IsIterableWith<CollectionType, DataType>
 	class DLLApi ContainAdapter<CollectionType, DataType> :
 		public std::true_type
 	{
-		private: using EndIteratorType = DeduceConstEndIteratorType<CollectionType>;
+		private: using EndIteratorType = Deduce::ConstEndIteratorType<CollectionType>;
 		
-		private: static constexpr bool NoExceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool NoExceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool NoExceptFind = noexcept ( std::find( std::cbegin( std::declval<CollectionType>( ) ) , std::cend( std::declval<CollectionType>( ) ) , std::declval<DataType>( ) ) );
-		private: static constexpr bool NoExcept = NoExceptBegin && NoExceptEnd && NoExceptFind;
+		private: static constexpr bool IsNoExceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
+		private: static constexpr bool IsNoExceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
+		private: static constexpr bool IsNoExceptFind = noexcept ( std::find( std::cbegin( std::declval<CollectionType>( ) ) , std::cend( std::declval<CollectionType>( ) ) , std::declval<DataType>( ) ) );
+		private: static constexpr bool IsNoExcept = IsNoExceptBegin && IsNoExceptEnd && IsNoExceptFind;
 
 
 		public:
-		inline bool Contains( const CollectionType& collection , const DataType& contained ) noexcept( NoExcept )
+		inline bool Contains( const CollectionType& collection , const DataType& contained ) noexcept( IsNoExcept )
 		{
 			const auto endIterator = std::cend( collection );
 

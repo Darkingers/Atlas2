@@ -18,7 +18,7 @@ export namespace Atlas
 	{
 		template<typename KeyType , typename ValueType , unsigned int Slots = 1000>
 		class DLLApi Bucket:
-			public IHashable
+			public Interface::IHashable
 		{
 			/*private: using BucketType = Bucket<KeyType , ValueType , Slots>;
 			private: using PairType = Pair<KeyType , ValueType >;

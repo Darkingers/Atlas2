@@ -6,12 +6,12 @@ export module AtlasInterfaces:ISortable;
 import AtlasDefinitions;
 import AtlasDefaultFunctions;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename DataType>
 	class DLLApi ISortable 
 	{
-		private: using ComparatorType = Comparator<DataType>;
+		private: using ComparatorType = Definition::Comparator<DataType>;
 
 		public:
 		virtual void MergeSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType comparator = Default::Comparator ) = 0;

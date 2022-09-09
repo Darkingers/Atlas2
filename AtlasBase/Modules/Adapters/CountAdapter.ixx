@@ -20,28 +20,28 @@ export namespace Atlas::Adapters
 	};
 	
 	template<typename CountedType> 
-		requires IsStandardCountable<CountedType>
+		requires Concept::IsStandardCountable<CountedType>
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		private: static constexpr bool NoExcept = noexcept ( std::declval<CountedType>( ).size( ) );
+		private: static constexpr bool IsNoExcept = noexcept ( std::declval<CountedType>( ).size( ) );
 
 	    public:
-		inline static auto Count(const CountedType& instance) noexcept( NoExcept )
+		inline static auto Count(const CountedType& instance) noexcept( IsNoExcept )
 		{
 			return instance.size( );
 		}
 	};
 
 	template<typename CountedType>
-		requires HasCountFunction<CountedType>
+		requires Concept::HasCountFunction<CountedType>
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		private: static constexpr bool NoExcept = noexcept ( std::declval<CountedType>( ).Count( ) );
+		private: static constexpr bool IsNoExcept = noexcept ( std::declval<CountedType>( ).Count( ) );
 
 	    public:
-		inline static auto Count(const CountedType& instance) noexcept( NoExcept )
+		inline static auto Count(const CountedType& instance) noexcept( IsNoExcept )
 		{
 			return instance.Count();
 		}

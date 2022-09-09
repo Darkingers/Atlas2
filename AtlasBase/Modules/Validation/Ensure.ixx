@@ -202,7 +202,7 @@ export namespace Atlas
 				return;
 			}
 
-			const unsigned int collectionCount = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int collectionCount = Adapter::Count( collection );
 
 			if ( collectionCount != 0 )
 			{
@@ -218,7 +218,7 @@ export namespace Atlas
 				return;
 			}
 
-			const unsigned int collectionCount = CountAdapter<CollectionType>::Count( collection );
+			const unsigned int collectionCount = Adapter::Count( collection );
 
 			if ( collectionCount <= 0 )
 			{
@@ -226,7 +226,7 @@ export namespace Atlas
 			}
 		}
 
-		public:template<typename CollectionType, typename DataType = DeduceCollectionContainedType<CollectionType>>
+		public:template<typename CollectionType, typename DataType = Deduce::CollectionContainedType<CollectionType>>
 		inline static void Contains( const CollectionType& collection , const DataType& data )
 		{
 			if constexpr ( !Configuration::EnableEnsure )

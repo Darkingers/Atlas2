@@ -4,7 +4,7 @@ module;
 
 export module AtlasInterfaces:IInvokable;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename ReturnType , typename... Args>
 	class DLLApi IInvokable

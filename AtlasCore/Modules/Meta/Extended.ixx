@@ -3,10 +3,10 @@ module;
 #include <tuple>
 #include "../../../Macros/Macros.h"
 
-export module AtlasGeneral:Extended;
+export module AtlasMeta:Extended;
 import AtlasDefinitions;
 
-export namespace Atlas
+export namespace Atlas::Meta
 {
 	template<typename Type , typename... ExtendedArgs>
 	class DLLApi ExtendedType :

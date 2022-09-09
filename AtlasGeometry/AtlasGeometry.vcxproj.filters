@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Modules\2D.ixx" />
+    <ClCompile Include="Modules\3D.ixx" />
+    <ClCompile Include="Modules\General.ixx" />
+    <ClCompile Include="Modules\3D\Box.ixx">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\3D\Cube.ixx">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\3D\Ellipsoid.ixx">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\3D\Sphere.ixx">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\2D\Circle.ixx">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\2D\Ellipse.ixx">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\2D\Rectangle.ixx">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\2D\Triangle.ixx">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\General\Line.ixx">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\General\Point.ixx">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\2D\Square.ixx">
+      <Filter>2D</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="2D">
+      <UniqueIdentifier>{a6d5e3ae-d195-4978-ae41-b0e3ca1e11c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D">
+      <UniqueIdentifier>{a15723ce-702e-4d43-883c-fe08f66fc34a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="General">
+      <UniqueIdentifier>{e20a8472-7c61-4eab-87f3-ce32997674a1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

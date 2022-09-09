@@ -160,8 +160,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Adapters.ixx" />
-    <ClCompile Include="Exceptions.ixx" />
+    <ClCompile Include="Modules\Adapters.ixx" />
+    <ClCompile Include="Modules\Exceptions.ixx" />
     <ClCompile Include="Modules\Adapters\Adapter.ixx">
       <SubType>
       </SubType>
@@ -191,11 +191,11 @@
     <ClCompile Include="Modules\Adapters\EqualityAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\HashAdapter.ixx" />
     <ClCompile Include="Modules\Variadics\Variadic.ixx" />
-    <ClCompile Include="Validation.ixx">
+    <ClCompile Include="Modules\Validation.ixx">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Variadics.ixx" />
+    <ClCompile Include="Modules\Variadics.ixx" />
     <ClCompile Include="Modules\Variadics\ContainChecker.ixx" />
     <ClCompile Include="Modules\Variadics\Counter.ixx" />
     <ClCompile Include="Modules\Variadics\ConditionChecker.ixx" />

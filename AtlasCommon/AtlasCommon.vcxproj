@@ -155,20 +155,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AtlasTraits.ixx" />
-    <ClCompile Include="Modules\Traits\Analysable.ixx" />
-    <ClCompile Include="Modules\Traits\Enumerable.ixx">
+    <ClCompile Include="Modules\CollectionTraits.ixx" />
+    <ClCompile Include="Modules\Traits\Collection\Analysable.ixx" />
+    <ClCompile Include="Modules\Traits\Collection\Enumerable.ixx">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Modules\Traits\Searchable.ixx">
+    <ClCompile Include="Modules\Traits\Collection\Searchable.ixx">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Modules\Traits\Sortable.ixx">
+    <ClCompile Include="Modules\Traits\Collection\Sortable.ixx">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Modules\Traits\FunctionalTratis.ixx" />
+    <ClCompile Include="Modules\Traits\Functional\Executable.ixx" />
+    <ClCompile Include="Modules\Traits\Functional\Hashable.ixx" />
+    <ClCompile Include="Modules\Traits\Functional\Invokable.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtlasBase\AtlasBase.vcxproj">

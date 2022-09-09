@@ -6,7 +6,7 @@ module;
 
 export module AtlasDefinitions:TypeDefinitions;
 
-export namespace Atlas
+export namespace Atlas::Definition
 {
 	template<typename ReturnType , typename... Args>
 	using StaticFunction = ReturnType( * )( Args... );

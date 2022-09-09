@@ -11,7 +11,7 @@ export namespace Atlas::Variadics
 	template<typename CollectionType> 
 	class DLLApi ConditionCounter
 	{
-		private: using DataType = DeduceCollectionContainedType<CollectionType>;
+		private: using DataType = Deduce::CollectionContainedType<CollectionType>;
 			
 		
 		public: template<typename ConditionType, typename... Args>

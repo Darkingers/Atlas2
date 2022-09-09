@@ -1,19 +1,19 @@
 module;
 
-#include "../../../Macros/Macros.h"
+#include "../../../../Macros/Macros.h"
 
-export module AtlasTraits:Enumerable;
+export module AtlasCollectionTraits:Enumerable;
 import AtlasDefinitions;
 import AtlasDataFunctions;
 import AtlasInterfaces;
 
-export namespace Atlas
+export namespace Atlas::Trait
 {
 	template<typename DerivedType>
 	class DLLApi Enumerable : 
-		public IEnumerable<DeduceCollectionContainedType<DerivedType>>
+		public Interface::IEnumerable<Deduce::CollectionContainedType<DerivedType>>
 	{
-		private: using DataType = DeduceCollectionContainedType<DerivedType>;
+		private: using DataType = Deduce::CollectionContainedType<DerivedType>;
 
 
 		public: template<typename... Args>
@@ -59,7 +59,7 @@ export namespace Atlas
 		}
 
 		private:
-		DerivedType& This( ) const  final
+		inline const DerivedType& This( ) const 
 		{
 			return static_cast<DerivedType&>( *this );
 		}

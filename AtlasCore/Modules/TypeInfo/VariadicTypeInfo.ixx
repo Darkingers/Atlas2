@@ -8,37 +8,41 @@ module;
 export module AtlasTypeInfo:VariadicTypeInfo;
 import AtlasConcepts;
 
-namespace Atlas
+namespace Atlas::Fulfills
 {
 	template<typename TestedType, typename... Args>
-	class FulfillsIsSame :std::false_type
+	class IsSame :std::false_type
 	{};
 
-	template<typename TestedType , typename... Args> requires IsSame<TestedType , Args...>
-	class FulfillsIsSame<TestedType , Args...> : std::true_type
-	{};
-
-	template<typename TestedType , typename... Args>
-	class FulfillsIsAll :std::false_type
-	{};
-
-	template<typename TestedType , typename... Args> requires IsAll<TestedType , Args...>
-	class FulfillsIsAll<TestedType , Args...> : std::true_type
+	template<typename TestedType , typename... Args> 
+		requires Concept::IsSame<TestedType , Args...>
+	class IsSame<TestedType , Args...> : std::true_type
 	{};
 
 	template<typename TestedType , typename... Args>
-	class FulfillsIsAny :std::false_type
+	class IsAll :std::false_type
 	{};
 
-	template<typename TestedType , typename... Args> requires IsAny<TestedType , Args...>
-	class FulfillsIsAny<TestedType , Args...> : std::true_type
+	template<typename TestedType , typename... Args> 
+		requires Concept::IsAll<TestedType , Args...>
+	class IsAll<TestedType , Args...> : std::true_type
 	{};
 
 	template<typename TestedType , typename... Args>
-	class FulfillsIsNone :std::false_type
+	class IsAny :std::false_type
 	{};
 
-	template<typename TestedType , typename... Args> requires IsNone<TestedType , Args...>
-	class FulfillsIsNone<TestedType , Args...> : std::true_type
+	template<typename TestedType , typename... Args>
+		requires Concept::IsAny<TestedType , Args...>
+	class IsAny<TestedType , Args...> : std::true_type
+	{};
+
+	template<typename TestedType , typename... Args>
+	class IsNone :std::false_type
+	{};
+
+	template<typename TestedType , typename... Args>
+		requires Concept::IsNone<TestedType , Args...>
+	class IsNone<TestedType , Args...> : std::true_type
 	{};
 }

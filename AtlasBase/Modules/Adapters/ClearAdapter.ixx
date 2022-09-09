@@ -19,29 +19,29 @@ export namespace Atlas::Adapters
 		}
 	};
 	
-	template<typename ClearedType>
-		requires IsStandardClearable<ClearedType>
+	template<typename ClearedType> 
+		requires Concept::IsStandardClearable<ClearedType>
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		private: static constexpr bool NoExcept = noexcept ( std::declval<ClearedType>.clear( ) );
+		private: static constexpr bool IsNoExcept = noexcept ( std::declval<ClearedType>.clear( ) );
 
 		public:
-		inline static void Clear( ClearedType& instance ) noexcept ( NoExcept )
+		inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
 		{
 			instance.clear( );
 		}
 	};
 
 	template<typename ClearedType>
-		requires HasClearFunction<ClearedType>
+		requires Concept::HasClearFunction<ClearedType>
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		private: static constexpr bool NoExcept = noexcept ( std::declval<ClearedType>.Clear( ) );
+		private: static constexpr bool IsNoExcept = noexcept ( std::declval<ClearedType>.Clear( ) );
 
 		public:
-		inline static void Clear( ClearedType& instance ) noexcept ( NoExcept )
+		inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
 		{
 			instance.Clear( );
 		}

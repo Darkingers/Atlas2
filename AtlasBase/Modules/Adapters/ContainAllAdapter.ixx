@@ -23,20 +23,20 @@ export namespace Atlas::Adapters
 	};
 	
 	template<typename CollectionType, typename ContainedCollectionType>
-		requires IsSame<DeduceCollectionContainedType<CollectionType>, DeduceCollectionContainedType<ContainedCollectionType>>
+		requires Concept::IsSame<Deduce::CollectionContainedType<CollectionType>, Deduce::CollectionContainedType<ContainedCollectionType>>
 	class DLLApi ContainAllAdapter<CollectionType, ContainedCollectionType> :
 		public std::true_type
 	{
-		private: using DataType = DeduceCollectionContainedType<CollectionType>;
-		private: using IteratorType = DeduceIteratorType<CollectionType>;
+		private: using DataType = Deduce::CollectionContainedType<CollectionType>;
+		private: using IteratorType = Deduce::IteratorType<CollectionType>;
 			   	
-		private: static constexpr bool NoExceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool NoExceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool NoExceptContains = noexcept ( ContainAdapter<CollectionType , DataType>::Contains( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) );
-		private: static constexpr bool NoExcept = NoExceptBegin && NoExceptEnd && NoExceptContains;
+		private: static constexpr bool IsNoExceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
+		private: static constexpr bool IsNoExceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
+		private: static constexpr bool IsNoExceptContains = noexcept ( ContainAdapter<CollectionType , DataType>::Contains( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) );
+		private: static constexpr bool IsNoExcept = IsNoExceptBegin && IsNoExceptEnd && IsNoExceptContains;
 
 		public:
-		inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( NoExcept )
+		inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( IsNoExcept )
 		{
 			auto current = std::cbegin(containedContainer);
 			const auto end = std::cend(containedContainer);

@@ -20,31 +20,31 @@ export namespace Atlas::Adapters
 	};
 	
 	template<typename DataType>
-		requires IsStandardHashable<DataType>
+		requires Concept::IsStandardHashable<DataType>
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: static constexpr bool NoExcept = noexcept( std::declval<std::hash<DataType>>( )( std::declval<DataType>( ) ) );
+		private: static constexpr bool IsNoExcept = noexcept( std::declval<std::hash<DataType>>( )( std::declval<DataType>( ) ) );
 
 		private: static std::hash<DataType> Hash;
 
 
 		public:
-		inline static auto GetHash(const DataType& instance) noexcept( NoExcept )
+		inline static auto GetHash(const DataType& instance) noexcept( IsNoExcept )
 		{
 			return Hash(instance);
 		}
 	};
 
 	template<typename DataType>
-		requires HasGetHashFunction<DataType>
+		requires Concept::HasGetHashFunction<DataType>
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: static constexpr bool NoExcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
+		private: static constexpr bool IsNoExcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
 			
 	    public:
-		inline static auto GetHash(const DataType& instance)  noexcept( NoExcept )
+		inline static auto GetHash(const DataType& instance)  noexcept( IsNoExcept )
 		{
 			return instance.GetHash();
 		}

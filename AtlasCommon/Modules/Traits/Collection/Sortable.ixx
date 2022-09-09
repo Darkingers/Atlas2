@@ -1,22 +1,22 @@
 module;
 
-#include "../../../Macros/Macros.h"
+#include "../../../../Macros/Macros.h"
 
-export module AtlasTraits:Sortable;
+export module AtlasCollectionTraits:Sortable;
 import AtlasDefinitions;
 import AtlasDefaultFunctions;
 import AtlasSortFunctions;
 import AtlasInterfaces;
 
-export namespace Atlas
+export namespace Atlas::Trait
 {
 	template<typename DerivedType>
 	class DLLApi Sortable : 
-		public ISortable<DeduceCollectionContainedType<DerivedType>>
+		public Interface::ISortable<Deduce::CollectionContainedType<DerivedType>>
 	{
-		private: using DataType = DeduceCollectionContainedType<DerivedType>;
-		private: using IteratorType = DeduceConstBeginIteratorType<DerivedType>;
-		private: using ComparatorType = Comparator<DataType>;
+		private: using DataType = Deduce::CollectionContainedType<DerivedType>;
+	private: using IteratorType = Deduce::ConstBeginIteratorType<DerivedType>;
+		private: using ComparatorType = Definition::Comparator<DataType>;
 
 
 		public: 
@@ -76,7 +76,7 @@ export namespace Atlas
 		}
 
 		private:
-		DerivedType& This( ) const 
+		inline DerivedType& This( ) 
 		{
 			return static_cast<DerivedType&>( *this );
 		}

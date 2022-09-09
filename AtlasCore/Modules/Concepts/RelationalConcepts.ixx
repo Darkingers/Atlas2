@@ -7,7 +7,7 @@ module;
 
 export module AtlasConcepts:RelationalConcepts;
 
-export namespace Atlas
+export namespace Atlas::Concept
 {
 	template<typename BaseType , typename DerivedType>
 	concept IsBaseOf = std::is_base_of<BaseType , DerivedType>::value;
@@ -17,4 +17,16 @@ export namespace Atlas
 
 	template<typename AssignLeft , typename AssignRight>
 	concept IsAssignableFrom = std::is_assignable<AssignLeft , AssignRight>::value;
+
+	template<unsigned int A , unsigned int B>
+	concept IsMore = A > B;
+
+	template<unsigned int A , unsigned int B>
+	concept IsLess = A < B;
+
+	template<unsigned int A , unsigned int B>
+	concept IsMoreOrEqual = A >= B;
+
+	template<unsigned int A , unsigned int B>
+	concept IsLessOrEqual = A <= B;
 }

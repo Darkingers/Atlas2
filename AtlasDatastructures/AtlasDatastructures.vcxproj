@@ -155,14 +155,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Allocators.ixx" />
+    <ClCompile Include="Modules\Allocators.ixx" />
     <ClCompile Include="Modules\Allocators\DifferentialGrowthAllocator.ixx" />
-    <ClCompile Include="Modules\Iterators\ListEnumerator.ixx">
+    <ClCompile Include="Modules\Iterators\ListIterator.ixx">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Modules\Allocators\SimpleAllocator.ixx" />
-    <ClCompile Include="Collections.ixx" />
+    <ClCompile Include="Modules\Collections.ixx" />
     <ClCompile Include="Modules\Collections\Array.ixx" />
     <ClCompile Include="Modules\Collections\BinaryTree.ixx" />
     <ClCompile Include="Modules\Collections\Graph.ixx" />
@@ -179,8 +179,8 @@
     <ClCompile Include="Modules\Collections\Table.ixx" />
     <ClCompile Include="Modules\Collections\Tree.ixx" />
     <ClCompile Include="Modules\Iterators\ContinousMemoryIterator.ixx" />
-    <ClCompile Include="Iterators.ixx" />
-    <ClCompile Include="Queries.ixx" />
+    <ClCompile Include="Modules\Iterators.ixx" />
+    <ClCompile Include="Modules\Queries.ixx" />
     <ClCompile Include="Modules\Queries\Query.ixx" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@ module;
 export module AtlasExceptions:Exception;
 import AtlasDefinitions;
 import AtlasConcepts;
-import AtlasGeneral;
+import AtlasMeta;
 
 export namespace Atlas
 {
@@ -23,10 +23,10 @@ export namespace Atlas
 	};
 
 	template<typename ExceptionType,  typename... Args>
-		requires IsMore<0, Args...>
+		requires Concept::IsMore<sizeof...(Args), 0>
 	void Throw(const char* message, const void* source, const Args&... arguments )
 	{
-		throw Extended<ExceptionType , const char* , const void*>::Create( message, source, std::forward<const Args&>( arguments )... );
+		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( message, source, std::forward<const Args&>( arguments )... );
 	}
 
 	template<typename ExceptionType>

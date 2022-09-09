@@ -159,8 +159,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Configuration.ixx" />
-    <ClCompile Include="Modules\General\Extended.ixx" />
+    <ClCompile Include="Modules\Configuration.ixx" />
+    <ClCompile Include="Modules\Meta\Extended.ixx" />
     <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx" />
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
       <SubType>
@@ -168,16 +168,16 @@
     </ClCompile>
     <ClCompile Include="Modules\TypeInfo\BasicTypeInfo.ixx" />
     <ClCompile Include="Modules\TypeInfo\VariadicTypeInfo.ixx" />
-    <ClCompile Include="Concepts.ixx" />
+    <ClCompile Include="Modules\Concepts.ixx" />
     <ClCompile Include="Modules\Concepts\FunctionalConcepts.ixx" />
     <ClCompile Include="Modules\Concepts\RelationalConcepts.ixx" />
     <ClCompile Include="Modules\Concepts\BasicConcepts.ixx" />
     <ClCompile Include="Modules\Concepts\VariadicConteps.ixx" />
-    <ClCompile Include="Definitions.ixx" />
+    <ClCompile Include="Modules\Definitions.ixx" />
     <ClCompile Include="Modules\Definitions\TypeDeducers.ixx" />
     <ClCompile Include="Modules\Definitions\TypeDefinitions.ixx" />
-    <ClCompile Include="TypeInfo.ixx" />
-    <ClCompile Include="General.ixx" />
+    <ClCompile Include="Modules\TypeInfo.ixx" />
+    <ClCompile Include="Modules\Meta.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h" />

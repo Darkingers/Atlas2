@@ -2,16 +2,16 @@ module;
 
 #include "../../../Macros/Macros.h"
 
-export module AtlasIterators:ListEnumerator;
+export module AtlasIterators:ListIterator;
 import AtlasInterfaces;
 
 export namespace Atlas
 {
 	template<typename DataType, typename NodeType>
-	class DLLApi ListEnumerator :
-        public IIterator<DataType>
+	class DLLApi ListIterator :
+        public Interface::IIterator<DataType>
 	{
-        private: using IteratorType = ListEnumerator<DataType, NodeType>;
+        private: using IteratorType = ListIterator<DataType, NodeType>;
 
         public: using iterator_category = std::bidirectional_iterator_tag;
         public: using difference_type = std::ptrdiff_t;
@@ -26,14 +26,14 @@ export namespace Atlas
 
 
         public:
-        ListEnumerator( NodeType* current ) :
+        ListIterator( NodeType* current ) :
             _current( current )
         {
 
         }
 
         public:
-        ~ListEnumerator( ) final
+        ~ListIterator( ) final
         {}
 
         public:

@@ -5,7 +5,7 @@ module;
 
 export module AtlasConcepts:FunctionalConcepts;
 
-export namespace Atlas
+export namespace Atlas::Concept
 {
 	template<typename ReturnType , typename InvokedType , typename... Args>
 	concept IsInvokable = std::is_invocable_r<ReturnType , InvokedType , Args...>::value;

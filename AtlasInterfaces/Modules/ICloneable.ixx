@@ -4,7 +4,7 @@ module;
 
 export module AtlasInterfaces:ICloneable;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename DataType>
 	class DLLApi ICloneable 

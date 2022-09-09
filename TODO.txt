@@ -1,0 +1,4 @@
+Extended -> Binding
+pl:
+
+auto&& [basetype, extendedparameter] = Extender<Type, int>::Create( 5, "name", 10);

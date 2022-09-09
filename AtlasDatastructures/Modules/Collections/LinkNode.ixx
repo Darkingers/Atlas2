@@ -7,10 +7,10 @@ import AtlasDefinitions;
 
 export namespace Atlas
 {
-	template<typename DataType>
+	/*template<typename DataType>
 	class DLLApi LinkNode
 	{
-		/*private: using LinkNodeType = LinkNode<DataType>;
+		private: using LinkNodeType = LinkNode<DataType>;
 
 		public: DataType Data;
 		public: LinkNodeType* Next;
@@ -25,7 +25,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... Args>
-			LinkNode( Args&&... arguments ) 
+		LinkNode( Args&&... arguments ) 
 		{
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
@@ -651,5 +651,5 @@ export namespace Atlas
 				return last->Add( arguments... );
 			}
 		}*/
-	};
+	//};
 }

@@ -12,7 +12,7 @@ export namespace Atlas
 {
 	template<typename DataType>
 	class DLLApi DifferentialGrowthAllocator :
-		public IAllocator<DataType>
+		public Interface::IAllocator<DataType>
 	{
 		private: DataType* _location;
 		private: unsigned int _size;

@@ -6,12 +6,12 @@ export module AtlasInterfaces:ISearchable;
 import AtlasDefinitions;
 import AtlasDefaultFunctions;
 
-export namespace Atlas
+export namespace Atlas::Interface
 {
 	template<typename DataType>
 	class DLLApi ISearchable
 	{
-		private: using ComparatorType = Comparator<DataType>;
+		private: using ComparatorType = Definition::Comparator<DataType>;
 
 		public:
 		virtual const unsigned int BinarySearch( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType value , const ComparatorType comparator = Default::Comparator )const  = 0;

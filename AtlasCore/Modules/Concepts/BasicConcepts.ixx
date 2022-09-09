@@ -7,7 +7,7 @@ module;
 
 export module AtlasConcepts:BasicConcepts;
 
-export namespace Atlas
+export namespace Atlas::Concept
 {
 	template<typename TestedType>
 	concept IsPointer = std::is_pointer<TestedType>::value;

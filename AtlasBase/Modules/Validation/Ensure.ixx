@@ -194,6 +194,20 @@ export namespace Atlas
 			}
 		}
 
+		public:template<typename TypeA , typename TypeB, typename TypeC>
+			inline static void IsInRange( const TypeA& number , const TypeB& inclusiveFrom, const TypeC& exclusiveTo )
+		{
+			if constexpr ( !Configuration::EnableEnsure )
+			{
+				return;
+			}
+
+			if ( number < inclusiveFrom || number >= exclusiveTo )
+			{
+				Throw<ValidationException>( "Condition: number >= inclusiveFrom && number < exclusiveTo is not fulfilled!" , nullptr , number, inclusiveFrom, exclusiveTo );
+			}
+		}
+
 		public:template<typename CollectionType>
 		inline static void IsEmpty( const CollectionType& collection )
 		{

@@ -4,7 +4,7 @@ module;
 
 export module AtlasGeometry2D:Circle;
 
-export namespace Atlas
+export namespace Atlas::Geometry
 {
 
 }

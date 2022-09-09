@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Modules\2D.ixx" />
     <ClCompile Include="Modules\3D.ixx" />
-    <ClCompile Include="Modules\General.ixx" />
     <ClCompile Include="Modules\3D\Box.ixx">
       <Filter>3D</Filter>
     </ClCompile>
@@ -28,15 +27,10 @@
     <ClCompile Include="Modules\2D\Triangle.ixx">
       <Filter>2D</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\General\Line.ixx">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\General\Point.ixx">
-      <Filter>General</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\2D\Square.ixx">
       <Filter>2D</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\2D\Vector.ixx" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2D">

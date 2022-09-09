@@ -68,7 +68,7 @@ export namespace Atlas
 			public:
 			static unsigned int JumpSearch( const CollectionType& collection,  const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value , const ComparatorType comparator )
 			{
-				const unsigned int stepDiff = MathFunctions::SquareRoot( exclusiveTo - inclusiveFrom );
+				const unsigned int stepDiff = Math::SquareRoot( exclusiveTo - inclusiveFrom );
 				unsigned int current = stepDiff;
 				unsigned int previous = inclusiveFrom;
 
@@ -81,7 +81,7 @@ export namespace Atlas
 					else
 					{
 						previous = current;
-						current = MathFunctions::Minimum( current + stepDiff, exclusiveTo );
+						current = Math::Minimum( current + stepDiff, exclusiveTo );
 					}
 				}
 

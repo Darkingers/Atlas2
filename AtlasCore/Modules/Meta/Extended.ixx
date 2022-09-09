@@ -5,11 +5,18 @@ module;
 
 export module AtlasMeta:Extended;
 import AtlasDefinitions;
+import AtlasConcepts;
 
 export namespace Atlas::Meta
 {
+	namespace Marker
+	{
+		class Extended{};
+	}
+
 	template<typename Type , typename... ExtendedArgs>
 	class DLLApi ExtendedType :
+		public Marker::Extended,
 		public Type
 	{
 		private: using PropertyHolder = std::tuple<ExtendedArgs...>;
@@ -36,6 +43,19 @@ export namespace Atlas::Meta
 		{
 			std::get<Index>( ExtendedProperties ) = value;
 		}
+
+		public: template<unsigned int Index>
+		std::tuple_element_t<Index , ExtendedType<Type, ExtendedArgs...>>& get( )
+		{
+			if constexpr ( Index == 0 )
+			{
+				return *this;
+			}
+			else
+			{
+				return GetExtended<Index>( );
+			}
+		}
 	};
 
 	template<typename BaseType , typename... BaseArgs>
@@ -46,5 +66,22 @@ export namespace Atlas::Meta
 		{
 			return ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs>( eArgs )... , std::forward<BaseArgs>( bArgs )... );
 		}
+	};
+}
+
+namespace std
+{
+	template<unsigned int Index, typename Type>
+		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Meta::Marker::Extended>
+	struct tuple_element<Index , Type>
+	{
+		using type = typename decltype( std::declval<Type>( ).GetExtended<Index-1>( ) );
+	};
+
+	template<typename Type>
+		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Meta::Marker::Extended>
+	struct tuple_element<0 , Type>
+	{
+		using type = Type;
 	};
 }

@@ -4,7 +4,7 @@ module;
 
 export module AtlasGeometry3D:Ellipsoid;
 
-export namespace Atlas
+export namespace Atlas::Geometry
 {
 
 }

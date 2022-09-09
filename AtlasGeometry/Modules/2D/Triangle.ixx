@@ -4,7 +4,7 @@ module;
 
 export module AtlasGeometry2D:Triangle;
 
-export namespace Atlas
+export namespace Atlas::Geometry
 {
 
 }

@@ -4,7 +4,7 @@ module;
 
 export module AtlasGeometry3D:Box;
 
-export namespace Atlas
+export namespace Atlas::Geometry
 {
 
 }

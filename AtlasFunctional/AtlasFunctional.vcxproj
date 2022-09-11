@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Eventhandling\Event.ixx" />
-    <ClCompile Include="Invokers.ixx" />
-    <ClCompile Include="Invokers\BoundInvoker.ixx" />
-    <ClCompile Include="Invokers\MemberInvoker.ixx" />
+    <ClCompile Include="Modules\Eventhandling\Event.ixx" />
+    <ClCompile Include="Modules\Invokers.ixx" />
+    <ClCompile Include="Modules\Invokers\BoundInvoker.ixx" />
+    <ClCompile Include="Modules\Invokers\MemberInvoker.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtlasBase\AtlasBase.vcxproj">

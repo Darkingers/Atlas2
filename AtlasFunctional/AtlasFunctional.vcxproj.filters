@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Eventhandling\Event.ixx">
+    <ClCompile Include="Modules\Eventhandling\Event.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Invokers\BoundInvoker.ixx">
+    <ClCompile Include="Modules\Invokers\BoundInvoker.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Invokers\MemberInvoker.ixx">
+    <ClCompile Include="Modules\Invokers\MemberInvoker.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Invokers.ixx">
+    <ClCompile Include="Modules\Invokers.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

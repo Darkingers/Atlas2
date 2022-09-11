@@ -70,6 +70,7 @@
     <ClCompile Include="Modules\Meta\Extended.ixx">
       <Filter>Modules\General</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Meta\Tuple.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

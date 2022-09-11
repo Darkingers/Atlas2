@@ -20,7 +20,7 @@ import :Package;
 export namespace Atlas
 {
 	template<typename DataType , template<typename> typename AllocatorTemplate , template<typename> typename EventHandlerTemplate>
-	requires IsDerivedFrom<AllocatorTemplate<DataType>, IAllocator<DataType>>
+		requires Concept::IsDerivedFrom<AllocatorTemplate<DataType>, Interface::IAllocator<DataType>>
 	class DLLApi ArrayBase :
 		public Trait::Searchable<ArrayBase<DataType, AllocatorTemplate , EventHandlerTemplate>>,
 		public Trait::Sortable<ArrayBase<DataType , AllocatorTemplate , EventHandlerTemplate>>,
@@ -83,20 +83,20 @@ export namespace Atlas
 		public:
 		ArrayType& Resize( const unsigned int newSize ) 
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsPositive( newSize );
-			}
-
 			if ( newSize == ArrayType::GetSize( ) )
 			{
 				return *this;
 			}
 
-			const int removed = ArrayType::GetSize( ) - newSize;
+			if constexpr ( Configuration::EnableArgumentCheck )
+			{
+				Ensure::IsPositive( newSize );
+			}		
 			
 			if constexpr ( DoEventHandling)
 			{
+				const int removed = ArrayType::GetSize( ) - newSize;
+				
 				if ( removed > 0 )
 				{
 					auto removedItems = CreatePackage( ArrayType::GetLocation( newSize ) , removed , true );

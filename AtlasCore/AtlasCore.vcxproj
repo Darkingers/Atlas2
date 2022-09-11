@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="Modules\Configuration.ixx" />
     <ClCompile Include="Modules\Meta\Extended.ixx" />
+    <ClCompile Include="Modules\Meta\Tuple.ixx" />
     <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx" />
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
       <SubType>

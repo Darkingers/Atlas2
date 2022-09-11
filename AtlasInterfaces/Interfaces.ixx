@@ -4,7 +4,6 @@ export import :IAnalysable;
 export import :ICloneable;
 export import :IConverter;
 export import :IEnumerable;
-export import :IExecutable;
 export import :IHashable;
 export import :IInvokable;
 export import :IIterator;

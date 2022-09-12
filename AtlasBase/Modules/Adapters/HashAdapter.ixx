@@ -15,7 +15,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static auto GetHash( const DataType& instance )
 		{
-			throw AdapterResolveException( "Could not resolve HashAdapter" , &instance );
+			Throw<AdapterResolveException>( "Could not resolve HashAdapter" , instance );
 		}
 	};
 	

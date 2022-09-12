@@ -17,7 +17,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static constexpr bool Contains( const CollectionType& collection , const DataType& contained )
 		{
-			throw AdapterResolveException( "Could not resolve ContainAdapter" , &collection );
+			Throw<AdapterResolveException>( "Could not resolve ContainAdapter" , collection , contained );
 		}
 	};
 

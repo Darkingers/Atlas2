@@ -30,7 +30,7 @@
     <ClCompile Include="Modules\2D\Rectangle.ixx" />
     <ClCompile Include="Modules\2D\Square.ixx" />
     <ClCompile Include="Modules\2D\Triangle.ixx" />
-    <ClCompile Include="Modules\2D\Vector.ixx" />
+    <ClCompile Include="Modules\2D\Vector2D.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtlasBase\AtlasBase.vcxproj">

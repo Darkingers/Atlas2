@@ -71,6 +71,7 @@
       <Filter>Modules\General</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Meta\Tuple.ixx" />
+    <ClCompile Include="Modules\Meta\Vector.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

@@ -30,7 +30,7 @@
     <ClCompile Include="Modules\2D\Square.ixx">
       <Filter>2D</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\2D\Vector.ixx" />
+    <ClCompile Include="Modules\2D\Vector2D.ixx" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2D">

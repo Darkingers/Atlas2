@@ -18,7 +18,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static bool ContainsAll( const CollectionType& collection , const ContainedCollectionType& containedContainer )
 		{
-			throw AdapterResolveException( "Could not resolve ContainAdapter" , &collection );
+			Throw<AdapterResolveException>( "Could not resolve ContainAllAdapter" , collection , containedContainer );
 		}
 	};
 	

@@ -2,7 +2,7 @@ module;
 
 #include "../../../Macros/Macros.h"
 
-export module AtlasGeometry2D:Vector;
+export module AtlasGeometry2D:Vector2D;
 import AtlasValidation;
 import AtlasMathFunctions;
 import AtlasConfiguration;

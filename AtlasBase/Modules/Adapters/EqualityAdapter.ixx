@@ -15,7 +15,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static bool Equals( const TypeA& a , const TypeB& b )
 		{
-			throw AdapterResolveException( "Could not resolve EqualityAdapter" );
+			Throw<AdapterResolveException>( "Could not resolve EqualityAdapter" , a , b );
 		}
 	};
 	

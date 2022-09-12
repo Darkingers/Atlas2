@@ -29,6 +29,27 @@ export namespace Atlas
 		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( message, source, std::forward<const Args&>( arguments )... );
 	}
 
+	template<typename ExceptionType , typename... Args>
+		requires Concept::IsMore<sizeof...( Args ) , 0>
+	void Throw( const char* message , const Args&... arguments )
+	{
+		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( message , nullptr , std::forward<const Args&>( arguments )... );
+	}
+
+	template<typename ExceptionType , typename... Args>
+		requires Concept::IsMore<sizeof...( Args ) , 0>
+	void Throw( const void* source , const Args&... arguments )
+	{
+		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( "" , source , std::forward<const Args&>( arguments )... );
+	}
+
+	template<typename ExceptionType , typename... Args>
+		requires Concept::IsMore<sizeof...( Args ) , 0>
+	void Throw( const Args&... arguments )
+	{
+		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( "", nullptr, std::forward<const Args&>( arguments )... );
+	}
+
 	template<typename ExceptionType>
 	void Throw( const char* message ="" , const void* source = nullptr )
 	{

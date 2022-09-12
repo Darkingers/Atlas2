@@ -18,13 +18,16 @@
     <ClCompile Include="Modules\Eventhandling\Event.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Invokers\BoundInvoker.ixx">
+    <ClCompile Include="Modules\Methods\BoundMethod.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Invokers\MemberInvoker.ixx">
+    <ClCompile Include="Modules\Methods\MemberMethod.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Invokers.ixx">
+    <ClCompile Include="Modules\Methods.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Methods\MethodExtensions.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

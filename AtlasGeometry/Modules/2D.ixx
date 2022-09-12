@@ -4,4 +4,4 @@ export import :Ellipse;
 export import :Rectangle;
 export import :Square;
 export import :Triangle;
-export import :Vector;
+export import :Vector2D;

@@ -20,9 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Modules\Eventhandling\Event.ixx" />
-    <ClCompile Include="Modules\Invokers.ixx" />
-    <ClCompile Include="Modules\Invokers\BoundInvoker.ixx" />
-    <ClCompile Include="Modules\Invokers\MemberInvoker.ixx" />
+    <ClCompile Include="Modules\Methods.ixx" />
+    <ClCompile Include="Modules\Methods\BoundMethod.ixx" />
+    <ClCompile Include="Modules\Methods\MemberMethod.ixx" />
+    <ClCompile Include="Modules\Methods\MethodExtensions.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtlasBase\AtlasBase.vcxproj">
@@ -33,6 +34,9 @@
     </ProjectReference>
     <ProjectReference Include="..\AtlasCore\AtlasCore.vcxproj">
       <Project>{e0088580-341c-4a8a-88e4-ddd2d06a992b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AtlasInterfaces\AtlasInterfaces.vcxproj">
+      <Project>{3a2a5f12-a4e2-4e60-9bc8-6487fc928f41}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">

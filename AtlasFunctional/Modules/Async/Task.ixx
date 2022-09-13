@@ -1,7 +1,6 @@
 module;
 
 #include "../../../Macros/Macros.h"
-#include <thread>
 #include <mutex>
 
 export module AtlasAsync:Task;
@@ -17,10 +16,9 @@ export namespace Atlas
 	namespace Implementation
 	{
 		template<typename ReturnType, typename TaskType>
-		class TaskBase :
-			public Trait::Invokable<TaskType& , TaskType>
+		class TaskBase
 		{
-			protected: using InvokedType = std::function<ReturnType(void)>;
+			protected: using InvokedType = Definition::LambdaFunction<ReturnType>;
 
 			protected: std::mutex _mutex;
 			protected: InvokedType _invoked;
@@ -124,7 +122,7 @@ export namespace Atlas
 
 				_isRunning = true;
 
-				Async::Invoke( Method::Create( this , &TaskType::Invoke ) );
+				Async::Invoke( Method::Create( this , &TaskBase<ReturnType,TaskType>::Invoke ) );
 			}
 
 			public:
@@ -143,7 +141,8 @@ export namespace Atlas
 
 	template<typename ReturnType>
 	class DLLApi Task :
-		public Implementation::TaskBase<ReturnType, Task<ReturnType>>
+		public Implementation::TaskBase<ReturnType, Task<ReturnType>>,
+		public Trait::Invokable<Task<ReturnType>& , Task<ReturnType>>
 	{
 		private: using TaskType = Task<ReturnType>;
 		private: using BaseType = Implementation::TaskBase<ReturnType , Task<ReturnType>>;
@@ -159,9 +158,9 @@ export namespace Atlas
 		{}
 
 		public:
-		AccessedResultType Result( unsigned int timeout = -1 ) const
+		AccessedResultType Result( unsigned int timeout = -1 , unsigned int sleep_ms = 100 ) const
 		{
-			this->Wait( timeout );
+			this->Wait( timeout ,sleep_ms );
 			if constexpr ( Type<ReturnType>::IsReference )
 			{
 				return ( *_result );		
@@ -188,7 +187,8 @@ export namespace Atlas
 
 	template<>
 	class DLLApi Task<void> :
-		public Implementation::TaskBase<void , Task<void>>
+		public Implementation::TaskBase<void , Task<void>> ,
+		public Trait::Invokable<Task<void>& , Task<void>>
 	{
 		private: using BaseType = Implementation::TaskBase<void , Task<void>>;
 

@@ -4,7 +4,7 @@ module;
 #include <vector>
 #include <map>
 
-export module AtlasEventHandlig:Event;
+export module AtlasEventHandling:Event;
 import AtlasDefinitions;
 import AtlasConcepts;
 import AtlasMeta;
@@ -22,6 +22,7 @@ export namespace Atlas
 		private: using LambdaType = Definition::LambdaFunction<void , Args...>;
 		private: using StaticType = Definition::StaticFunction<void , Args...>;
 		private: using InterfaceType = Interface::IInvokable<void , Args...>;
+		private: using EventType = Event<Args...>;
 
 		struct InstanceWrapper
 		{
@@ -106,6 +107,18 @@ export namespace Atlas
 			};
 
 			Meta::Vector::RemoveIf( _wrapped , condition );
+		}
+
+		public: template<typename InvokedType>
+		void operator+=( InvokedType invoked )
+		{
+			Subscribe( invoked );
+		}
+
+		public: template<typename InvokedType>
+		void operator-=( InvokedType invoked )
+		{
+			Unsubscribe( invoked );
 		}
 
 		private: template<typename ClassType , typename InvokedType>

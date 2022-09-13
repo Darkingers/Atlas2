@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Modules\Async.ixx" />
+    <ClCompile Include="Modules\Async\AsyncExtensions.ixx" />
+    <ClCompile Include="Modules\Async\Task.ixx" />
+    <ClCompile Include="Modules\Async\Threadpool.ixx" />
+    <ClCompile Include="Modules\EventHandling.ixx" />
     <ClCompile Include="Modules\Eventhandling\Event.ixx" />
     <ClCompile Include="Modules\Methods.ixx" />
     <ClCompile Include="Modules\Methods\BoundMethod.ixx" />

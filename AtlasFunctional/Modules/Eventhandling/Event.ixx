@@ -4,7 +4,7 @@ module;
 #include <vector>
 #include <map>
 
-export module AtlasEventHandling:Event;
+export module AtlasEvent;
 import AtlasDefinitions;
 import AtlasConcepts;
 import AtlasMeta;

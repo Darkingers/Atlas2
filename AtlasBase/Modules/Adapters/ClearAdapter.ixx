@@ -15,7 +15,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static void Clear( ClearedType& instance )
 		{
-			Throw<AdapterResolveException>( "Could not resolve ClearAdapter" , instance );
+			Throw<AdapterResolveException>( "Could not resolve " + typeid( ClearAdapter ).name( ) + "(" + typeid( ClearedType ).name( )+")" );
 		}
 	};
 	

@@ -105,11 +105,5 @@
     <ClCompile Include="Modules\Validation.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadics\Variadic.ixx">
-      <Filter>Modules\Variadics</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Adapters\Adapter.ixx">
-      <Filter>Modules\Adapters</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

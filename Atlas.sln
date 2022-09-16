@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AtlasFunctional", "AtlasFunctional\AtlasFunctional.vcxproj", "{B3C0CEE7-24D4-4C1A-9703-3430512045CC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticLib1", "StaticLib1\StaticLib1.vcxproj", "{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -96,6 +98,14 @@ Global
 		{B3C0CEE7-24D4-4C1A-9703-3430512045CC}.Release|x64.Build.0 = Release|x64
 		{B3C0CEE7-24D4-4C1A-9703-3430512045CC}.Release|x86.ActiveCfg = Release|Win32
 		{B3C0CEE7-24D4-4C1A-9703-3430512045CC}.Release|x86.Build.0 = Release|Win32
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Debug|x64.ActiveCfg = Debug|x64
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Debug|x64.Build.0 = Debug|x64
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Debug|x86.ActiveCfg = Debug|Win32
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Debug|x86.Build.0 = Debug|Win32
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Release|x64.ActiveCfg = Release|x64
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Release|x64.Build.0 = Release|x64
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Release|x86.ActiveCfg = Release|Win32
+		{B70D3526-A6E5-4033-9FAB-DC574E74B7EF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 module;
 
-#include <vector>
 #include "../../../Macros/Macros.h"
+#include <vector>
 
 export module AtlasMeta:Vector;
 import AtlasDefinitions;

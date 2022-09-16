@@ -1,15 +1,12 @@
 module;
 
 #include "../../../Macros/Macros.h"
-#include <chrono>
-#include <thread>
 
-export module AtlasAsync:AsyncExtensions;
-import AtlasDefinitions;
-import AtlasConcepts;
+#include <thread>
+#include <chrono>
+
+export module AtlasAsync;
 import AtlasExceptions;
-import AtlasFunctionalTraits;
-import AtlasTypeInfo;
 
 export namespace Atlas
 {
@@ -25,7 +22,7 @@ export namespace Atlas
 		public: template<typename InvokableType>
 		static void WaitUntil( InvokableType condition , unsigned int timeout_ms = -1 , unsigned int sleep_ms = 100 )
 		{
-			std::chrono::milliseconds sleepDuration( 2000 );
+			auto sleepDuration = std::chrono::milliseconds( sleep_ms );
 			if ( timeout_ms == -1 )
 			{
 				while ( !condition( ) )
@@ -33,7 +30,7 @@ export namespace Atlas
 					std::this_thread::sleep_for( sleepDuration );
 				}
 			}
-			/*else
+			else
 			{
 				unsigned int current = 0;
 
@@ -44,12 +41,12 @@ export namespace Atlas
 						return;
 					}
 
-					std::this_thread::sleep_for( sleepTime );
+					std::this_thread::sleep_for( sleepDuration );
 					current += sleep_ms;
 				}
 
-				Throw<TimeoutException>( "Timed out" , timeout_ms );
-			}*/
+				Throw<TimeoutException>( "Wait timed out" , timeout_ms , sleep_ms );
+			}
 		}
 	};
 }

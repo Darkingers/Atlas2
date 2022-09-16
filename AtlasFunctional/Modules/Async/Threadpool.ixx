@@ -4,7 +4,7 @@ module;
 #include <thread>
 #include <mutex>
 
-export module AtlasAsync:Threadpool;
+export module AtlasThreadpool;
 
 
 export namespace Atlas

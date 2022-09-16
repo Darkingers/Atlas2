@@ -3,13 +3,13 @@ module;
 #include "../../../Macros/Macros.h"
 #include <mutex>
 
-export module AtlasAsync:Task;
+export module AtlasTask;
 import AtlasDefinitions;
 import AtlasExceptions;
 import AtlasFunctionalTraits;
 import AtlasTypeInfo;
 import AtlasMethods;
-import :AsyncExtensions;
+import AtlasAsync;
 
 export namespace Atlas
 {

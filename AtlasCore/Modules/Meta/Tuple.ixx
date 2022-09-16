@@ -1,7 +1,7 @@
 module;
 
-#include <tuple>
 #include "../../../Macros/Macros.h"
+#include <tuple>
 
 export module AtlasMeta:Tuple;
 import AtlasDefinitions;

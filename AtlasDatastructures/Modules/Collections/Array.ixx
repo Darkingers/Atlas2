@@ -42,7 +42,7 @@ export namespace Atlas
 
 
 		public: template<typename... Args>
-		ArrayBase( Args&&... arguments ) 
+		constexpr ArrayBase( Args&&... arguments ) noexcept
 		{
 			if constexpr (sizeof...(arguments) > 0 )
 			{
@@ -51,47 +51,44 @@ export namespace Atlas
 		}
 
 		public:
-		~ArrayBase() 
+		constexpr ~ArrayBase() noexcept
 		{
 			
 		}
 
 		public:
-		inline const unsigned int GetHash() const 
+		constexpr inline const unsigned int GetHash() const
 		{
 			return Memory::GetHash( ArrayType::GetLocation(0), ArrayType::GetSize( ) ) ^ Memory::GetHash(*this, sizeof(ArrayType) );
 		}
 
 		public: 
-		inline const unsigned int GetSize() const 
+		constexpr inline const unsigned int GetSize() const
 		{
 			return _allocator.GetSize( );
 		}
 		
 		public: 
-		inline const DataType& GetConst( const unsigned int index ) const
+		constexpr inline const DataType& GetConst( const unsigned int index ) const
 		{
 			return ( *this )[index];
 		}
 		
 		public:
-		inline DataType& Get( const unsigned int index ) 
+		constexpr inline DataType& Get( const unsigned int index )
 		{
 			return ( *this )[index];
 		}
 
 		public:
-		ArrayType& Resize( const unsigned int newSize ) 
+		constexpr ArrayType& Resize( const unsigned int newSize )
 		{
 			if ( newSize == ArrayType::GetSize( ) )
 			{
 				return *this;
 			}
 
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsPositive( newSize );
-			}		
+			Argument::IsPositive( newSize );
 			
 			if constexpr ( DoEventHandling)
 			{
@@ -119,7 +116,7 @@ export namespace Atlas
 		}
 
 		public:
-		ArrayType& Reserve( const unsigned int reservedSize ) 
+		constexpr ArrayType& Reserve( const unsigned int reservedSize )
 		{
 			ArrayType::Resize( ArrayType::GetSize( ) + reservedSize );
 
@@ -127,7 +124,7 @@ export namespace Atlas
 		}
 
 		public:
-		ArrayType& Trim( const unsigned int trimSize ) 
+		constexpr ArrayType& Trim( const unsigned int trimSize )
 		{
 			ArrayType::Resize( ArrayType::GetSize( ) - trimSize );
 
@@ -135,7 +132,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... Args>
-		ArrayType& Add( Args&&... arguments ) 
+		constexpr ArrayType& Add( Args&&... arguments )
 		{
 			const unsigned int index = ArrayType::GetSize( );
 			const unsigned int added = Variadic::Count( std::forward<const Args&>( arguments )... );
@@ -153,7 +150,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... Args>
-		ArrayType& Remove( const Args&... arguments ) 
+		constexpr ArrayType& Remove( const Args&... arguments )
 		{
 			unsigned int removed = 0;
 
@@ -184,7 +181,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... Args>
-		ArrayType& Insert( const unsigned int index , Args&&... arguments ) 
+		constexpr ArrayType& Insert( const unsigned int index , Args&&... arguments )
 		{
 			ArrayType::ValidateIndex( index );
 
@@ -203,7 +200,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... Args>
-		ArrayType& ReplaceFrom( const unsigned int index , Args&&... arguments ) 
+		constexpr ArrayType& ReplaceFrom( const unsigned int index , Args&&... arguments )
 		{
 			ArrayType::ValidateIndex( index );
 
@@ -228,7 +225,7 @@ export namespace Atlas
 		}
 
 		public:
-		ArrayType& Clear( ) 
+		constexpr ArrayType& Clear( )
 		{
 			ArrayType::Trim( GetSize( ) );
 
@@ -236,7 +233,7 @@ export namespace Atlas
 		}
 
 		public:
-		ArrayType& ShiftLeft( const unsigned int index , const unsigned int offset ) 
+		constexpr ArrayType& ShiftLeft( const unsigned int index , const unsigned int offset )
 		{
 			ArrayType::Shift( index , GetSize( ) - index , -offset );
 
@@ -244,7 +241,7 @@ export namespace Atlas
 		}
 
 		public:
-		ArrayType& ShiftRight( const unsigned int index , const unsigned int offset ) 
+		constexpr ArrayType& ShiftRight( const unsigned int index , const unsigned int offset )
 		{
 			ArrayType::Shift( index , GetSize( ) - index , offset );
 
@@ -252,7 +249,7 @@ export namespace Atlas
 		}
 
 		public:
-		ArrayType& Shift( const unsigned int index , const unsigned int size , const unsigned int offset ) 
+		constexpr ArrayType& Shift( const unsigned int index , const unsigned int size , const unsigned int offset )
 		{
 			if constexpr ( DoEventHandling )
 			{
@@ -280,7 +277,7 @@ export namespace Atlas
 		}
 	
 		public:
-		DataType& operator[]( const unsigned int index )
+		constexpr DataType& operator[]( const unsigned int index )
 		{
 			ArrayType::ValidateIndex( index );
 
@@ -288,19 +285,16 @@ export namespace Atlas
 		}
 
 		private:
-		void ValidateIndex(const unsigned int index ) const
+		constexpr void ValidateIndex(const unsigned int index ) const
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsPositive( index );
-				Ensure::IsLess( index , GetSize( ) );
-			}
+			Argument::IsPositive( index );
+			Argument::IsLess( index , GetSize( ) );
 		}
 
 		private:
-		inline DataType* GetLocation( const unsigned int index ) const
+		constexpr inline DataType* GetLocation( const unsigned int index ) const
 		{
-			return &_allocator[index];
+			return &( *this )[index];
 		}
     };
 }

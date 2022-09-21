@@ -26,37 +26,37 @@ export namespace Atlas
 
 
         public:
-        ListIterator( NodeType* current ) :
+        constexpr ListIterator( NodeType* current ) :
             _current( current )
         {
 
         }
 
         public:
-        ~ListIterator( ) final
+        constexpr ~ListIterator( ) final
         {}
 
         public:
-        DataType& operator*( ) final
+        constexpr  DataType& operator*( ) final
         {
             return _current->Data;
         }
 
         public:
-        DataType* operator->( ) final
+        constexpr  DataType* operator->( ) final
         {
             return &(_current->Data);
         }
 
         public:
-        IteratorType& operator++( ) final
+        constexpr IteratorType& operator++( ) final
         {
             _current = _current->Next;
             return *this;
         }
 
         public:
-        IteratorType& operator++( int) final
+        constexpr IteratorType& operator++( int) final
         {
             IteratorType tmp = *this;
             _current = _current->Next;
@@ -64,26 +64,26 @@ export namespace Atlas
         }
 
         public:
-        IteratorType& operator--( ) final
+        constexpr IteratorType& operator--( ) final
         {
             _current = _current->Previous;
             return *this;
         }
 
         public:
-        IteratorType operator--( int ) final
+        constexpr IteratorType operator--( int ) final
         {
             IteratorType tmp = *this; 
             _current = _current->Previous;
             return tmp;
         }
 
-        friend bool operator== ( const IteratorType& a , const IteratorType& b )
+        constexpr friend bool operator== ( const IteratorType& a , const IteratorType& b )
         {
             return a._current == b._current;
         };
 
-        friend bool operator!= ( const IteratorType& a , const IteratorType& b )
+        constexpr friend bool operator!= ( const IteratorType& a , const IteratorType& b )
         {
             return a._current != b._current;
         };

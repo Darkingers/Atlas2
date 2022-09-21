@@ -24,39 +24,39 @@ export namespace Atlas
 
 
         public:
-        ContinousMemoryIterator( DataType* current )  :
+        constexpr ContinousMemoryIterator( DataType* current )  :
             _current( current )
         {
 
         }
 
         public:
-        ~ContinousMemoryIterator( ) final
+        constexpr ~ContinousMemoryIterator( ) final
         {
 
         }
 
         public: 
-        DataType& operator*() final
+        constexpr DataType& operator*() final
         { 
             return *_current;
         }
 
         public: 
-        DataType* operator->() final
+        constexpr DataType* operator->() final
         { 
             return _current;
         }
 
         public: 
-        IteratorType& operator++()  final
+        constexpr IteratorType& operator++()  final
         {
             _current++;
             return *this; 
         }
 
         public:
-        IteratorType operator++( int ) final
+        constexpr IteratorType operator++( int ) final
         { 
             IteratorType tmp = *this;
             ++( *this );
@@ -64,26 +64,26 @@ export namespace Atlas
         }
 
         public:
-        IteratorType& operator--( )  final
+        constexpr IteratorType& operator--( )  final
         {
             _current--;
             return *this;
         }
 
         public:
-        IteratorType operator--( int ) final
+        constexpr IteratorType operator--( int ) final
         {
             IteratorType tmp = *this;
             --( *this );
             return tmp;
         }
 
-        friend bool operator== ( const IteratorType& a, const IteratorType& b ) 
+        constexpr friend bool operator== ( const IteratorType& a, const IteratorType& b )
         {
             return a._current == b._current;
         };
 
-        friend bool operator!= ( const IteratorType& a, const IteratorType& b )
+        constexpr friend bool operator!= ( const IteratorType& a, const IteratorType& b )
         { 
             return a._current != b._current;
         };

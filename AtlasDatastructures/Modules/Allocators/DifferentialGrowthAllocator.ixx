@@ -19,7 +19,7 @@ export namespace Atlas
 		private: unsigned int _allocatedSize;
 
 		public:
-		DifferentialGrowthAllocator( )  :
+		constexpr DifferentialGrowthAllocator( )  :
 			_location( nullptr ) ,
 			_size( 0 ) ,
 			_allocatedSize( 0 )
@@ -28,57 +28,47 @@ export namespace Atlas
 		}
 
 		public:
-		DifferentialGrowthAllocator( unsigned int size )  :
+		constexpr DifferentialGrowthAllocator( unsigned int size )  :
 			_location( new DataType[size] ) ,
 			_size( size ) ,
 			_allocatedSize( size )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsPositive( size );
-			}
+			Argument::IsPositive( size );
 		}
 
 		public:
-		DifferentialGrowthAllocator( DataType* location , unsigned int size )  :
+		constexpr DifferentialGrowthAllocator( DataType* location , unsigned int size )  :
 			_location( location ) ,
 			_size( size ) ,
 			_allocatedSize( size )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
+			Argument::IsPositive( size );
+			if ( size > 0 )
 			{
-				Ensure::IsPositive( size );
-
-				if( size >0 )
-				{
-					Ensure::IsNotNull( location );
-				}
+				Argument::IsNotNull( location );
 			}
 		}
 
 		public:
-		~DifferentialGrowthAllocator( )  final
+		constexpr ~DifferentialGrowthAllocator( )  final
 		{
 			Empty( );
 		}
 
 		public:
-		inline unsigned int GetSize( )const  final
+		constexpr inline unsigned int GetSize( )const  final
 		{
 			return _size;
 		}
 
 		public:
-		void Allocate( const unsigned int newSize )  final
+		constexpr void Allocate( const unsigned int newSize )  final
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
+			Argument::IsPositive( newSize );
+			if ( _size > 0 )
 			{
-				Ensure::IsPositive( newSize );
-				if ( _size > 0 )
-				{
-					Ensure::IsNotNull( _location );
-				}
-			}	
+				Argument::IsNotNull( _location );
+			}
 
 			if ( newSize > _allocatedSize )
 			{
@@ -97,20 +87,17 @@ export namespace Atlas
 		}
 
 		public:
-		DataType& operator[]( const unsigned int index ) final
+		constexpr DataType& operator[]( const unsigned int index ) final
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsPositive( index );
-				Ensure::IsLess( index , _size );
-				Ensure::IsNotNull( _location );
-			}
+			Argument::IsPositive( index );
+			Argument::IsLess( index , _size );
+			Argument::IsNotNull( _location );
 
 			return _location[index];
 		}
 
 		public:
-		void Empty()  final
+		constexpr void Empty()  final
 		{
 			if ( _allocatedSize > 0 )
 			{

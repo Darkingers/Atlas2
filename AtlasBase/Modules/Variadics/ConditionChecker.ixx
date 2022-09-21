@@ -10,7 +10,7 @@ export namespace Atlas::Variadics
 	class DLLApi ConditionChecker
 	{
 		public: template<typename ConditionType, typename... Args>
-		inline static bool AnyFulfills( const DataType& data, const ConditionType& condition, const Args&... arguments ) 
+		constexpr inline static bool AnyFulfills( const DataType& data, const ConditionType& condition, const Args&... arguments )
 		{
 			const bool fulfills = condition( data );
 
@@ -25,7 +25,7 @@ export namespace Atlas::Variadics
 		}
 
 		public: template<typename ConditionType, typename... Args>
-		inline static bool AllFulfills( const DataType& data, const ConditionType& condition, const Args&... arguments ) 
+		constexpr inline static bool AllFulfills( const DataType& data, const ConditionType& condition, const Args&... arguments )
 		{
 			const bool fulfills = condition( data );
 

@@ -15,7 +15,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static void Clear( ClearedType& instance )
 		{
-			Throw<AdapterResolveException>( "Could not resolve " + typeid( ClearAdapter ).name( ) + "(" + typeid( ClearedType ).name( )+")" );
+			Throw<AdapterResolveException>( "Could not resolve ClearAdapter for " + typeid( ClearedType ).name( ) );
 		}
 	};
 	
@@ -27,7 +27,7 @@ export namespace Atlas::Adapters
 		private: static constexpr bool IsNoExcept = noexcept ( std::declval<ClearedType>.clear( ) );
 
 		public:
-		inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
+		constexpr inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
 		{
 			instance.clear( );
 		}
@@ -41,7 +41,7 @@ export namespace Atlas::Adapters
 		private: static constexpr bool IsNoExcept = noexcept ( std::declval<ClearedType>.Clear( ) );
 
 		public:
-		inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
+		constexpr inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
 		{
 			instance.Clear( );
 		}

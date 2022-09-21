@@ -16,32 +16,32 @@ export namespace Atlas
 	template<typename DataType>
 	class DLLApi Type
 	{
-		public: inline static constexpr bool IsFundamental = Fulfills::IsFundamental<DataType>::value;
-		public: inline static constexpr bool IsConst = Fulfills::IsConst<DataType>::value;
-		public: inline static constexpr bool IsReference = Fulfills::IsReference<DataType>::value;
-		public: inline static constexpr bool IsPointer = Fulfills::IsPointer<DataType>::value;
-		public: inline static constexpr bool IsValue = Fulfills::IsValue<DataType>::value;
+		public: constexpr inline static bool IsFundamental = Fulfills::IsFundamental<DataType>::value;
+		public: constexpr inline static bool IsConst = Fulfills::IsConst<DataType>::value;
+		public: constexpr inline static bool IsReference = Fulfills::IsReference<DataType>::value;
+		public: constexpr inline static bool IsPointer = Fulfills::IsPointer<DataType>::value;
+		public: constexpr inline static bool IsValue = Fulfills::IsValue<DataType>::value;
 
 		public: template<typename ComparedType>
-		inline static constexpr bool IsSame = Fulfills::IsSame<DataType , ComparedType>::value;
+		constexpr inline static bool IsSame = Fulfills::IsSame<DataType , ComparedType>::value;
 
 		public: template<typename... ComparedType>
-		inline static constexpr bool IsAll = Fulfills::IsAll<DataType , ComparedType...>::value;
+		constexpr inline static bool IsAll = Fulfills::IsAll<DataType , ComparedType...>::value;
 
 		public: template<typename... ComparedType>
-		inline static constexpr bool IsAny = Fulfills::IsAny<DataType , ComparedType...>::value;
+		constexpr inline static bool IsAny = Fulfills::IsAny<DataType , ComparedType...>::value;
 
 		public: template<typename... ComparedType>
-		inline static constexpr bool IsNone = Fulfills::IsNone<DataType , ComparedType...>::value;
+		constexpr inline static bool IsNone = Fulfills::IsNone<DataType , ComparedType...>::value;
 
 		public: template<typename DerivedType>
-		inline static constexpr bool IsBaseOf = Fulfills::IsBaseOf<DataType , DerivedType>::value;
+		constexpr inline static bool IsBaseOf = Fulfills::IsBaseOf<DataType , DerivedType>::value;
 
 		public: template<typename BaseType>
-		inline static constexpr bool IsDerivedFrom = Fulfills::IsDerivedFrom<DataType , BaseType>::value;
+		constexpr inline static bool IsDerivedFrom = Fulfills::IsDerivedFrom<DataType , BaseType>::value;
 
 		public: template<typename AssignedType>
-		inline static constexpr bool IsAssignableFrom = Fulfills::IsAssignableFrom<DataType , AssignedType>::value;
+		constexpr inline static bool IsAssignableFrom = Fulfills::IsAssignableFrom<DataType , AssignedType>::value;
 
 
 		public: using MutableType = typename std::remove_const_t<DataType>;

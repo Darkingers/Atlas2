@@ -11,7 +11,7 @@ export namespace Atlas
 		public Exception
 	{
 		public:
-		ArgumentException( const char* message , const void* source = nullptr ) noexcept :
+		constexpr ArgumentException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
 	};

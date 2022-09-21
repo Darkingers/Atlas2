@@ -13,7 +13,7 @@ export namespace Atlas
 
 
 		public:
-		Exception( const std::string message ="" , const void* source = nullptr ) noexcept :
+		constexpr Exception( const std::string message ="" , const void* source = nullptr ) noexcept :
 			Message( message ) ,
 			Source( source )
 		{}

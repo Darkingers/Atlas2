@@ -11,8 +11,8 @@ export namespace Atlas::Meta
 {
 	namespace Implementation
 	{
-		template<unsigned int Index,typename CurrentType, typename... Args>
-		void Convert(std::string* result, CurrentType current , const Args&... arguments )
+		template<unsigned int Index , typename CurrentType , typename... Args>
+		constexpr void ConvertFrom( std::string result[] , const CurrentType& current , const Args&... arguments )
 		{
 			std::stringstream stream;
 			stream << current;
@@ -21,31 +21,67 @@ export namespace Atlas::Meta
 
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
-				Convert<Index + 1>( std::forward<const Args&>( arguments )... );
+				ConvertFrom<Index + 1>( result , std::forward<const Args&>( arguments )... );
 			}
 		}
 	}
 
-	class DLLApi String
+	class String
 	{
-		template<typename... Args>
-		consteval static std::string ConstConcat( const Args&... arguments )
+		public: template<typename... Args>
+		constexpr inline static auto Create( const std::string& current , const Args&... arguments )
 		{
-			requires "" + ... + arguments;
+			if constexpr ( sizeof...( arguments ) > 0 )
+			{
+				return current + String::Create( std::forward<const Args&>( arguments )... );
+			}
+			else
+			{
+				return current;
+			}
 		}
 
-		template<typename... Args>
-		inline static std::string* CreateArrayFrom( const Args&... arguments )
+		public: template<typename... Args>
+		constexpr inline static auto Create( const char* current, const Args&... arguments )
+		{
+			if constexpr ( sizeof...( arguments ) > 0 )
+			{
+				return current + String::Create( std::forward<const Args&>( arguments )... );
+			}
+			else
+			{
+				return current;
+			}
+		}
+
+		public: template<typename CurrentType , typename... Args>
+		constexpr inline static auto Create( const CurrentType& current , const Args&... arguments )
+		{
+			std::stringstream stream;
+			stream << current;
+
+			if constexpr ( sizeof...( arguments ) > 0 )
+			{
+				return stream.str( ) + String::Create( std::forward<const Args&>( arguments )... );
+			}
+			else
+			{
+				return stream.str( );
+			}
+		}
+
+		public: template<typename... Args>
+		constexpr inline static auto CreateArrayFrom( const Args&... arguments )
 		{
 			std::string strings[sizeof...( arguments )];
 
-			Implementation::Convert<0>( strings , std::forward<const Args&>( arguments )... );
+			Implementation::ConvertFrom<0>( strings , std::forward<const Args&>( arguments )... );
 
 			return strings;
 		}
-		
-		template<typename... Args>
-		inline static std::string Replace( std::string string, const Args&... arguments )
+
+		public: template<typename... Args>
+		constexpr static auto Replace( const std::string& string , const Args&... arguments )
 		{
 			const unsigned int stringLength = string.length( );
 			if ( stringLength < 3 )
@@ -53,24 +89,27 @@ export namespace Atlas::Meta
 				return string;
 			}
 
-			auto replaceArray = String::CreateArrayFrom( std::forward<const Args&>( arguments )... );
+			std::string replaceArray[sizeof...( arguments )];
+			Implementation::ConvertFrom<0>( replaceArray , std::forward<const Args&>( arguments )... );
 
 			std::string result;
-			
+
 			unsigned int length;
 			unsigned int j;
 			unsigned int index;
 
 			for ( unsigned int i = 0; i < stringLength - 2;)
 			{
-				if ( string[i++] == '{' )
+				if ( string[i] == '{' )
 				{
-					for ( length = 0, j = i ; j < stringLength && string[j] != '}'; j++ )
+					for ( length = 0 , j = i + 1; j < stringLength && string[j] != '}'; j++ )
 					{
 						length++;
 					}
 
-					result += replaceArray[std::stoul( string.substr(i, length ) , nullptr , 10 )];
+					result += replaceArray[std::stoul( string.substr( i + 1 , length ) , nullptr , 10 )];
+
+					i += length + 2;
 				}
 				else
 				{
@@ -78,7 +117,7 @@ export namespace Atlas::Meta
 				}
 			}
 
-			return result;
+			return result.c_str( );
 		}
 	};
 }

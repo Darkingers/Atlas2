@@ -15,7 +15,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static bool Equals( const TypeA& a , const TypeB& b )
 		{
-			Throw<AdapterResolveException>( "Could not resolve EqualityAdapter" , a , b );
+			Throw<AdapterResolveException>( "Could not resolve EqualityAdapter for "+ typeid( TypeA ).name( )+","+ typeid( TypeB ).name( ) );
 		}
 	};
 	
@@ -27,7 +27,7 @@ export namespace Atlas::Adapters
 		private: static constexpr bool IsNoExcept = noexcept ( std::declval<TypeA>( ) == std::declval<TypeB>() );
 
 	    public:
-		inline static bool Equals(const TypeA& a, const TypeB& b) noexcept( IsNoExcept )
+		constexpr inline static bool Equals(const TypeA& a, const TypeB& b) noexcept( IsNoExcept )
 		{
 			return a == b;
 		}

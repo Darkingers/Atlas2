@@ -12,7 +12,7 @@ export namespace Atlas::Meta
 	class DLLApi Vector
 	{
 		public: template<typename DataType>
-		static void Remove( std::vector<DataType>& vector , const DataType& element )
+		constexpr static void Remove( std::vector<DataType>& vector , const DataType& element )
 		{
 			const auto end = std::cend( vector );
 			auto begin = std::begin( vector );
@@ -25,7 +25,7 @@ export namespace Atlas::Meta
 		}
 
 		public: template<typename DataType>
-		static void RemoveIf( std::vector<DataType>& vector , Definition::Condition<const DataType&> condition )
+		constexpr static void RemoveIf( std::vector<DataType>& vector , Definition::Condition<const DataType&> condition )
 		{
 			const auto end = std::cend( vector );
 			auto begin = std::begin( vector );
@@ -38,7 +38,7 @@ export namespace Atlas::Meta
 		}
 
 		public: template<typename DataType>
-		static auto FindIterator( std::vector<DataType>& vector , const DataType& element )
+		constexpr static auto FindIterator( std::vector<DataType>& vector , const DataType& element )
 		{
 			return std::find( std::begin( vector ) , std::cend( vector ) , element );
 		}

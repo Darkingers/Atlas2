@@ -24,7 +24,7 @@ export namespace Atlas
 			private: using ComparatorType = Definition::Comparator<DataType>;
 
 			public:
-			static unsigned int BinarySearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value, const ComparatorType comparator )
+			constexpr static unsigned int BinarySearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value, const ComparatorType comparator )
 			{
 				unsigned int low = inclusiveFrom;
 				unsigned int high = exclusiveTo;
@@ -52,7 +52,7 @@ export namespace Atlas
 			}
 
 			public:
-			static unsigned int LinearSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value , const ComparatorType comparator )
+			constexpr static unsigned int LinearSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value , const ComparatorType comparator )
 			{
 				for ( unsigned int i = 0; i < exclusiveTo; ++i )
 				{
@@ -66,7 +66,7 @@ export namespace Atlas
 			}
 
 			public:
-			static unsigned int JumpSearch( const CollectionType& collection,  const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value , const ComparatorType comparator )
+			constexpr static unsigned int JumpSearch( const CollectionType& collection,  const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType value , const ComparatorType comparator )
 			{
 				const unsigned int stepDiff = Math::SquareRoot( exclusiveTo - inclusiveFrom );
 				unsigned int current = stepDiff;
@@ -108,7 +108,7 @@ export namespace Atlas
 	class DLLApi Search
 	{
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int BinarySearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr static unsigned int BinarySearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Search::Validate( collection, inclusiveFrom , exclusiveTo );
 
@@ -116,13 +116,13 @@ export namespace Atlas
 		}
 		
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int BinarySearch( const CollectionType& collection, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr static unsigned int BinarySearch( const CollectionType& collection, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			return Implementation::Search<CollectionType>::BinarySearch( collection, 0, Adapter::Count( collection ), value, comparator );
 		}
 
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int LinearSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value , const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr static unsigned int LinearSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value , const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Search::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -130,13 +130,13 @@ export namespace Atlas
 		}
 		
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int LinearSearch( const CollectionType& collection, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr static unsigned int LinearSearch( const CollectionType& collection, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			return Implementation::Search<CollectionType>::LinearSearch( collection, 0, Adapter::Count( collection ), value, comparator );
 		}
 
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int JumpSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value , const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr static unsigned int JumpSearch( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const DataType& value , const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Search::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -144,22 +144,19 @@ export namespace Atlas
 		}
 		
 		public: template<typename CollectionType, typename DataType>
-		static unsigned int JumpSearch( const CollectionType& collection, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr static unsigned int JumpSearch( const CollectionType& collection, const DataType& value, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			return Implementation::Search<CollectionType>::JumpSearch( collection, 0, Adapter::Count( collection ), value, comparator );
 		}
 	
 		private: template<typename CollectionType>
-		inline static void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+		constexpr inline static void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				const unsigned int count = Adapter::Count( collection );
+			const unsigned int count = Adapter::Count( collection );
 
-				Ensure::IsMore( count , 0 );
-				Ensure::PositiveRange( inclusiveFrom , exclusiveTo );
-				Ensure::IsLessOrEqual( exclusiveTo , count );
-			}
+			Argument::IsMore( count , 0 );
+			Argument::PositiveRange( inclusiveFrom , exclusiveTo );
+			Argument::IsLessOrEqual( exclusiveTo , count );
 		}
 	};
 }

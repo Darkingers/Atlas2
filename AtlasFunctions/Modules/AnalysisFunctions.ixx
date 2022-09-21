@@ -22,7 +22,7 @@ export namespace Atlas
 
 
 			public: 
-		    inline static DataType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator )
+			constexpr inline static DataType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom, const unsigned int exclusiveTo, const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -44,7 +44,7 @@ export namespace Atlas
 				return max;
 			}	
 			public: template<typename ConverterType, typename ConvertResultType> 
-			inline static ConvertResultType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
+			constexpr inline static ConvertResultType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -67,7 +67,7 @@ export namespace Atlas
 			}
 
 			public: template<typename ConverterType, typename ConvertResultType> 
-			inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
+			constexpr inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -91,7 +91,7 @@ export namespace Atlas
 				return maxIterator;
 			}
 			public: template<typename ConverterType, typename ConvertResultType = Deduce::ReturnType<ConverterType,DataType>>
-			inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
+			constexpr inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -116,7 +116,7 @@ export namespace Atlas
 			}
 
 			public:
-			inline static DataType Minimum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
+			constexpr inline static DataType Minimum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -138,7 +138,7 @@ export namespace Atlas
 				return min;
 			}
 			public: template<typename ConverterType, typename ConvertResultType>
-			inline static ConvertResultType Minimum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
+			constexpr inline static ConvertResultType Minimum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -161,7 +161,7 @@ export namespace Atlas
 			}
 
 			public: template<typename ConverterType, typename ConvertResultType>
-			inline static IteratorType MinimumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
+			constexpr inline static IteratorType MinimumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -185,7 +185,7 @@ export namespace Atlas
 				return minIterator;
 			}
 			public: template<typename ConverterType, typename ConvertResultType> 
-			inline static IteratorType MinimumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
+			constexpr inline static IteratorType MinimumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const ComparatorType& comparator )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -210,7 +210,7 @@ export namespace Atlas
 			}
 
 			public:
-			inline static constexpr DataType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+			constexpr inline static DataType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -226,7 +226,7 @@ export namespace Atlas
 				return sum;
 			}
 			public: template<typename ConverterType, typename ConvertResultType>
-			inline static ConvertResultType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter )
+			constexpr inline static ConvertResultType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter )
 			{
 				IteratorType currentIterator = std::cbegin( collection );
 				std::advance( currentIterator, inclusiveFrom );
@@ -242,12 +242,12 @@ export namespace Atlas
 				return sum;
 			}
 			public: 
-			inline static DataType Average( const CollectionType&& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+			constexpr inline static DataType Average( const CollectionType&& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 			{
 				return Analysis<CollectionType>::Sum(collection, inclusiveFrom, exclusiveTo) / (exclusiveTo - inclusiveFrom + 1);
 			}
 			public: template<typename ConverterType, typename ConvertResultType> 
-		    inline static ConvertResultType Average( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter )
+			constexpr inline static ConvertResultType Average( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter )
 			{
 				return Analysis<CollectionType>::Sum( collection, inclusiveFrom, exclusiveTo, converter ) / ( exclusiveTo - inclusiveFrom + 1 );
 			}	
@@ -257,17 +257,17 @@ export namespace Atlas
 	class DLLApi Analysis
 	{
 		public: template<typename CollectionType, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static DataType Maximum( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static DataType Maximum( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Maximum( collection, 0, count, comparator );
 		}
 		
 		public: template<typename CollectionType, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static DataType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static DataType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -275,17 +275,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ConverterType, typename DataType = Deduce::CollectionContainedType<CollectionType>, typename ConvertResultType = Deduce::ReturnType<ConverterType,DataType>>
-		inline static ConvertResultType Maximum( const CollectionType& collection , const ConverterType& converter , const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static ConvertResultType Maximum( const CollectionType& collection , const ConverterType& converter , const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count , 0 );
 
 			return Implementation::Analysis<CollectionType>::Maximum( collection , 0 , count , converter , comparator );
 		}
 
 		public: template<typename CollectionType, typename ConverterType, typename DataType = Deduce::CollectionContainedType<CollectionType>, typename ConvertResultType = Deduce::ReturnType<ConverterType, DataType>>
-		inline static ConvertResultType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static ConvertResultType Maximum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -293,17 +293,17 @@ export namespace Atlas
 		}		
 
 		public: template<typename CollectionType, typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType>, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static IteratorType MaximumBy( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MaximumBy( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 			
-			Analysis::Validate( count );
+			Argument::IsMore( count , 0 );
 
 			return Implementation::Analysis<CollectionType>::MaximumBy( collection, 0, count, comparator );
 		}
 	
 		public: template<typename CollectionType, typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType>, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -311,17 +311,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ConverterType, typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType>, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static IteratorType MaximumBy( const CollectionType& collection, const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MaximumBy( const CollectionType& collection, const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 			
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::MaximumBy( collection, 0,count, converter, comparator );
 		}
 		
 		public: template<typename CollectionType, typename ConverterType, typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType>, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MaximumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -329,17 +329,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static DataType Minimum( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static DataType Minimum( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Minimumn( collection, 0, count, comparator );
 		}
 		
 		public: template<typename CollectionType , typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static DataType Minimum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static DataType Minimum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -347,17 +347,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ConverterType, typename DataType = Deduce::CollectionContainedType<CollectionType>, typename ConvertResultType = Deduce::ReturnType<ConverterType, DataType>>
-		inline static ConvertResultType Minimumn( const CollectionType& collection, const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static ConvertResultType Minimumn( const CollectionType& collection, const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Minimumn( collection, 0, count, converter, comparator );
 		}
 		
 		public: template<typename CollectionType , typename ConverterType , typename DataType = Deduce::CollectionContainedType<CollectionType> , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
-		inline static ConvertResultType Minimumn( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static ConvertResultType Minimumn( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -365,17 +365,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType>, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr IteratorType MinimumBy( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MinimumBy( const CollectionType& collection, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::MinimumBy( collection, 0, count, comparator );
 		}
 	
 		public: template<typename CollectionType , typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType> , typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr IteratorType MinimumBy( const CollectionType&& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MinimumBy( const CollectionType&& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -383,17 +383,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ConverterType, typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType>, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr IteratorType MinimumBy( const CollectionType& collection, const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MinimumBy( const CollectionType& collection, const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::MinimumBy( collection, 0, count, converter, comparator );
 		}
 		
 		public: template<typename CollectionType , typename ConverterType , typename IteratorType = Deduce::ConstBeginIteratorType<CollectionType> , typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr IteratorType MinimumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
+		constexpr inline static IteratorType MinimumBy( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter, const Definition::Comparator<DataType>& comparator = Default::Comparator )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -401,17 +401,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr DataType Sum( const CollectionType& collection )
+		constexpr inline static DataType Sum( const CollectionType& collection )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Sum( collection, 0, count);
 		}
 		
 		public: template<typename CollectionType , typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr DataType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+		constexpr inline static DataType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -419,17 +419,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ConverterType, typename DataType = Deduce::CollectionContainedType<CollectionType>, typename ConvertResultType = Deduce::ReturnType<ConverterType, DataType>>
-		inline static constexpr ConvertResultType Sum( const CollectionType& collection, const ConverterType& converter )
+		constexpr inline static ConvertResultType Sum( const CollectionType& collection, const ConverterType& converter )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Sum( collection, 0, count, converter );
 		}
 		
 		public: template<typename CollectionType , typename ConverterType , typename DataType = Deduce::CollectionContainedType<CollectionType> , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
-		inline static constexpr ConvertResultType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& converter )
+		constexpr inline static ConvertResultType Sum( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const Definition::Comparator<DataType>& converter )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -437,17 +437,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr DataType Average( const CollectionType& collection )
+		constexpr inline static DataType Average( const CollectionType& collection )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Average( collection, 0, count );
 		}
 		
 		public: template<typename CollectionType , typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		inline static constexpr DataType Average( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+		constexpr inline static DataType Average( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -455,17 +455,17 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename ConverterType, typename DataType = Deduce::CollectionContainedType<CollectionType>, typename ConvertResultType = Deduce::ReturnType<ConverterType, DataType>>
-		inline static constexpr ConvertResultType Average( const CollectionType& collection, const ConverterType& converter )
+		constexpr inline static ConvertResultType Average( const CollectionType& collection, const ConverterType& converter )
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Analysis::Validate( count );
+			Argument::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Average( collection, 0, count, converter );
 		}
 		
 		public: template<typename CollectionType , typename ConverterType , typename DataType = Deduce::CollectionContainedType<CollectionType> , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
-		inline static constexpr ConvertResultType Average( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo ,const Definition::Comparator<DataType>& converter )
+		constexpr inline static ConvertResultType Average( const CollectionType& collection, const unsigned int inclusiveFrom , const unsigned int exclusiveTo ,const Definition::Comparator<DataType>& converter )
 		{
 			Analysis::Validate( collection , inclusiveFrom , exclusiveTo );
 
@@ -473,24 +473,12 @@ export namespace Atlas
 		}
 	
 		private: template<typename CollectionType>
-		inline static void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+		constexpr inline static void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				const unsigned int count = CountAdapter<CollectionType>::Count( collection );
-				Ensure::IsMore( count , 0 );
-				Ensure::PositiveRange( inclusiveFrom , exclusiveTo );
-				Ensure::IsLessOrEqual( exclusiveTo , count );
-			}
-		}
-
-		private:
-		inline static void Validate( const unsigned int count )
-		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsMore( count , 0 );
-			}
+			const auto count = Adapter::Count( collection );
+			Argument::IsMore( count , 0 );
+			Argument::PositiveRange( inclusiveFrom , exclusiveTo );
+			Argument::IsLessOrEqual( exclusiveTo , count );
 		}
     };
 }

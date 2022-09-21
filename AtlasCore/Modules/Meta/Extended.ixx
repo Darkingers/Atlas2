@@ -1,7 +1,9 @@
 module;
 
-#include "../../../Macros/Macros.h"
 #include <tuple>
+#include <type_traits>
+#include "../../../Macros/Macros.h"
+
 
 export module AtlasMeta:Extended;
 import AtlasDefinitions;
@@ -19,13 +21,14 @@ export namespace Atlas::Meta
 		public Marker::Extended,
 		public Type
 	{
+		private: using ActualType = ExtendedType < Type , ExtendedArgs...>;
 		private: using PropertyHolder = std::tuple<ExtendedArgs...>;
 
 		public: PropertyHolder ExtendedProperties;
 
 
 		public: template<typename... BaseArgs>
-			ExtendedType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs ) :
+		constexpr ExtendedType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs ) :
 			ExtendedProperties( std::forward<ExtendedArgs&&>( extendedArgs )... ) ,
 			Type( std::forward<BaseArgs&&>( baseArgs )... )
 		{
@@ -45,7 +48,7 @@ export namespace Atlas::Meta
 		}
 
 		public: template<unsigned int Index>
-		std::tuple_element_t<Index , ExtendedType<Type, ExtendedArgs...>>& get( )
+		constexpr std::tuple_element_t<Index , ActualType>& get( )
 		{
 			if constexpr ( Index == 0 )
 			{
@@ -62,9 +65,15 @@ export namespace Atlas::Meta
 	class Extended
 	{
 		public: template<typename... ExtendedArgs>
-		inline static constexpr auto Create( BaseArgs... bArgs , ExtendedArgs... eArgs )
+		constexpr inline static auto Create( BaseArgs... bArgs , ExtendedArgs... eArgs )
 		{
 			return ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs>( eArgs )... , std::forward<BaseArgs>( bArgs )... );
+		}
+
+		public: template<typename... ExtendedArgs>
+		constexpr inline static auto Allocate( BaseArgs... bArgs , ExtendedArgs... eArgs )
+		{
+			return new ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs>( eArgs )... , std::forward<BaseArgs>( bArgs )... );
 		}
 	};
 }

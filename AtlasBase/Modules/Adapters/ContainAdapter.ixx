@@ -17,7 +17,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static constexpr bool Contains( const CollectionType& collection , const DataType& contained )
 		{
-			Throw<AdapterResolveException>( "Could not resolve ContainAdapter for type", typeid( CollectionType ).name( ));
+			Throw<AdapterResolveException>( "Could not resolve ContainAdapter for " + typeid( CollectionType ).name( ) + "," + typeid( DataType ).name( ) );
 		}
 	};
 
@@ -29,7 +29,7 @@ export namespace Atlas::Adapters
 		private: static constexpr bool IsNoExcept = noexcept ( std::declval<CollectionType>.Contains( std::declval<DataType>( ) ) );
 
 	    public:
-		inline static bool Contains(const CollectionType& collection, const DataType& contained) noexcept ( IsNoExcept )
+		constexpr inline static bool Contains(const CollectionType& collection, const DataType& contained) noexcept ( IsNoExcept )
 		{
 			return collection.Contains(contained);
 		}
@@ -49,7 +49,7 @@ export namespace Atlas::Adapters
 
 
 		public:
-		inline bool Contains( const CollectionType& collection , const DataType& contained ) noexcept( IsNoExcept )
+		constexpr inline bool Contains( const CollectionType& collection , const DataType& contained ) noexcept( IsNoExcept )
 		{
 			const auto endIterator = std::cend( collection );
 

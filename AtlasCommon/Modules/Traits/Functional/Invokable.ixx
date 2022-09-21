@@ -12,13 +12,14 @@ export namespace Atlas::Trait
 	class DLLApi Invokable :
 		public Interface::IInvokable<ReturnType, Args...>
 	{
-		public: ReturnType operator()( Args&&... arguments )
+		public:
+		constexpr ReturnType operator()( Args&&... arguments )
 		{
 			return This( ).Invoke( std::forward<Args&&>( arguments )... );
 		}
 
 		private:
-		inline DerivedType& This( )
+		constexpr inline DerivedType& This( )
 		{
 			return static_cast<DerivedType&>( *this );
 		}

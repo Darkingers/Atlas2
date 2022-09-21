@@ -1,6 +1,7 @@
 module;
 
 #include <utility>
+#include <string>
 
 export module AtlasExceptions;
 export import :AbortRequestedException;
@@ -25,35 +26,35 @@ export namespace Atlas
 {
 	template<typename ExceptionType , typename... Args>
 		requires Concept::IsMore<sizeof...( Args ) , 0>
-	void Throw( const char* message , const void* source , const Args&... arguments )
+	constexpr void Throw( const std::string& message , const void* source , const Args&... arguments )
 	{
-		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( message , source , std::forward<const Args&>( arguments )... );
+		throw Meta::Extended<ExceptionType , const std::string& , const void*>::Allocate( message , source , std::forward<const Args&>( arguments )... );
 	}
 
 	template<typename ExceptionType , typename... Args>
 		requires Concept::IsMore<sizeof...( Args ) , 0>
-	void Throw( const char* message , const Args&... arguments )
+	constexpr void Throw( const std::string& message , const Args&... arguments )
 	{
-		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( message , nullptr , std::forward<const Args&>( arguments )... );
+		throw Meta::Extended<ExceptionType , const std::string& , const void*>::Allocate( message , nullptr , std::forward<const Args&>( arguments )... );
 	}
 
 	template<typename ExceptionType , typename... Args>
 		requires Concept::IsMore<sizeof...( Args ) , 0>
-	void Throw( const void* source , const Args&... arguments )
+	constexpr void Throw( const void* source , const Args&... arguments )
 	{
-		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( "" , source , std::forward<const Args&>( arguments )... );
+		throw Meta::Extended<ExceptionType , const std::string& , const void*>::Allocate( "" , source , std::forward<const Args&>( arguments )... );
 	}
 
 	template<typename ExceptionType , typename... Args>
 		requires Concept::IsMore<sizeof...( Args ) , 0>
-	void Throw( const Args&... arguments )
+	constexpr void Throw( const Args&... arguments )
 	{
-		throw Meta::Extended<ExceptionType , const char* , const void*>::Create( "" , nullptr , std::forward<const Args&>( arguments )... );
+		throw Meta::Extended<ExceptionType , const std::string& , const void*>::Allocate( "" , nullptr , std::forward<const Args&>( arguments )... );
 	}
 
 	template<typename ExceptionType>
-	void Throw( const char* message = "" , const void* source = nullptr )
+	constexpr void Throw( std::string& message = "" , const void* source = nullptr )
 	{
-		throw ExceptionType( message , source );
+		throw new ExceptionType( message , source );
 	}
 }

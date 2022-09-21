@@ -18,7 +18,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static bool ContainsAll( const CollectionType& collection , const ContainedCollectionType& containedContainer )
 		{
-			Throw<AdapterResolveException>( "Could not resolve ContainAllAdapter" , collection , containedContainer );
+			Throw<AdapterResolveException>( "Could not resolve ContainAllAdapter for "+ typeid( CollectionType ).name( )+","+ typeid( ContainedCollectionType ).name( ) );
 		}
 	};
 	
@@ -36,7 +36,7 @@ export namespace Atlas::Adapters
 		private: static constexpr bool IsNoExcept = IsNoExceptBegin && IsNoExceptEnd && IsNoExceptContains;
 
 		public:
-		inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( IsNoExcept )
+		constexpr inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( IsNoExcept )
 		{
 			auto current = std::cbegin(containedContainer);
 			const auto end = std::cend(containedContainer);

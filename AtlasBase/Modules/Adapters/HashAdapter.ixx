@@ -15,7 +15,7 @@ export namespace Atlas::Adapters
 		public:
 		inline static auto GetHash( const DataType& instance )
 		{
-			Throw<AdapterResolveException>( "Could not resolve HashAdapter" , instance );
+			Throw<AdapterResolveException>( "Could not resolve HashAdapter for" + typeid( DataType ).name( ) );
 		}
 	};
 	
@@ -30,7 +30,7 @@ export namespace Atlas::Adapters
 
 
 		public:
-		inline static auto GetHash(const DataType& instance) noexcept( IsNoExcept )
+		constexpr inline static auto GetHash(const DataType& instance) noexcept( IsNoExcept )
 		{
 			return Hash(instance);
 		}
@@ -44,7 +44,7 @@ export namespace Atlas::Adapters
 		private: static constexpr bool IsNoExcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
 			
 	    public:
-		inline static auto GetHash(const DataType& instance)  noexcept( IsNoExcept )
+		constexpr inline static auto GetHash(const DataType& instance)  noexcept( IsNoExcept )
 		{
 			return instance.GetHash();
 		}

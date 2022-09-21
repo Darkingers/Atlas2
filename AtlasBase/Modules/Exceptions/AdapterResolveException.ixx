@@ -11,7 +11,7 @@ export namespace Atlas
 		public Exception
 	{
 		public:
-		AdapterResolveException( const char* message , const void* source = nullptr ) noexcept :
+		constexpr AdapterResolveException( const char* message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
 	};

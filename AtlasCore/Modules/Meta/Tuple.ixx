@@ -13,7 +13,7 @@ export namespace Atlas::Meta
 	{
 		template<unsigned int Index , typename CurrentType , typename... Args>
 			requires Concept::IsSame<CurrentType , typename std::tuple_element<Index , std::tuple<Args...>>::type>
-		void Reassign( std::tuple<Args...>& tuple , CurrentType&& current , Args&&... arguments )
+		constexpr void Reassign( std::tuple<Args...>& tuple , CurrentType&& current , Args&&... arguments )
 		{
 			std::get<Index>( tuple ) = std::forward<CurrentType&&>( current );
 
@@ -26,8 +26,8 @@ export namespace Atlas::Meta
 
 	class DLLApi Tuple
 	{
-		template<typename... Args>
-		std::tuple<Args...>& Reassign( std::tuple<Args...>& tuple , Args&&... arguments )
+		public: template<typename... Args>
+		constexpr static std::tuple<Args...>& Reassign( std::tuple<Args...>& tuple , Args&&... arguments )
 		{
 			Implementation::Reassign<0>( tuple , std::forward<Args&&>( arguments )... );
 

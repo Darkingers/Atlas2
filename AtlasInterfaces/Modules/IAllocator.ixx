@@ -15,7 +15,7 @@ export namespace Atlas::Interface
 		virtual ~IAllocator()  = 0;
 
 		public:
-		virtual unsigned int GetSize( ) const  = 0;
+		virtual unsigned int GetSize( ) const noexcept  = 0;
 
 		public:
 		virtual void Allocate( const unsigned int newSize ) = 0;

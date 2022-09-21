@@ -12,18 +12,20 @@ export namespace Atlas::Trait
 	class DLLApi Hashable :
 		public Interface::IHashable
 	{
-		public: bool operator== (const DerivedType& a )
+		public: 
+		constexpr bool operator== (const DerivedType& a )
 		{
 			return This( ).GetHash( ) == a.GetHash( );
 		};
 
-		public: bool operator!= ( const DerivedType& a )
+		public: 
+		constexpr bool operator!= ( const DerivedType& a )
 		{
 			return This( ).GetHash( ) != a.GetHash( );
 		};
 
 		private: 
-		inline DerivedType& This( )
+		constexpr inline DerivedType& This( )
 		{
 			return static_cast<DerivedType&>( *this );
 		}

@@ -22,7 +22,7 @@ export namespace Atlas
 
 			protected: std::mutex _mutex;
 			protected: InvokedType _invoked;
-			protected: Exception _error;
+			protected: Exception* _error;
 			protected: bool _isFailed;
 			protected: bool _isCompleted;
 			protected: bool _isSuccess;
@@ -31,11 +31,21 @@ export namespace Atlas
 			public:
 			TaskBase( InvokedType invoked ) noexcept :
 				_invoked( invoked ) ,
+				_error(nullptr ),
 				_isFailed( false ) ,
 				_isCompleted( false ) ,
 				_isSuccess( false ) ,
 				_isRunning( false )
 			{}
+
+			public:
+			~TaskBase( )noexcept
+			{
+				if ( _error != nullptr )
+				{
+					delete _error;
+				}
+			}
 
 			public:
 			bool IsFailed( unsigned int timeout_ms = -1 , unsigned int sleep_ms = 100 ) const
@@ -64,10 +74,10 @@ export namespace Atlas
 			}
 
 			public:
-			Exception Error( unsigned int timeout_ms = -1 , unsigned int sleep_ms = 100 ) const
+			Exception& Error( unsigned int timeout_ms = -1 , unsigned int sleep_ms = 100 ) const
 			{
 				Wait( timeout_ms , sleep_ms );
-				return _error;
+				return *_error;
 			}
 
 			public:
@@ -93,7 +103,7 @@ export namespace Atlas
 
 					_isSuccess = true;
 				}
-				catch ( Exception e )
+				catch ( Exception* e )
 				{
 					_error = e;
 					_isFailed = true;

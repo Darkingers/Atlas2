@@ -20,23 +20,23 @@ export namespace Atlas::Geometry
 
 
 		public:
-		Vector2D( ) noexcept
+		constexpr Vector2D( ) noexcept
 		{}
 		
 		public:
-		Vector2D( const NumberType& x, const NumberType& y ) noexcept:
+		constexpr Vector2D( const NumberType& x, const NumberType& y ) noexcept:
 			X(x ),
 			Y(y )
 		{}
 
 		public:
-		NumberType Length( )const noexcept
+		constexpr NumberType Length( )const noexcept
 		{
 			return Math::SquareRoot( X * X + Y * Y );
 		}
 
 		public:
-		VectorType& Normalise( )
+		constexpr VectorType& Normalise( )
 		{
 			const auto div = 1 / Length( );
 			X *= div;
@@ -46,7 +46,7 @@ export namespace Atlas::Geometry
 		}
 
 		public:
-		VectorType& Rotate( double angle ) noexcept
+		constexpr VectorType& Rotate( double angle ) noexcept
 		{
 			const double radian = Math::AngleToRadian( angle );
 			const auto cos = Math::Cos( radian );
@@ -62,7 +62,7 @@ export namespace Atlas::Geometry
 		}
 
 		public:
-		VectorType& Rotate(const VectorType& pivot, double angle ) noexcept
+		constexpr VectorType& Rotate(const VectorType& pivot, double angle ) noexcept
 		{
 			X -= pivot.X;
 			Y -= pivot.Y;
@@ -76,19 +76,19 @@ export namespace Atlas::Geometry
 		}
 
 		public:
-		bool operator==( const VectorType& vector ) const noexcept
+		constexpr bool operator==( const VectorType& vector ) const noexcept
 		{
 			return X == vector.X && Y == vector.Y;
 		}
 
 		public:
-		bool operator!=( const VectorType& vector ) const noexcept
+		constexpr bool operator!=( const VectorType& vector ) const noexcept
 		{
 			return !( *this ) == vector;
 		}
 
 		public:
-		VectorType& operator=( const VectorType& vector ) const noexcept
+		constexpr VectorType& operator=( const VectorType& vector ) const noexcept
 		{
 			X = vector.X;
 			Y = vector.Y;
@@ -97,7 +97,7 @@ export namespace Atlas::Geometry
 		}
 
 		public:
-		VectorType& operator+=( const VectorType& vector ) const noexcept
+		constexpr VectorType& operator+=( const VectorType& vector ) const noexcept
 		{
 			X += vector.X;
 			Y += vector.Y;
@@ -106,7 +106,7 @@ export namespace Atlas::Geometry
 		}
 
 		public:
-		VectorType& operator-=( const VectorType& vector ) const noexcept
+		constexpr VectorType& operator-=( const VectorType& vector ) const noexcept
 		{
 			X -= vector.X;
 			Y -= vector.Y;
@@ -115,13 +115,13 @@ export namespace Atlas::Geometry
 		}
 
 		public:
-		VectorType operator+( const VectorType& vector ) const noexcept
+		constexpr VectorType operator+( const VectorType& vector ) const noexcept
 		{
 			return VectorType( X + vector.X , Y + vector.Y );
 		}
 
 		public:
-		VectorType operator-( const VectorType& vector ) const noexcept
+		constexpr VectorType operator-( const VectorType& vector ) const noexcept
 		{
 			return VectorType( X - vector.X , Y - vector.Y );
 		}

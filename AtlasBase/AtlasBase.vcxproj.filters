@@ -105,5 +105,6 @@
     <ClCompile Include="Modules\Validation.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Validation\Argument.ixx" />
   </ItemGroup>
 </Project>

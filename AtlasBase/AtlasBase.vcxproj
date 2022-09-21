@@ -176,6 +176,7 @@
     <ClCompile Include="Modules\Exceptions\NullException.ixx" />
     <ClCompile Include="Modules\Exceptions\TimeoutException.ixx" />
     <ClCompile Include="Modules\Exceptions\ValidationException.ixx" />
+    <ClCompile Include="Modules\Validation\Argument.ixx" />
     <ClCompile Include="Modules\Validation\Ensure.ixx">
       <SubType>
       </SubType>

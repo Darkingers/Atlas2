@@ -20,63 +20,63 @@ export namespace Atlas::Trait
 
 
 		public: 
-		static void MergeSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void MergeSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
 		{
 
 			Sort::MergeSort( This() , inclusiveFrom , exclusiveTo , comparator );
 		}
 		public:
-		static void MergeSort( const ComparatorType comparator = Default::Comparator ) final
+		constexpr static void MergeSort( const ComparatorType comparator = Default::Comparator ) final
 		{
 			Sort::MergeSort( This(), comparator );
 		}
 
 		public: 
-		static void QuickSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void QuickSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
 		{
 			Sort::QuickSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
 		}
 		public:
-		static void QuickSort( const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void QuickSort( const ComparatorType& comparator = Default::Comparator ) final
 		{
 			Sort::QuickSort( This( ) , comparator );
 		}
 
 		public: 
-		static void HeapSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void HeapSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
 		{
 			Sort::HeapSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
 		}
 		public:
-		static void HeapSort( const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void HeapSort( const ComparatorType& comparator = Default::Comparator ) final
 		{
 			Sort::HeapSort( This( ) , comparator );
 		}
 
 		public:  
-		static void SelectionSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void SelectionSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
 		{
 			Sort::SelectionSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
 		}
 		public: 
-		static void SelectionSort( const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void SelectionSort( const ComparatorType& comparator = Default::Comparator ) final
 		{
 			Sort::SelectionSort( This( ) , comparator );
 		}
 
 		public: 
-		static void InsertionSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator )final
+		constexpr static void InsertionSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator )final
 		{
 			Sort::InsertionSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
 		}
 		public: 
-		static void InsertionSort( const ComparatorType& comparator = Default::Comparator )  final
+		constexpr static void InsertionSort( const ComparatorType& comparator = Default::Comparator )  final
 		{
 			Sort::InsertionSort( This( ) , comparator );
 		}
 
 		private:
-		inline DerivedType& This( ) 
+		constexpr inline DerivedType& This( )
 		{
 			return static_cast<DerivedType&>( *this );
 		}

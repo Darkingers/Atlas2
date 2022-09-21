@@ -12,7 +12,7 @@ export namespace Atlas::Variadics
 	class DLLApi ContainChecker
 	{
 		public: template<typename... Args> requires Concept::IsSame<Args, DataType>
-		inline static bool AnyContains(const DataType& data, const DataType& current, const Args&... arguments) 
+		constexpr inline static bool AnyContains(const DataType& data, const DataType& current, const Args&... arguments)
 		{
 			const bool equals = (data == current);
 
@@ -27,7 +27,7 @@ export namespace Atlas::Variadics
 		}
 
 		public: template<typename CollectionType, typename... Args> requires Concept::IsSame<Args, DataType>
-		inline static bool AllContains(const DataType& data, const DataType& current , const Args&... arguments ) 
+		constexpr inline static bool AllContains(const DataType& data, const DataType& current , const Args&... arguments )
 		{
 			const bool equals = ( data == current );		
 
@@ -42,7 +42,7 @@ export namespace Atlas::Variadics
 		}
 
 		public: template<typename CollectionType, typename... Args>
-		inline static bool AnyContains(const DataType& data, const CollectionType& collection, const Args&... arguments )
+		constexpr inline static bool AnyContains(const DataType& data, const CollectionType& collection, const Args&... arguments )
 		{
 			const bool contains = Adapter::Contains( collection , data );
 
@@ -57,7 +57,7 @@ export namespace Atlas::Variadics
 		}
 
 		public: template<typename CollectionType, typename... Args>
-		inline static bool AllContains(const DataType& data , const CollectionType& collection , const Args&... arguments )
+		constexpr inline static bool AllContains(const DataType& data , const CollectionType& collection , const Args&... arguments )
 		{
 			const bool contains = Adapter::Contains( collection , data );
 

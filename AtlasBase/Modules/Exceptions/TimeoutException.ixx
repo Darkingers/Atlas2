@@ -11,7 +11,7 @@ export namespace Atlas
 		public Exception
 	{
 		public:
-		TimeoutException( const char* message , const void* source = nullptr ) noexcept  :
+		constexpr TimeoutException( const std::string& message , const void* source = nullptr ) noexcept  :
 			Exception( message , source )
 		{}
 	};

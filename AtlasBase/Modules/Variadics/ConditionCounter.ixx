@@ -15,7 +15,7 @@ export namespace Atlas::Variadics
 			
 		
 		public: template<typename ConditionType, typename... Args>
-		inline static auto CountAny(const CollectionType& collection, const Args&... conditions ) 
+		constexpr inline static auto CountAny(const CollectionType& collection, const Args&... conditions )
 		{
 			const auto endIterator = collection.cend();
 			auto currentIterator = collection.cbegin();
@@ -31,7 +31,7 @@ export namespace Atlas::Variadics
 		}
 
 		public: template<typename ConditionType, typename... Args>
-		inline static auto CountAll(const CollectionType& collection,const Args&... conditions ) 
+		constexpr inline static auto CountAll(const CollectionType& collection,const Args&... conditions )
 		{
 			const auto endIterator = collection.cend();
 			auto currentIterator = collection.cbegin();

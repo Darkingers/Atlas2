@@ -13,17 +13,17 @@ export namespace Atlas
 {
 	namespace Implementation
 	{
-		template<typename DataType>
+		template<typename NumberType>
 		class Math
 		{
 			private: template<typename... Args>
-			inline static DataType Minimum( const DataType& previousMin , const DataType& current , const Args&... arguments )
+			constexpr inline static auto Minimum( const NumberType& previousMin , const NumberType& current , const Args&... arguments )
 			{
-				DataType min = static_cast<DataType>( previousMin < current ? previousMin : current );
+				auto min = previousMin < current ? previousMin : current;
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return MathFunctions<DataType>::Minimum( min , std::forward<const Args&>( arguments )... );
+					return MathFunctions<NumberType>::Minimum( min , std::forward<const Args&>( arguments )... );
 				}
 				else
 				{
@@ -32,13 +32,13 @@ export namespace Atlas
 			}
 
 			private: template<typename... Args>
-			inline static DataType Maximum( const DataType& previousMax , const DataType& current , const Args&... arguments )
+			constexpr inline static auto Maximum( const NumberType& previousMax , const NumberType& current , const Args&... arguments )
 			{
-				DataType max = static_cast<DataType>( previousMax > current ? previousMax : current );
+				auto max = previousMax > current ? previousMax : current;
 
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
-					return MathFunctions<DataType>::Maximum( max , std::forward<const Args&>( arguments )... );
+					return MathFunctions<NumberType>::Maximum( max , std::forward<const Args&>( arguments )... );
 				}
 				else
 				{
@@ -47,37 +47,37 @@ export namespace Atlas
 			}
 
 			public:
-			inline static DataType SquareRoot( const DataType& data )
+			constexpr inline static auto SquareRoot( const NumberType& data )
 			{
-				return static_cast<DataType>( sqrt( data ));
+				return sqrt( data );
 			}
 		
 			public:
-			inline static DataType Pow( const DataType& data , const DataType& exponental )
+			constexpr inline static auto Pow( const NumberType& data , const NumberType& exponental )
 			{
-				return static_cast<DataType>( std::pow(data, exponental) );
+				return pow( data , exponental );
 			}
 		
 			public: 
-			inline static DataType Cos( const DataType& data )
+			constexpr inline static auto Cos( const NumberType& data )
 			{
 				return cos( data );
 			}
 
 			public:
-			inline static DataType ACos( const DataType& data )
+			constexpr inline static auto ACos( const NumberType& data )
 			{
 				return acos( data );
 			}
 
 			public:
-			inline static DataType Sin( const DataType& data )
+			constexpr inline static auto Sin( const NumberType& data )
 			{
 				return sin( data );
 			}
 
 			public:
-			inline static DataType ASin( const DataType& data )
+			constexpr inline static auto ASin( const NumberType& data )
 			{
 				return asin( data );
 			}
@@ -89,7 +89,7 @@ export namespace Atlas
 		public: constexpr static double PI = 3.14;
 
 		public: template<typename... Args>
-		inline static auto Maximum(const Args&... arguments )
+		constexpr inline static auto Maximum(const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
@@ -97,59 +97,58 @@ export namespace Atlas
 		}
 			   
 		public: template<typename... Args>
-		inline static auto Minimum( const Args&... arguments )
+		constexpr inline static auto Minimum( const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
 			return Implementation::Math<Deduce::IndexedArgumentType<0 , Args...>>::Minimum( std::forward<const Args&>( arguments )... );
 		}
 
-		public: template<typename DataType>
-		inline static DataType SquareRoot( const DataType& data )
+		public: template<typename NumberType>
+		constexpr inline static auto SquareRoot( const NumberType& data )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsPositive( data );
-			}
+			Argument::IsPositive( data );
 
-			return Implementation::Math<DataType>::SquareRoot( data );
+			return Implementation::Math<NumberType>::SquareRoot( data );
 		}
 
-		public: template<typename DataType>
-		inline static DataType Pow( const DataType& data, const DataType& exponental ) 
+		public: template<typename NumberType>
+		constexpr inline static auto Pow( const NumberType& data, const NumberType& exponental )
 		{
-			return Implementation::Math<DataType>::Pow( data, exponental );
+			return Implementation::Math<NumberType>::Pow( data, exponental );
 		}
 
-		public: template<typename DataType>
-		inline static DataType Cos( const DataType& data )
+		public: template<typename NumberType>
+		constexpr inline static auto Cos( const NumberType& data )
 		{
-			return Implementation::Math<DataType>::Cos( data );
+			return Implementation::Math<NumberType>::Cos( data );
 		}
-		public: template<typename DataType>
-		inline static DataType ACos( const DataType& data )
+		
+		public: template<typename NumberType>
+		constexpr inline static auto ACos( const NumberType& data )
 		{
-			return Implementation::Math<DataType>::ACos( data );
+			return Implementation::Math<NumberType>::ACos( data );
 		}
-		public: template<typename DataType>
-		inline static DataType Sin( const DataType& data )
+		
+		public: template<typename NumberType>
+		constexpr inline static auto Sin( const NumberType& data )
 		{
-			return Implementation::Math<DataType>::Sin( data );
+			return Implementation::Math<NumberType>::Sin( data );
 		}
-		public: template<typename DataType>
-		inline static DataType ASin( const DataType& data )
+		
+		public: template<typename NumberType>
+		constexpr inline static auto ASin( const NumberType& data )
 		{
-			return Implementation::Math<DataType>::ASin( data );
+			return Implementation::Math<NumberType>::ASin( data );
 		}
 
-		public:
-		inline static double AngleToRadian( double angle )
+		public: template<typename NumberType>
+		constexpr inline static auto AngleToRadian( const NumberType& angle )
 		{
 			return 2 * PI * ( angle / 360 );
 		}
-
-		public:
-		inline static double RadianToAngle( double radian )
+		public: template<typename NumberType>
+		constexpr inline static auto RadianToAngle( const NumberType& radian )
 		{
 			return radian * 360 / ( 2 * PI );
 		}

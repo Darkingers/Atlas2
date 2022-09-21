@@ -11,7 +11,7 @@ export namespace Atlas
 		public Exception
 	{
 		public:
-		NotImplementedException( const char* message , const void* source = nullptr ) noexcept :
+		constexpr NotImplementedException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
 	};

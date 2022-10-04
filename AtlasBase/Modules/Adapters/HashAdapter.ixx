@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:HashAdapter;
+import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasExceptions;
 
@@ -12,11 +13,6 @@ export namespace Atlas::Adapters
 	class DLLApi HashAdapter :
 		public std::false_type
 	{
-		public:
-		inline static auto GetHash( const DataType& instance )
-		{
-			Throw<AdapterResolveException>( "Could not resolve HashAdapter for" + typeid( DataType ).name( ) );
-		}
 	};
 	
 	template<typename DataType>
@@ -49,4 +45,10 @@ export namespace Atlas::Adapters
 			return instance.GetHash();
 		}
 	};
+}
+
+export namespace Atlas::Concept
+{
+	template<typename DataType>
+	concept HasHashAdapter = Atlas::Adapters::HashAdapter<DataType>::value;
 }

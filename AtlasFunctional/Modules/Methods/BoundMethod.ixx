@@ -8,7 +8,7 @@ import AtlasDefinitions;
 import AtlasValidation;
 import AtlasConfiguration;
 import AtlasFunctionalTraits;
-import AtlasMeta;
+import AtlasExtensions;
 
 export namespace Atlas
 {
@@ -39,7 +39,7 @@ export namespace Atlas
 		public:
 		BoundMethodType& Rebind( Args&&... args )
 		{
-			Meta::Tuple::Reassign( _arguments , std::forward<Args&&>( args )... );
+			Extensions::Tuple::Reassign( _arguments , std::forward<Args&&>( args )... );
 		}
 
 		public:

@@ -161,6 +161,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Modules\Adapters.ixx" />
+    <ClCompile Include="Modules\Converters.ixx" />
+    <ClCompile Include="Modules\Converters\Converter.ixx" />
+    <ClCompile Include="Modules\Converters\DoubleConverter.ixx" />
+    <ClCompile Include="Modules\Converters\FloatConverter.ixx" />
+    <ClCompile Include="Modules\Converters\IntConverter.ixx" />
+    <ClCompile Include="Modules\Converters\LongConverter.ixx" />
+    <ClCompile Include="Modules\Converters\LongLongConverter.ixx" />
+    <ClCompile Include="Modules\Converters\StringConverter.ixx" />
     <ClCompile Include="Modules\Exceptions.ixx" />
     <ClCompile Include="Modules\Exceptions\AbortRequestedException.ixx" />
     <ClCompile Include="Modules\Exceptions\AccessException.ixx" />
@@ -176,6 +184,11 @@
     <ClCompile Include="Modules\Exceptions\NullException.ixx" />
     <ClCompile Include="Modules\Exceptions\TimeoutException.ixx" />
     <ClCompile Include="Modules\Exceptions\ValidationException.ixx" />
+    <ClCompile Include="Modules\Extensions\Extended.ixx" />
+    <ClCompile Include="Modules\Extensions\String.ixx" />
+    <ClCompile Include="Modules\Extensions\Tuple.ixx" />
+    <ClCompile Include="Modules\Extensions\Vector.ixx" />
+    <ClCompile Include="Modules\Extensions.ixx" />
     <ClCompile Include="Modules\Validation\Argument.ixx" />
     <ClCompile Include="Modules\Validation\Ensure.ixx">
       <SubType>

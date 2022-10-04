@@ -14,5 +14,10 @@ export namespace Atlas
 		constexpr AlreadyExistsException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
+
+		public:
+		constexpr AlreadyExistsException( const AlreadyExistsException& other ) noexcept :
+			Exception( other )
+		{}
 	};
 }

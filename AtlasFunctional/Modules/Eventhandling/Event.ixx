@@ -7,7 +7,7 @@ module;
 export module AtlasEvent;
 import AtlasDefinitions;
 import AtlasConcepts;
-import AtlasMeta;
+import AtlasExtensions;
 import AtlasExceptions;
 import AtlasInterfaces;
 import AtlasFunctionalTraits;
@@ -88,14 +88,14 @@ export namespace Atlas
 		public: template<typename InvokedType>
 		void Unsubscribe( InvokedType invoked )
 		{
-			Meta::Vector::Remove( _lambdas, invoked );
+			Extensions::Vector::Remove( _lambdas, invoked );
 		}	
 
 		public: template<typename InvokedType>
 			requires Concept::IsSame<InvokedType , StaticType>
 		void Unsubscribe( InvokedType invoked )
 		{
-			Meta::Vector::Remove( _static , invoked );
+			Extensions::Vector::Remove( _static , invoked );
 		}
 
 		public: template<typename ClassType , typename InvokedType>
@@ -106,7 +106,7 @@ export namespace Atlas
 				return wrapper.Instance == (void*) instance && wrapper.Function == (void*) invoked;
 			};
 
-			Meta::Vector::RemoveIf( _wrapped , condition );
+			Extensions::Vector::RemoveIf( _wrapped , condition );
 		}
 
 		public: template<typename InvokedType>

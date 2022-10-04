@@ -17,5 +17,11 @@ export namespace Atlas
 			Message( message ) ,
 			Source( source )
 		{}
+
+		public:	
+		constexpr Exception( const Exception& other ) noexcept :
+			Message( other.Message ) ,
+			Source( other.Source )
+		{}	
 	};
 }

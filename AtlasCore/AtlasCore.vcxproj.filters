@@ -64,15 +64,6 @@
     <ClCompile Include="Modules\Configuration.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Meta.ixx">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Meta\Extended.ixx">
-      <Filter>Modules\General</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Meta\Tuple.ixx" />
-    <ClCompile Include="Modules\Meta\Vector.ixx" />
-    <ClCompile Include="Modules\Meta\String.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

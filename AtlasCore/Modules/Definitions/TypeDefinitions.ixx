@@ -28,4 +28,7 @@ export namespace Atlas::Definition
 
 	template<typename DataType>
 	using Condition = LambdaFunction<bool , const DataType&>;
+
+	template<typename DataType, typename KeyType>
+	using KeyGenerator = LambdaFunction<KeyType , const DataType&>;
 }

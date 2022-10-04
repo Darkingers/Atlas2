@@ -2,6 +2,8 @@ module;
 
 #include <algorithm>
 #include <functional>
+#include <type_traits>;
+#include <string>
 
 export module AtlasConcepts:FunctionalConcepts;
 
@@ -13,6 +15,13 @@ export namespace Atlas::Concept
 	template<typename ReturnType , typename ExecutedType>
 	concept IsExecutable = std::is_invocable_r<ReturnType , ExecutedType>::value;
 
+	template<typename TestedType>
+	concept HasToString = requires ( TestedType testInstance )
+	{
+		{
+			testInstance.ToString( )
+		} -> std::convertible_to<std::string>;
+	};
 
 	template<typename TestedType , typename IndexType, typename IndexedType>
 	concept HasIndexOperator = requires( TestedType instance , const IndexType index )

@@ -47,3 +47,9 @@ export namespace Atlas::Adapters
 		}
 	};
 }
+
+export namespace Atlas::Concept
+{
+	template<typename CountedType>
+	concept HasCountAdapter = Atlas::Adapters::CountAdapter<CountedType>::value;
+}

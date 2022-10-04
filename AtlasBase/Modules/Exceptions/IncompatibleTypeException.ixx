@@ -14,5 +14,10 @@ export namespace Atlas
 		constexpr IncompatibleTypeException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
+
+		public:
+		constexpr IncompatibleTypeException( const IncompatibleTypeException& other ) noexcept :
+			Exception( other )
+		{}
 	};
 }

@@ -14,5 +14,10 @@ export namespace Atlas
 		constexpr NotFoundException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
+
+		public:
+		constexpr NotFoundException( const NotFoundException& other ) noexcept :
+			Exception( other )
+		{}
 	};
 }

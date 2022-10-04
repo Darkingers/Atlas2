@@ -14,5 +14,10 @@ export namespace Atlas
 		constexpr AbortRequestedException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
+
+		public: 
+		constexpr AbortRequestedException( const AbortRequestedException& other ) noexcept :
+			Exception( other )
+		{}	
 	};
 }

@@ -14,5 +14,10 @@ export namespace Atlas
 		constexpr TimeoutException( const std::string& message , const void* source = nullptr ) noexcept  :
 			Exception( message , source )
 		{}
+
+		public:
+		constexpr TimeoutException( const TimeoutException& other ) noexcept :
+			Exception( other )
+		{}
 	};
 }

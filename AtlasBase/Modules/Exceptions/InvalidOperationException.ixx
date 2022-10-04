@@ -14,5 +14,10 @@ export namespace Atlas
 		constexpr InvalidOperationException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
+
+		public:
+		constexpr InvalidOperationException( const InvalidOperationException& other ) noexcept :
+			Exception( other )
+		{}
 	};
 }

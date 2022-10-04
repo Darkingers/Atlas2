@@ -5,20 +5,21 @@ module;
 #include "../../../Macros/Macros.h"
 
 
-export module AtlasMeta:Extended;
+export module AtlasExtensions:Extended;
 import AtlasDefinitions;
 import AtlasConcepts;
+import :Tuple;
 
-export namespace Atlas::Meta
+export namespace Atlas::Extensions
 {
 	namespace Marker
 	{
-		class Extended{};
+		class ExtendedType{};
 	}
 
 	template<typename Type , typename... ExtendedArgs>
 	class DLLApi ExtendedType :
-		public Marker::Extended,
+		public Marker::ExtendedType ,
 		public Type
 	{
 		private: using ActualType = ExtendedType < Type , ExtendedArgs...>;
@@ -38,17 +39,17 @@ export namespace Atlas::Meta
 		public: template<unsigned int Index>
 		constexpr auto GetExtended( )
 		{
-			return std::get<Index>( ExtendedProperties );
+			return Tuple::Get<Index>( ExtendedProperties );
 		}
 
 		public: template<unsigned int Index>
-		constexpr void SetExtended( auto value )
+		constexpr void SetExtended( Deduce::TupleIndexedType<Index, PropertyHolder>&& value )
 		{
-			std::get<Index>( ExtendedProperties ) = value;
+			Tuple::Set<Index>( ExtendedProperties , value );
 		}
 
 		public: template<unsigned int Index>
-		constexpr std::tuple_element_t<Index , ActualType>& get( )
+		constexpr Tuple::ElementType<Index , ActualType>& get( )
 		{
 			if constexpr ( Index == 0 )
 			{
@@ -60,20 +61,23 @@ export namespace Atlas::Meta
 			}
 		}
 	};
+}
 
+export namespace Atlas
+{
 	template<typename BaseType , typename... BaseArgs>
 	class Extended
 	{
 		public: template<typename... ExtendedArgs>
-		constexpr inline static auto Create( BaseArgs... bArgs , ExtendedArgs... eArgs )
+			constexpr inline static auto Construct( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs )
 		{
-			return ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs>( eArgs )... , std::forward<BaseArgs>( bArgs )... );
+			return Extensions::ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
 		}
 
 		public: template<typename... ExtendedArgs>
-		constexpr inline static auto Allocate( BaseArgs... bArgs , ExtendedArgs... eArgs )
+			constexpr inline static auto Allocate( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs )
 		{
-			return new ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs>( eArgs )... , std::forward<BaseArgs>( bArgs )... );
+			return new Extensions::ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
 		}
 	};
 }
@@ -81,14 +85,14 @@ export namespace Atlas::Meta
 namespace std
 {
 	template<unsigned int Index, typename Type>
-		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Meta::Marker::Extended>
+		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Extensions::Marker::ExtendedType>
 	struct tuple_element<Index , Type>
 	{
 		using type = typename decltype( std::declval<Type>( ).GetExtended<Index-1>( ) );
 	};
 
 	template<typename Type>
-		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Meta::Marker::Extended>
+		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Extensions::Marker::ExtendedType>
 	struct tuple_element<0 , Type>
 	{
 		using type = Type;

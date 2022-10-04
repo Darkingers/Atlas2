@@ -3,20 +3,15 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:ClearAdapter;
+import AtlasTypeInfo;
 import AtlasConcepts;
-import AtlasExceptions;
 
 export namespace Atlas::Adapters
 {
 	template<typename ClearedType>
-	class DLLApi ClearAdapter :
-		public std::false_type
+	class DLLApi ClearAdapter:
+		public std::true_type
 	{
-		public:
-		inline static void Clear( ClearedType& instance )
-		{
-			Throw<AdapterResolveException>( "Could not resolve ClearAdapter for " + typeid( ClearedType ).name( ) );
-		}
 	};
 	
 	template<typename ClearedType> 
@@ -46,4 +41,10 @@ export namespace Atlas::Adapters
 			instance.Clear( );
 		}
 	};
+}
+
+export namespace Atlas::Concept
+{
+	template<typename ClearedType>
+	concept HasClearAdapter = Atlas::Adapters::ClearAdapter<ClearedType>::value;
 }

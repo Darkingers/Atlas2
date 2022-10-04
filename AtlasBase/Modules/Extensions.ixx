@@ -1,4 +1,4 @@
-export module AtlasMeta;
+export module AtlasExtensions;
 export import :Extended;
 export import :Tuple;
 export import :Vector;

@@ -14,5 +14,10 @@ export namespace Atlas
 		constexpr DLLException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
+
+		public:
+		constexpr DLLException( const DLLException& other ) noexcept :
+			Exception( other)
+		{}
 	};
 }

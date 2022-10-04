@@ -16,6 +16,7 @@ export namespace Atlas
 	template<typename DataType>
 	class DLLApi Type
 	{
+		public: constexpr inline static char* Name = typeid( DataType ).name( );	
 		public: constexpr inline static bool IsFundamental = Fulfills::IsFundamental<DataType>::value;
 		public: constexpr inline static bool IsConst = Fulfills::IsConst<DataType>::value;
 		public: constexpr inline static bool IsReference = Fulfills::IsReference<DataType>::value;

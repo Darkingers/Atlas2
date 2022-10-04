@@ -11,8 +11,13 @@ export namespace Atlas
 		public Exception
 	{
 		public:
-		AccessException( const std::string& message , const void* source = nullptr )noexcept :
+		constexpr AccessException( const std::string& message , const void* source = nullptr ) noexcept :
 			Exception( message , source )
 		{}
+
+		public:
+		constexpr AccessException( const AccessException& other ) noexcept :
+			Exception( other )
+		{}	
 	};
 }

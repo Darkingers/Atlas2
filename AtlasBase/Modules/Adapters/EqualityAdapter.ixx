@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:EqualityAdapter;
+import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasExceptions;
 
@@ -12,11 +13,6 @@ export namespace Atlas::Adapters
 	class DLLApi EqualityAdapter :
 		public std::false_type
 	{
-		public:
-		inline static bool Equals( const TypeA& a , const TypeB& b )
-		{
-			Throw<AdapterResolveException>( "Could not resolve EqualityAdapter for "+ typeid( TypeA ).name( )+","+ typeid( TypeB ).name( ) );
-		}
 	};
 	
 	template<typename TypeA, typename TypeB>
@@ -32,4 +28,10 @@ export namespace Atlas::Adapters
 			return a == b;
 		}
 	};
+}
+
+export namespace Atlas::Concept
+{
+	template<typename TypeA , typename TypeB>
+	concept HasEqualityAdapter = Atlas::Adapters::EqualityAdapter<TypeA , TypeB>::value;
 }

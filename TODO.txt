@@ -1,4 +1,5 @@
-Extended -> Binding
-pl:
+Create tests
 
-auto&& [basetype, extendedparameter] = Extender<Type, int>::Create( 5, "name", 10);
+Add constexpr and Noexcept
+
+Run Tests-> if constexpr is wrong, compile error

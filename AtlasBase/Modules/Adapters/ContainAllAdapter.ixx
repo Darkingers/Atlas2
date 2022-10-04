@@ -3,9 +3,9 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:ContainAllAdapter;
+import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasDefinitions;
-import AtlasExceptions;
 import :ContainAdapter;
 
 
@@ -15,11 +15,6 @@ export namespace Atlas::Adapters
 	class DLLApi ContainAllAdapter :
 		public std::false_type
 	{
-		public:
-		inline static bool ContainsAll( const CollectionType& collection , const ContainedCollectionType& containedContainer )
-		{
-			Throw<AdapterResolveException>( "Could not resolve ContainAllAdapter for "+ typeid( CollectionType ).name( )+","+ typeid( ContainedCollectionType ).name( ) );
-		}
 	};
 	
 	template<typename CollectionType, typename ContainedCollectionType>
@@ -52,4 +47,10 @@ export namespace Atlas::Adapters
 			return true;
 		}
 	};
+}
+
+export namespace Atlas::Concept
+{
+	template<typename CollectionType , typename ContainedCollectionType>
+	concept HasContainAllAdapter = Atlas::Adapters::ContainAllAdapter<CollectionType , ContainedCollectionType>::value;
 }

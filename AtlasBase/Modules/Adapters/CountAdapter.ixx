@@ -4,7 +4,6 @@ module;
 
 export module AtlasAdapters:CountAdapter;
 import AtlasConcepts;
-import AtlasExceptions;
 
 export namespace Atlas::Adapters
 {

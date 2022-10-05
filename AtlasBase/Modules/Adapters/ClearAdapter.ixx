@@ -10,7 +10,7 @@ export namespace Atlas::Adapters
 {
 	template<typename ClearedType>
 	class DLLApi ClearAdapter:
-		public std::true_type
+		public std::false_type
 	{
 	};
 	

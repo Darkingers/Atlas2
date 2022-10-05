@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasExceptions:Exception;
+import AtlasConverters;
 
 export namespace Atlas
 {
@@ -23,5 +24,17 @@ export namespace Atlas
 			Message( other.Message ) ,
 			Source( other.Source )
 		{}	
+
+		constexpr virtual std::string ToString( ) const
+		{
+			if ( Source == nullptr )
+			{
+				return Message;
+			}
+			else
+			{
+				return Message + " at " + Convert<std::string>::From( Source );
+			}
+		}
 	};
 }

@@ -8,6 +8,7 @@ module;
 export module AtlasExtensions:Extended;
 import AtlasDefinitions;
 import AtlasConcepts;
+import AtlasConverters;
 import :Tuple;
 
 export namespace Atlas::Extensions
@@ -18,18 +19,18 @@ export namespace Atlas::Extensions
 	}
 
 	template<typename Type , typename... ExtendedArgs>
-	class DLLApi ExtendedType :
+	class DLLApi ExtendedBaseType :
 		public Marker::ExtendedType ,
 		public Type
 	{
-		private: using ActualType = ExtendedType < Type , ExtendedArgs...>;
+		private: using ActualType = ExtendedBaseType < Type , ExtendedArgs...>;
 		private: using PropertyHolder = std::tuple<ExtendedArgs...>;
 
 		public: PropertyHolder ExtendedProperties;
 
 
 		public: template<typename... BaseArgs>
-		constexpr ExtendedType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs ) :
+		constexpr ExtendedBaseType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs ) :
 			ExtendedProperties( std::forward<ExtendedArgs&&>( extendedArgs )... ) ,
 			Type( std::forward<BaseArgs&&>( baseArgs )... )
 		{
@@ -61,6 +62,38 @@ export namespace Atlas::Extensions
 			}
 		}
 	};
+
+	template<typename Type , typename... ExtendedArgs>
+	class DLLApi ExtendedType :
+		public ExtendedBaseType<Type , ExtendedArgs...>
+	{
+		public: template<typename... BaseArgs>
+		constexpr ExtendedType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs ) :
+			ExtendedBaseType<Type , ExtendedArgs...>( std::forward<ExtendedArgs&&>( extendedArgs )... , std::forward<BaseArgs&&>( baseArgs )... )
+		{
+
+		}
+	};
+
+	template<typename Type , typename... ExtendedArgs>
+		requires Concept::HasToString<Type>
+	class DLLApi ExtendedType<Type, ExtendedArgs...> :
+		public ExtendedBaseType<Type , ExtendedArgs...>
+	{
+
+		public: template<typename... BaseArgs>
+		constexpr ExtendedType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs ) :
+			ExtendedBaseType<Type , ExtendedArgs...>( std::forward<ExtendedArgs&&>( extendedArgs )... , std::forward<BaseArgs&&>( baseArgs )... )
+		{
+
+		}
+			
+		public:
+		constexpr std::string ToString( ) const override
+		{
+			return Type::ToString( ) /*+ "{" + Converter<std::tuple<ExtendedArgs...>, std::string>::Convert( this->ExtendedProperties ) + "}"*/;
+		}
+	};
 }
 
 export namespace Atlas
@@ -69,13 +102,13 @@ export namespace Atlas
 	class Extended
 	{
 		public: template<typename... ExtendedArgs>
-			constexpr inline static auto Construct( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs )
+		constexpr inline static auto Construct( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs )
 		{
 			return Extensions::ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
 		}
 
 		public: template<typename... ExtendedArgs>
-			constexpr inline static auto Allocate( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs )
+		constexpr inline static auto Allocate( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs )
 		{
 			return new Extensions::ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
 		}

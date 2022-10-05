@@ -49,7 +49,7 @@ export namespace Atlas
 		requires Concept::IsMore<sizeof...( Args ) , 0>
 	constexpr void Throw( const char* message , const Args&... arguments )
 	{
-		throw Extended<ExceptionType , const std::string& , const void*>::Allocate( message , nullptr , std::forward<const Args&>( arguments )... );
+		throw Extended<ExceptionType , const std::string& , const void*>::Construct( message , nullptr , std::forward<const Args&>( arguments )... );
 	}
 
 	template<typename ExceptionType , typename... Args>
@@ -75,6 +75,6 @@ export namespace Atlas
 	template<typename ExceptionType>
 	constexpr void Throw( const char* message = "" , const void* source = nullptr )
 	{
-		throw new ExceptionType( message , source );
+		throw ExceptionType( message , source );
 	}
 }

@@ -11,74 +11,100 @@ import AtlasConcepts;
 namespace Atlas::Fulfills
 {
 	template<typename TestedType>
-	class IsPointer :std::false_type
+	class IsPointer : 
+		public std::false_type
 	{};
 
 	template<typename TestedType>
 		requires Concept::IsPointer<TestedType>
-	class IsPointer<TestedType> : std::true_type
+	class IsPointer<TestedType> :
+		public std::true_type
 	{};
 
 	template<typename TestedType>
-	class IsReference :std::false_type
+	class IsReference :
+		public std::false_type
 	{};
 
 	template<typename TestedType> 
 		requires Concept::IsReference<TestedType>
-	class IsReference<TestedType> : std::true_type
+	class IsReference<TestedType> : 
+		public std::true_type
 	{};
 
 	template<typename TestedType>
-	class IsValue :std::false_type
+	class IsValue :
+		public std::false_type
 	{};
 
 	template<typename TestedType>
 		requires Concept::IsValue<TestedType>
-	class IsValue<TestedType> : std::true_type
+	class IsValue<TestedType> : 
+		public std::true_type
 	{};
 
 	template<typename TestedType>
-	class IsFundamental :std::false_type
+	class IsFundamental :
+		public std::false_type
 	{};
 
 	template<typename TestedType>
 		requires Concept::IsFundamental<TestedType>
-	class IsFundamental<TestedType> : std::true_type
+	class IsFundamental<TestedType> : 
+		public std::true_type
 	{};
 
 	template<typename TestedType>
-	class IsConst :std::false_type
+	class IsConst :
+		public std::false_type
 	{};
 
 	template<typename TestedType>
 		requires Concept::IsConst<TestedType>
-	class IsConst<TestedType> : std::true_type
+	class IsConst<TestedType> :
+		public std::true_type
 	{};
 
 	template<typename TestedType>
-	class IsFloat :std::false_type
+	class IsFloat :
+		public std::false_type
 	{};
 
 	template<typename TestedType>
 		requires Concept::IsFloat<TestedType>
-	class IsFloat<TestedType> : std::true_type
+	class IsFloat<TestedType> : 
+		public std::true_type
 	{};
 
 	template<typename TestedType>
-	class IsBoolean :std::false_type
+	class IsBoolean :
+		public std::false_type
 	{};
 
 	template<typename TestedType>
 		requires Concept::IsBoolean<TestedType>
-	class IsBoolean<TestedType> : std::true_type
+	class IsBoolean<TestedType> :
+		public std::true_type
 	{};
 
 	template<typename TestedType>
-	class IsInteger :std::false_type
+	class IsInteger :
+		public std::false_type
 	{};
 
 	template<typename TestedType>
 		requires Concept::IsInteger<TestedType>
-	class IsInteger<TestedType> : std::true_type
+	class IsInteger<TestedType> : 
+		public std::true_type
+	{};
+
+	template <typename TestedType> 
+	class IsTuple :
+		public std::false_type
+	{};
+
+	template <typename ...T>
+	class IsTuple<std::tuple<T...>> :
+		public std::true_type
 	{};
 }

@@ -11,38 +11,46 @@ import AtlasConcepts;
 namespace Atlas::Fulfills
 {
 	template<typename TestedType, typename... Args>
-	class IsSame :std::false_type
+	class IsSame :
+		public std::false_type
 	{};
 
 	template<typename TestedType , typename... Args> 
 		requires Concept::IsSame<TestedType , Args...>
-	class IsSame<TestedType , Args...> : std::true_type
+	class IsSame<TestedType , Args...> : 
+		public std::true_type
 	{};
 
 	template<typename TestedType , typename... Args>
-	class IsAll :std::false_type
+	class IsAll :
+		public std::false_type
 	{};
 
 	template<typename TestedType , typename... Args> 
 		requires Concept::IsAll<TestedType , Args...>
-	class IsAll<TestedType , Args...> : std::true_type
+	class IsAll<TestedType , Args...> :
+		public std::true_type
 	{};
 
 	template<typename TestedType , typename... Args>
-	class IsAny :std::false_type
+	class IsAny :
+		public std::false_type
 	{};
 
 	template<typename TestedType , typename... Args>
 		requires Concept::IsAny<TestedType , Args...>
-	class IsAny<TestedType , Args...> : std::true_type
+	class IsAny<TestedType , Args...> :
+		public std::true_type
 	{};
 
 	template<typename TestedType , typename... Args>
-	class IsNone :std::false_type
+	class IsNone :
+		public std::false_type
 	{};
 
 	template<typename TestedType , typename... Args>
 		requires Concept::IsNone<TestedType , Args...>
-	class IsNone<TestedType , Args...> : std::true_type
+	class IsNone<TestedType , Args...> : 
+		public std::true_type
 	{};
 }

@@ -9,6 +9,9 @@ export module AtlasConcepts:RelationalConcepts;
 
 export namespace Atlas::Concept
 {
+	template<typename SourceType, typename TargetType>
+	concept IsConvertibleTo = std::is_convertible<SourceType , TargetType>::value;
+
 	template<typename BaseType , typename DerivedType>
 	concept IsBaseOf = std::is_base_of<BaseType , DerivedType>::value;
 

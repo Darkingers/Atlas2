@@ -14,7 +14,7 @@ export namespace Atlas::Extensions
 	class DLLApi Vector
 	{
 		public: template<typename DataType>
-		static void Remove( std::vector<DataType>& vector , const DataType& element )
+		constexpr static void Remove( std::vector<DataType>& vector , const DataType& element )
 		{
 			const auto end = std::cend( vector );
 			auto begin = std::begin( vector );
@@ -27,7 +27,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename DataType>
-		static void RemoveIf( std::vector<DataType>& vector , Definition::Condition<DataType> condition )
+		constexpr static void RemoveIf( std::vector<DataType>& vector , Definition::Condition<DataType> condition )
 		{
 			const auto end = std::cend( vector );
 			auto begin = std::begin( vector );
@@ -40,25 +40,25 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename DataType>
-		static auto FindIterator( std::vector<DataType>& vector , const DataType& element )
+		constexpr static auto FindIterator( std::vector<DataType>& vector , const DataType& element )
 		{
 			return std::find( std::begin( vector ) , std::cend( vector ) , element );
 		}
 
 		public: template<typename DataType>
-		static void Sort( std::vector<DataType>& vector )
+		constexpr static void Sort( std::vector<DataType>& vector )
 		{
 			std::sort( std::begin( vector ) , std::end( vector ) );
 		}
 
 		public: template<typename DataType>
-		static void SortBy( std::vector<DataType>& vector , Definition::Comparator<DataType> comparator )
+		constexpr static void SortBy( std::vector<DataType>& vector , Definition::Comparator<DataType> comparator )
 		{
 			std::sort( std::begin( vector ) , std::end( vector ) , comparator );
 		}	
 
 		public: template<typename DataType , typename KeyType>
-		static auto GroupBy( const std::vector<DataType>& vector , Definition::KeyGenerator<DataType, KeyType> keyGenerator )
+		constexpr static auto GroupBy( const std::vector<DataType>& vector , Definition::KeyGenerator<DataType, KeyType> keyGenerator )
 		{
 			std::map<KeyType , std::vector<DataType>> map;
 
@@ -71,31 +71,31 @@ export namespace Atlas::Extensions
 		}	
 
 		public: template<typename DataType>
-		static auto Count( const std::vector<DataType>& vector , const DataType& element )
+		constexpr static auto Count( const std::vector<DataType>& vector , const DataType& element )
 		{
 			return std::count( std::cbegin( vector ) , std::cend( vector ) , element );
 		}
 
 		public: template<typename DataType>
-		static auto CountIf( const std::vector<DataType>& vector , Definition::Condition<DataType> condition )
+		constexpr static auto CountIf( const std::vector<DataType>& vector , Definition::Condition<DataType> condition )
 		{
 			return std::count_if( std::cbegin( vector ) , std::cend( vector ) , condition );
 		}
 
 		public: template<typename DataType>
-		static auto Contains( const std::vector<DataType>& vector , const DataType& element )
+		constexpr static auto Contains( const std::vector<DataType>& vector , const DataType& element )
 		{
 			return std::find( std::cbegin( vector ) , std::cend( vector ) , element ) != std::cend( vector );
 		}
 
 		public: template<typename DataType>
-		static auto ContainsIf( const std::vector<DataType>& vector , Definition::Condition<DataType> condition )
+		constexpr static auto ContainsIf( const std::vector<DataType>& vector , Definition::Condition<DataType> condition )
 		{
 			return std::find_if( std::cbegin( vector ) , std::cend( vector ) , condition ) != std::cend( vector );
 		}
 
 		public: template<typename DataType>
-		static auto ContainsAll( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
+		constexpr static auto ContainsAll( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
 		{
 			return std::all_of( std::cbegin( elements ) , std::cend( elements ) , [ &vector ]( const auto& element )
 			{
@@ -104,7 +104,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename DataType>
-		static auto ContainsAny( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
+		constexpr static auto ContainsAny( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
 		{
 			return std::any_of( std::cbegin( elements ) , std::cend( elements ) , [ &vector ]( const auto& element )
 			{
@@ -113,7 +113,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename DataType>
-		static auto ContainsNone( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
+		constexpr static auto ContainsNone( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
 		{
 			return std::none_of( std::cbegin( elements ) , std::cend( elements ) , [ &vector ]( const auto& element )
 			{
@@ -122,7 +122,7 @@ export namespace Atlas::Extensions
 		}
 			
 		public: template<typename DataType>
-		static auto Difference( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
+		constexpr static auto Difference( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
 		{
 			std::vector<DataType> result;
 
@@ -138,7 +138,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename DataType>
-		static auto Union( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
+		constexpr static auto Union( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
 		{
 			std::vector<DataType> result;
 
@@ -162,7 +162,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename DataType>
-		static auto Intersection( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
+		constexpr static auto Intersection( const std::vector<DataType>& vector , const std::vector<DataType>& elements )
 		{
 			std::vector<DataType> result;
 

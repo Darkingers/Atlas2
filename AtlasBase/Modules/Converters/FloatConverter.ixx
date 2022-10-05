@@ -4,26 +4,38 @@ module;
 #include <string>
 
 export module AtlasConverters:FloatConverter;
+import AtlasConcepts;
 import :Converter;
 
-export namespace Atlas
+export namespace Atlas::Converters
 {
-	template<>
-	class DLLApi Converter<float>
+	template<typename SourceType>
+		requires Concept::IsConvertibleTo<SourceType , float>
+	class DLLApi Converter<SourceType , float> :
+		public std::true_type
 	{
-		public: template<typename DataType>
-			requires std::is_convertible_v<DataType , float>
-		inline static double Convert( const DataType& data )
+		public:
+		constexpr inline static float Convert( const SourceType& data )
 		{
 			return data;
 		}
+	};
 
+	template<>
+	class DLLApi Converter<std::string , float> :
+		public std::true_type
+	{
 		public:
 		inline static float Convert( const std::string& data )
 		{
 			return std::stof( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<const char* , float> :
+		public std::true_type
+	{
 		public:
 		inline static float Convert( const char* data )
 		{

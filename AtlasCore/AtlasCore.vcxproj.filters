@@ -64,6 +64,7 @@
     <ClCompile Include="Modules\Configuration.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Definitions\TypeHelpers.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

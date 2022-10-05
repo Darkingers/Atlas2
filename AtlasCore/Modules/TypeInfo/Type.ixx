@@ -16,12 +16,13 @@ export namespace Atlas
 	template<typename DataType>
 	class DLLApi Type
 	{
-		public: constexpr inline static char* Name = typeid( DataType ).name( );	
+		public: inline static const char* Name = typeid( DataType ).name( );	
 		public: constexpr inline static bool IsFundamental = Fulfills::IsFundamental<DataType>::value;
 		public: constexpr inline static bool IsConst = Fulfills::IsConst<DataType>::value;
 		public: constexpr inline static bool IsReference = Fulfills::IsReference<DataType>::value;
 		public: constexpr inline static bool IsPointer = Fulfills::IsPointer<DataType>::value;
 		public: constexpr inline static bool IsValue = Fulfills::IsValue<DataType>::value;
+		public: constexpr inline static bool IsTuple = Fulfills::IsTuple<DataType>::value;
 
 		public: template<typename ComparedType>
 		constexpr inline static bool IsSame = Fulfills::IsSame<DataType , ComparedType>::value;
@@ -48,10 +49,10 @@ export namespace Atlas
 		public: using MutableType = typename std::remove_const_t<DataType>;
 		public: using ConstType = const MutableType;
 
-		public: using ReferenceType = MutableType&;
-		public: using ConstReferenceType = ConstType&;
+		public: using ReferenceType =typename std::remove_reference_t<MutableType>&;
+		public: using ConstReferenceType = const ReferenceType;
 
-		public: using PointerType = MutableType*;
-		public: using ConstPointerType = ConstType*;
+		public: using PointerType = typename std::remove_reference_t<MutableType>*;
+		public: using ConstPointerType = const PointerType*;
 	};
 }

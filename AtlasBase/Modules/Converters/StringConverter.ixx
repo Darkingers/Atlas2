@@ -5,100 +5,154 @@ module;
 
 export module AtlasConverters:StringConverter;
 import AtlasConcepts;
+import AtlasDefinitions;
 import :Converter;
 
-export namespace Atlas
+export namespace Atlas::Converters
 {
-	template<>
-	class DLLApi Converter<std::string>
+	template<typename SourceType>
+		requires Concept::IsConvertibleTo<SourceType , std::string>
+	class DLLApi Converter<SourceType , std::string> :
+		public std::true_type
 	{
-		public: template<typename DataType>
-			requires std::is_convertible_v<DataType , std::string>
-		inline static std::string Convert( const DataType& data )
+		public:
+		constexpr inline static std::string Convert( const SourceType& data )
 		{
 			return data;
 		}
+	};
 
+	template<>
+	class DLLApi Converter<int, std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const int data )
+		inline static std::string Convert( const int& data )
 		{
 			return std::to_string( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<unsigned int, std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const unsigned int data )
+		inline static std::string Convert( const unsigned int& data )
 		{
 			return std::to_string( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<long , std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const long data )
+		inline static std::string Convert( const long& data )
 		{
 			return std::to_string( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<unsigned long , std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const unsigned long data )
+		inline static std::string Convert( const unsigned long& data )
 		{
 			return std::to_string( data );
 		}
-		
+	};
+
+	template<>
+	class DLLApi Converter<long long , std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const unsigned long long data )
+		inline static std::string Convert( const long long& data )
 		{
 			return std::to_string( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<unsigned long long , std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const long long data )
+		inline static std::string Convert( const unsigned long long& data )
 		{
 			return std::to_string( data );
 		}
-
+	};
+	
+	template<>
+	class DLLApi Converter<float , std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const double data )
+		inline static std::string Convert( const float& data )
 		{
 			return std::to_string( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<double , std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const float data )
+		inline static std::string Convert( const double& data )
 		{
 			return std::to_string( data );
 		}
-
+	};
+	
+	template<>
+	class DLLApi Converter<long double , std::string> :
+		public std::true_type
+	{
 		public:
-		inline static std::string Convert( const long double data )
+		inline static std::string Convert( const long double& data )
 		{
 			return std::to_string( data );
 		}
+	};
 
-		public: template<typename ConvertedType>
-			requires Concept::HasToString<ConvertedType>
-		inline static std::string Convert( const ConvertedType& data )
+	template<>
+	class DLLApi Converter<bool, std::string> :
+		public std::true_type
+	{
+		public:
+		inline static std::string Convert( const bool& data )
 		{
-			return data.ToString( );	
+			return std::to_string( data );
 		}
-		
-		public: template<typename... Args>
-		inline static std::string Convert( const std::tuple<Args...>& arguments, const std::string delimiter = "," )
-		{			
-			std::string data = std::get<0>( arguments );
+	};
 
-			Converter<std::string>::ConvertImplElement<0>( data , arguments , delimiter );
-			
-			return data;
-		}	
-
-		private: template<unsigned int Index, typename... Args>
-		inline static void ConvertImplElement( std::string& data , const std::tuple<Args...>& arguments , const std::string& delimiter )
+	template<typename SourceType>
+		requires Concept::IsPointer<SourceType>
+	class DLLApi Converter<SourceType, std::string> :
+		public std::true_type
+	{
+		public:
+		inline static std::string Convert( const SourceType* data )
 		{
-			data += delimiter + Converter<std::string>::Convert( std::get<Index>( arguments ) );
+			return std::to_string( reinterpret_cast<unsigned long long>( data ) );
+		}
+	};
 
-			if constexpr ( std::tuple_size<std::tuple<Args...>>::value > Index + 1 )
-			{
-				Converter<std::string>::ConvertImplElement<Index + 1>( data , arguments , delimiter );
-			}
+	template<typename SourceType>
+		requires Concept::HasToString<SourceType>
+	class DLLApi Converter<SourceType , std::string> :
+		public std::true_type
+	{
+		public:
+		constexpr inline static std::string Convert( const SourceType& data )
+		{
+			return data.ToString( );
 		}
 	};
 }

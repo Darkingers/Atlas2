@@ -3,12 +3,18 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasConverters:Converter;
-import AtlasTypeInfo;
 
-export namespace Atlas
+export namespace Atlas::Converters
 {
-	template<typename DataType>
-	class DLLApi Converter
+	template<typename SourceType, typename TargetType>
+	class DLLApi Converter :
+		public std::false_type
 	{
 	};
+}
+
+export namespace Atlas::Concept
+{
+	template<typename SourceType , typename TargetType>
+	concept HasConverter = Atlas::Converters::Converter<SourceType, TargetType>::value;
 }

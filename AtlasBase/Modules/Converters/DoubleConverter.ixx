@@ -4,26 +4,38 @@ module;
 #include <string>
 
 export module AtlasConverters:DoubleConverter;
+import AtlasConcepts;
 import :Converter;
 
-export namespace Atlas
+export namespace Atlas::Converters
 {
-	template<>
-	class DLLApi Converter<double>
+	template<typename SourceType>
+		requires Concept::IsConvertibleTo<SourceType, double>
+	class DLLApi Converter<SourceType,double> :
+		public std::true_type
 	{
-		public: template<typename DataType>
-			requires std::is_convertible_v<DataType , double>
-		inline static double Convert( const DataType& data )
+		public:
+		constexpr inline static double Convert( const SourceType& data )
 		{
 			return data;
 		}
+	};
 
+	template<>
+	class DLLApi Converter<std::string, double> :
+		public std::true_type
+	{
 		public:
 		inline static double Convert( const std::string& data )
 		{
-			return std::stof( data );
+			return std::stod( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<const char*, double> :
+		public std::true_type
+	{
 		public:
 		inline static double Convert( const char* data )
 		{

@@ -12,20 +12,9 @@ import AtlasConverters;
 export namespace Atlas::Extensions
 {
 	class String
-	{
-		private: template<unsigned int Index , typename CurrentType , typename... Args>
-		void ConvertFrom( std::string result[] , const CurrentType& current , const Args&... arguments )
-		{
-			result[Index] = Converter<std::string>::Convert( current );
-
-			if constexpr ( sizeof...( arguments ) > 0 )
-			{
-				ConvertFrom<Index + 1>( result , std::forward<const Args&>( arguments )... );
-			}
-		}
-
+	{	
 		public: template<typename... Args>
-		inline static std::string Concat( const std::string& current , const Args&... arguments )
+		constexpr inline static std::string Concat( const std::string& current , const Args&... arguments )
 		{
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
@@ -38,7 +27,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename... Args>
-		inline static std::string Concat( const char* current, const Args&... arguments )
+		constexpr inline static std::string Concat( const char* current, const Args&... arguments )
 		{
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
@@ -51,9 +40,9 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename CurrentType , typename... Args>
-		inline static std::string Concat( const CurrentType& current , const Args&... arguments )
+		constexpr inline static std::string Concat( const CurrentType& current , const Args&... arguments )
 		{
-			std::string data = Converter<std::string>::Convert( current );
+			std::string data = Convert<std::string>::From( current );
 
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
@@ -66,7 +55,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename... Args>
-		inline static std::string* CreateArrayFrom( const Args&... arguments )
+		constexpr inline static std::string* CreateArrayFrom( const Args&... arguments )
 		{
 			std::string strings[sizeof...( arguments )];
 
@@ -76,7 +65,7 @@ export namespace Atlas::Extensions
 		}
 
 		public:
-		static bool StartsWith( const std::string& source , const std::string& checked )
+		constexpr static bool StartsWith( const std::string& source , const std::string& checked )
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -95,7 +84,7 @@ export namespace Atlas::Extensions
 		}
 
 		public:
-		static bool EndsWith( const std::string& source, const std::string& checked )
+		constexpr static bool EndsWith( const std::string& source, const std::string& checked )
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -114,7 +103,7 @@ export namespace Atlas::Extensions
 		}
 
 		public:
-		static bool Contains( const std::string& source , const std::string& checked )
+		constexpr static bool Contains( const std::string& source , const std::string& checked )
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -144,7 +133,7 @@ export namespace Atlas::Extensions
 		}
 
 		public:
-		static int Occurence( const std::string& source , const std::string& checked )
+		constexpr static int Occurence( const std::string& source , const std::string& checked )
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -176,7 +165,7 @@ export namespace Atlas::Extensions
 		}
 
 		public:
-		static std::vector<std::string> Split( const std::string& source , const std::string& separator )
+		constexpr static std::vector<std::string> Split( const std::string& source , const std::string& separator )
 		{
 			std::vector<std::string> result;
 
@@ -219,7 +208,7 @@ export namespace Atlas::Extensions
 		}
 		
 		public:
-		static std::string Replace( const std::string& source , const std::string& replaced , const std::string& replacedWith )
+		constexpr static std::string Replace( const std::string& source , const std::string& replaced , const std::string& replacedWith )
 		{			
 			if ( replaced.length( ) == 0 )
 			{
@@ -264,7 +253,7 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename... Args>
-		static std::string ReplaceSymbols( const std::string& string , const Args&... arguments )
+		constexpr static std::string ReplaceSymbols( const std::string& string , const Args&... arguments )
 		{
 			const unsigned int stringLength = string.length( );
 			if ( stringLength < 3 )
@@ -290,7 +279,7 @@ export namespace Atlas::Extensions
 						length++;
 					}
 
-					result += replaceArray[std::stoul( string.substr( i + 1 , length ) , nullptr , 10 )];
+					result += replaceArray[Convert<int>::From( string.substr( i + 1 , length ) , nullptr , 10 )];
 
 					i += length + 2;
 				}
@@ -301,6 +290,17 @@ export namespace Atlas::Extensions
 			}
 
 			return result;
+		}
+
+		private: template<unsigned int Index , typename CurrentType , typename... Args>
+		constexpr void ConvertFrom( std::string result[] , const CurrentType& current , const Args&... arguments )
+		{
+			result[Index] = Convert<std::string>::From( current );
+
+			if constexpr ( sizeof...( arguments ) > 0 )
+			{
+				ConvertFrom<Index + 1>( result , std::forward<const Args&>( arguments )... );
+			}
 		}
 	};
 }

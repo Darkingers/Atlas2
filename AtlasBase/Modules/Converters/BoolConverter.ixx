@@ -3,41 +3,41 @@ module;
 #include "../../../Macros/Macros.h"
 #include <string>
 
-export module AtlasConverters:IntConverter;
+export module AtlasConverters:BoolConverter;
 import AtlasConcepts;
 import :Converter;
 
 export namespace Atlas::Converters
 {
 	template<typename SourceType>
-		requires Concept::IsConvertibleTo<SourceType , int>
-	class DLLApi Converter<SourceType , int> :
+		requires Concept::IsConvertibleTo<SourceType , bool>
+	class DLLApi Converter<SourceType , bool> :
 		public std::true_type
 	{
 		public:
-		constexpr inline static int Convert( const SourceType& data )
+		constexpr inline static bool Convert( const SourceType& data )
 		{
 			return data;
 		}
 	};
 
 	template<>
-	class DLLApi Converter<std::string , int> :
+	class DLLApi Converter<std::string , bool> :
 		public std::true_type
 	{
 		public:
-		inline static int Convert( const std::string& data )
+		inline static bool Convert( const std::string& data )
 		{
 			return std::stoi( data );
 		}
 	};
 
 	template<>
-	class DLLApi Converter<const char* , int> :
+	class DLLApi Converter<const char* , bool> :
 		public std::true_type
 	{
 		public:
-		inline static int Convert( const char* data )
+		inline static bool Convert( const char* data )
 		{
 			return std::atoi( data );
 		}

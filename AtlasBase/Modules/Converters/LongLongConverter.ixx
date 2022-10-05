@@ -4,26 +4,38 @@ module;
 #include <string>
 
 export module AtlasConverters:LongLongConverter;
+import AtlasConcepts;
 import :Converter;
 
-export namespace Atlas
+export namespace Atlas::Converters
 {
-	template<>
-	class DLLApi Converter<long long>
+	template<typename SourceType>
+		requires Concept::IsConvertibleTo<SourceType , long long>
+	class DLLApi Converter<SourceType , long long> :
+		public std::true_type
 	{
-		public: template<typename DataType>
-			requires std::is_convertible_v<DataType , long long>
-		inline static long long Convert( const DataType& data )
+		public:
+		constexpr inline static long long Convert( const SourceType& data )
 		{
 			return data;
 		}
+	};
 
+	template<>
+	class DLLApi Converter<std::string , long long> :
+		public std::true_type
+	{
 		public:
 		inline static long long Convert( const std::string& data )
 		{
 			return std::stoll( data );
 		}
+	};
 
+	template<>
+	class DLLApi Converter<const char* , long long> :
+		public std::true_type
+	{
 		public:
 		inline static long long Convert( const char* data )
 		{

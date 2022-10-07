@@ -11,7 +11,8 @@ int main()
 {
 	try
 	{
-		const Atlas::Simplify<const char*> hi = "fsdfsd";
+		char* t;
+		Atlas::Simplify<const char*> hi = t;
 		Atlas::Throw<Atlas::ValidationException>( "Hi there", "I have been extended" );
 	}
 	catch ( Atlas::Exception& e )

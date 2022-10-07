@@ -2,9 +2,11 @@ module;
 
 #include <string>
 #include <regex>
+
 #include "../../../Macros/Macros.h"
 
 export module AtlasExtensions:String;
+
 import AtlasDefinitions;
 import AtlasConcepts;
 import AtlasConverters;

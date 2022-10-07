@@ -2,13 +2,15 @@ module;
 
 #include <tuple>
 #include <type_traits>
+
 #include "../../../Macros/Macros.h"
 
-
 export module AtlasExtensions:Extended;
+
 import AtlasDefinitions;
 import AtlasConcepts;
 import AtlasConverters;
+
 import :Tuple;
 
 export namespace Atlas::Extensions
@@ -36,10 +38,6 @@ export namespace Atlas::Extensions
 		{
 
 		}
-
-		public:
-		~ExtendedBaseType( )
-		{}
 
 		public: template<unsigned int Index>
 		constexpr auto GetExtended( )

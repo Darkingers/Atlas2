@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasExceptions:NotImplementedException;
+
 import :Exception;
 
 export namespace Atlas

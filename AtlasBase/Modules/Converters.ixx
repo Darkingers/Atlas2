@@ -1,9 +1,11 @@
 module;
 
-#include "../../Macros/Macros.h"
 #include <algorithm>
 
+#include "../../Macros/Macros.h"
+
 export module AtlasConverters;
+
 import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasDefinitions;
@@ -45,7 +47,7 @@ export namespace Atlas
 			requires Concept::IsPointer<SourceType>
 		inline static ConvertedType From( const SourceType data )
 		{
-			return Converters::Converter<Simplify<SourceType> , Simplify<ConvertedType>>::Convert( static_cast<const Simplify<SourceType>>( data) );
+			return Converters::Converter<Simplify<SourceType> , Simplify<ConvertedType>>::Convert( data );
 		}
 	};
 }

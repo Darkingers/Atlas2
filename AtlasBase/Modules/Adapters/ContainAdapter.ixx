@@ -1,9 +1,11 @@
 module;
 
 #include <algorithm>
+
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:ContainAdapter;
+
 import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasDefinitions;

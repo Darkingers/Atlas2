@@ -3,11 +3,12 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:ContainAllAdapter;
+
 import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasDefinitions;
-import :ContainAdapter;
 
+import :ContainAdapter;
 
 export namespace Atlas::Adapters
 {

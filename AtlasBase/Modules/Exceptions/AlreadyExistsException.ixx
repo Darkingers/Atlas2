@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasExceptions:AlreadyExistsException;
+
 import :Exception;
 
 export namespace Atlas

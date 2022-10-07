@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:ClearAdapter;
+
 import AtlasTypeInfo;
 import AtlasConcepts;
 

@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:CountAdapter;
+
 import AtlasConcepts;
 
 export namespace Atlas::Adapters

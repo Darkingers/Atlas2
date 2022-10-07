@@ -1,10 +1,13 @@
 module;
 
-#include "../../../Macros/Macros.h"
 #include <string>
 
+#include "../../../Macros/Macros.h"
+
 export module AtlasConverters:LongLongConverter;
+
 import AtlasConcepts;
+
 import :Converter;
 
 export namespace Atlas::Converters

@@ -3,6 +3,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasAdapters:EqualityAdapter;
+
 import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasExceptions;

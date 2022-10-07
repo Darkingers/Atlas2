@@ -14,8 +14,7 @@ import :Converter;
 export namespace Atlas::Converters
 {
 	template<typename SourceType>
-		requires Concept::IsPointer<SourceType>
-	class DLLApi Converter<SourceType , std::string> :
+	class DLLApi Converter<SourceType* , std::string> :
 		public std::true_type
 	{
 		public:
@@ -34,6 +33,17 @@ export namespace Atlas::Converters
 		inline static std::string Convert( const SourceType& data )
 		{
 			return data.ToString( );
+		}
+	};
+
+	template<>
+	class DLLApi Converter<void* , std::string> :
+		public std::true_type
+	{
+		public:
+		inline static std::string Convert( const void* data )
+		{
+			return std::to_string( reinterpret_cast<unsigned long long>( data ) );
 		}
 	};
 

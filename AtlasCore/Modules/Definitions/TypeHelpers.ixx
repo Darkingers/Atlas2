@@ -8,9 +8,6 @@ export module AtlasDefinitions:TypeHelpers;
 
 export namespace Atlas
 {
-	template<typename DataType, typename ExpectedType>
-	using IgnoreConst = typename std::enable_if<std::is_same<DataType , ExpectedType>::value || std::is_same<DataType , const ExpectedType>::value>::type;
-	
 	template<typename DataType>
 	struct SimplifyImpl
 	{
@@ -36,6 +33,6 @@ export namespace Atlas
 	};
 
 	template<typename DataType>
-	using Simplify = SimplifyImpl<DataType>::type;
+	using Simplify = typename SimplifyImpl<DataType>::type;
 
 }

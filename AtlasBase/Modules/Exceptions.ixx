@@ -4,6 +4,7 @@ module;
 #include <string>
 
 export module AtlasExceptions;
+
 export import :AbortRequestedException;
 export import :AccessException;
 export import :AdapterResolveException;

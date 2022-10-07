@@ -36,6 +36,6 @@ export namespace Atlas
 	};
 
 	template<typename DataType>
-	using Simplify = typename SimplifyImpl<DataType>::type;
+	using Simplify = SimplifyImpl<DataType>::type;
 
 }

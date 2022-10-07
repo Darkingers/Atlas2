@@ -2,21 +2,32 @@
 //
 
 import AtlasExceptions;
+import AtlasDefinitions;
 
 #include <iostream>
+
+template<typename DataType>
+using Simplify = typename std::remove_const_t
+<
+	std::conditional
+	<
+	std::is_pointer<DataType>::value ,
+	std::remove_pointer_t<DataType> ,
+	std::conditional<std::is_reference<DataType>::value , std::remove_reference_t<DataType> , DataType>
+	>
+>;
 
 int main()
 {
 	try
 	{
-		Atlas::Throw<Atlas::ValidationException>( "Hi there" , false );
+		typename Simplify<const char*> hi = "fsdfsd";
+		Atlas::Throw<Atlas::ValidationException>( "Hi there", "I have been extended" );
 	}
-	catch ( Atlas::Exception e )
+	catch ( Atlas::Exception& e )
 	{
 		std::cout << e.ToString() << std::endl;
 	}
-
-    std::cout << "Hello World!\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -5,6 +5,7 @@ module;
 
 export module AtlasConverters;
 import AtlasTypeInfo;
+import AtlasConcepts;
 import AtlasDefinitions;
 
 export import :BoolConverter;
@@ -27,43 +28,24 @@ export namespace Atlas
 			return Converters::Converter<Simplify<ConvertedType> , Simplify<TargetType>>::Convert( data );
 		}
 
+		public: template<typename TargetType>
+			requires Concept::IsPointer<ConvertedType>
+		inline static TargetType To( const ConvertedType data )
+		{
+			return Converters::Converter<Simplify<ConvertedType> , Simplify<TargetType>>::Convert( data );
+		}
+
 		public: template<typename SourceType>
 		inline static ConvertedType From( const SourceType& data )
 		{
 			return Converters::Converter<Simplify<SourceType> , Simplify<ConvertedType>>::Convert( data );
 		}
+
+		public: template<typename SourceType>
+			requires Concept::IsPointer<SourceType>
+		inline static ConvertedType From( const SourceType data )
+		{
+			return Converters::Converter<Simplify<SourceType> , Simplify<ConvertedType>>::Convert( data );
+		}
 	};
 }
-
-//export namespace Atlas::Converters
-//{
-//	template<typename SourceType>
-//		requires Type<SourceType>::IsTuple
-//	class DLLApi Converter<SourceType , std::string> :
-//		public std::true_type
-//	{
-//		public:
-//		inline static std::string Convert( const SourceType& data , const std::string& delimiter = "," )
-//		{
-//			std::string result;
-//
-//			std::for_each( data , [ &result ]( auto& s )
-//			{
-//					result += Converters::Converter<Simplify<decltype( data )> , std::string>::Convert( data ) + delimiter;
-//			} );
-//
-//			return result;
-//		}
-//
-//		/*private: template<unsigned int Current, unsigned int End>
-//		inline static void ConvertRemainingToString( const SourceType& data , std::string& result , const std::string& delimiter )
-//		{
-//			result += delimiter + Atlas::Convert<std::string>::From( std::get<Current>( data ) );
-//
-//			if constexpr ( std::tuple_size<SourceType>::value > 1 )
-//			{
-//				ConvertRemainingToString<Current + 1 , End>( data , result , delimiter );
-//			}
-//		}*/
-//	};
-//}

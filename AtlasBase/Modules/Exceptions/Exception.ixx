@@ -25,7 +25,13 @@ export namespace Atlas
 			Source( other.Source )
 		{}	
 
-		constexpr virtual std::string ToString( ) const
+		public:
+		virtual ~Exception( ) noexcept
+		{
+		}
+
+		public:
+		virtual std::string ToString( ) const
 		{
 			if ( Source == nullptr )
 			{

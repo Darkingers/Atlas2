@@ -299,7 +299,7 @@ export namespace Atlas::Extensions
 
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
-				ConvertFrom<Index + 1>( result , std::forward<const Args&>( arguments )... );
+				String::ConvertFrom<Index + 1>( result , std::forward<const Args&>( arguments )... );
 			}
 		}
 	};

@@ -15,7 +15,7 @@ export namespace Atlas::Converters
 		public std::true_type
 	{
 		public:
-		constexpr inline static int Convert( const SourceType& data )
+		inline static int Convert( const SourceType& data )
 		{
 			return data;
 		}

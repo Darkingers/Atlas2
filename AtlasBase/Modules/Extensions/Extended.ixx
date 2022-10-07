@@ -37,6 +37,10 @@ export namespace Atlas::Extensions
 
 		}
 
+		public:
+		~ExtendedBaseType( )
+		{}
+
 		public: template<unsigned int Index>
 		constexpr auto GetExtended( )
 		{
@@ -73,6 +77,10 @@ export namespace Atlas::Extensions
 		{
 
 		}
+
+		public:
+		~ExtendedType( )
+		{}
 	};
 
 	template<typename Type , typename... ExtendedArgs>
@@ -87,11 +95,15 @@ export namespace Atlas::Extensions
 		{
 
 		}
+
+		public:
+		~ExtendedType( )
+		{}
 			
 		public:
-		constexpr std::string ToString( ) const override
+		std::string ToString( ) const final
 		{
-			return Type::ToString( ) /*+ "{" + Converter<std::tuple<ExtendedArgs...>, std::string>::Convert( this->ExtendedProperties ) + "}"*/;
+			return Type::ToString( ) + "{" + Convert<std::string>::From( this->ExtendedProperties ) + "}";
 		}
 	};
 }

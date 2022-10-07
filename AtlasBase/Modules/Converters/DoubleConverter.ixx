@@ -15,7 +15,7 @@ export namespace Atlas::Converters
 		public std::true_type
 	{
 		public:
-		constexpr inline static double Convert( const SourceType& data )
+		inline static double Convert( const SourceType& data )
 		{
 			return data;
 		}

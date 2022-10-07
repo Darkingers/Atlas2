@@ -11,14 +11,26 @@ import :Converter;
 export namespace Atlas::Converters
 {
 	template<typename SourceType>
-		requires Concept::IsConvertibleTo<SourceType , std::string>
+		requires Concept::IsPointer<SourceType>
 	class DLLApi Converter<SourceType , std::string> :
 		public std::true_type
 	{
 		public:
-		constexpr inline static std::string Convert( const SourceType& data )
+		inline static std::string Convert( const SourceType data )
 		{
-			return data;
+			return std::to_string( reinterpret_cast<unsigned long long>( data ) );
+		}
+	};
+
+	template<typename SourceType>
+		requires Concept::HasToString<SourceType>
+	class DLLApi Converter<SourceType , std::string> :
+		public std::true_type
+	{
+		public:
+		inline static std::string Convert( const SourceType& data )
+		{
+			return data.ToString( );
 		}
 	};
 
@@ -126,33 +138,21 @@ export namespace Atlas::Converters
 		public std::true_type
 	{
 		public:
-		inline static std::string Convert( const bool& data )
+		inline static std::string Convert( const bool data )
 		{
 			return std::to_string( data );
 		}
 	};
 
-	template<typename SourceType>
-		requires Concept::IsPointer<SourceType>
-	class DLLApi Converter<SourceType, std::string> :
+	template<>
+	class DLLApi Converter<char*, std::string> :
 		public std::true_type
 	{
 		public:
-		inline static std::string Convert( const SourceType* data )
+		inline static std::string Convert( const char* data )
 		{
-			return std::to_string( reinterpret_cast<unsigned long long>( data ) );
+			return data;
 		}
 	};
 
-	template<typename SourceType>
-		requires Concept::HasToString<SourceType>
-	class DLLApi Converter<SourceType , std::string> :
-		public std::true_type
-	{
-		public:
-		constexpr inline static std::string Convert( const SourceType& data )
-		{
-			return data.ToString( );
-		}
-	};
 }

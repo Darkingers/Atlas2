@@ -6,22 +6,12 @@ import AtlasDefinitions;
 
 #include <iostream>
 
-template<typename DataType>
-using Simplify = typename std::remove_const_t
-<
-	std::conditional
-	<
-	std::is_pointer<DataType>::value ,
-	std::remove_pointer_t<DataType> ,
-	std::conditional<std::is_reference<DataType>::value , std::remove_reference_t<DataType> , DataType>
-	>
->;
 
 int main()
 {
 	try
 	{
-		typename Simplify<const char*> hi = "fsdfsd";
+		Atlas::Simplify<const char*> hi = "fsdfsd";
 		Atlas::Throw<Atlas::ValidationException>( "Hi there", "I have been extended" );
 	}
 	catch ( Atlas::Exception& e )

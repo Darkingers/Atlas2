@@ -24,22 +24,27 @@ export namespace Atlas::Adapters
 		public std::true_type
 	{
 		private: using DataType = Deduce::CollectionContainedType<CollectionType>;
-		private: using IteratorType = Deduce::IteratorType<CollectionType>;
-			   	
-		private: static constexpr bool IsNoExceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool IsNoExceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool IsNoExceptContains = noexcept ( ContainAdapter<CollectionType , DataType>::Contains( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) );
-		private: static constexpr bool IsNoExcept = IsNoExceptBegin && IsNoExceptEnd && IsNoExceptContains;
+		private: using SimpleCollectionType = Deduce::SimpleType<CollectionType>;
+		private: using SimpleContainedType = Deduce::SimpleType<ContainedCollectionType>;
+		private: using ContainAdapterType = ContainAdapter<SimpleCollectionType , DataType>;
+   	
+			
+		private: constexpr static bool IsNoexceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
+		private: constexpr static bool IsNoexceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
+		private: constexpr static bool IsNoexceptContains = noexcept ( ContainAdapterType::Contains( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) );
+		public: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd && IsNoexceptContains;
 
+			
 		public:
-		constexpr inline static bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer) noexcept( IsNoExcept )
+		constexpr inline static bool ContainsAll(const SimpleCollectionType& collection, const SimpleContainedType& containedContainer)
+			noexcept( IsNoexcept )
 		{
 			auto current = std::cbegin(containedContainer);
 			const auto end = std::cend(containedContainer);
 
 			for (; current != end; std::advance(current,1))
 			{
-				if (!ContainAdapter<CollectionType,DataType>::Contains(collection, *current))
+				if (!ContainAdapterType::Contains(collection, *current))
 				{
 					return false;
 				}
@@ -48,10 +53,4 @@ export namespace Atlas::Adapters
 			return true;
 		}
 	};
-}
-
-export namespace Atlas::Concept
-{
-	template<typename CollectionType , typename ContainedCollectionType>
-	concept HasContainAllAdapter = Atlas::Adapters::ContainAllAdapter<CollectionType , ContainedCollectionType>::value;
 }

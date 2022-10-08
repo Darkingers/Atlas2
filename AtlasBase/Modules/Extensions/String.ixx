@@ -11,12 +11,32 @@ import AtlasDefinitions;
 import AtlasConcepts;
 import AtlasConverters;
 
-export namespace Atlas::Extensions
+export namespace Atlas
 {
 	class String
 	{	
+		private: template<typename CurrentType , typename... Args>
+		struct IsNoexceptConvertible
+		{
+			public: constexpr static bool value = NoexceptCheck( );
+
+			public:
+			constexpr static bool NoexceptCheck( )
+			{
+				bool result = noexcept( Convert<std::string>::From( std::declval<CurrentType>( ) ) );
+
+				if constexpr ( sizeof ...( Args ) > 0 )
+				{
+					result = result && IsNoexceptConvertible<Args...>::value;
+				}
+
+				return result;
+			}
+		};
+
 		public: template<typename... Args>
-		constexpr inline static std::string Concat( const std::string& current , const Args&... arguments )
+		constexpr inline static std::string Concat( const std::string& current , const Args&... arguments)
+			noexcept ( Implementation::IsNoexceptConvertible<Args...>::value )
 		{
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
@@ -29,7 +49,8 @@ export namespace Atlas::Extensions
 		}
 
 		public: template<typename... Args>
-		constexpr inline static std::string Concat( const char* current, const Args&... arguments )
+		constexpr inline static std::string Concat( const char* current, const Args&... arguments ) 
+			noexcept ( Implementation::IsNoexceptConvertible<Args...>::value )
 		{
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
@@ -43,6 +64,7 @@ export namespace Atlas::Extensions
 
 		public: template<typename CurrentType , typename... Args>
 		constexpr inline static std::string Concat( const CurrentType& current , const Args&... arguments )
+			noexcept ( Implementation::IsNoexceptConvertible<Args...>::value )
 		{
 			std::string data = Convert<std::string>::From( current );
 
@@ -58,6 +80,7 @@ export namespace Atlas::Extensions
 
 		public: template<typename... Args>
 		constexpr inline static std::string* CreateArrayFrom( const Args&... arguments )
+			noexcept ( Implementation::IsNoexceptConvertible<Args...>::value )
 		{
 			std::string strings[sizeof...( arguments )];
 
@@ -68,6 +91,7 @@ export namespace Atlas::Extensions
 
 		public:
 		constexpr static bool StartsWith( const std::string& source , const std::string& checked )
+			noexcept
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -87,6 +111,7 @@ export namespace Atlas::Extensions
 
 		public:
 		constexpr static bool EndsWith( const std::string& source, const std::string& checked )
+			noexcept
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -106,6 +131,7 @@ export namespace Atlas::Extensions
 
 		public:
 		constexpr static bool Contains( const std::string& source , const std::string& checked )
+			noexcept
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -136,6 +162,7 @@ export namespace Atlas::Extensions
 
 		public:
 		constexpr static int Occurence( const std::string& source , const std::string& checked )
+			noexcept
 		{
 			if ( source.length( ) < checked.length( ) )
 			{
@@ -168,6 +195,7 @@ export namespace Atlas::Extensions
 
 		public:
 		constexpr static std::vector<std::string> Split( const std::string& source , const std::string& separator )
+			noexcept
 		{
 			std::vector<std::string> result;
 
@@ -204,13 +232,15 @@ export namespace Atlas::Extensions
 
 		public:
 		static bool Match(const std::string& source, const std::string& regex )
+			noexcept( noexcept( std::regex_match( std::declval<std::string>(), std::declval<std::regex>() ) ) )
 		{
 			std::regex reg( regex );
 			return std::regex_match( source , reg );
 		}
 		
 		public:
-		constexpr static std::string Replace( const std::string& source , const std::string& replaced , const std::string& replacedWith )
+		constexpr static std::string Replace( const std::string& source , const std::string& replaced , const std::string& replacedWith ) 
+			noexcept
 		{			
 			if ( replaced.length( ) == 0 )
 			{
@@ -256,6 +286,7 @@ export namespace Atlas::Extensions
 
 		public: template<typename... Args>
 		constexpr static std::string ReplaceSymbols( const std::string& string , const Args&... arguments )
+			noexcept ( Implementation::IsNoexceptConvertible<Args...>::value && noexcept( Convert<int>::From( std::declval<std::string>() )) )
 		{
 			const unsigned int stringLength = string.length( );
 			if ( stringLength < 3 )
@@ -295,7 +326,8 @@ export namespace Atlas::Extensions
 		}
 
 		private: template<unsigned int Index , typename CurrentType , typename... Args>
-		constexpr void ConvertFrom( std::string result[] , const CurrentType& current , const Args&... arguments )
+		constexpr void ConvertFrom( std::string result[] , const CurrentType& current , const Args&... arguments ) 
+			noexcept ( noexcept( Convert<std::string>::From( std::declval<CurrentType>() ) ) && Implementation::IsNoexceptConvertible<Args...>::value )
 		{
 			result[Index] = Convert<std::string>::From( current );
 

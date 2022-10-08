@@ -7,6 +7,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasTypeInfo:Type;
+
 import :BasicTypeInfo;
 import :RelationalTypeInfo;
 import :VariadicTypeInfo;
@@ -23,6 +24,12 @@ export namespace Atlas
 		public: constexpr inline static bool IsPointer = Fulfills::IsPointer<DataType>::value;
 		public: constexpr inline static bool IsValue = Fulfills::IsValue<DataType>::value;
 		public: constexpr inline static bool IsTuple = Fulfills::IsTuple<DataType>::value;
+
+		public: template<typename CastedType>
+		constexpr inline static bool IsNoexceptConvertibleTo = noexcept( (CastedType)std::declval<DataType>( ));
+
+		public: template<typename... Args>
+		constexpr inline static bool IsNoexceptConstructible = noexcept( std::declval<DataType>( std::declval<Args>( )... ) );
 
 		public: template<typename ComparedType>
 		constexpr inline static bool IsSame = Fulfills::IsSame<DataType , ComparedType>::value;

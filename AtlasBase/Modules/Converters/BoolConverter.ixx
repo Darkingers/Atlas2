@@ -6,7 +6,10 @@ module;
 
 export module AtlasConverters:BoolConverter;
 
+import AtlasTypeInfo;
 import AtlasConcepts;
+import AtlasConfiguration;
+import AtlasValidation;
 
 import :Converter;
 
@@ -17,8 +20,12 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType , bool> :
 		public std::true_type
 	{
+		public: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<bool>;
+		
+
 		public:
-		inline static bool Convert( const SourceType& data )
+		constexpr inline static bool Convert( const SourceType& data )
+			noexcept( IsNoexcept )
 		{
 			return data;
 		}
@@ -28,10 +35,18 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , bool> :
 		public std::true_type
 	{
+		public: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
+		
+
 		public:
-		inline static bool Convert( const std::string& data )
+		constexpr inline static bool Convert( const std::string& data ) 
+			noexcept( IsNoexcept )
 		{
-			return std::stoi( data );
+			bool isTrue = "1" || data == "true" || data == "True" || data == "TRUE";
+			
+			Validate<Configuration::EnableBoolConverterCheck>::IsNone(data, "0" , "false" , "False" , "FALSE" );
+
+			return isTrue;
 		}
 	};
 
@@ -39,10 +54,18 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , bool> :
 		public std::true_type
 	{
+		public: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
+
+			
 		public:
-		inline static bool Convert( const char* data )
+		constexpr inline static bool Convert( const char* data )
+			noexcept ( IsNoexcept )
 		{
-			return std::atoi( data );
+			bool isTrue = "1" || data == "true" || data == "True" || data == "TRUE";
+
+			Validate<Configuration::EnableBoolConverterCheck>::IsNone( data , "0" , "false" , "False" , "FALSE" );
+
+			return isTrue;
 		}
 	};
 }

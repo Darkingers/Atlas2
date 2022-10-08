@@ -23,10 +23,12 @@ export namespace Atlas::Adapters
 	class DLLApi ContainAdapter<CollectionType, DataType> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept ( std::declval<CollectionType>.Contains( std::declval<DataType>( ) ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<CollectionType>.Contains( std::declval<DataType>( ) ) );
 
+			
 	    public:
-		constexpr inline static bool Contains(const CollectionType& collection, const DataType& contained) noexcept ( IsNoExcept )
+		constexpr inline static bool Contains(const CollectionType& collection, const DataType& contained)
+			noexcept ( IsNoexcept )
 		{
 			return collection.Contains(contained);
 		}
@@ -39,24 +41,26 @@ export namespace Atlas::Adapters
 	{
 		private: using EndIteratorType = Deduce::ConstEndIteratorType<CollectionType>;
 		
-		private: static constexpr bool IsNoExceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool IsNoExceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
-		private: static constexpr bool IsNoExceptFind = noexcept ( std::find( std::cbegin( std::declval<CollectionType>( ) ) , std::cend( std::declval<CollectionType>( ) ) , std::declval<DataType>( ) ) );
-		private: static constexpr bool IsNoExcept = IsNoExceptBegin && IsNoExceptEnd && IsNoExceptFind;
+		private: constexpr static bool IsNoexceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
+		private: constexpr static bool IsNoexceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
+		public: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd;
 
 
 		public:
-		constexpr inline bool Contains( const CollectionType& collection , const DataType& contained ) noexcept( IsNoExcept )
+		constexpr inline bool Contains( const CollectionType& collection , const DataType& contained ) 
+			noexcept( IsNoexcept )
 		{
 			const auto endIterator = std::cend( collection );
 
-			return std::find( std::cbegin( collection ) , endIterator , contained ) != endIterator;
+			for ( auto iterator = std::cbegin( collection ); iterator != endIterator; ++iterator )
+			{
+				if ( *iterator == contained )
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 	};
-}
-
-export namespace Atlas::Concept
-{
-	template<typename CollectionType , typename DataType>
-	concept HasContainAdapter = Atlas::Adapters::ContainAdapter<CollectionType , DataType>::value;
 }

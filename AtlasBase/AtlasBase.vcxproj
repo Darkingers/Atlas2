@@ -170,6 +170,9 @@
     <ClCompile Include="Modules\Converters\LongConverter.ixx" />
     <ClCompile Include="Modules\Converters\LongLongConverter.ixx" />
     <ClCompile Include="Modules\Converters\StringConverter.ixx" />
+    <ClCompile Include="Modules\Converters\UnsignedIntConverter.ixx" />
+    <ClCompile Include="Modules\Converters\UnsignedLongConverter.ixx" />
+    <ClCompile Include="Modules\Converters\UnsignedLongLongConverter.ixx" />
     <ClCompile Include="Modules\Exceptions.ixx" />
     <ClCompile Include="Modules\Exceptions\AbortRequestedException.ixx" />
     <ClCompile Include="Modules\Exceptions\AccessException.ixx" />
@@ -185,13 +188,13 @@
     <ClCompile Include="Modules\Exceptions\NullException.ixx" />
     <ClCompile Include="Modules\Exceptions\TimeoutException.ixx" />
     <ClCompile Include="Modules\Exceptions\ValidationException.ixx" />
+    <ClCompile Include="Modules\Extensions\Exception.ixx" />
     <ClCompile Include="Modules\Extensions\Extended.ixx" />
     <ClCompile Include="Modules\Extensions\String.ixx" />
     <ClCompile Include="Modules\Extensions\Tuple.ixx" />
     <ClCompile Include="Modules\Extensions\Vector.ixx" />
     <ClCompile Include="Modules\Extensions.ixx" />
-    <ClCompile Include="Modules\Validation\Argument.ixx" />
-    <ClCompile Include="Modules\Validation\Ensure.ixx">
+    <ClCompile Include="Modules\Validation\Validate.ixx">
       <SubType>
       </SubType>
     </ClCompile>

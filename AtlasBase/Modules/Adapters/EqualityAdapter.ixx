@@ -21,18 +21,14 @@ export namespace Atlas::Adapters
 	class DLLApi EqualityAdapter<TypeA, TypeB> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept ( std::declval<TypeA>( ) == std::declval<TypeB>() );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<TypeA>( ) == std::declval<TypeB>() );
 
+			
 	    public:
-		constexpr inline static bool Equals(const TypeA& a, const TypeB& b) noexcept( IsNoExcept )
+		constexpr inline static bool Equals(const TypeA& a, const TypeB& b)
+			noexcept( IsNoexcept )
 		{
 			return a == b;
 		}
 	};
-}
-
-export namespace Atlas::Concept
-{
-	template<typename TypeA , typename TypeB>
-	concept HasEqualityAdapter = Atlas::Adapters::EqualityAdapter<TypeA , TypeB>::value;
 }

@@ -6,6 +6,7 @@ export module AtlasAdapters:ClearAdapter;
 
 import AtlasTypeInfo;
 import AtlasConcepts;
+import AtlasDefinitions;
 
 export namespace Atlas::Adapters
 {
@@ -20,10 +21,12 @@ export namespace Atlas::Adapters
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept ( std::declval<ClearedType>.clear( ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<ClearedType>.clear( ) );
 
+			
 		public:
-		constexpr inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
+		constexpr inline static void Clear( ClearedType& instance )
+			noexcept ( IsNoexcept )
 		{
 			instance.clear( );
 		}
@@ -34,18 +37,14 @@ export namespace Atlas::Adapters
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept ( std::declval<ClearedType>.Clear( ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<ClearedType>.Clear( ) );
 
+			
 		public:
-		constexpr inline static void Clear( ClearedType& instance ) noexcept ( IsNoExcept )
+		constexpr inline static void Clear( ClearedType& instance )
+			noexcept ( IsNoexcept )
 		{
 			instance.Clear( );
 		}
 	};
-}
-
-export namespace Atlas::Concept
-{
-	template<typename ClearedType>
-	concept HasClearAdapter = Atlas::Adapters::ClearAdapter<ClearedType>::value;
 }

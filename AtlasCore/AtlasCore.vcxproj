@@ -160,7 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Modules\Configuration.ixx" />
-    <ClCompile Include="Modules\Definitions\TypeHelpers.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations.ixx" />
     <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx" />
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
       <SubType>

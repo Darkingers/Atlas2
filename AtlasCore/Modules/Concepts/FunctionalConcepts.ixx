@@ -152,4 +152,7 @@ export namespace Atlas::Concept
 			testInstance.GetHash( )
 		}->std::convertible_to<const unsigned int>;
 	};
+
+	template<template<typename...> typename AdapterType , typename... AdapterArguments>
+	concept HasAdapter = AdapterType<AdapterArguments...>::value;
 }

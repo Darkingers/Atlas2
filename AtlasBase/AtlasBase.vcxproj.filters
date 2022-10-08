@@ -93,7 +93,7 @@
     <ClCompile Include="Modules\Exceptions\ValidationException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Validation\Ensure.ixx">
+    <ClCompile Include="Modules\Validation\Validate.ixx">
       <Filter>Modules\Validation</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Exceptions\Exception.ixx">
@@ -105,7 +105,6 @@
     <ClCompile Include="Modules\Validation.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Validation\Argument.ixx" />
     <ClCompile Include="Modules\Extensions\Extended.ixx" />
     <ClCompile Include="Modules\Extensions\String.ixx" />
     <ClCompile Include="Modules\Extensions\Tuple.ixx" />
@@ -120,5 +119,9 @@
     <ClCompile Include="Modules\Converters\LongLongConverter.ixx" />
     <ClCompile Include="Modules\Converters\StringConverter.ixx" />
     <ClCompile Include="Modules\Converters\BoolConverter.ixx" />
+    <ClCompile Include="Modules\Converters\UnsignedIntConverter.ixx" />
+    <ClCompile Include="Modules\Converters\UnsignedLongConverter.ixx" />
+    <ClCompile Include="Modules\Converters\UnsignedLongLongConverter.ixx" />
+    <ClCompile Include="Modules\Extensions\Exception.ixx" />
   </ItemGroup>
 </Project>

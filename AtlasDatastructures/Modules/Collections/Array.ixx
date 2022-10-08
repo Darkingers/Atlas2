@@ -35,7 +35,7 @@ export namespace Atlas
 		private: using IteratorType = ContinousMemoryIterator<DataType>;
 		private: using EventHandlerType = EventHandlerTemplate<DataType>;
 
-		private: inline static constexpr bool DoEventHandling = EventHandlerType::value;
+		private: constexpr static inline bool DoEventHandling = EventHandlerType::value;
 		
 
 		private: AllocatorType _allocator;

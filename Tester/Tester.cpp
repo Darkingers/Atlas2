@@ -3,6 +3,7 @@
 
 import AtlasExceptions;
 import AtlasDefinitions;
+import AtlasExtensions;
 
 #include <iostream>
 

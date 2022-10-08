@@ -6,6 +6,7 @@ module;
 #include <typeinfo>
 
 export module AtlasTypeInfo:VariadicTypeInfo;
+
 import AtlasConcepts;
 
 namespace Atlas::Fulfills

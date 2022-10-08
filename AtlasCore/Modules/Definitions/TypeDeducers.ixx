@@ -6,6 +6,8 @@ module;
 
 export module AtlasDefinitions:TypeDeducers;
 
+import :Implementations;
+
 export namespace Atlas::Deduce
 {
 	template<typename IteratorType>
@@ -43,4 +45,7 @@ export namespace Atlas::Deduce
 
 	template<typename Invokable , typename... Args>
 	using ReturnType = typename std::invoke_result_t<Invokable( Args... )>;
+
+	template<typename DataType>
+	using SimpleType = typename Atlas::Implementation::SimpleType<DataType>::type;
 }

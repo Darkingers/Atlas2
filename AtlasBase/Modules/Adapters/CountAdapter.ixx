@@ -12,6 +12,9 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter :
 		public std::true_type
 	{
+		public: constexpr static bool IsNoexcept = true;
+
+
 		public:
 		constexpr inline static auto Count( const CountedType& instance ) noexcept
 		{
@@ -24,10 +27,12 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept ( std::declval<CountedType>( ).size( ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<CountedType>( ).size( ) );
 
+			
 	    public:
-		constexpr inline static auto Count(const CountedType& instance) noexcept( IsNoExcept )
+		constexpr inline static auto Count(const CountedType& instance) 
+			noexcept( IsNoexcept )
 		{
 			return instance.size( );
 		}
@@ -38,18 +43,14 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept ( std::declval<CountedType>( ).Count( ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<CountedType>( ).Count( ) );
 
+			
 	    public:
-		constexpr inline static auto Count(const CountedType& instance) noexcept( IsNoExcept )
+		constexpr inline static auto Count(const CountedType& instance) 
+			noexcept( IsNoexcept )
 		{
 			return instance.Count();
 		}
 	};
-}
-
-export namespace Atlas::Concept
-{
-	template<typename CountedType>
-	concept HasCountAdapter = Atlas::Adapters::CountAdapter<CountedType>::value;
 }

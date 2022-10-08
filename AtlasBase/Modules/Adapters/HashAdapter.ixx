@@ -21,13 +21,14 @@ export namespace Atlas::Adapters
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept( std::declval<std::hash<DataType>>( )( std::declval<DataType>( ) ) );
+		public: constexpr static bool IsNoexcept = noexcept( std::declval<std::hash<DataType>>( )( std::declval<DataType>( ) ) );
 
+			
 		private: static std::hash<DataType> Hash;
 
-
 		public:
-		constexpr inline static auto GetHash(const DataType& instance) noexcept( IsNoExcept )
+		constexpr inline static auto GetHash(const DataType& instance) 
+			noexcept( IsNoexcept )
 		{
 			return Hash(instance);
 		}
@@ -38,18 +39,14 @@ export namespace Atlas::Adapters
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: static constexpr bool IsNoExcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
+			
 			
 	    public:
-		constexpr inline static auto GetHash(const DataType& instance)  noexcept( IsNoExcept )
+		constexpr inline static auto GetHash(const DataType& instance) 
+			noexcept( IsNoexcept )
 		{
 			return instance.GetHash();
 		}
 	};
-}
-
-export namespace Atlas::Concept
-{
-	template<typename DataType>
-	concept HasHashAdapter = Atlas::Adapters::HashAdapter<DataType>::value;
 }

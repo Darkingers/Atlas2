@@ -6,20 +6,61 @@ import  <Atlas.Configuration.h>
 
 export namespace Atlas::Configuration
 {
-#ifndef ATLAS_ENSURE
-#define ATLAS_ENSURE true
+#ifndef ATLAS_CONVERTER_CHECK
+#define ATLAS_CONVERTER_CHECK true
 #endif
 
-#ifndef ATLAS_ARGUMENT_CHECK
-#define ATLAS_ARGUMENT_CHECK false
+#ifndef ATLAS_BOOL_CONVERTER_CHECK
+#define ATLAS_BOOL_CONVERTER_CHECK true
 #endif
 
-#ifndef ATLAS_COMPILETIME_ADAPTER_CHECK
-#define ATLAS_COMPILETIME_ADAPTER_CHECK false
+#ifndef ATLAS_DOUBLE_CONVERTER_CHECK
+#define ATLAS_DOUBLE_CONVERTER_CHECK true
 #endif
 
-	constexpr bool EnableEnsure = ATLAS_ENSURE;
-	constexpr bool EnableArgumentCheck = ATLAS_ARGUMENT_CHECK;
-	constexpr bool DoCompiletimeAdapterCheck = ATLAS_COMPILETIME_ADAPTER_CHECK;
+#ifndef ATLAS_FLOAT_CONVERTER_CHECK
+#define ATLAS_FLOAT_CONVERTER_CHECK true
+#endif
+
+#ifndef ATLAS_INT_CONVERTER_CHECK
+#define ATLAS_INT_CONVERTER_CHECK true
+#endif
+
+#ifndef ATLAS_LONG_CONVERTER_CHECK
+#define ATLAS_LONG_CONVERTER_CHECK true
+#endif
+
+#ifndef ATLAS_LONGLONG_CONVERTER_CHECK
+#define ATLAS_LONGLONG_CONVERTER_CHECK true
+#endif
+	
+#ifndef ATLAS_STRING_CONVERTER_CHECK
+#define ATLAS_STRING_CONVERTER_CHECK true
+#endif
+
+#ifndef ATLAS_UNSIGNEDINT_CONVERTER_CHECK
+#define ATLAS_UNSIGNEDINT_CONVERTER_CHECK true
+#endif
+	
+#ifndef ATLAS_UNSIGNEDLONG_CONVERTER_CHECK
+#define ATLAS_UNSIGNEDLONG_CONVERTER_CHECK true
+#endif
+
+#ifndef ATLAS_UNSIGNEDLONGLONG_CONVERTER_CHECK
+#define ATLAS_UNSIGNEDLONGLONG_CONVERTER_CHECK true
+#endif
+	
+	constexpr bool EnableConverterCheck = ATLAS_CONVERTER_CHECK;
+	constexpr bool EnableBoolConverterCheck = EnableConverterCheck && ATLAS_BOOL_CONVERTER_CHECK;
+	constexpr bool EnableDoubleConverterCheck = EnableConverterCheck && ATLAS_DOUBLE_CONVERTER_CHECK;
+	constexpr bool EnableFloatConverterCheck = EnableConverterCheck && ATLAS_FLOAT_CONVERTER_CHECK;
+	constexpr bool EnableIntConverterCheck = EnableConverterCheck && ATLAS_INT_CONVERTER_CHECK;
+	constexpr bool EnableLongConverterCheck = EnableConverterCheck && ATLAS_LONG_CONVERTER_CHECK;
+	constexpr bool EnableLongLongConverterCheck = EnableConverterCheck && ATLAS_LONGLONG_CONVERTER_CHECK;
+	constexpr bool EnableStringConverterCheck = EnableConverterCheck && ATLAS_STRING_CONVERTER_CHECK;
+	constexpr bool EnableUnsignedIntConverterCheck = EnableConverterCheck && ATLAS_UNSIGNEDINT_CONVERTER_CHECK;
+	constexpr bool EnableUnsignedLongConverterCheck = EnableConverterCheck && ATLAS_UNSIGNEDLONG_CONVERTER_CHECK;
+	constexpr bool EnableUnsignedLongLongConverterCheck = EnableConverterCheck && ATLAS_UNSIGNEDLONGLONG_CONVERTER_CHECK;
+
 }
 

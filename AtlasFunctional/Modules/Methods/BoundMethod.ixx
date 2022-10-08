@@ -39,7 +39,7 @@ export namespace Atlas
 		public:
 		BoundMethodType& Rebind( Args&&... args )
 		{
-			Extensions::Tuple::Reassign( _arguments , std::forward<Args&&>( args )... );
+			Tuple::Reassign( _arguments , std::forward<Args&&>( args )... );
 		}
 
 		public:

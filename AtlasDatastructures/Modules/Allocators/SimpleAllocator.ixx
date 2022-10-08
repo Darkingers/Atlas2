@@ -30,7 +30,7 @@ export namespace Atlas
 			_location( new DataType[size] ) ,
 			_size( size ) 
 		{
-			Argument::IsPositive( size );
+			Validate::IsPositive( size );
 		}
 
 		public:
@@ -38,10 +38,10 @@ export namespace Atlas
 			_location( location ) ,
 			_size( size ) 
 		{
-			Argument::IsPositive( size );
+			Validate::IsPositive( size );
 			if ( size > 0 )
 			{
-				Argument::IsNotNull( location );
+				Validate::IsNotNull( location );
 			}
 		}
 
@@ -60,10 +60,10 @@ export namespace Atlas
 		public:
 		constexpr void Allocate( const unsigned int newSize )  final
 		{
-			Argument::IsPositive( newSize );
+			Validate::IsPositive( newSize );
 			if ( _size > 0 )
 			{
-				Argument::IsNotNull( _location );
+				Validate::IsNotNull( _location );
 			}
 		
 			DataType* newMemory = new DataType[newSize];
@@ -80,9 +80,9 @@ export namespace Atlas
 		public:
 		constexpr DataType& operator[]( const unsigned int index ) final
 		{
-			Argument::IsPositive( index );
-			Argument::IsLess( index , _size );
-			Argument::IsNotNull( _location );
+			Validate::IsPositive( index );
+			Validate::IsLess( index , _size );
+			Validate::IsNotNull( _location );
 
 			return _location[index];
 		}

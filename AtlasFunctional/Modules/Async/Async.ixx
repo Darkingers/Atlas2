@@ -7,6 +7,7 @@ module;
 
 export module AtlasAsync;
 import AtlasExceptions;
+import AtlasExtensions;
 
 export namespace Atlas
 {
@@ -45,7 +46,7 @@ export namespace Atlas
 					current += sleep_ms;
 				}
 
-				Throw<TimeoutException>( "Wait timed out" , timeout_ms , sleep_ms );
+				//Throw<TimeoutException>( "Wait timed out" , timeout_ms , sleep_ms );
 			}
 		}
 	};

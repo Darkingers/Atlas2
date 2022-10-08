@@ -188,7 +188,7 @@
     <ClCompile Include="Modules\Exceptions\NullException.ixx" />
     <ClCompile Include="Modules\Exceptions\TimeoutException.ixx" />
     <ClCompile Include="Modules\Exceptions\ValidationException.ixx" />
-    <ClCompile Include="Modules\Extensions\Exception.ixx" />
+    <ClCompile Include="Modules\Extensions\Throw.ixx" />
     <ClCompile Include="Modules\Extensions\Extended.ixx" />
     <ClCompile Include="Modules\Extensions\String.ixx" />
     <ClCompile Include="Modules\Extensions\Tuple.ixx" />

@@ -27,8 +27,8 @@ export namespace Atlas
 		public: template<typename DataType>
 		constexpr inline static auto GetHash( const DataType* memoryLocation , const unsigned int memorySize )
 		{
-			Argument::IsNotNull( memoryLocation );
-			Argument::IsPositive( memorySize );
+			Validate::IsNotNull( memoryLocation );
+			Validate::IsPositive( memorySize );
 
 			return Implementation::Memory<DataType>::GetHash( memoryLocation , memorySize );
 		}

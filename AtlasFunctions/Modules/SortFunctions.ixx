@@ -363,9 +363,9 @@ export namespace Atlas
 		{
 			const auto count = Adapter::Count( collection );
 
-			Argument::IsMore( count , 0 );
-			Argument::PositiveRange( inclusiveFrom , exclusiveTo );
-			Argument::IsLessOrEqual( exclusiveTo , count );
+			Validate::IsMore( count , 0 );
+			Validate::PositiveRange( inclusiveFrom , exclusiveTo );
+			Validate::IsLessOrEqual( exclusiveTo , count );
 		}
     };
 }

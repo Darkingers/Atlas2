@@ -27,10 +27,7 @@ export namespace Atlas
 			_instance( instance ) ,
 			_invoked( invoked )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsNotNull( instance );
-			}
+			Validate<true>::IsNotNull( instance );
 		}	
 
 		public: 

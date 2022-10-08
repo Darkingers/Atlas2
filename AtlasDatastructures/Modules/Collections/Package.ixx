@@ -21,11 +21,8 @@ export namespace Atlas
 			Size( size ),
 			DeleteData( deleteData )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsNotNull( data );
-				Ensure::IsPositive( size );
-			}
+			Validate::IsNotNull( data );
+			Validate::IsPositive( size );
 		}
 
 		Package( unsigned int size)  :
@@ -33,10 +30,7 @@ export namespace Atlas
 			Size( size ) ,
 			DeleteData( true )
 		{
-			if constexpr ( Configuration::EnableArgumentCheck )
-			{
-				Ensure::IsPositive( size );
-			}
+			Validate::IsPositive( size );
 		}
 
 		~Package()
@@ -52,11 +46,8 @@ export namespace Atlas
 	template<typename DataType>
 	Package<DataType> CreatePackage( const DataType* location , const unsigned int size , bool copy )
 	{
-		if constexpr ( Configuration::EnableArgumentCheck )
-		{
-			Ensure::IsPositive( size );
-			Ensure::IsNotNull( location );
-		}
+		Validate::IsPositive( size );
+		Validate::IsNotNull( location );
 
 		if constexpr ( copy )
 		{

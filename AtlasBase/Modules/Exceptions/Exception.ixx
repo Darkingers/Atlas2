@@ -9,7 +9,7 @@ export namespace Atlas
 	class DLLApi Exception
 	{
 		public: const void* Source;
-		public: const std::string& Message;
+		public: const std::string Message;
 
 
 		public:

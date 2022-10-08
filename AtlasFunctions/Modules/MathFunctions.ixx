@@ -107,7 +107,7 @@ export namespace Atlas
 		public: template<typename NumberType>
 		constexpr inline static auto SquareRoot( const NumberType& data )
 		{
-			Argument::IsPositive( data );
+			Validate::IsPositive( data );
 
 			return Implementation::Math<NumberType>::SquareRoot( data );
 		}

@@ -88,14 +88,14 @@ export namespace Atlas
 		public: template<typename InvokedType>
 		void Unsubscribe( InvokedType invoked )
 		{
-			Extensions::Vector::Remove( _lambdas, invoked );
+			Vector::Remove( _lambdas, invoked );
 		}	
 
 		public: template<typename InvokedType>
 			requires Concept::IsSame<InvokedType , StaticType>
 		void Unsubscribe( InvokedType invoked )
 		{
-			Extensions::Vector::Remove( _static , invoked );
+			Vector::Remove( _static , invoked );
 		}
 
 		public: template<typename ClassType , typename InvokedType>
@@ -106,7 +106,7 @@ export namespace Atlas
 				return wrapper.Instance == (void*) instance && wrapper.Function == (void*) invoked;
 			};
 
-			Extensions::Vector::RemoveIf( _wrapped , condition );
+			Vector::RemoveIf( _wrapped , condition );
 		}
 
 		public: template<typename InvokedType>

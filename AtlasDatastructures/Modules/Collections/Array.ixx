@@ -88,7 +88,7 @@ export namespace Atlas
 				return *this;
 			}
 
-			Argument::IsPositive( newSize );
+			Validate::IsPositive( newSize );
 			
 			if constexpr ( DoEventHandling)
 			{
@@ -287,8 +287,8 @@ export namespace Atlas
 		private:
 		constexpr void ValidateIndex(const unsigned int index ) const
 		{
-			Argument::IsPositive( index );
-			Argument::IsLess( index , GetSize( ) );
+			Validate::IsPositive( index );
+			Validate::IsLess( index , GetSize( ) );
 		}
 
 		private:

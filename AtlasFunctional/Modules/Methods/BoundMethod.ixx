@@ -18,11 +18,11 @@ export namespace Atlas
 	{
 		private: using BoundMethodType = BoundMethod<ReturnType , Args...>;
 		private: using FunctionType = Definition::LambdaFunction<ReturnType , Args...>;	
-		private: using ArgumentHolder = std::tuple<Args...>;
+		private: using ValidateHolder = std::tuple<Args...>;
 					   
 		
 		private: FunctionType _invoked;
-		private: ArgumentHolder _arguments;
+		private: ValidateHolder _arguments;
 
 
 		public:

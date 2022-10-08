@@ -231,7 +231,7 @@ export namespace Atlas
 					}
 				}
 
-				Throw<NotFoundException>( "No element found matching the given condition!" );
+				//Throw<NotFoundException>( "No element found matching the given condition!" );
 			}
 
 			public: template<typename... Args>
@@ -258,22 +258,22 @@ export namespace Atlas
 		public: template<typename CollectionType, typename TargetCollectionType>
 		constexpr inline static auto Copy( const CollectionType& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
 		{
-			Argument::IsPositive( copyStart );
-			Argument::IsPositive( copySize );
+			Validate::IsPositive( copyStart );
+			Validate::IsPositive( copySize );
 
 			if constexpr ( !Type<CollectionType>::IsPointer )
 			{
 				const unsigned int sourceCount = Adapter::Count( collection );
 
-				Argument::IsLess( copyStart , sourceCount );
-				Argument::IsLess( copyStart + copySize , sourceCount );
+				Validate::IsLess( copyStart , sourceCount );
+				Validate::IsLess( copyStart + copySize , sourceCount );
 			}
 
 			if constexpr ( !Type<TargetCollectionType>::IsPointer )
 			{
 				const unsigned int destinationCount = Adapter::Count( collection );
 
-				Argument::IsLess( copySize , destinationCount );
+				Validate::IsLess( copySize , destinationCount );
 			}
 
 			return Implementation::DataFunctions<CollectionType>::Copy( collection , copyStart , copySize , destination );
@@ -282,20 +282,20 @@ export namespace Atlas
 		public: template<typename CollectionType , typename TargetCollectionType>
 		constexpr inline static auto Copy( const CollectionType& collection , const unsigned int copySize , TargetCollectionType& destination )
 		{
-			Argument::IsPositive( copySize );
+			Validate::IsPositive( copySize );
 
 			if constexpr ( !Type<CollectionType>::IsPointer )
 			{
 				const unsigned int sourceCount = Adapter::Count( collection );
 
-				Argument::IsLess( copySize , sourceCount );
+				Validate::IsLess( copySize , sourceCount );
 			}
 
 			if constexpr ( !Type<TargetCollectionType>::IsPointer )
 			{
 				const unsigned int destinationCount = Adapter::Count( collection );
 
-				Argument::IsLess( copySize , destinationCount );
+				Validate::IsLess( copySize , destinationCount );
 			}
 
 			return Implementation::DataFunctions<CollectionType>::Copy( collection , 0 , copySize , destination );
@@ -304,19 +304,19 @@ export namespace Atlas
 		public: template<typename CollectionType>
 		constexpr inline static void Shift( CollectionType& collection , const unsigned int shiftStart, const unsigned int shiftSize, const unsigned int shiftOffset )
 		{
-			Argument::IsPositive( shiftStart );
-			Argument::IsPositive( shiftSize );
-			Argument::IsPositive( shiftStart + shiftOffset );
-			Argument::IsPositive( shiftStart + shiftOffset + shiftSize );
+			Validate::IsPositive( shiftStart );
+			Validate::IsPositive( shiftSize );
+			Validate::IsPositive( shiftStart + shiftOffset );
+			Validate::IsPositive( shiftStart + shiftOffset + shiftSize );
 
 			if constexpr ( !Type<CollectionType>::IsPointer )
 			{
 				const unsigned int sourceCount = Adapter::Count( collection );
 
-				Argument::IsLess( shiftStart , sourceCount );
-				Argument::IsLess( shiftStart + shiftOffset , sourceCount );
-				Argument::IsLess( shiftStart + shiftSize , sourceCount );
-				Argument::IsLess( shiftStart + shiftOffset + shiftSize , sourceCount );
+				Validate::IsLess( shiftStart , sourceCount );
+				Validate::IsLess( shiftStart + shiftOffset , sourceCount );
+				Validate::IsLess( shiftStart + shiftSize , sourceCount );
+				Validate::IsLess( shiftStart + shiftOffset + shiftSize , sourceCount );
 			}
 
 			Implementation::DataFunctions<CollectionType>::Shift( collection , shiftStart, shiftSize , shiftOffset );
@@ -328,12 +328,12 @@ export namespace Atlas
 			if constexpr ( !Type<CollectionType>::IsPointer )
 			{
 				const auto count = Adapter::Count( collection );
-				Argument::IsInRange( index, 0 , count );
-				Argument::IsLess( index + Variadic::Count( std::forward<const Args&>( arguments )... ) , count );
+				Validate::IsInRange( index, 0 , count );
+				Validate::IsLess( index + Variadic::Count( std::forward<const Args&>( arguments )... ) , count );
 			}
 			else
 			{
-				Argument::IsPositive( index );
+				Validate::IsPositive( index );
 			}
 
 			auto iterator = std::begin( collection );

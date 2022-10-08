@@ -2,7 +2,7 @@ module;
 
 #include "../../../Macros/Macros.h"
 
-export module AtlasExtensions:Exception;
+export module AtlasExtensions:Throw;
 
 import AtlasConcepts;
 

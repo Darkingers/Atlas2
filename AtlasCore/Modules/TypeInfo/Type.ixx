@@ -29,7 +29,7 @@ export namespace Atlas
 		constexpr inline static bool IsNoexceptConvertibleTo = noexcept( (CastedType)std::declval<DataType>( ));
 
 		public: template<typename... Args>
-		constexpr inline static bool IsNoexceptConstructible = noexcept( std::declval<DataType>( std::declval<Args>( )... ) );
+		constexpr inline static bool IsNoexceptConstructible = noexcept( std::is_nothrow_constructible<DataType, Args...>::value );
 
 		public: template<typename ComparedType>
 		constexpr inline static bool IsSame = Fulfills::IsSame<DataType , ComparedType>::value;

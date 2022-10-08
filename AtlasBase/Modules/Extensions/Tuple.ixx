@@ -18,8 +18,6 @@ export namespace Atlas
 		private: template<unsigned int Current , unsigned int End , typename... Args>
 		struct IsNoexceptReassign
 		{
-			public: constexpr static bool value = NoexceptCheck( );
-
 			public:
 			constexpr static bool NoexceptCheck( )
 			{
@@ -32,6 +30,8 @@ export namespace Atlas
 
 				return result;
 			}
+
+			public: constexpr static bool value = NoexceptCheck( );
 		};
 
 		public: template <unsigned int InclusiveFrom, unsigned int ExclusiveTo, typename TupleType>
@@ -61,7 +61,7 @@ export namespace Atlas
 
 		public: template<typename... Args>
 		constexpr inline static auto Make(Args&&... arguments )
-			noexcept( Type<std::tuple<Args...>>::template IsNoexceptConstructible<Args...> )
+			noexcept( Type<std::tuple<Args...>>::template IsNoexceptConstructible<Args&&...> )
 		{
 			return std::tuple<Args...>( std::forward<Args&&>( arguments )... );
 		}
@@ -113,7 +113,7 @@ export namespace Atlas::Converters
 		private: template<unsigned int Current , unsigned int End>
 		struct IsNoexceptConvertable
 		{
-			public: constexpr static bool value = NoexceptCheck( );
+		
 
 			public:
 			constexpr static bool NoexceptCheck( )
@@ -127,6 +127,8 @@ export namespace Atlas::Converters
 
 				return result;
 			}
+
+			public: constexpr static bool value = NoexceptCheck( );
 		};
 
 		public:

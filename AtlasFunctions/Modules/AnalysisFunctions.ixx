@@ -261,7 +261,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Maximum( collection, 0, count, comparator );
 		}
@@ -279,7 +279,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count , 0 );
+			Validate::IsMore( count , 0 );
 
 			return Implementation::Analysis<CollectionType>::Maximum( collection , 0 , count , converter , comparator );
 		}
@@ -297,7 +297,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 			
-			Argument::IsMore( count , 0 );
+			Validate::IsMore( count , 0 );
 
 			return Implementation::Analysis<CollectionType>::MaximumBy( collection, 0, count, comparator );
 		}
@@ -315,7 +315,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 			
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::MaximumBy( collection, 0,count, converter, comparator );
 		}
@@ -333,7 +333,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Minimumn( collection, 0, count, comparator );
 		}
@@ -351,7 +351,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Minimumn( collection, 0, count, converter, comparator );
 		}
@@ -369,7 +369,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::MinimumBy( collection, 0, count, comparator );
 		}
@@ -387,7 +387,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::MinimumBy( collection, 0, count, converter, comparator );
 		}
@@ -405,7 +405,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Sum( collection, 0, count);
 		}
@@ -423,7 +423,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Sum( collection, 0, count, converter );
 		}
@@ -441,7 +441,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Average( collection, 0, count );
 		}
@@ -459,7 +459,7 @@ export namespace Atlas
 		{
 			const unsigned int count = Adapter::Count( collection );
 
-			Argument::IsMore( count, 0 );
+			Validate::IsMore( count, 0 );
 
 			return Implementation::Analysis<CollectionType>::Average( collection, 0, count, converter );
 		}
@@ -476,9 +476,9 @@ export namespace Atlas
 		constexpr inline static void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 		{
 			const auto count = Adapter::Count( collection );
-			Argument::IsMore( count , 0 );
-			Argument::PositiveRange( inclusiveFrom , exclusiveTo );
-			Argument::IsLessOrEqual( exclusiveTo , count );
+			Validate::IsMore( count , 0 );
+			Validate::PositiveRange( inclusiveFrom , exclusiveTo );
+			Validate::IsLessOrEqual( exclusiveTo , count );
 		}
     };
 }

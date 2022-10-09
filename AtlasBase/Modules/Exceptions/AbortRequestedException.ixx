@@ -11,8 +11,13 @@ export namespace Atlas
 	class DLLApi AbortRequestedException :
 		public Exception
 	{
+		public:
+		constexpr AbortRequestedException( const std::string& message ) noexcept :
+			Exception( message , nullptr )
+		{}
+
 		public: 
-		constexpr AbortRequestedException( const std::string& message , const void* source = nullptr ) noexcept :
+		constexpr AbortRequestedException( const std::string& message , const void* source ) noexcept :
 			Exception( message , source )
 		{}
 

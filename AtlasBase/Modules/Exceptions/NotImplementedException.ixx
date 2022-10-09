@@ -12,10 +12,15 @@ export namespace Atlas
 		public Exception
 	{
 		public:
-		NotImplementedException( const std::string& message , const void* source = nullptr ) noexcept :
+		constexpr NotImplementedException( const std::string& message ) noexcept :
+			Exception( message , nullptr )
+		{}
+		
+		public:
+		NotImplementedException( const std::string& message , const void* source ) noexcept :
 			Exception( message , source )
 		{}
-
+		
 		public:
 		NotImplementedException( const NotImplementedException& other ) noexcept :
 			Exception( other )

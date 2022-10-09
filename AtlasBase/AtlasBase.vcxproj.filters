@@ -123,5 +123,6 @@
     <ClCompile Include="Modules\Converters\UnsignedLongConverter.ixx" />
     <ClCompile Include="Modules\Converters\UnsignedLongLongConverter.ixx" />
     <ClCompile Include="Modules\Extensions\Throw.ixx" />
+    <ClCompile Include="Modules\Converters\Convert.ixx" />
   </ItemGroup>
 </Project>

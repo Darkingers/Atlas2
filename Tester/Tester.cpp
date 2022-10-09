@@ -13,13 +13,43 @@ import AtlasExtensions;
 
 int main()
 {
-	try
+	const std::string g = "Hi there";
+	std::vector<int> vec;
+
+	for ( int i = 0; i < 10000; ++i )
 	{
-		Atlas::Throw<Atlas::ValidationException>( "Hi there" , 1 , 2 , 3 , 4 , 5 );
+		vec.push_back( i );
 	}
-	catch ( Atlas::Exception& e )
+	
+	while(true )
 	{
-		std::cout << e.ToString( );
+		try
+		{		
+			throw std::make_tuple( 1 , 2 , 3 , 4 , 5 , 5 );
+
+			Atlas::Throw<Atlas::ValidationException>(g );
+		}
+		catch ( Atlas::Exception& e )
+		{
+			std::cout << e.ToString( );
+		}
+		catch ( std::string& e)
+		{
+			std::cout << e;
+		}
+		catch ( std::tuple<int , int , int , int , int , int>& tuple )
+		{
+			std::cout << std::get<0>( tuple ) << std::endl;
+			std::cout << std::get<1>( tuple ) << std::endl;
+			std::cout << std::get<2>( tuple ) << std::endl;
+			std::cout << std::get<3>( tuple ) << std::endl;
+			std::cout << std::get<4>( tuple ) << std::endl;
+			std::cout << std::get<5>( tuple ) << std::endl;
+		}
+		catch ( ... )
+		{
+			std::cout << "Unknown exception";
+		}
 	}
 }
 

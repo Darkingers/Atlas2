@@ -124,45 +124,64 @@ export namespace Atlas::Implementation
 		public:
 		auto ToString( ) const final
 		{
-			return BaseType::ToString( ) /*+ "{" + Convert<std::string>::From( this->ExtendedProperties ) + "}"*/;
+			return BaseType::ToString( ) + "{" + Convert<std::string>::From( this->ExtendedProperties ) + "}";
+		}
+	};
+
+	template<typename ConstructedType, typename... BaseArgs>
+	class DLLApi Constructor
+	{
+		public: template<typename CurrentType, typename... ExtendedArgs>
+		constexpr static auto Construct(BaseArgs&&... bArgs, CurrentType&& current, ExtendedArgs&&... eArgs )
+		{
+			if constexpr ( std::is_constructible<ConstructedType , BaseArgs...>::value )
+			{
+				return Implementation::ExtendedType<ConstructedType, CurrentType, ExtendedArgs...>( std::forward<CurrentType&&>( current ), std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
+			} 
+			else if constexpr( sizeof...( eArgs )>0 )
+			{
+				return Constructor<ConstructedType , BaseArgs... , CurrentType>::Construct( std::forward<BaseArgs&&>( bArgs )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... );
+			}
+			else
+			{
+				static_assert( sizeof...( eArgs ) == 0 , "No constructor found for type" );
+			}
+		}	
+
+		public: template<typename CurrentType , typename... ExtendedArgs>
+		constexpr static auto Construct( BaseArgs&&... bArgs , const CurrentType& current , ExtendedArgs&&... eArgs )
+		{
+			if constexpr ( std::is_constructible<ConstructedType , BaseArgs...>::value )
+			{
+				return Implementation::ExtendedType<ConstructedType , const CurrentType&, ExtendedArgs...>( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
+			}
+			else if constexpr ( sizeof...( eArgs ) > 0 )
+			{
+				return Constructor<ConstructedType , BaseArgs... , const CurrentType&>::Construct( std::forward<BaseArgs&&>( bArgs )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... );
+			}
+			else
+			{
+				static_assert( sizeof...( eArgs ) == 0 , "No constructor found for type" );
+			}
 		}
 	};
 }
 
 export namespace Atlas
 {
-	template<typename BaseType , typename... BaseArgs>
+	template<typename BaseType>
 	class DLLApi Extended
 	{
-		public: template<typename... ExtendedArgs>
-		constexpr inline static auto Construct( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs )
-			noexcept( Type<Implementation::ExtendedType<BaseType , ExtendedArgs...>>::template IsNoexceptConstructible<ExtendedArgs...,BaseArgs...>)
+		public: template<typename... Arguments>
+			constexpr inline static auto Construct( Arguments&&... args )
 		{
-			return Implementation::ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
+			return Implementation::Constructor<BaseType>::Construct( std::forward<Arguments&&>( args )... );
 		}
 
-		public: template<typename... ExtendedArgs>
-		constexpr inline static auto Allocate( BaseArgs&&... bArgs , ExtendedArgs&&... eArgs ) 
-			noexcept( Type<Implementation::ExtendedType<BaseType , ExtendedArgs...>>::template IsNoexceptConstructible<ExtendedArgs... , BaseArgs...> )
+		public:  template<typename... Arguments>
+			constexpr inline static auto Allocate( Arguments&&... args )
 		{
-			return new Implementation::ExtendedType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
+			return new Implementation::Constructor<BaseType>::Construct( std::forward<Arguments&&>( args )... );
 		}
 	};
-}
-
-namespace std
-{
-	/*template<unsigned int Index, typename Type>
-		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Implementation::Marker::ExtendedType>
-	struct tuple_element<Index , Type>
-	{
-		using type = typename decltype( std::declval<Type>( ).GetExtended<Index-1>( ) );
-	};
-
-	template<typename Type>
-		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Implementation::Marker::ExtendedType>
-	struct tuple_element<0 , Type>
-	{
-		using type = Type;
-	};*/
 }

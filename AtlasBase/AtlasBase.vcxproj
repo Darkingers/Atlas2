@@ -163,6 +163,7 @@
     <ClCompile Include="Modules\Adapters.ixx" />
     <ClCompile Include="Modules\Converters.ixx" />
     <ClCompile Include="Modules\Converters\BoolConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Convert.ixx" />
     <ClCompile Include="Modules\Converters\Converter.ixx" />
     <ClCompile Include="Modules\Converters\DoubleConverter.ixx" />
     <ClCompile Include="Modules\Converters\FloatConverter.ixx" />

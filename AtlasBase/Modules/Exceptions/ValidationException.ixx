@@ -12,7 +12,12 @@ export namespace Atlas
 		public Exception
 	{
 		public:
-		constexpr ValidationException( const std::string& message , const void* source = nullptr ) noexcept :
+		constexpr ValidationException( const std::string& message ) noexcept :
+			Exception( message , nullptr )
+		{} 
+		
+		public:
+		constexpr ValidationException( const std::string& message , const void* source  ) noexcept :
 			Exception( message , source )
 		{}
 

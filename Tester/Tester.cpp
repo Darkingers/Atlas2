@@ -7,13 +7,27 @@ import AtlasAdapters;
 import AtlasConverters;
 import AtlasExtensions;
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 #include <iostream>
 #include <string>
 #include <vector>
 
+#ifdef _DEBUG
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+// Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
+// allocations to be of _CLIENT_BLOCK type
+#else
+#define DBG_NEW new
+#endif
+
 int main()
 {
-	const std::string g = "Hi there";
+	std::string g = "Hi there";
+
+	char* t = new char[400];
+	delete[] t;
 	std::vector<int> vec;
 
 	for ( int i = 0; i < 10000; ++i )
@@ -21,17 +35,17 @@ int main()
 		vec.push_back( i );
 	}
 	
-	while(true )
+	for ( int i = 0; i < 1000000000; ++i )
 	{
 		try
 		{		
-			throw std::make_tuple( 1 , 2 , 3 , 4 , 5 , 5 );
+			//throw std::make_tuple( 1 , 2 , 3 , 4 , 5 , 5 );
 
-			Atlas::Throw<Atlas::ValidationException>(g );
+			Atlas::Throw<Atlas::ValidationException>(g, 1, 2,3, 4,5 );
 		}
 		catch ( Atlas::Exception& e )
 		{
-			std::cout << e.ToString( );
+			std::cout<< e.ToString( );
 		}
 		catch ( std::string& e)
 		{
@@ -51,6 +65,8 @@ int main()
 			std::cout << "Unknown exception";
 		}
 	}
+
+	_CrtDumpMemoryLeaks( );
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

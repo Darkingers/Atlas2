@@ -35,7 +35,8 @@ export namespace Atlas
 		{}
 
 		public:
-		virtual const std::string& ToString( ) const 		{
+		virtual std::string ToString( ) const 		
+		{
 			return Message;
 		}
 	};

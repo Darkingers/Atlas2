@@ -21,13 +21,12 @@ export namespace Atlas::Implementation
 		class ExtendedType{};
 	}
 
-	template<typename BaseType , typename... ExtendedArgs>
+	template<typename BaseType ,typename PropertyHolder>
 	class DLLApi ExtendedBaseType :
 		public Marker::ExtendedType ,
 		public BaseType
 	{
-		private: using ActualType = ExtendedBaseType<BaseType , ExtendedArgs...>;
-		private: using PropertyHolder = std::tuple<ExtendedArgs...>;
+		private: using ActualType = ExtendedBaseType<BaseType , PropertyHolder>;
 		private: template<unsigned int Index>
 		using PropertyType = Deduce::TupleIndexedType<Index , PropertyHolder>;
 
@@ -42,17 +41,16 @@ export namespace Atlas::Implementation
 
 
 		public: template<typename... BaseArgs>
-		constexpr ExtendedBaseType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs ) 
+		constexpr ExtendedBaseType( PropertyHolder&& propertyHolder , BaseArgs&&... baseArgs )
 			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseArgs&&...> ) :
-			ExtendedProperties( std::forward<ExtendedArgs&&>( extendedArgs )... ) ,
+			ExtendedProperties( std::move( propertyHolder ) ) ,
 			BaseType( std::forward<BaseArgs&&>( baseArgs )... )
 		{
 
 		}
 
 		public:
-		~ExtendedBaseType( ) override
-		{}
+		~ExtendedBaseType( ) override = default;
 
 		public: template<unsigned int Index>
 		constexpr auto GetExtended( ) 
@@ -83,43 +81,36 @@ export namespace Atlas::Implementation
 		}
 	};
 
-	template<typename BaseType , typename... ExtendedArgs>
+	template<typename BaseType , typename PropertyHolder>
 	class DLLApi ExtendedType :
-		public ExtendedBaseType<BaseType , ExtendedArgs...>
-	{
-		private: constexpr static bool IsNoexceptConstructible = Type<BaseType>::template IsNoexceptConstructible<ExtendedArgs&&...>;
-
-			
+		public ExtendedBaseType<BaseType , PropertyHolder>
+	{			
 		public: template<typename... BaseArgs>
-		constexpr ExtendedType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs )
-			noexcept ( IsNoexceptConstructible ) :
-			ExtendedBaseType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( extendedArgs )... , std::forward<BaseArgs&&>( baseArgs )... )
+		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseArgs&&... baseArgs )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseArgs&&...> ) :
+			ExtendedBaseType<BaseType , PropertyHolder>( std::move(propertyHolder) , std::forward<BaseArgs&&>( baseArgs )... )
 		{}
 
 		public:
-		~ExtendedType( ) final
-		{}
+		~ExtendedType( ) final = default;
 	};
 
-	template<typename BaseType, typename... ExtendedArgs>
+	template<typename BaseType, typename PropertyHolder>
 		requires Concept::HasToString<BaseType>
-	class DLLApi ExtendedType<BaseType, ExtendedArgs...> :
-		public ExtendedBaseType<BaseType , ExtendedArgs...>
+	class DLLApi ExtendedType<BaseType, PropertyHolder> :
+		public ExtendedBaseType<BaseType , PropertyHolder>
 	{
 		private: constexpr static bool IsNoexceptToString = noexcept( std::declval<BaseType>( ).ToString( ) );
-		private: constexpr static bool IsNoexceptExtendedToString = noexcept( Convert<std::string>::From( std::declval<std::tuple<ExtendedArgs...>>() ) );
-		private: constexpr static bool IsNoexceptConstructible = Type<BaseType>::template IsNoexceptConstructible<ExtendedArgs&&...>;
-			
-			
+		private: constexpr static bool IsNoexceptExtendedToString = noexcept( Convert<std::string>::From( std::declval<PropertyHolder>() ) );
+	
 		public: template<typename... BaseArgs>
-		constexpr ExtendedType( ExtendedArgs&&... extendedArgs , BaseArgs&&... baseArgs )
-			noexcept ( IsNoexceptConstructible ) :
-			ExtendedBaseType<BaseType , ExtendedArgs...>( std::forward<ExtendedArgs&&>( extendedArgs )... , std::forward<BaseArgs&&>( baseArgs )... )
+		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseArgs&&... baseArgs )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseArgs&&...> ) :
+			ExtendedBaseType<BaseType , PropertyHolder>( std::move( propertyHolder ) , std::forward<BaseArgs&&>( baseArgs )... )
 		{}
 
 		public:
-		 ~ExtendedType()  final
-		{}
+		~ExtendedType( ) final = default;
 			
 		public:
 		auto ToString( ) const final
@@ -136,7 +127,7 @@ export namespace Atlas::Implementation
 		{
 			if constexpr ( std::is_constructible<ConstructedType , BaseArgs...>::value )
 			{
-				return Implementation::ExtendedType<ConstructedType, CurrentType, ExtendedArgs...>( std::forward<CurrentType&&>( current ), std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
+				return Implementation::ExtendedType<ConstructedType, std::tuple<CurrentType, ExtendedArgs...>>(std::make_tuple( std::forward<CurrentType&&>( current ), std::forward<ExtendedArgs&&>( eArgs )...) , std::forward<BaseArgs&&>( bArgs )... );
 			} 
 			else if constexpr( sizeof...( eArgs )>0 )
 			{
@@ -153,7 +144,7 @@ export namespace Atlas::Implementation
 		{
 			if constexpr ( std::is_constructible<ConstructedType , BaseArgs...>::value )
 			{
-				return Implementation::ExtendedType<ConstructedType , const CurrentType&, ExtendedArgs...>( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... , std::forward<BaseArgs&&>( bArgs )... );
+				return Implementation::ExtendedType<ConstructedType ,std::tuple<const CurrentType&, ExtendedArgs...>>(std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )...) , std::forward<BaseArgs&&>( bArgs )... );
 			}
 			else if constexpr ( sizeof...( eArgs ) > 0 )
 			{

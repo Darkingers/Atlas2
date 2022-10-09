@@ -20,7 +20,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType , bool> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<bool>;
+		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<bool>;
 		
 
 		public:
@@ -35,7 +35,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , bool> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
 		
 
 		public:
@@ -54,7 +54,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , bool> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
 
 			
 		public:

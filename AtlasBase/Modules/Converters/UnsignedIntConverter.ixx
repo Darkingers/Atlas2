@@ -20,7 +20,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType , unsigned int> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<unsigned int>;
+		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<unsigned int>;
 		
 
 		public:
@@ -35,7 +35,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , unsigned int> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableUnsignedIntConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableUnsignedIntConverterCheck;
 		
 
 		public:
@@ -45,7 +45,7 @@ export namespace Atlas::Converters
 			unsigned int integer = 0;
 
 			int i = 0;
-			int length = data.length( );
+			auto length = data.length( );
 			char current;
 
 			Validate<Configuration::EnableUnsignedIntConverterCheck>::IsMore( length , 0 );
@@ -68,7 +68,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , unsigned int> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableUnsignedIntConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableUnsignedIntConverterCheck;
 		
 
 		public:

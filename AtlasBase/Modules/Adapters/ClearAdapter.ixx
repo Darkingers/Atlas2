@@ -21,7 +21,7 @@ export namespace Atlas::Adapters
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept ( std::declval<ClearedType>.clear( ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<ClearedType>().clear( ) );
 
 			
 		public:
@@ -37,7 +37,7 @@ export namespace Atlas::Adapters
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept ( std::declval<ClearedType>.Clear( ) );
+		public: constexpr static bool IsNoexcept = noexcept ( std::declval<ClearedType>().Clear( ) );
 
 			
 		public:

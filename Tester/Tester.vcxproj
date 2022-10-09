@@ -137,26 +137,8 @@
     <ProjectReference Include="..\AtlasBase\AtlasBase.vcxproj">
       <Project>{b5053f47-5a8f-45e3-b449-b53a0b754d8d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\AtlasCommon\AtlasCommon.vcxproj">
-      <Project>{4b59b68e-823f-4567-aaa1-4c25de7e9c14}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\AtlasCore\AtlasCore.vcxproj">
       <Project>{e0088580-341c-4a8a-88e4-ddd2d06a992b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\AtlasDatastructures\AtlasDatastructures.vcxproj">
-      <Project>{771fb5d5-80fb-4783-bcb8-738712534344}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\AtlasFunctional\AtlasFunctional.vcxproj">
-      <Project>{b3c0cee7-24d4-4c1a-9703-3430512045cc}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\AtlasFunctions\AtlasFunctions.vcxproj">
-      <Project>{76c7b38c-5bb7-461e-a78b-943de8c62753}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\AtlasGeometry\AtlasGeometry.vcxproj">
-      <Project>{75787bd1-701d-4eaa-bc12-5ac2c99337ae}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\AtlasInterfaces\AtlasInterfaces.vcxproj">
-      <Project>{3a2a5f12-a4e2-4e60-9bc8-6487fc928f41}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

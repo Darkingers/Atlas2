@@ -26,7 +26,7 @@ export namespace Atlas::Implementation
 		public Marker::ExtendedType ,
 		public BaseType
 	{
-		private: using ActualType = ExtendedBaseType < BaseType , ExtendedArgs...>;
+		private: using ActualType = ExtendedBaseType<BaseType , ExtendedArgs...>;
 		private: using PropertyHolder = std::tuple<ExtendedArgs...>;
 		private: template<unsigned int Index>
 		using PropertyType = Deduce::TupleIndexedType<Index , PropertyHolder>;
@@ -51,8 +51,7 @@ export namespace Atlas::Implementation
 		}
 
 		public:
-		 ~ExtendedBaseType( )
-			noexcept
+		~ExtendedBaseType( ) override
 		{}
 
 		public: template<unsigned int Index>
@@ -98,8 +97,7 @@ export namespace Atlas::Implementation
 		{}
 
 		public:
-		~ExtendedType( ) 
-			noexcept final
+		~ExtendedType( ) final
 		{}
 	};
 
@@ -120,15 +118,13 @@ export namespace Atlas::Implementation
 		{}
 
 		public:
-		 ~ExtendedType() 
-			 noexcept final
+		 ~ExtendedType()  final
 		{}
 			
 		public:
-		auto ToString( ) const 
-			noexcept( IsNoexceptToString && IsNoexceptExtendedToString) final
+		auto ToString( ) const final
 		{
-			return BaseType::ToString( ) + "{" + Convert<std::string>::From( this->ExtendedProperties ) + "}";
+			return BaseType::ToString( ) /*+ "{" + Convert<std::string>::From( this->ExtendedProperties ) + "}"*/;
 		}
 	};
 }
@@ -156,7 +152,7 @@ export namespace Atlas
 
 namespace std
 {
-	template<unsigned int Index, typename Type>
+	/*template<unsigned int Index, typename Type>
 		requires Atlas::Concept::IsDerivedFrom<Type , Atlas::Implementation::Marker::ExtendedType>
 	struct tuple_element<Index , Type>
 	{
@@ -168,5 +164,5 @@ namespace std
 	struct tuple_element<0 , Type>
 	{
 		using type = Type;
-	};
+	};*/
 }

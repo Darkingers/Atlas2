@@ -20,7 +20,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType , unsigned long long> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept( static_cast<unsigned long long>( std::declval<SourceType>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( static_cast<unsigned long long>( std::declval<SourceType>( ) ) );
 
 		
 		public:
@@ -35,7 +35,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , unsigned long long> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept( std::stoull( std::declval<std::string>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::stoull( std::declval<std::string>( ) ) );
 
 		
 		public:
@@ -45,7 +45,7 @@ export namespace Atlas::Converters
 			unsigned long long integer = 0;
 
 			int i = 0;
-			int length = data.length( );
+			auto length = data.length( );
 			char current;
 
 			Validate<Configuration::EnableUnsignedLongLongConverterCheck>::IsMore( length , 0 );
@@ -68,7 +68,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , unsigned long long> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept( std::stoull( std::declval<const char*>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::stoull( std::declval<const char*>( ) ) );
 		
 
 		public:

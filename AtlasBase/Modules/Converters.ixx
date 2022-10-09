@@ -29,19 +29,19 @@ export namespace Atlas
 	{
 		using SimpleConvertedType = Deduce::SimpleType<ConvertedType>;
 
-		public: template<typename SourceType, typename SimpleSourceType = Deduce::SimpleType<SourceType>>
-		constexpr inline static ConvertedType From( const SimpleSourceType& data )
-			noexcept( Converters::Converter<SimpleSourceType , SimpleConvertedType>::IsNoexcept )
+		public: template<typename SourceType>
+		constexpr inline static ConvertedType From(const SourceType& data )
+			noexcept( noexcept( Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( std::declval<SourceType>() ) ) )
 		{
-			return Converters::Converter<SimpleSourceType , SimpleConvertedType>::Convert( data );
+			return Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( data );
 		}
 
-		public: template<typename SourceType, typename SimpleSourceType = Deduce::SimpleType<SourceType>>
+		public: template<typename SourceType>
 			requires Concept::IsPointer<SourceType>
-		constexpr inline static ConvertedType From( const SimpleSourceType data )
-			noexcept( Converters::Converter<SimpleSourceType , SimpleConvertedType>::IsNoexcept )
+		constexpr inline static ConvertedType From( const SourceType data )
+			noexcept( noexcept( Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( std::declval<SourceType>( ) ) ) )
 		{
-			return Converters::Converter<SimpleSourceType , SimpleConvertedType>::Convert( data );
+			return Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( data );
 		}
 	};
 }

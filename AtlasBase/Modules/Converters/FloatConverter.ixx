@@ -20,7 +20,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType , float> :
 		public std::true_type
 	{	
-		public: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<float>;
+		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<float>;
 
 
 		public:
@@ -35,7 +35,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , float> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableFloatConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableFloatConverterCheck;
 		private: constexpr inline static float DecimalMultipliers[] = {
 			0.1f,
 			0.01f,
@@ -101,7 +101,7 @@ export namespace Atlas::Converters
 			int i = 0;
 			int decimalLength = 1;
 			int sign = 1;
-			int length = data.length( );
+			auto length = data.length( );
 			char current;
 
 			if ( data[0] == '-' )
@@ -147,7 +147,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , float> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableFloatConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableFloatConverterCheck;
 		private: constexpr inline static float DecimalMultipliers[] = {
 			0.1f,
 			0.01f,

@@ -17,46 +17,46 @@ export namespace Atlas
 {
 	class DLLApi Adapter
 	{
-		public: template<typename CollectionType, typename SimpleCollectionType = Deduce::SimpleType<CollectionType>>
-		constexpr inline static void Clear( SimpleCollectionType& collection ) 
-			noexcept( Adapters::ClearAdapter<SimpleCollectionType>::IsNoexcept )
+		public: template<typename CollectionType>
+		constexpr inline static void Clear( CollectionType& collection )
+			noexcept( Adapters::ClearAdapter<Deduce::SimpleType<CollectionType>>::IsNoexcept )
 		{
-			Adapters::ClearAdapter<SimpleCollectionType>::Contains( collection );
+			Adapters::ClearAdapter<Deduce::SimpleType<CollectionType>>::Clear( collection );
 		}
 
-		public: template<typename CollectionType , typename DataType, typename SimpleCollectionType = Deduce::SimpleType<CollectionType>, typename SimpleDataType = Deduce::SimpleType<DataType>>
-		constexpr inline static bool Contains( const SimpleCollectionType& collection , const SimpleDataType& contained )
-			noexcept ( Adapters::ContainAdapter<SimpleCollectionType , SimpleDataType>::IsNoexcept )
+		public: template<typename CollectionType , typename DataType>
+		constexpr inline static bool Contains( const CollectionType& collection , const DataType& contained )
+			noexcept ( Adapters::ContainAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<DataType>>::IsNoexcept )
 		{
-			return Adapters::ContainAdapter<SimpleCollectionType , SimpleDataType>::Contains( collection , contained );
+			return Adapters::ContainAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<DataType>>::Contains( collection , contained );
 		}
 
-		public: template<typename CollectionType , typename ContainedCollectionType , typename SimpleCollectionType = Deduce::SimpleType<CollectionType> , typename SimpleContainedCollectionType = Deduce::SimpleType<ContainedCollectionType>>
-		constexpr inline static bool ContainsAll( const CollectionType& collection , const SimpleContainedCollectionType& containedContainer )
-			noexcept ( Adapters::ContainAllAdapter<SimpleCollectionType , SimpleContainedCollectionType>::IsNoexcept )
+		public: template<typename CollectionType , typename ContainedCollectionType>
+		constexpr inline static bool ContainsAll( const CollectionType& collection , const ContainedCollectionType& containedContainer )
+			noexcept ( Adapters::ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::IsNoexcept )
 		{
-			return Adapters::ContainAllAdapter<SimpleCollectionType , SimpleContainedCollectionType>::Contains( collection , containedContainer );
+			return Adapters::ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::ContainsAll( collection , containedContainer );
 		}
 
-		public: template<typename DataType , typename SimpleDataType = Deduce::SimpleType<DataType>>
-		constexpr inline static auto Count( const SimpleDataType& data )
-			noexcept ( Adapters::CountAdapter<SimpleDataType>::IsNoexcept )
+		public: template<typename DataType>
+		constexpr inline static auto Count( const DataType& data )
+			noexcept ( Adapters::CountAdapter<Deduce::SimpleType<DataType>>::IsNoexcept )
 		{
-			return Adapters::CountAdapter<SimpleDataType>::Count( data );
+			return Adapters::CountAdapter<Deduce::SimpleType<DataType>>::Count( data );
 		}
 
-		public: template<typename TypeA , typename TypeB, typename SimpleTypeA = Deduce::SimpleType<TypeA>, typename SimpleTypeB = Deduce::SimpleType<TypeB>>
-		constexpr inline static bool Equals( const SimpleTypeA& A , const SimpleTypeB& B )
-			noexcept ( Adapters::EqualityAdapter<SimpleTypeA , SimpleTypeB>::IsNoexcept )
+		public: template<typename TypeA , typename TypeB>
+		constexpr inline static bool Equals( const TypeA& a , const TypeB& b )
+			noexcept ( Adapters::EqualityAdapter<Deduce::SimpleType<TypeA> , Deduce::SimpleType<TypeB>>::IsNoexcept )
 		{
-			return Adapters::EqualityAdapter<SimpleTypeA , SimpleTypeB>::Equals( A , B );
+			return Adapters::EqualityAdapter<Deduce::SimpleType<TypeA> , Deduce::SimpleType<TypeB>>::Equals( a , b );
 		}
 
-		public: template<typename DataType , typename SimpleDataType = Deduce::SimpleType<DataType>>
-		constexpr inline static void GetHash( const SimpleDataType& data )
-			noexcept ( Adapters::HashAdapter<SimpleDataType>::IsNoexcept )
+		public: template<typename DataType>
+		constexpr inline static void GetHash( const DataType& data )
+			noexcept ( Adapters::HashAdapter<Deduce::SimpleType<DataType>>::IsNoexcept )
 		{
-			return Adapters::HashAdapter<SimpleDataType>::GetHash( data );
+			return Adapters::HashAdapter<Deduce::SimpleType<DataType>>::GetHash( data );
 		}
 	};
 }

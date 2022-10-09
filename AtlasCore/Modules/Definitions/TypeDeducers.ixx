@@ -11,7 +11,7 @@ import :Implementations;
 export namespace Atlas::Deduce
 {
 	template<typename IteratorType>
-	using IteratedType = decltype( std::declval<IteratorType>( )->operator*( ) );
+	using IteratedType = decltype( std::declval<IteratorType>( ).operator*( ) );
 
 	template<typename CollectionType>
 	using BeginIteratorType = typename std::remove_pointer_t<decltype( std::begin( std::declval<CollectionType>( ) ) )>;

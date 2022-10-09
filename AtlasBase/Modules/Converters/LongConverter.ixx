@@ -20,7 +20,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType , long> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<long>;
+		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<long>;
 		
 
 		public:
@@ -35,7 +35,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , long> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableLongConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableLongConverterCheck;
 		
 
 		public:
@@ -46,7 +46,7 @@ export namespace Atlas::Converters
 
 			int i = 0;
 			int sign = 1;
-			int length = data.length( );
+			auto length = data.length( );
 			char current;
 
 			if ( data[0] == '-' )
@@ -75,7 +75,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , long> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = !Configuration::EnableLongConverterCheck;
+		private: constexpr static bool IsNoexcept = !Configuration::EnableLongConverterCheck;
 		
 
 		public:

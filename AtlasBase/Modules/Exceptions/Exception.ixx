@@ -25,13 +25,11 @@ export namespace Atlas
 		{}	
 
 		public:
-		virtual ~Exception( ) noexcept
-		{
-		}
+		virtual ~Exception( ) 		
+		{}
 
 		public:
-		virtual const std::string& ToString( ) const noexcept
-		{
+		virtual const std::string& ToString( ) const 		{
 			return Message;
 		}
 	};

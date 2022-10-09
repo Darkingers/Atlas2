@@ -1,22 +1,25 @@
-// Tester.cpp : This file contains the 'main' function. Program execution begins and ends there.
+﻿// Tester.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 import AtlasExceptions;
 import AtlasDefinitions;
+import AtlasAdapters;
+import AtlasConverters;
 import AtlasExtensions;
 
 #include <iostream>
-
+#include <string>
+#include <vector>
 
 int main()
 {
 	try
 	{
-		Atlas::Throw<Atlas::ValidationException>( "Hi there", "General kenobi" );
+		Atlas::Throw<Atlas::ValidationException>( "Hi there" , 1 , 2 , 3 , 4 , 5 );
 	}
 	catch ( Atlas::Exception& e )
 	{
-		std::cout << e.ToString() << std::endl;
+		std::cout << e.ToString( );
 	}
 }
 

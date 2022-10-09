@@ -54,8 +54,7 @@ export namespace Atlas
 
 	template<typename ExceptionType>
 	constexpr DLLApi void Throw( const std::string& message = "" , const void* source = nullptr )
-	{
-		throw new ExceptionType( message , source );
+	{		throw new ExceptionType( message , source );
 	}
 
 	template<typename ExceptionType>

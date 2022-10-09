@@ -68,7 +68,7 @@ export namespace Atlas
 			
 		public: template<unsigned int Index, typename TupleType>
 		constexpr inline static auto Get( TupleType& tuple ) 
-			noexcept(std::get<Index>(std::declval<TupleType>() ) ) 
+			noexcept( noexcept( std::get<Index>(std::declval<TupleType>()) ) )
 		{
 			return std::get<Index>( tuple );
 		}
@@ -131,13 +131,17 @@ export namespace Atlas::Converters
 			public: constexpr static bool value = NoexceptCheck( );
 		};
 
+		
+		public: constexpr static bool IsNoexcept = IsNoexceptConvertable<0 , std::tuple_size_v<SourceType>>::value;
+			
+
 		public:
 		inline static std::string Convert( const SourceType& data , const std::string& delimiter = "," )
 			noexcept ( IsNoexceptConvertable<0 , std::tuple_size_v<SourceType>>::value )
 		{
 			std::string result = Atlas::Convert<std::string>::From( Tuple::Get<0>( data ) );
 	
-			Converter<SourceType , std::string>::ConvertRemainingToString<1 , std::tuple_size<SourceType>::value>( data , result , delimiter );
+			ConvertRemainingToString<1 , std::tuple_size<SourceType>::value>( data , result , delimiter );
 	
 			return result;
 		}
@@ -147,9 +151,9 @@ export namespace Atlas::Converters
 		{
 			if constexpr ( End > Current )
 			{
-				result += delimiter + Atlas::Convert<std::string>::From( Tuple::Get<0><Current>( data ) );
+				result += delimiter + Atlas::Convert<std::string>::From( Tuple::Get<Current>( data ) );
 
-				Converter<SourceType , std::string>::ConvertRemainingToString<Current + 1 , End>( data , result , delimiter );
+				ConvertRemainingToString<Current + 1 , End>( data , result , delimiter );
 			}
 		}
 	};

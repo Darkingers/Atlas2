@@ -66,14 +66,5 @@ export namespace Atlas
 
 		public: using PointerType = BaseType*;
 		public: using ConstPointerType = const PointerType*;
-	
-		public: template<typename... ConstructorArgs>
-			requires Concept::IsConstructible<DataType , ConstructorArgs...>
-		constexpr inline static auto Instance( )
-		{
-			return std::declval<DataType>( std::declval<ConstructorArgs>()...);
-		}
-
-		
 	};
 }

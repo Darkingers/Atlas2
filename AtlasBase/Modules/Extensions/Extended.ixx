@@ -32,9 +32,9 @@ export namespace Atlas::Implementation
 
 			
 		private:  template<unsigned int Index>
-		constexpr static bool IsNoexceptGet = noexcept( Tuple::Get<Index>( std::declval<PropertyHolder>( ) ) );
+		constexpr static bool IsNoexceptGet = noexcept( Tuple::Get<Index>( PropertyHolder( ) ) );
 		private:  template<unsigned int Index>
-		constexpr static bool IsNoexceptSet = noexcept( Tuple::Set<Index>( std::declval<PropertyHolder>( ) , std::declval<PropertyType<Index>>( ) ) );
+		constexpr static bool IsNoexceptSet = noexcept( Tuple::Set<Index>(PropertyHolder( ) , PropertyType<Index>( ) ) );
 		
 			
 		public: PropertyHolder ExtendedProperties;
@@ -101,7 +101,7 @@ export namespace Atlas::Implementation
 		public ExtendedBaseType<BaseType , PropertyHolder>
 	{
 		private: constexpr static bool IsNoexceptToString = noexcept( std::declval<BaseType>( ).ToString( ) );
-		private: constexpr static bool IsNoexceptExtendedToString = noexcept( Convert<std::string>::From( std::declval<PropertyHolder>() ) );
+		private: constexpr static bool IsNoexceptExtendedToString = noexcept( Convert<std::string>::From( PropertyHolder() ) );
 	
 		public: template<typename... BaseConstructorArgs>
 		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorArgs&&... baseArgs )

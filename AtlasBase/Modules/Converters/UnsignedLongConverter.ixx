@@ -20,7 +20,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType , unsigned long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( static_cast<unsigned long>( std::declval<SourceType>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( static_cast<unsigned long>( SourceType( ) ) );
 		
 
 		public:
@@ -35,7 +35,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , unsigned long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::stoul( std::declval<std::string>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::stoul( std::string( ) ) );
 		
 
 		public:

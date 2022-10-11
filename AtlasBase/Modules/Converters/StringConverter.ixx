@@ -52,7 +52,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<void* , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<unsigned long long>( )) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( unsigned long long( )) );
 		
 
 		public:
@@ -67,7 +67,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<int, std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<int>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( int( ) ) );
 
 		public:
 		inline static std::string Convert( const int& data )
@@ -81,7 +81,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<unsigned int, std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<unsigned int>( ) ));
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( unsigned int( ) ));
 		
 
 		public:
@@ -96,7 +96,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<long , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<long>( ) ));
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( long( ) ));
 		
 
 		public:
@@ -111,7 +111,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<unsigned long , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<unsigned long>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( unsigned long( ) ));
 		
 
 		public:
@@ -126,7 +126,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<long long , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<long long>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( long long( ) ));
 		
 
 		public:
@@ -141,7 +141,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<unsigned long long , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<unsigned long long>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( unsigned long long( ) ));
 		
 
 		public:
@@ -156,7 +156,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<float , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<float>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( float( ) ));
 		
 
 		public:
@@ -171,7 +171,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<double , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<double>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( double( ) ));
 		
 
 		public:
@@ -186,7 +186,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<long double , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<long double>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( long double( ) ));
 
 		
 		public:
@@ -201,7 +201,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<bool, std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<bool>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( bool( )));
 		
 
 		public:
@@ -216,7 +216,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<char*, std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::string( std::declval<char*>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::string( std::declval<char*>( ) ));
 
 		
 		public:
@@ -240,7 +240,7 @@ export namespace Atlas::Converters
 			{
 				using IndexedType = Deduce::TupleIndexedType<Current,SourceType>;
 
-				bool result = noexcept( Atlas::Convert<std::string>::From( std::declval<IndexedType>( ) ) );
+				bool result = noexcept( Atlas::Convert<std::string>::From( std::declval<IndexedType>( ) ));
 
 				if constexpr ( End > Current - 1 )
 				{
@@ -285,9 +285,9 @@ export namespace Atlas::Converters
 		public std::true_type
 	{
 		private: using DataType = Deduce::CollectionContainedType<SourceType>;
-		private: constexpr static bool IsNoexceptBegin = noexcept( std::begin( SourceType()));
-		private: constexpr static bool IsNoexceptEnd = noexcept( std::cend( SourceType() ) );
-		private: constexpr static bool IsNoexceptConvert = noexcept( Converter<DataType , std::string>::Convert( std::declval<DataType>( ) ) );
+		private: constexpr static bool IsNoexceptBegin = Concept::IsNoexceptBegin<SourceType>;
+		private: constexpr static bool IsNoexceptEnd = Concept::IsNoexceptConstEnd<SourceType>;
+		private: constexpr static bool IsNoexceptConvert = noexcept( Converter<DataType , std::string>::Convert( DataType( ) ));
 		private: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd && IsNoexceptConvert;
 
 		public:

@@ -21,7 +21,7 @@ export namespace Atlas
 			public:
 			constexpr static bool NoexceptCheck( )
 			{
-				bool result = noexcept( Convert<std::string>::From( std::declval<CurrentType>( ) ) );
+				bool result = noexcept( Convert<std::string>::From( CurrentType() ) );
 
 				if constexpr ( sizeof ...( Args ) > 0 )
 				{
@@ -232,7 +232,7 @@ export namespace Atlas
 
 		public:
 		static bool Match(const std::string& source, const std::string& regex )
-			noexcept( noexcept( std::regex_match( std::declval<std::string>(), std::declval<std::regex>() ) ) )
+			noexcept( noexcept( std::regex_match(std::string(), std::regex() ) ) )
 		{
 			std::regex reg( regex );
 			return std::regex_match( source , reg );
@@ -286,7 +286,7 @@ export namespace Atlas
 
 		public: template<typename... Args>
 		constexpr static std::string ReplaceSymbols( const std::string& string , const Args&... arguments )
-			noexcept ( IsNoexceptConvertible<Args...>::value && noexcept( Convert<int>::From( std::declval<std::string>() )) )
+			noexcept ( IsNoexceptConvertible<Args...>::value && noexcept( Convert<int>::From( std::string() )) )
 		{
 			const unsigned int stringLength = string.length( );
 			if ( stringLength < 3 )
@@ -327,7 +327,7 @@ export namespace Atlas
 
 		private: template<unsigned int Index , typename CurrentType , typename... Args>
 		constexpr void ConvertFrom( std::string result[] , const CurrentType& current , const Args&... arguments ) 
-			noexcept ( noexcept( Convert<std::string>::From( std::declval<CurrentType>() ) ) && IsNoexceptConvertible<Args...>::value )
+			noexcept ( noexcept( Convert<std::string>::From( CurrentType() ) ) && IsNoexceptConvertible<Args...>::value )
 		{
 			result[Index] = Convert<std::string>::From( current );
 

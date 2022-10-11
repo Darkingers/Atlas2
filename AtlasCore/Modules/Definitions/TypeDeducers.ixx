@@ -14,28 +14,28 @@ export namespace Atlas::Deduce
 	using IteratedType = decltype( std::declval<IteratorType>( ).operator*( ) );
 
 	template<typename CollectionType>
-	using BeginIteratorType = typename std::remove_pointer_t<decltype( std::begin( std::declval<CollectionType>( ) ) )>;
+	using BeginIteratorType = typename std::remove_pointer_t<decltype( std::begin( CollectionType( ) ) )>;
 
 	template<typename CollectionType>
-	using EndIteratorType = typename std::remove_pointer_t<decltype( std::end( std::declval<CollectionType>( ) ) )>;
+	using EndIteratorType = typename std::remove_pointer_t<decltype( std::end( CollectionType( ) ) )>;
 
 	template<typename CollectionType>
 	using IteratorType = BeginIteratorType<CollectionType>;
 
 	template<typename CollectionType>
-	using ConstBeginIteratorType = typename std::remove_pointer_t<decltype( std::cbegin( std::declval<CollectionType>( ) ) )>;
+	using ConstBeginIteratorType = typename std::remove_pointer_t<decltype( std::cbegin( CollectionType( ) ) )>;
 
 	template<typename CollectionType>
-	using ConstEndIteratorType = typename std::remove_pointer_t<decltype( std::cend( std::declval<CollectionType>( ) ) )>;
+	using ConstEndIteratorType = typename std::remove_pointer_t<decltype( std::cend( CollectionType( ) ) )>;
 
 	template<typename CollectionType>
 	using ConstIteratorType = ConstBeginIteratorType<CollectionType>;
 
 	template<typename CollectionType , typename IndexType>
-	using CollectionIndexedType = decltype( std::declval<CollectionType>( )->operator[]( std::declval<IndexType>( ) ) );
+	using CollectionIndexedType = decltype( std::declval<CollectionType>( )->operator[]( IndexType( ) ) );
 
 	template<unsigned int Index , typename Tuple>
-	using TupleIndexedType = decltype( std::get<Index>( std::declval<Tuple>( ) ) );
+	using TupleIndexedType = decltype( std::get<Index>( Tuple( ) ) );
 
 	template<typename CollectionType>
 	using CollectionContainedType = IteratedType<BeginIteratorType<CollectionType>>;

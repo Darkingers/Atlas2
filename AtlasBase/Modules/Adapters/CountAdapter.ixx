@@ -5,6 +5,7 @@ module;
 export module AtlasAdapters:CountAdapter;
 
 import AtlasConcepts;
+import AtlasTypeInfo;
 
 export namespace Atlas::Adapters
 {
@@ -12,7 +13,7 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = true;
+		private: constexpr static bool IsNoexcept = true;
 
 
 		public:
@@ -27,7 +28,7 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept ( std::declval<CountedType>( ).size( ) );
+		private: constexpr static bool IsNoexcept = noexcept ( Type<CountedType>::Intance( ).size( ) );
 
 			
 	    public:
@@ -43,7 +44,7 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept ( std::declval<CountedType>( ).Count( ) );
+		private: constexpr static bool IsNoexcept = noexcept ( Type<CountedType>::Intance( ).Count( ) );
 
 			
 	    public:

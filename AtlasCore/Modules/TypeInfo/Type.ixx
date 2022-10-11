@@ -8,9 +8,8 @@ module;
 
 export module AtlasTypeInfo:Type;
 
-import :BasicTypeInfo;
-import :RelationalTypeInfo;
-import :VariadicTypeInfo;
+import AtlasConcepts;
+import AtlasDefinitions;
 
 export namespace Atlas
 {
@@ -18,48 +17,63 @@ export namespace Atlas
 	class DLLApi Type
 	{
 		public: inline static const char* Name = typeid( DataType ).name( );	
-		public: constexpr inline static bool IsFundamental = Fulfills::IsFundamental<DataType>::value;
-		public: constexpr inline static bool IsConst = Fulfills::IsConst<DataType>::value;
-		public: constexpr inline static bool IsReference = Fulfills::IsReference<DataType>::value;
-		public: constexpr inline static bool IsPointer = Fulfills::IsPointer<DataType>::value;
-		public: constexpr inline static bool IsValue = Fulfills::IsValue<DataType>::value;
-		public: constexpr inline static bool IsTuple = Fulfills::IsTuple<DataType>::value;
+		public: constexpr inline static bool IsFundamental = Concept::IsFundamental<DataType>;
+		public: constexpr inline static bool IsConst = Concept::IsConst<DataType>;
+		public: constexpr inline static bool IsReference = Concept::IsReference<DataType>;
+		public: constexpr inline static bool IsPointer = Concept::IsPointer<DataType>;
+		public: constexpr inline static bool IsValue = Concept::IsValue<DataType>;
+		public: constexpr inline static bool IsTuple = Concept::IsTuple<DataType>;
 
 		public: template<typename CastedType>
-		constexpr inline static bool IsNoexceptConvertibleTo = noexcept( (CastedType)std::declval<DataType>( ));
+		constexpr inline static bool IsConvertibleTo = Concept::IsConvertibleTo<DataType , CastedType>;
+			
+		public: template<typename CastedType>
+		constexpr inline static bool IsNoexceptConvertibleTo = Concept::IsNoexceptConvertibleTo<DataType , CastedType>;
 
-		public: template<typename... Args>
-		constexpr inline static bool IsNoexceptConstructible = noexcept( std::is_nothrow_constructible<DataType, Args...>::value );
+		public: template<typename... ConstructorArgs>
+		constexpr inline static bool IsConstructible = Concept::IsConstructible<DataType , ConstructorArgs...>;
+
+		public: template<typename... ConstructorArgs>
+		constexpr inline static bool IsNoexceptConstructible = Concept::IsNoexceptConstructible<DataType , ConstructorArgs...>;
 
 		public: template<typename ComparedType>
-		constexpr inline static bool IsSame = Fulfills::IsSame<DataType , ComparedType>::value;
+		constexpr inline static bool IsSame = Concept::IsSame<DataType , ComparedType>;
 
 		public: template<typename... ComparedType>
-		constexpr inline static bool IsAll = Fulfills::IsAll<DataType , ComparedType...>::value;
+		constexpr inline static bool IsAll = Concept::IsAll<DataType , ComparedType...>;
 
 		public: template<typename... ComparedType>
-		constexpr inline static bool IsAny = Fulfills::IsAny<DataType , ComparedType...>::value;
+		constexpr inline static bool IsAny = Concept::IsAny<DataType , ComparedType...>;
 
 		public: template<typename... ComparedType>
-		constexpr inline static bool IsNone = Fulfills::IsNone<DataType , ComparedType...>::value;
+		constexpr inline static bool IsNone = Concept::IsNone<DataType , ComparedType...>;
 
 		public: template<typename DerivedType>
-		constexpr inline static bool IsBaseOf = Fulfills::IsBaseOf<DataType , DerivedType>::value;
+		constexpr inline static bool IsBaseOf = Concept::IsBaseOf<DataType , DerivedType>;
 
 		public: template<typename BaseType>
-		constexpr inline static bool IsDerivedFrom = Fulfills::IsDerivedFrom<DataType , BaseType>::value;
+		constexpr inline static bool IsDerivedFrom = Concept::IsDerivedFrom<DataType , BaseType>;
 
 		public: template<typename AssignedType>
-		constexpr inline static bool IsAssignableFrom = Fulfills::IsAssignableFrom<DataType , AssignedType>::value;
+		constexpr inline static bool IsAssignableFrom = Concept::IsAssignableFrom<DataType , AssignedType>;
 
 
-		public: using MutableType = typename std::remove_const_t<DataType>;
-		public: using ConstType = const MutableType;
+		public: using BaseType = typename Deduce::SimpleType<DataType>;
+		public: using ConstType = const BaseType;
 
-		public: using ReferenceType =typename std::remove_reference_t<MutableType>&;
+		public: using ReferenceType = BaseType&;
 		public: using ConstReferenceType = const ReferenceType;
 
-		public: using PointerType = typename std::remove_reference_t<MutableType>*;
+		public: using PointerType = BaseType*;
 		public: using ConstPointerType = const PointerType*;
+	
+		public: template<typename... ConstructorArgs>
+			requires Concept::IsConstructible<DataType , ConstructorArgs...>
+		constexpr inline static auto Instance( )
+		{
+			return std::declval<DataType>( std::declval<ConstructorArgs>()...);
+		}
+
+		
 	};
 }

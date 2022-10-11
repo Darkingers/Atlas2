@@ -29,10 +29,10 @@ export namespace Atlas::Adapters
 		private: using ContainAdapterType = ContainAdapter<SimpleCollectionType , DataType>;
    	
 			
-		private: constexpr static bool IsNoexceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
-		private: constexpr static bool IsNoexceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
-		private: constexpr static bool IsNoexceptContains = noexcept ( ContainAdapterType::Contains( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) );
-		public: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd && IsNoexceptContains;
+		private: constexpr static bool IsNoexceptBegin = Concept::IsNoexceptBegin<CollectionType>;
+		private: constexpr static bool IsNoexceptEnd = Concept::IsNoexceptConstEnd<CollectionType>;
+		private: constexpr static bool IsNoexceptContains = noexcept ( ContainAdapterType::Contains( Type<CollectionType>::Instance( ) , Type<DataType>::Instance( ) ) );
+		private: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd && IsNoexceptContains;
 
 			
 		public:

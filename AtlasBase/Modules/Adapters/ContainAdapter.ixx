@@ -23,7 +23,7 @@ export namespace Atlas::Adapters
 	class DLLApi ContainAdapter<CollectionType, DataType> :
 		public std::true_type
 	{
-		public: constexpr static bool IsNoexcept = noexcept ( std::declval<CollectionType>().Contains( std::declval<DataType>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept (Type<CollectionType>::Instance().Contains( Type<DataType>::Instance( ) ) );
 
 			
 	    public:
@@ -41,9 +41,9 @@ export namespace Atlas::Adapters
 	{
 		private: using EndIteratorType = Deduce::ConstEndIteratorType<CollectionType>;
 		
-		private: constexpr static bool IsNoexceptBegin = noexcept ( std::cbegin( std::declval<CollectionType>( ) ) );
-		private: constexpr static bool IsNoexceptEnd = noexcept ( std::cend( std::declval<CollectionType>( ) ) );
-		public: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd;
+		private: constexpr static bool IsNoexceptBegin = Concept::IsNoexceptBegin<CollectionType>;
+		private: constexpr static bool IsNoexceptEnd = Concept::IsNoexceptConstEnd<CollectionType>;
+		private: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd;
 
 
 		public:

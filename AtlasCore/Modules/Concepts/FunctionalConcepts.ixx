@@ -155,4 +155,16 @@ export namespace Atlas::Concept
 
 	template<template<typename...> typename AdapterType , typename... AdapterArguments>
 	concept HasAdapter = AdapterType<AdapterArguments...>::value;
+
+	template<typename CollectionType>
+	concept IsNoexceptBegin = noexcept( std::begin( std::declval<CollectionType>( ) ) );
+
+	template<typename CollectionType>
+	concept IsNoexceptConstBegin = noexcept( std::cbegin( std::declval<CollectionType>( ) ) );
+
+	template<typename CollectionType>
+	concept IsNoexceptEnd = noexcept( std::end( std::declval<CollectionType>( ) ) );
+
+	template<typename CollectionType>
+	concept IsNoexceptConstEnd = noexcept( std::cend( std::declval<CollectionType>( ) ) );
 }

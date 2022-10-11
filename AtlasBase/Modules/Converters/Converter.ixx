@@ -10,9 +10,6 @@ export namespace Atlas::Converters
 	class DLLApi Converter :
 		public std::false_type
 	{
-		public: constexpr static bool IsNoexcept = false;
-
-		public: TargetType Convert( const SourceType& data ) = delete;
 	};
 }
 

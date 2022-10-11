@@ -161,13 +161,10 @@
   <ItemGroup>
     <ClCompile Include="Modules\Configuration.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations.ixx" />
-    <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx" />
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\BasicTypeInfo.ixx" />
-    <ClCompile Include="Modules\TypeInfo\VariadicTypeInfo.ixx" />
     <ClCompile Include="Modules\Concepts.ixx" />
     <ClCompile Include="Modules\Concepts\FunctionalConcepts.ixx" />
     <ClCompile Include="Modules\Concepts\RelationalConcepts.ixx" />

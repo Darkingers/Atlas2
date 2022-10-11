@@ -52,15 +52,6 @@
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
       <Filter>Modules\Type</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\RelationalTypeInfo.ixx">
-      <Filter>Modules\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\VariadicTypeInfo.ixx">
-      <Filter>Modules\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\BasicTypeInfo.ixx">
-      <Filter>Modules\Type</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\Configuration.ixx">
       <Filter>Modules</Filter>
     </ClCompile>

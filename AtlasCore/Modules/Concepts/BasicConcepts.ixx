@@ -7,6 +7,19 @@ module;
 
 export module AtlasConcepts:BasicConcepts;
 
+namespace Atlas::Concept::Implementation
+{
+	template <typename TestedType>
+	class IsTuple :
+		public std::false_type
+	{};
+
+	template <typename ...T>
+	class IsTuple<std::tuple<T...>> :
+		public std::true_type
+	{};
+}
+
 export namespace Atlas::Concept
 {
 	template<typename TestedType>
@@ -32,4 +45,7 @@ export namespace Atlas::Concept
 
 	template<typename TestedType>
 	concept IsInteger = std::is_integral<std::remove_reference<TestedType>>::value;
+
+	template<typename TestedType>
+	concept IsTuple = Implementation::IsTuple<TestedType>::value;
 }

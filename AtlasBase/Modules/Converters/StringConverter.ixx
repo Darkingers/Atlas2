@@ -21,7 +21,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType* , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( std::declval<unsigned long long>( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( Type<unsigned long long>::Instance( ) ) );
 
 			
 		public:
@@ -280,16 +280,18 @@ export namespace Atlas::Converters
 	};
 
 	template<typename SourceType>
-	class DLLApi Converter<std::vector<SourceType> , std::string> :
+		requires Concept::IsIterable<SourceType>
+	class DLLApi Converter<SourceType , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexceptBegin = noexcept( std::begin(std::vector<SourceType>( )));
-		private: constexpr static bool IsNoexceptEnd = noexcept( std::cend( std::vector<SourceType>( ) ) );
-		private: constexpr static bool IsNoexceptConvert = noexcept( Converter<SourceType , std::string>::Convert( std::declval<SourceType>( ) ) );
+		private: using DataType = Deduce::CollectionContainedType<SourceType>;
+		private: constexpr static bool IsNoexceptBegin = noexcept( std::begin( SourceType()));
+		private: constexpr static bool IsNoexceptEnd = noexcept( std::cend( SourceType() ) );
+		private: constexpr static bool IsNoexceptConvert = noexcept( Converter<DataType , std::string>::Convert( std::declval<DataType>( ) ) );
 		private: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd && IsNoexceptConvert;
 
 		public:
-		constexpr inline static std::string Convert( const std::vector<SourceType>& data , const std::string& delimiter = "," )
+		constexpr inline static std::string Convert( const SourceType& data , const std::string& delimiter = "," )
 			noexcept ( IsNoexcept )
 		{
 			auto current = std::begin( data );

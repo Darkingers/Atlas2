@@ -20,7 +20,7 @@ export namespace Atlas
 
 		public: template<typename SourceType>
 			constexpr inline static ConvertedType From( const SourceType& data )
-			noexcept( noexcept( Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( std::declval<SourceType>( ) ) ) )
+			noexcept( noexcept( Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( Type<SourceType>::Instance( ) ) ) )
 		{
 			return Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( data );
 		}
@@ -28,7 +28,7 @@ export namespace Atlas
 		public: template<typename SourceType>
 			requires Concept::IsPointer<SourceType>
 			  constexpr inline static ConvertedType From( const SourceType data )
-				  noexcept( noexcept( Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( std::declval<SourceType>( ) ) ) )
+				  noexcept( noexcept( Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( Type<SourceType>::Instance( ) ) ) )
 		{
 			return Converters::Converter<Deduce::SimpleType<SourceType> , SimpleConvertedType>::Convert( data );
 		}

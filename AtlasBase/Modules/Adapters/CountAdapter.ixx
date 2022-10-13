@@ -28,7 +28,7 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept ( Type<CountedType>::Intance( ).size( ) );
+		private: constexpr static bool IsNoexcept = noexcept ( std::declval<CountedType>( ).size( ) );
 
 			
 	    public:
@@ -44,7 +44,7 @@ export namespace Atlas::Adapters
 	class DLLApi CountAdapter<CountedType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept ( Type<CountedType>::Intance( ).Count( ) );
+		private: constexpr static bool IsNoexcept = noexcept ( std::declval<CountedType>( ).Count( ) );
 
 			
 	    public:
@@ -52,6 +52,46 @@ export namespace Atlas::Adapters
 			noexcept( IsNoexcept )
 		{
 			return instance.Count();
+		}
+	};
+
+	template<>
+	class DLLApi CountAdapter<std::string> :
+		public std::true_type
+	{
+		private: constexpr static bool IsNoexcept = noexcept ( std::declval<std::string>( ).length( ) );
+
+
+		public:
+		constexpr inline static auto Count( const std::string& instance )
+			noexcept( IsNoexcept )
+		{
+			return instance.length( );
+		}
+	};
+
+	template<>
+	class DLLApi CountAdapter<char*> :
+		public std::true_type
+	{
+		public:
+		constexpr inline static auto Count( const char* instance )
+			noexcept( true )
+		{
+			unsigned int i = 0;
+
+			while ( instance[i++] != '\0' )
+			{
+				i++;
+			}
+
+			return i;
+		}
+
+		public: template<unsigned int Size>
+		constexpr inline static auto Count( const char( &instance )[Size] )
+		{
+			return Size;
 		}
 	};
 }

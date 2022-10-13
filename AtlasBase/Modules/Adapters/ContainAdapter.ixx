@@ -23,7 +23,7 @@ export namespace Atlas::Adapters
 	class DLLApi ContainAdapter<CollectionType, DataType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept (Type<CollectionType>::Instance().Contains( Type<DataType>::Instance( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept ( std::declval<CollectionType>().Contains( DataType( ) ) );
 
 			
 	    public:

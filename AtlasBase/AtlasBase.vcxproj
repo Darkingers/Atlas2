@@ -161,6 +161,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Modules\Adapters.ixx" />
+    <ClCompile Include="Modules\BaseTypes.ixx" />
+    <ClCompile Include="Modules\BaseTypes\String.ixx">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Modules\Converters.ixx" />
     <ClCompile Include="Modules\Converters\BoolConverter.ixx" />
     <ClCompile Include="Modules\Converters\Convert.ixx" />

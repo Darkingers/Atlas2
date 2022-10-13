@@ -31,7 +31,7 @@ export namespace Atlas::Adapters
 			
 		private: constexpr static bool IsNoexceptBegin = Concept::IsNoexceptBegin<CollectionType>;
 		private: constexpr static bool IsNoexceptEnd = Concept::IsNoexceptConstEnd<CollectionType>;
-		private: constexpr static bool IsNoexceptContains = noexcept ( ContainAdapterType::Contains( Type<CollectionType>::Instance( ) , Type<DataType>::Instance( ) ) );
+		private: constexpr static bool IsNoexceptContains = noexcept ( ContainAdapterType::Contains( CollectionType( ) , DataType( ) ) );
 		private: constexpr static bool IsNoexcept = IsNoexceptBegin && IsNoexceptEnd && IsNoexceptContains;
 
 			

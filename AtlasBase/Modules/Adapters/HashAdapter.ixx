@@ -21,7 +21,7 @@ export namespace Atlas::Adapters
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( Type<std::hash<DataType>>::Instance( )( Type<DataType>::Instance( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::declval<std::hash<DataType>>( )( DataType( ) ) );
 
 			
 		private: static std::hash<DataType> Hash;
@@ -40,7 +40,7 @@ export namespace Atlas::Adapters
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept ( Type<DataType>::Instance( ).GetHash( ) );
+		private: constexpr static bool IsNoexcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
 			
 			
 	    public:

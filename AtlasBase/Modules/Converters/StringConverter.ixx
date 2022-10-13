@@ -21,7 +21,7 @@ export namespace Atlas::Converters
 	class DLLApi Converter<SourceType* , std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::to_string( Type<unsigned long long>::Instance( ) ) );
+		private: constexpr static bool IsNoexcept = noexcept( std::to_string( unsigned long long( ) ) );
 
 			
 		public:

@@ -21,7 +21,7 @@ export namespace Atlas::Adapters
 	class DLLApi EqualityAdapter<TypeA, TypeB> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept ( Type<TypeA>::Intance( ) == Type<TypeB>::Intance() );
+		private: constexpr static bool IsNoexcept = noexcept ( TypeA( ) == TypeB() );
 
 			
 	    public:

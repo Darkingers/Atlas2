@@ -31,8 +31,7 @@ export namespace Atlas
 		{}	
 
 		public:
-		virtual ~Exception( ) 		
-		{}
+		virtual ~Exception( ) = default;
 
 		public:
 		virtual std::string ToString( ) const 		

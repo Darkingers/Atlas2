@@ -3,3 +3,19 @@ Create tests
 Add constexpr and Noexcept
 
 Run Tests-> if constexpr is wrong, compile error
+
+
+//////////////////////////////
+Move Event to Eventhandling project ->Add observables there
+
+Base datastructures->No event, this way i dont have to use STL
+
+//////////////////////////////////
+Strinliteral
+ImmutableString,
+String
+///
+
+Undoable class
+Plugins
+Statemachine

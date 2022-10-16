@@ -9,73 +9,33 @@ import AtlasAdapters;
 
 export namespace Atlas
 {
-	class DLLApi String 
+	template<unsigned int Size>
+	class DLLApi StaticString 
 	{
 		private: template<typename TestedType>
-		constexpr static bool IsNoexceptIndexable = noexcept( std::declval<TestedType>( ).operator[]( unsigned int ) );
+		constexpr static bool IsNoexceptIndexable = noexcept( std::declval<TestedType>( ).operator[]( unsigned int()0 ) );
 		
-		private: const char* _data;
-		private: unsigned int _size;
-
-			
-		public: template<unsigned int Size>
-		constexpr String ( const char ( &data )[Size] )
-			noexcept :
-			_data( data ) ,
-			_size( Size - 1 )
-		{}
-
-		public: template<typename StringType>
-			requires Concept::HasIndexOperator<StringType , unsigned int, char>
-		constexpr String( const StringType& copy )
-			noexcept ( IsNoexceptIndexable<StringType> ) :
-			_size( Adapter::Count( copy ) )
-		{
-			for(unsigned int i = 0;i<_size;++i )
-			{
-				_data[i] = copy[i];
-			}
-		}
-		
-		public:
-		constexpr String( const char* data , unsigned int size ) 
-			noexcept :
-			_data( data ) ,
-			_size( size )
-		{}
-			
-		public:
-		constexpr String( const char* data )
-			noexcept :
-			_data( data ) ,
-			_size( 0 )
-		{
-			while ( data[_size] != '\0' )
-			{
-				_size++;
-			}
-		}
-
-		public:
-		constexpr String( const String& other ) 
-			noexcept :
-			_data( other._data ) ,
-			_size( other._size )
-		{}
+		private: char _data[Size];
 
 		public: 
-		constexpr String( String&& other ) 
-			noexcept :
-			_data( other._data ) ,
-			_size( other._size )
-		{}
+		constexpr StaticString( const char (&data)[Size])
+			noexcept 
+		{
+			for ( unsigned int i = 0; i < Size; ++i )
+			{
+				_data[i] = data[i];
+			}
+		}
 
 		public:
-		constexpr String( ) 
-			noexcept :
-			_data( nullptr ) ,
-			_size( 0 )
-		{}
+		constexpr StaticString( const StaticString<Size>& other )
+			noexcept 
+		{
+			for ( unsigned int i = 0; i < Size; ++i )
+			{
+				_data[i] = data[i];
+			}
+		}
 		
 		public:
 		constexpr bool Match(unsigned int start, const char* string ) const
@@ -84,7 +44,7 @@ export namespace Atlas
 			unsigned int i = 0;
 			while ( string[i] != '\0' )
 			{
-				if ( _data[start + i] != string[i] )
+				if ( start + i >= Size || _data[start + i] != string[i] )
 				{
 					return false;
 				}
@@ -102,7 +62,7 @@ export namespace Atlas
 			auto size = Adapter::Count( string );
 			for(int i = 0;i<size;++i )
 			{
-				if ( _data[start + i] != string[i] )
+				if ( start + i >= Size || _data[start + i] != string[i] )
 				{
 					return false;
 				}
@@ -239,112 +199,189 @@ export namespace Atlas
 		}
 		
 		public:
-		constexpr String& operator=( const String& other )
+		constexpr bool operator==( const char* other )
 			noexcept
 		{
-			_data = other._data;
-			_size = other._size;
+			unsigned int current = 0;
 
-			return *this;
+			while ( other[current] != '\0' )
+			{
+				if ( current >= Size || _data[current] != other[current] )
+				{
+					return false;
+				}
+				current++;
+			}
+
+			return true;
 		}
 
-		public:
-		constexpr String& operator=( String&& other )
-			noexcept
+		public: template<typename StringType>
+			requires Concept::HasIndexOperator<StringType , unsigned int , char>
+		constexpr bool operator==( const StringType& other )
+			noexcept( IsNoexceptIndexable<StringType> )
 		{
-			_data = other._data;
-			_size = other._size;
-
-			return *this;
-		}
-
-		public:
-		constexpr bool operator==( const String& other )
-			noexcept
-		{
-			if ( _size != other._size )
+			if ( Adapter::Count(other ) != Size)
 			{
 				return false;
 			}
 
-			for ( unsigned int i = 0; i < _size; i++ )
+			for ( unsigned int i = 0; i < Size; i++ )
 			{
-				if ( _data[i] != other._data[i] )
+				if ( _data[i] != other[i] )
 				{
 					return false;
 				}
 			}
 
 			return true;
-		}
+		}	
 
 		public:
-		constexpr bool operator!=( const String& other )
+		constexpr bool operator!=( const char* other )
 			noexcept
 		{
 			return !( *this == other );
 		}
 
-		public:
-		constexpr bool operator<( const String& other )
+		public: template<typename StringType>
+			requires Concept::HasIndexOperator<StringType , unsigned int , char>
+		constexpr bool operator!=( const StringType& other )
+			noexcept( IsNoexceptIndexable<StringType> )
+		{
+			return !( *this == other );
+		}	
+
+		public: 
+		constexpr bool operator<( const char* other )
 			noexcept
 		{
-			unsigned int minSize = _size < other._size ? _size : other._size;
+			unsigned int current = 0;
 
-			for ( unsigned int i = 0; i < minSize; i++ )
+			while ( other[current] != '\0' )
 			{
-				if ( _data[i] < other._data[i] )
+				if ( current >= Size || _data[current] < other[current] )
 				{
 					return true;
 				}
-				else if ( _data[i] > other._data[i] )
+				else if ( _data[current] > other[current] )
+				{
+					return false;
+				}
+				current++;
+			}
+
+			return false;
+		}
+
+		public: template<typename StringType>
+			requires Concept::HasIndexOperator<StringType , unsigned int , char>
+		constexpr bool operator<( const StringType& other )
+			noexcept( IsNoexceptIndexable<StringType> )
+		{
+			unsigned int otherSize = Adapter::Count( other );
+			unsigned int minSize = Size < otherSize ? Size : otherSize;
+
+			for ( unsigned int i = 0; i < minSize; i++ )
+			{
+				if ( _data[i] < other[i] )
+				{
+					return true;
+				}
+				else if ( _data[i] > other[i] )
 				{
 					return false;
 				}
 			}
 
-			return _size < other._size;
+			return Size < otherSize;
 		}
 
 		public:
-		constexpr bool operator>( const String& other )
+		constexpr bool operator>( const char* other )
 			noexcept
 		{
-			unsigned int minSize = _size < other._size ? _size : other._size;
+			unsigned int current = 0;
 
-			for ( unsigned int i = 0; i < minSize; i++ )
+			while ( other[current] != '\0' )
 			{
-				if ( _data[i] > other._data[i] )
+				if ( current >= Size || _data[current] > other[current] )
 				{
 					return true;
 				}
-				else if ( _data[i] < other._data[i] )
+				else if ( _data[current] < other[current] )
+				{
+					return false;
+				}
+				current++;
+			}
+
+			return false;
+		}
+
+		public: template<typename StringType>
+			requires Concept::HasIndexOperator<StringType , unsigned int , char>
+		constexpr bool operator>( const StringType& other )
+			noexcept( IsNoexceptIndexable<StringType> )
+		{
+			unsigned int otherSize = Adapter::Count( other );
+			unsigned int minSize = Size < otherSize ? Size : otherSize;
+
+			for ( unsigned int i = 0; i < minSize; i++ )
+			{
+				if ( _data[i] > other[i] )
+				{
+					return true;
+				}
+				else if ( _data[i] < other[i] )
 				{
 					return false;
 				}
 			}
 
-			return _size > other._size;
+			return Size > otherSize;
 		}
 
 		public:
-		constexpr bool operator<=( const String& other )
+		constexpr bool operator<=( const char* other )
 			noexcept
+		{
+			return !( *this > other );
+		}
+			
+		public: template<typename StringType>
+			requires Concept::HasIndexOperator<StringType , unsigned int , char>
+		constexpr bool operator<=( const StringType& other )
+			noexcept( IsNoexceptIndexable<StringType> )
 		{
 			return !( *this > other );
 		}
 
 		public:
-		constexpr bool operator>=( const String& other )
+		constexpr bool operator>=( const char* other )
 			noexcept
 		{
 			return !( *this < other );
 		}
+			
+		public: template<typename StringType>
+			requires Concept::HasIndexOperator<StringType , unsigned int , char>
+		constexpr bool operator>=( const StringType& other )
+			noexcept( IsNoexceptIndexable<StringType> )
+		{
+			return !( *this < other );
+		}
+		
+		public:
+		constexpr char operator[]( unsigned int index )
+			noexcept
+		{
+			return _data[index];
+		}
 
 		public:
-		constexpr char operator[]( const unsigned int index ) const
-		{
-			return 
-		}
+		
+			
+		
 	};
 }

@@ -54,8 +54,8 @@ export namespace Atlas
 		template<typename CollectionType , typename ContainedCollectionType>
 		concept IsNoexceptContainAll = noexcept( ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::ContainAll( std::declval<CollectionType>( ) , std::declval<ContainedCollectionType>( ) ) );
 
-		template<typename ExpectedType , typename CountedType>
-		concept IsNoexceptCount = noexcept( SizeAdapter<Deduce::SimpleType<ExpectedType> , Deduce::SimpleType<CountedType>>::Count( std::declval<CountedType>( ) ) );
+		template<typename DataTypeType>
+		concept IsNoexceptCount = noexcept( SizeAdapter<Deduce::SimpleType<DataTypeType>>::Count( std::declval<DataTypeType>( ) ) );
 
 		template<typename TypeA , typename TypeB>
 		concept IsNoexceptEquality = noexcept( EqualityAdapter<Deduce::SimpleType<TypeA> , Deduce::SimpleType<TypeB>>::Equality( std::declval<TypeA>( ) , std::declval<TypeB>( ) ) );
@@ -87,11 +87,11 @@ export namespace Atlas
 			return ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::ContainsAll( collection , containedContainer );
 		}
 
-		public: template<typename ExpectedType, typename DataType>
+		public: template<typename DataType>
 		constexpr static inline auto Size( const DataType& data )
-			noexcept ( Concept::IsNoexceptCount<ExpectedType,DataType> )
+			noexcept ( Concept::IsNoexceptCount<DataType> )
 		{
-			return SizeAdapter<Deduce::SimpleType<ExpectedType>, Deduce::SimpleType<DataType>>::Size( data );
+			return SizeAdapter<Deduce::SimpleType<DataType>>::Size( data );
 		}
 
 		public: template<typename TypeA , typename TypeB>

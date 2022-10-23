@@ -6,26 +6,21 @@ module;
 
 export module AtlasConverters:UnsignedIntConverter;
 
-import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
+import AtlasIntegration;
 
-import :Converter;
-
-export namespace Atlas::Converters
+export namespace Atlas
 {
 	template<typename SourceType>
 		requires Concept::IsConvertibleTo<SourceType ,unsigned int>
 	class DLLApi Converter<SourceType , unsigned int> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<unsigned int>;
-		
-
 		public:
 		constexpr static inline int Convert( const SourceType& data )
-			noexcept( IsNoexcept )
+			noexcept( Concept::IsNoexceptConvertibleTo<SourceType , unsigned int> )
 		{
 			return data;
 		}
@@ -35,12 +30,9 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , unsigned int> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableUnsignedIntConverterCheck;
-		
-
 		public:
 		constexpr static inline int Convert( const std::string& data ) 
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableUnsignedIntConverterCheck )
 		{
 			unsigned int integer = 0;
 
@@ -54,8 +46,7 @@ export namespace Atlas::Converters
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableUnsignedIntConverterCheck > ::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableUnsignedIntConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableUnsignedIntConverterCheck>::InclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
@@ -68,12 +59,9 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , unsigned int> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableUnsignedIntConverterCheck;
-		
-
 		public:
 		constexpr static inline int Convert( const char* data ) 
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableUnsignedIntConverterCheck )
 		{
 			unsigned int integer = 0;
 
@@ -82,8 +70,7 @@ export namespace Atlas::Converters
 			
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableUnsignedIntConverterCheck > ::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableUnsignedIntConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableUnsignedIntConverterCheck>::InclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}

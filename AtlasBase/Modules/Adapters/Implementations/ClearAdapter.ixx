@@ -14,12 +14,9 @@ export namespace Atlas
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		private: constexpr static inline bool IsNoexcept = noexcept ( std::declval<ClearedType>( ).clear( ) );
-
-			
 		public:
 		constexpr static inline void Clear( ClearedType& instance )
-			noexcept ( IsNoexcept )
+			noexcept ( noexcept ( instance.clear( ) ) )
 		{
 			instance.clear( );
 		}
@@ -30,12 +27,9 @@ export namespace Atlas
 	class DLLApi ClearAdapter<ClearedType> :
 		public std::true_type
 	{
-		private: constexpr static inline bool IsNoexcept = noexcept ( std::declval<ClearedType>( ).Clear( ) );
-
-			
 		public:
 		constexpr static inline void Clear( ClearedType& instance )
-			noexcept ( IsNoexcept )
+			noexcept ( noexcept ( instance.Clear( ) ) )
 		{
 			instance.Clear( );
 		}

@@ -6,26 +6,22 @@ module;
 
 export module AtlasConverters:UnsignedLongLongConverter;
 
-import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
+import AtlasIntegration;
 
-import :Converter;
-
-export namespace Atlas::Converters
+export namespace Atlas
 {
 	template<typename SourceType>
 		requires Concept::IsConvertibleTo<SourceType , unsigned long long>
 	class DLLApi Converter<SourceType , unsigned long long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( static_cast<unsigned long long>( Type<SourceType>::Instance( ) ) );
 
-		
 		public:
 		constexpr static inline unsigned long long Convert( const SourceType& data )  
-			noexcept( IsNoexcept )
+			noexcept( Concept::IsNoexceptConvertibleTo<SourceType ,unsigned long long> )
 		{
 			return data;
 		}
@@ -35,12 +31,9 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , unsigned long long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::stoull( std::string( ) ));
-
-		
 		public:
 		constexpr static inline unsigned long long Convert( const std::string& data )
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableUnsignedLongLongConverterCheck )
 		{
 			unsigned long long integer = 0;
 
@@ -54,8 +47,7 @@ export namespace Atlas::Converters
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableUnsignedLongLongConverterCheck > ::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::InclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
@@ -68,12 +60,9 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , unsigned long long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::stoull( std::declval<char*>( ) ) );
-		
-
 		public:
 		constexpr static inline unsigned long long Convert( const char* data ) 
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableUnsignedLongLongConverterCheck )
 		{
 			unsigned long long integer = 0;
 
@@ -82,12 +71,11 @@ export namespace Atlas::Converters
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableUnsignedLongLongConverterCheck > ::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::InclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
-
+			
 			return integer;
 		}
 	};

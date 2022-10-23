@@ -1,4 +1,3 @@
-module;
 export module AtlasExceptions;
 
 export import :Exception;

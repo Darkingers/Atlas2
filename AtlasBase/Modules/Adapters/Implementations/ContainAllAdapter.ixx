@@ -16,15 +16,11 @@ export namespace Atlas
 		public std::true_type
 	{
 		private: using DataType = Deduce::CollectionContainedType<CollectionType>;
-		private: using SimpleCollectionType = Deduce::SimpleType<CollectionType>;
-		private: using SimpleContainedType = Deduce::SimpleType<ContainedCollectionType>;
 
-		private: constexpr static inline bool IsNoexcept = Concept::IsNoexceptIterableWith<CollectionType , DataType>;
-			
 			
 		public:
-		constexpr static inline bool ContainsAll(const SimpleCollectionType& collection, const SimpleContainedType& containedContainer)
-			noexcept( IsNoexcept )
+		constexpr static inline bool ContainsAll(const CollectionType& collection, const ContainedCollectionType& containedContainer)
+			noexcept( Concept::IsNoexceptIterableWith<CollectionType , DataType> )
 		{
 			auto current = std::cbegin(containedContainer);
 			const auto end = std::cend(containedContainer);

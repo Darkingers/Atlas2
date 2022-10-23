@@ -42,18 +42,6 @@
     <ClCompile Include="Modules\Adapters\Implementations\HashAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\ContainChecker.ixx">
-      <Filter>Modules\Variadics</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\Counter.ixx">
-      <Filter>Modules\Variadics</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\ConditionChecker.ixx">
-      <Filter>Modules\Variadics</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\ConditionCounter.ixx">
-      <Filter>Modules\Variadics</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\Exceptions\Implementations\AbortRequestedException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
@@ -122,7 +110,7 @@
     <ClCompile Include="Modules\Converters\Implementations\UnsignedLongConverter.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\UnsignedLongLongConverter.ixx" />
     <ClCompile Include="Modules\Extensions\Implementations\Throw.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\String.ixx" />
+    <ClCompile Include="Modules\BaseTypes\Implementations\StaticString.ixx" />
     <ClCompile Include="Modules\BaseTypes\BaseTypes.ixx" />
   </ItemGroup>
 </Project>

@@ -162,7 +162,7 @@
   <ItemGroup>
     <ClCompile Include="Modules\Adapters\Adapters.ixx" />
     <ClCompile Include="Modules\BaseTypes\BaseTypes.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\String.ixx">
+    <ClCompile Include="Modules\BaseTypes\Implementations\StaticString.ixx">
       <SubType>
       </SubType>
     </ClCompile>
@@ -213,10 +213,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Modules\VariadicHelpers\VariadicsHelpers.ixx" />
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\ContainChecker.ixx" />
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\Counter.ixx" />
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\ConditionChecker.ixx" />
-    <ClCompile Include="Modules\VariadicHelpers\Implementations\ConditionCounter.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtlasCore\AtlasCore.vcxproj">

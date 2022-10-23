@@ -14,15 +14,12 @@ export namespace Atlas::Adapters
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept( std::declval<std::hash<DataType>>( )( std::declval<DataType>( ) ) );
-
-			
 		private: static std::hash<DataType> Hash;
 
 			
 		public:
 		constexpr static inline auto GetHash(const DataType& instance) 
-			noexcept( IsNoexcept )
+			noexcept( noexcept( Hash(instance) ) )
 		{
 			return Hash(instance);
 		}
@@ -33,12 +30,9 @@ export namespace Atlas::Adapters
 	class DLLApi HashAdapter<DataType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept ( std::declval<DataType>( ).GetHash( ) );
-			
-			
 	    public:
 		constexpr static inline auto GetHash(const DataType& instance) 
-			noexcept( IsNoexcept )
+			noexcept( noexcept ( instance.GetHash( ) ) )
 		{
 			return instance.GetHash();
 		}

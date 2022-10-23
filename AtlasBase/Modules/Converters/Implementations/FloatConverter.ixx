@@ -6,26 +6,21 @@ module;
 
 export module AtlasConverters:FloatConverter;
 
-import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
+import AtlasIntegration;
 
-import :Converter;
-
-export namespace Atlas::Converters
+export namespace Atlas
 {
 	template<typename SourceType>
 		requires Concept::IsConvertibleTo<SourceType , float>
 	class DLLApi Converter<SourceType , float> :
 		public std::true_type
 	{	
-		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<float>;
-
-
 		public:
 		constexpr static inline float Convert( const SourceType& data )
-			noexcept( IsNoexcept )
+			noexcept( Concept::IsNoexceptConvertibleTo<SourceType , float> )
 		{
 			return data;
 		}
@@ -35,7 +30,6 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , float> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableFloatConverterCheck;
 		private: constexpr static inline float DecimalMultipliers[] = {
 			0.1f,
 			0.01f,
@@ -93,7 +87,7 @@ export namespace Atlas::Converters
 			
 		public:
 		constexpr static inline float Convert( const std::string& data ) 
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableFloatConverterCheck )
 		{
 			float integer = 0;
 			float decimal = 0;
@@ -120,8 +114,7 @@ export namespace Atlas::Converters
 				}
 				else
 				{
-					Validate<Configuration::EnableFloatConverterCheck>::IsMoreOrEqual( current , '0' );
-					Validate<Configuration::EnableFloatConverterCheck>::IsLessOrEqual( current , '9' );
+					Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
 					
 					integer = integer * 10 + ( current - '0' );
 				}
@@ -133,8 +126,7 @@ export namespace Atlas::Converters
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableFloatConverterCheck>::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableFloatConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
 				
 				decimal = decimal * 10 + ( current - '0' );
 			}
@@ -147,7 +139,6 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , float> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableFloatConverterCheck;
 		private: constexpr static inline float DecimalMultipliers[] = {
 			0.1f,
 			0.01f,
@@ -205,7 +196,7 @@ export namespace Atlas::Converters
 			
 		public:
 		constexpr static inline float Convert( const char* data )
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableFloatConverterCheck )
 		{
 			float integer = 0;
 			float decimal = 0;
@@ -229,8 +220,7 @@ export namespace Atlas::Converters
 				}
 				else
 				{
-					Validate<Configuration::EnableFloatConverterCheck>::IsMoreOrEqual( current , '0' );
-					Validate<Configuration::EnableFloatConverterCheck>::IsLessOrEqual( current , '9' );
+					Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
 					
 					integer = integer * 10 + ( current - '0' );
 				}
@@ -240,8 +230,7 @@ export namespace Atlas::Converters
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableFloatConverterCheck>::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableFloatConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
 				
 				decimal = decimal * 10 + ( current - '0' );
 			}

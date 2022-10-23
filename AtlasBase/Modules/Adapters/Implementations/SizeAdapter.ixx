@@ -16,12 +16,9 @@ export namespace Atlas
 	class DLLApi SizeAdapter<DataType> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept ( std::declval<DataType>( ).size( ) );
-
-			
 	    public:
 		constexpr static inline auto Size(const DataType& instance)
-			noexcept( IsNoexcept )
+			noexcept( noexcept ( instance.size( ) ) )
 		{
 			return instance.size( );
 		}
@@ -31,13 +28,10 @@ export namespace Atlas
 		requires Concept::HasCountFunction<DataType>
 	class DLLApi SizeAdapter<DataType> :
 		public std::true_type
-	{
-		private: constexpr static bool IsNoexcept = noexcept ( std::declval<DataType>( ).Count( ) );
-
-			
+	{	
 	    public:
 		constexpr static inline auto Size(const DataType& instance)
-			noexcept( IsNoexcept )
+			noexcept( noexcept ( instance.Count( ) ) )
 		{
 			return instance.Count();
 		}
@@ -47,12 +41,9 @@ export namespace Atlas
 	class DLLApi SizeAdapter<std::string> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = noexcept ( std::declval<std::string>( ).length( ) );
-
-
 		public:
 		constexpr static inline auto Size( const std::string& instance )
-			noexcept( IsNoexcept )
+			noexcept( noexcept ( instance.length( ) ) )
 		{
 			return instance.length( );
 		}

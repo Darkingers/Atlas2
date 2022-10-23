@@ -6,26 +6,21 @@ module;
 
 export module AtlasConverters:LongConverter;
 
-import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
+import AtlasIntegration;
 
-import :Converter;
-
-export namespace Atlas::Converters
+export namespace Atlas
 {
 	template<typename SourceType>
 		requires Concept::IsConvertibleTo<SourceType , long>
 	class DLLApi Converter<SourceType , long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<long>;
-		
-
 		public:
 		constexpr static inline long Convert( const SourceType& data ) 
-			noexcept( IsNoexcept )
+			noexcept( Concept::IsNoexceptConvertibleTo<SourceType, long> )
 		{
 			return data;
 		}
@@ -35,12 +30,9 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableLongConverterCheck;
-		
-
 		public:
 		constexpr static inline long Convert( const std::string& data )
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableLongConverterCheck )
 		{
 			long integer = 0;
 
@@ -61,8 +53,7 @@ export namespace Atlas::Converters
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableLongConverterCheck>::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableLongConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableLongConverterCheck>::InclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
@@ -80,7 +71,7 @@ export namespace Atlas::Converters
 
 		public:
 		constexpr static inline long Convert( const char* data ) 
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableLongConverterCheck )
 		{
 			long integer = 0;
 
@@ -96,8 +87,7 @@ export namespace Atlas::Converters
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableLongConverterCheck>::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableLongConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableLongConverterCheck>::InclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}

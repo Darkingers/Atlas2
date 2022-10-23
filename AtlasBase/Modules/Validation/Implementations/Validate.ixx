@@ -178,6 +178,36 @@ export namespace Atlas
 			}
 		}
 
+		public: template<typename TestedType , typename TypeA , typename TypeB>
+		constexpr static inline void InclusiveRange( const TestedType& tested, const TypeA& from , const TypeB& to )
+			noexcept( !IsEnabled )
+		{
+			if constexpr ( !IsEnabled )
+			{
+				return;
+			}
+
+			if ( tested<from || tested>to)
+			{
+				throw ValidationException( "Condition: tested<from || tested>to is not fulfilled!" );
+			}
+		}
+						
+		public: template<typename TestedType , typename TypeA , typename TypeB>
+		constexpr static inline void ExlclusiveRange( const TestedType& tested , const TypeA& from , const TypeB& to )
+			noexcept( !IsEnabled )
+		{
+			if constexpr ( !IsEnabled )
+			{
+				return;
+			}
+
+			if ( tested<=from || tested>=to )
+			{
+				throw ValidationException( "Condition: tested<=from || tested>=to is not fulfilled!" );
+			}
+		}
+
 		public: template<typename TypeA , typename TypeB>
 		constexpr static inline void IsLessOrEqual( const TypeA& a , const TypeB& b )
 			noexcept( !IsEnabled )

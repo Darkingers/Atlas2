@@ -12,17 +12,26 @@ import AtlasIntegration;
 
 export namespace Atlas
 {
+	template<typename DataType>
+	class DLLApi ContainAdapter<DataType , DataType> :
+		public std::true_type
+	{
+		public:
+		constexpr static inline bool Contains( const DataType& d1 , const DataType& d2 )
+			noexcept ( noexcept ( d1 == d2 ) )
+		{
+			return d1 == d2;
+		}
+	};
+	
 	template<typename CollectionType, typename DataType> 
 		requires Concept::HasContainFunction<CollectionType, DataType>
 	class DLLApi ContainAdapter<CollectionType, DataType> :
 		public std::true_type
 	{
-		private: constexpr static inline bool IsNoexcept = noexcept ( std::declval<CollectionType>().Contains( std::declval<DataType>() ) );
-
-			
 	    public:
 		constexpr static inline bool Contains(const CollectionType& collection, const DataType& contained)
-			noexcept ( IsNoexcept )
+			noexcept ( noexcept ( collection.Contains( contained ) ) )
 		{
 			return collection.Contains(contained);
 		}
@@ -33,12 +42,9 @@ export namespace Atlas
 	class DLLApi ContainAdapter<CollectionType, DataType> :
 		public std::true_type
 	{
-		private: constexpr static inline bool IsNoexcept = Concept::IsNoexceptIterableWith<CollectionType,DataType>;
-
-
 		public:
 		constexpr inline bool Contains( const CollectionType& collection , const DataType& contained ) 
-			noexcept( IsNoexcept )
+			noexcept( Concept::IsNoexceptIterableWith<CollectionType , DataType> )
 		{
 			auto iterator = std::cbegin( collection );
 			const auto endIterator = std::cend( collection );

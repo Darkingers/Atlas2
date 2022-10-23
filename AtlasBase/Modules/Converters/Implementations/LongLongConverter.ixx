@@ -6,26 +6,22 @@ module;
 
 export module AtlasConverters:LongLongConverter;
 
-import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
+import AtlasIntegration;
 
-import :Converter;
-
-export namespace Atlas::Converters
+export namespace Atlas
 {
+
 	template<typename SourceType>
 		requires Concept::IsConvertibleTo<SourceType , long long>
 	class DLLApi Converter<SourceType , long long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<long long>;
-		
-
 		public:
 		constexpr static inline long long Convert( const SourceType& data ) 
-			noexcept( IsNoexcept )
+			noexcept( Concept::IsNoexceptConvertibleTo<SourceType, long long> )
 		{
 			return data;
 		}
@@ -35,12 +31,9 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , long long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableLongLongConverterCheck;
-		
-		
 		public:
 		constexpr static inline long long Convert( const std::string& data )
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableLongLongConverterCheck )
 		{
 			long long integer = 0;
 
@@ -61,9 +54,8 @@ export namespace Atlas::Converters
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableLongLongConverterCheck>::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableLongLongConverterCheck>::IsLessOrEqual( current , '9' );
-
+				Validate<Configuration::EnableLongLongConverterCheck>::InclusiveRange( current , '0' , '9' );
+				
 				integer = integer * 10 + ( current - '0' );
 			}
 
@@ -75,12 +67,9 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , long long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableLongLongConverterCheck;
-		
-
 		public:
 		constexpr static inline long long Convert( const char* data ) 
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableLongLongConverterCheck )
 		{
 			long long integer = 0;
 
@@ -96,8 +85,7 @@ export namespace Atlas::Converters
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableLongLongConverterCheck > ::IsMoreOrEqual( current , '0' );
-				Validate<Configuration::EnableLongLongConverterCheck>::IsLessOrEqual( current , '9' );
+				Validate<Configuration::EnableLongLongConverterCheck>::InclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}

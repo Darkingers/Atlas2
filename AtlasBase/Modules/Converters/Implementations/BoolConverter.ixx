@@ -6,26 +6,21 @@ module;
 
 export module AtlasConverters:BoolConverter;
 
-import AtlasTypeInfo;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
+import AtlasIntegration;
 
-import :Converter;
-
-export namespace Atlas::Converters
+export namespace Atlas
 {
 	template<typename SourceType>
 		requires Concept::IsConvertibleTo<SourceType , bool>
 	class DLLApi Converter<SourceType , bool> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = Type<SourceType>::template IsNoexceptConvertibleTo<bool>;
-		
-
 		public:
 		constexpr static inline bool Convert( const SourceType& data )
-			noexcept( IsNoexcept )
+			noexcept( Concept::IsNoexceptConvertibleTo<SourceType, bool> )
 		{
 			return data;
 		}
@@ -35,16 +30,13 @@ export namespace Atlas::Converters
 	class DLLApi Converter<std::string , bool> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
-		
-
 		public:
 		constexpr static inline bool Convert( const std::string& data ) 
-			noexcept( IsNoexcept )
+			noexcept( !Configuration::EnableBoolConverterCheck)
 		{
-			bool isTrue = "1" || data == "true" || data == "True" || data == "TRUE";
+			bool isTrue = data == Configuration::TrueString;
 			
-			Validate<Configuration::EnableBoolConverterCheck>::IsNone(data, "0" , "false" , "False" , "FALSE" );
+			Validate<Configuration::EnableBoolConverterCheck>::IsSame( data , Configuration::FalseString );
 
 			return isTrue;
 		}
@@ -54,16 +46,13 @@ export namespace Atlas::Converters
 	class DLLApi Converter<const char* , bool> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableBoolConverterCheck;
-
-			
 		public:
 		constexpr static inline bool Convert( const char* data )
-			noexcept ( IsNoexcept )
+			noexcept ( !Configuration::EnableBoolConverterCheck )
 		{
-			bool isTrue = "1" || data == "true" || data == "True" || data == "TRUE";
+			bool isTrue = data == Configuration::TrueString;
 
-			Validate<Configuration::EnableBoolConverterCheck>::IsNone( data , "0" , "false" , "False" , "FALSE" );
+			Validate<Configuration::EnableBoolConverterCheck>::IsSame( data , Configuration::FalseString );
 
 			return isTrue;
 		}

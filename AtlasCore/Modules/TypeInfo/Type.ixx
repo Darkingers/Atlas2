@@ -6,7 +6,7 @@ module;
 #include <typeinfo>
 #include "../../../Macros/Macros.h"
 
-export module AtlasTypeInfo:Type;
+export module AtlasTypeInfo;
 
 import AtlasConcepts;
 import AtlasDefinitions;
@@ -17,45 +17,45 @@ export namespace Atlas
 	class DLLApi Type
 	{
 		public: inline static const char* Name = typeid( DataType ).name( );	
-		public: constexpr inline static bool IsFundamental = Concept::IsFundamental<DataType>;
-		public: constexpr inline static bool IsConst = Concept::IsConst<DataType>;
-		public: constexpr inline static bool IsReference = Concept::IsReference<DataType>;
-		public: constexpr inline static bool IsPointer = Concept::IsPointer<DataType>;
-		public: constexpr inline static bool IsValue = Concept::IsValue<DataType>;
-		public: constexpr inline static bool IsTuple = Concept::IsTuple<DataType>;
+		public: constexpr static inline bool IsFundamental = Concept::IsFundamental<DataType>;
+		public: constexpr static inline bool IsConst = Concept::IsConst<DataType>;
+		public: constexpr static inline bool IsReference = Concept::IsReference<DataType>;
+		public: constexpr static inline bool IsPointer = Concept::IsPointer<DataType>;
+		public: constexpr static inline bool IsValue = Concept::IsValue<DataType>;
+		public: constexpr static inline bool IsTuple = Concept::IsTuple<DataType>;
 
 		public: template<typename CastedType>
-		constexpr inline static bool IsConvertibleTo = Concept::IsConvertibleTo<DataType , CastedType>;
+		constexpr static inline bool IsConvertibleTo = Concept::IsConvertibleTo<DataType , CastedType>;
 			
 		public: template<typename CastedType>
-		constexpr inline static bool IsNoexceptConvertibleTo = Concept::IsNoexceptConvertibleTo<DataType , CastedType>;
+		constexpr static inline bool IsNoexceptConvertibleTo = Concept::IsNoexceptConvertibleTo<DataType , CastedType>;
 
 		public: template<typename... ConstructorArgs>
-		constexpr inline static bool IsConstructible = Concept::IsConstructible<DataType , ConstructorArgs...>;
+		constexpr static inline bool IsConstructible = Concept::IsConstructible<DataType , ConstructorArgs...>;
 
 		public: template<typename... ConstructorArgs>
-		constexpr inline static bool IsNoexceptConstructible = Concept::IsNoexceptConstructible<DataType , ConstructorArgs...>;
+		constexpr static inline bool IsNoexceptConstructible = Concept::IsNoexceptConstructible<DataType , ConstructorArgs...>;
 
 		public: template<typename ComparedType>
-		constexpr inline static bool IsSame = Concept::IsSame<DataType , ComparedType>;
+		constexpr static inline bool IsSame = Concept::IsSame<DataType , ComparedType>;
 
 		public: template<typename... ComparedType>
-		constexpr inline static bool IsAll = Concept::IsAll<DataType , ComparedType...>;
+		constexpr static inline bool IsAll = Concept::IsAll<DataType , ComparedType...>;
 
 		public: template<typename... ComparedType>
-		constexpr inline static bool IsAny = Concept::IsAny<DataType , ComparedType...>;
+		constexpr static inline bool IsAny = Concept::IsAny<DataType , ComparedType...>;
 
 		public: template<typename... ComparedType>
-		constexpr inline static bool IsNone = Concept::IsNone<DataType , ComparedType...>;
+		constexpr static inline bool IsNone = Concept::IsNone<DataType , ComparedType...>;
 
 		public: template<typename DerivedType>
-		constexpr inline static bool IsBaseOf = Concept::IsBaseOf<DataType , DerivedType>;
+		constexpr static inline bool IsBaseOf = Concept::IsBaseOf<DataType , DerivedType>;
 
 		public: template<typename BaseType>
-		constexpr inline static bool IsDerivedFrom = Concept::IsDerivedFrom<DataType , BaseType>;
+		constexpr static inline bool IsDerivedFrom = Concept::IsDerivedFrom<DataType , BaseType>;
 
 		public: template<typename AssignedType>
-		constexpr inline static bool IsAssignableFrom = Concept::IsAssignableFrom<DataType , AssignedType>;
+		constexpr static inline bool IsAssignableFrom = Concept::IsAssignableFrom<DataType , AssignedType>;
 
 
 		public: using BaseType = typename Deduce::SimpleType<DataType>;

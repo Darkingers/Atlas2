@@ -150,7 +150,7 @@ export namespace Atlas
 		}
 	
 		private: template<typename CollectionType>
-		constexpr inline static void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+		constexpr static inline void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 		{
 			const unsigned int count = Adapter::Count( collection );
 

@@ -14,7 +14,7 @@ export namespace Atlas
 		class Memory
 		{
 			public:
-			constexpr inline static unsigned int GetHash( const DataType* memoryLocation , const unsigned int memorySize ) 
+			constexpr static inline unsigned int GetHash( const DataType* memoryLocation , const unsigned int memorySize ) 
 			{
 				const unsigned int shift = (unsigned int) log2( 1 + sizeof( DataType ) * memorySize );
 				return (unsigned int) ( memoryLocation ) >> shift;
@@ -25,7 +25,7 @@ export namespace Atlas
 	class DLLApi Memory
 	{
 		public: template<typename DataType>
-		constexpr inline static auto GetHash( const DataType* memoryLocation , const unsigned int memorySize )
+		constexpr static inline auto GetHash( const DataType* memoryLocation , const unsigned int memorySize )
 		{
 			Validate::IsNotNull( memoryLocation );
 			Validate::IsPositive( memorySize );

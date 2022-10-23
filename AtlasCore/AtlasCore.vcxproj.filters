@@ -22,31 +22,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Modules\TypeInfo.ixx">
+    <ClCompile Include="Modules\Definitions\Definitions.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Definitions.ixx">
+    <ClCompile Include="Modules\Concepts\Concepts.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Concepts.ixx">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Concepts\BasicConcepts.ixx">
+    <ClCompile Include="Modules\Concepts\Implementations\BasicConcepts.ixx">
       <Filter>Modules\Concepts</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Concepts\FunctionalConcepts.ixx">
+    <ClCompile Include="Modules\Concepts\Implementations\FunctionalConcepts.ixx">
       <Filter>Modules\Concepts</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Concepts\RelationalConcepts.ixx">
+    <ClCompile Include="Modules\Concepts\Implementations\RelationalConcepts.ixx">
       <Filter>Modules\Concepts</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Concepts\VariadicConteps.ixx">
+    <ClCompile Include="Modules\Concepts\Implementations\VariadicConteps.ixx">
       <Filter>Modules\Concepts</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Definitions\TypeDeducers.ixx">
+    <ClCompile Include="Modules\Definitions\Implementations\TypeDeducers.ixx">
       <Filter>Modules\Definitions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Definitions\TypeDefinitions.ixx">
+    <ClCompile Include="Modules\Definitions\Implementations\TypeDefinitions.ixx">
       <Filter>Modules\Definitions</Filter>
     </ClCompile>
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
@@ -55,7 +52,9 @@
     <ClCompile Include="Modules\Configuration.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Definitions\Implementations.ixx" />
+    <ClCompile Include="Modules\Integration\Integrations.ixx" />
+    <ClCompile Include="Modules\Integration\Implementations\Adapter.ixx" />
+    <ClCompile Include="Modules\Integration\Implementations\Converter.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

@@ -25,7 +25,7 @@ export namespace Atlas
 
 			public: template<typename TargetCollectionType> 
 				requires Concept::IsSame<DataType, Deduce::CollectionContainedType<TargetCollectionType>>
-				  constexpr inline static ConstIteratorType Copy( const CollectionType& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
+				  constexpr static inline ConstIteratorType Copy( const CollectionType& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
 			{
 				auto sourceIterator = std::cbegin( collection );
 				auto targetIterator = std::begin( destination );
@@ -40,7 +40,7 @@ export namespace Atlas
 			}
 
 			public: 
-			constexpr inline static void Shift( CollectionType& collection , const unsigned int shiftStart , const unsigned int shiftSize , const unsigned int shiftOffset )
+			constexpr static inline void Shift( CollectionType& collection , const unsigned int shiftStart , const unsigned int shiftSize , const unsigned int shiftOffset )
 			{
 				const unsigned int destinationIndex = shiftStart + shiftOffset;
 
@@ -57,7 +57,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... Args>
-			constexpr inline static IteratorType ReplaceFrom( IteratorType& iterator , const DataType& data , Args&&... arguments )
+			constexpr static inline IteratorType ReplaceFrom( IteratorType& iterator , const DataType& data , Args&&... arguments )
 			{
 				( *iterator ) = data;
 
@@ -74,7 +74,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... Args>
-			constexpr inline static IteratorType ReplaceFrom( IteratorType& iterator , DataType&& data , Args&&... arguments )
+			constexpr static inline IteratorType ReplaceFrom( IteratorType& iterator , DataType&& data , Args&&... arguments )
 			{
 				( *iterator ) = std::move( data );
 
@@ -91,7 +91,7 @@ export namespace Atlas
 			}
 
 			public: template<typename SourceCollectionType , typename... Args>
-			constexpr inline static IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType& collection , Args&&... arguments )
+			constexpr static inline IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType& collection , Args&&... arguments )
 			{
 				auto collectionIterator = std::cbegin( collection );
 				const auto end = std::cend( collection );
@@ -112,7 +112,7 @@ export namespace Atlas
 			}
 
 			public: template<typename SourceCollectionType , typename... Args>
-			constexpr inline static IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType&& collection , Args&&... arguments )
+			constexpr static inline IteratorType ReplaceFrom( IteratorType& iterator , SourceCollectionType&& collection , Args&&... arguments )
 			{
 				auto collectionIterator = std::cbegin( collection );
 				const auto end = std::cend( collection );
@@ -134,7 +134,7 @@ export namespace Atlas
 
 			public: template<typename CurrentCollectionType , typename... Args> 
 				requires Concept::IsIterableWith<CollectionType , DataType>
-			constexpr inline static bool Contains(const CollectionType& collection, const CurrentCollectionType& current , const Args&... arguments )
+			constexpr static inline bool Contains(const CollectionType& collection, const CurrentCollectionType& current , const Args&... arguments )
 			{
 				const bool contains = Adapter::ContainsAll( collection , current );
 
@@ -150,7 +150,7 @@ export namespace Atlas
 
 			public: template<typename CurrentType , typename... Args>
 				requires Concept::IsSame<DataType, CurrentType>
-			constexpr inline static bool Contains( const CollectionType& collection , const CurrentType& current , const Args&... arguments )
+			constexpr static inline bool Contains( const CollectionType& collection , const CurrentType& current , const Args&... arguments )
 			{
 				const bool contains = Adapter::Contains( collection , current );
 
@@ -165,7 +165,7 @@ export namespace Atlas
 			}
 		
 			public: template<typename... Args>
-			constexpr inline static unsigned int Count( const CollectionType& collection , const Args&... arguments )
+			constexpr static inline unsigned int Count( const CollectionType& collection , const Args&... arguments )
 			{
 				auto iterator = std::cbegin( collection );
 				const auto end = std::cend( collection );
@@ -184,7 +184,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... Args>
-			constexpr inline static bool All( const CollectionType& collection , const Args&... arguments )
+			constexpr static inline bool All( const CollectionType& collection , const Args&... arguments )
 			{
 				auto iterator = std::cbegin( collection );
 				const auto end = std::cend( collection );
@@ -201,7 +201,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... Args>
-			constexpr inline static bool Any( const CollectionType& collection , const Args&... arguments )
+			constexpr static inline bool Any( const CollectionType& collection , const Args&... arguments )
 			{
 				auto iterator = std::cbegin( collection );
 				const auto end = std::cend( collection );
@@ -218,7 +218,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... Args>
-			constexpr inline static DataType& First( const CollectionType& collection , const Args&... arguments )
+			constexpr static inline DataType& First( const CollectionType& collection , const Args&... arguments )
 			{
 				auto iterator = std::cbegin( collection );
 				const auto end = std::cend( collection );
@@ -235,7 +235,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... Args>
-			constexpr inline static DataType* FirstOrNullptr( const CollectionType& collection , const Args&... arguments )
+			constexpr static inline DataType* FirstOrNullptr( const CollectionType& collection , const Args&... arguments )
 			{
 				auto iterator = std::cbegin( collection );
 				const auto end = std::cend( collection );
@@ -256,7 +256,7 @@ export namespace Atlas
 	class DLLApi DataFunctions
 	{
 		public: template<typename CollectionType, typename TargetCollectionType>
-		constexpr inline static auto Copy( const CollectionType& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
+		constexpr static inline auto Copy( const CollectionType& collection , const unsigned int copyStart , const unsigned int copySize , TargetCollectionType& destination )
 		{
 			Validate::IsPositive( copyStart );
 			Validate::IsPositive( copySize );
@@ -280,7 +280,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType , typename TargetCollectionType>
-		constexpr inline static auto Copy( const CollectionType& collection , const unsigned int copySize , TargetCollectionType& destination )
+		constexpr static inline auto Copy( const CollectionType& collection , const unsigned int copySize , TargetCollectionType& destination )
 		{
 			Validate::IsPositive( copySize );
 
@@ -302,7 +302,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType>
-		constexpr inline static void Shift( CollectionType& collection , const unsigned int shiftStart, const unsigned int shiftSize, const unsigned int shiftOffset )
+		constexpr static inline void Shift( CollectionType& collection , const unsigned int shiftStart, const unsigned int shiftSize, const unsigned int shiftOffset )
 		{
 			Validate::IsPositive( shiftStart );
 			Validate::IsPositive( shiftSize );
@@ -323,7 +323,7 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename... Args>
-		constexpr inline static auto ReplaceFrom( CollectionType&& collection , unsigned int index, Args&&... arguments )
+		constexpr static inline auto ReplaceFrom( CollectionType&& collection , unsigned int index, Args&&... arguments )
 		{
 			if constexpr ( !Type<CollectionType>::IsPointer )
 			{
@@ -343,37 +343,37 @@ export namespace Atlas
 		}
 
 		public: template<typename CollectionType, typename... Args>
-		constexpr inline static bool Contains( const CollectionType& collection , const Args&... arguments )
+		constexpr static inline bool Contains( const CollectionType& collection , const Args&... arguments )
 		{
 			return Implementation::DataFunctions<CollectionType>::Contains( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
-		constexpr inline static unsigned int Count( const CollectionType& collection , const Args&... arguments )
+		constexpr static inline unsigned int Count( const CollectionType& collection , const Args&... arguments )
 		{
 			return Implementation::DataFunctions<CollectionType>::Count( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
-		constexpr inline static bool All( const CollectionType& collection , const Args&... arguments )
+		constexpr static inline bool All( const CollectionType& collection , const Args&... arguments )
 		{
 			return Implementation::DataFunctions<CollectionType>::All( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
-		constexpr inline static bool Any( const CollectionType& collection , const Args&... arguments )
+		constexpr static inline bool Any( const CollectionType& collection , const Args&... arguments )
 		{
 			return Implementation::DataFunctions<CollectionType>::Any( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
-		constexpr inline static auto First( const CollectionType& collection , const Args&... arguments )
+		constexpr static inline auto First( const CollectionType& collection , const Args&... arguments )
 		{
 			return Implementation::DataFunctions<CollectionType>::First( collection , std::forward<const Args&>( arguments )... );
 		}
 
 		public: template<typename CollectionType , typename... Args>
-		constexpr inline static auto FirstOrNullptr( const CollectionType& collection , const Args&... arguments )
+		constexpr static inline auto FirstOrNullptr( const CollectionType& collection , const Args&... arguments )
 		{
 			return Implementation::DataFunctions<CollectionType>::FirstOrNullptr( collection , std::forward<const Args&>( arguments )... );
 		}

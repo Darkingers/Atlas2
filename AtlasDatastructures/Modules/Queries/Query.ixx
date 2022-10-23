@@ -408,7 +408,7 @@ export namespace Atlas
 		public:
 		Query( SourceCollectionType* sourceCollection )  :
 			_sourceCollection( sourceCollection ),
-			_results( CountAdapter<SourceCollectionType>::Count( *sourceCollection ) ),
+			_results( SizeAdapter<SourceCollectionType>::Count( *sourceCollection ) ),
 			_deleteSource(false)
 		{
 		}
@@ -416,7 +416,7 @@ export namespace Atlas
 		public:
 		Query( SourceCollectionType& sourceCollection )  :
 			_sourceCollection( &sourceCollection ),
-			_results( CountAdapter<SourceCollectionType>::Count( sourceCollection ) ),
+			_results( SizeAdapter<SourceCollectionType>::Count( sourceCollection ) ),
 			_deleteSource( false )
 		{
 		}
@@ -424,7 +424,7 @@ export namespace Atlas
 		public:
 		Query( SourceCollectionType&& sourceCollection )  :
 			_sourceCollection( sourceCollection ),
-			_results( CountAdapter<SourceCollectionType>::Count( sourceCollection ) ),
+			_results( SizeAdapter<SourceCollectionType>::Count( sourceCollection ) ),
 			_deleteSource( true )
 		{
 		}

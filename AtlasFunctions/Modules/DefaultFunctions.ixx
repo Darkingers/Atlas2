@@ -12,7 +12,7 @@ export namespace Atlas
 		class Default
 		{
 			public:
-			constexpr inline static auto Comparator( const DataType& instanceA, const DataType& instanceB )
+			constexpr static inline auto Comparator( const DataType& instanceA, const DataType& instanceB )
 			{
 				return instanceA - instanceB;
 			}
@@ -22,7 +22,7 @@ export namespace Atlas
 	class DLLApi Default
 	{
 		public: template<typename DataType>
-		constexpr inline static auto Comparator( const DataType& instanceA, const DataType& instanceB )
+		constexpr static inline auto Comparator( const DataType& instanceA, const DataType& instanceB )
 		{
 			return Implementation::Default<DataType>::Comparator( instanceA, instanceB );
 		}	

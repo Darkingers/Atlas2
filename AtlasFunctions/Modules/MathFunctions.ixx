@@ -17,7 +17,7 @@ export namespace Atlas
 		class Math
 		{
 			private: template<typename... Args>
-			constexpr inline static auto Minimum( const NumberType& previousMin , const NumberType& current , const Args&... arguments )
+			constexpr static inline auto Minimum( const NumberType& previousMin , const NumberType& current , const Args&... arguments )
 			{
 				auto min = previousMin < current ? previousMin : current;
 
@@ -32,7 +32,7 @@ export namespace Atlas
 			}
 
 			private: template<typename... Args>
-			constexpr inline static auto Maximum( const NumberType& previousMax , const NumberType& current , const Args&... arguments )
+			constexpr static inline auto Maximum( const NumberType& previousMax , const NumberType& current , const Args&... arguments )
 			{
 				auto max = previousMax > current ? previousMax : current;
 
@@ -47,37 +47,37 @@ export namespace Atlas
 			}
 
 			public:
-			constexpr inline static auto SquareRoot( const NumberType& data )
+			constexpr static inline auto SquareRoot( const NumberType& data )
 			{
 				return sqrt( data );
 			}
 		
 			public:
-			constexpr inline static auto Pow( const NumberType& data , const NumberType& exponental )
+			constexpr static inline auto Pow( const NumberType& data , const NumberType& exponental )
 			{
 				return pow( data , exponental );
 			}
 		
 			public: 
-			constexpr inline static auto Cos( const NumberType& data )
+			constexpr static inline auto Cos( const NumberType& data )
 			{
 				return cos( data );
 			}
 
 			public:
-			constexpr inline static auto ACos( const NumberType& data )
+			constexpr static inline auto ACos( const NumberType& data )
 			{
 				return acos( data );
 			}
 
 			public:
-			constexpr inline static auto Sin( const NumberType& data )
+			constexpr static inline auto Sin( const NumberType& data )
 			{
 				return sin( data );
 			}
 
 			public:
-			constexpr inline static auto ASin( const NumberType& data )
+			constexpr static inline auto ASin( const NumberType& data )
 			{
 				return asin( data );
 			}
@@ -89,7 +89,7 @@ export namespace Atlas
 		public: constexpr static double PI = 3.14;
 
 		public: template<typename... Args>
-		constexpr inline static auto Maximum(const Args&... arguments )
+		constexpr static inline auto Maximum(const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
@@ -97,7 +97,7 @@ export namespace Atlas
 		}
 			   
 		public: template<typename... Args>
-		constexpr inline static auto Minimum( const Args&... arguments )
+		constexpr static inline auto Minimum( const Args&... arguments )
 		{
 			static_assert( sizeof...( arguments ) > 0 , "At least one element is required!" );
 
@@ -105,7 +105,7 @@ export namespace Atlas
 		}
 
 		public: template<typename NumberType>
-		constexpr inline static auto SquareRoot( const NumberType& data )
+		constexpr static inline auto SquareRoot( const NumberType& data )
 		{
 			Validate::IsPositive( data );
 
@@ -113,42 +113,42 @@ export namespace Atlas
 		}
 
 		public: template<typename NumberType>
-		constexpr inline static auto Pow( const NumberType& data, const NumberType& exponental )
+		constexpr static inline auto Pow( const NumberType& data, const NumberType& exponental )
 		{
 			return Implementation::Math<NumberType>::Pow( data, exponental );
 		}
 
 		public: template<typename NumberType>
-		constexpr inline static auto Cos( const NumberType& data )
+		constexpr static inline auto Cos( const NumberType& data )
 		{
 			return Implementation::Math<NumberType>::Cos( data );
 		}
 		
 		public: template<typename NumberType>
-		constexpr inline static auto ACos( const NumberType& data )
+		constexpr static inline auto ACos( const NumberType& data )
 		{
 			return Implementation::Math<NumberType>::ACos( data );
 		}
 		
 		public: template<typename NumberType>
-		constexpr inline static auto Sin( const NumberType& data )
+		constexpr static inline auto Sin( const NumberType& data )
 		{
 			return Implementation::Math<NumberType>::Sin( data );
 		}
 		
 		public: template<typename NumberType>
-		constexpr inline static auto ASin( const NumberType& data )
+		constexpr static inline auto ASin( const NumberType& data )
 		{
 			return Implementation::Math<NumberType>::ASin( data );
 		}
 
 		public: template<typename NumberType>
-		constexpr inline static auto AngleToRadian( const NumberType& angle )
+		constexpr static inline auto AngleToRadian( const NumberType& angle )
 		{
 			return 2 * PI * ( angle / 360 );
 		}
 		public: template<typename NumberType>
-		constexpr inline static auto RadianToAngle( const NumberType& radian )
+		constexpr static inline auto RadianToAngle( const NumberType& radian )
 		{
 			return radian * 360 / ( 2 * PI );
 		}

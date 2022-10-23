@@ -18,113 +18,111 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Modules\Adapters.ixx">
+    <ClCompile Include="Modules\Adapters\Adapters.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadics.ixx">
+    <ClCompile Include="Modules\VariadicHelpers\VariadicsHelpers.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Adapters\CountAdapter.ixx">
+    <ClCompile Include="Modules\Adapters\Implementations\SizeAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Adapters\ClearAdapter.ixx">
+    <ClCompile Include="Modules\Adapters\Implementations\ClearAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Adapters\ContainAdapter.ixx">
+    <ClCompile Include="Modules\Adapters\Implementations\ContainAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Adapters\ContainAllAdapter.ixx">
+    <ClCompile Include="Modules\Adapters\Implementations\ContainAllAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Adapters\EqualityAdapter.ixx">
+    <ClCompile Include="Modules\Adapters\Implementations\EqualityAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Adapters\HashAdapter.ixx">
+    <ClCompile Include="Modules\Adapters\Implementations\HashAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadics\ContainChecker.ixx">
+    <ClCompile Include="Modules\VariadicHelpers\Implementations\ContainChecker.ixx">
       <Filter>Modules\Variadics</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadics\Counter.ixx">
+    <ClCompile Include="Modules\VariadicHelpers\Implementations\Counter.ixx">
       <Filter>Modules\Variadics</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadics\ConditionChecker.ixx">
+    <ClCompile Include="Modules\VariadicHelpers\Implementations\ConditionChecker.ixx">
       <Filter>Modules\Variadics</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Variadics\ConditionCounter.ixx">
+    <ClCompile Include="Modules\VariadicHelpers\Implementations\ConditionCounter.ixx">
       <Filter>Modules\Variadics</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\AbortRequestedException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\AbortRequestedException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\AccessException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\AccessException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\AdapterResolveException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\AdapterResolveException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\AlreadyExistsException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\AlreadyExistsException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\ArgumentException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\ArgumentException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\DLLException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\DLLException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\IncompatibleTypeException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\IncompatibleTypeException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\InvalidOperationException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\InvalidOperationException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\NotFoundException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\NotFoundException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\NotImplementedException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\NotImplementedException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\NullException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\NullException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\TimeoutException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\TimeoutException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\ValidationException.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\ValidationException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Validation\Validate.ixx">
+    <ClCompile Include="Modules\Validation\Implementations\Validate.ixx">
       <Filter>Modules\Validation</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\Exception.ixx">
+    <ClCompile Include="Modules\Exceptions\Implementations\Exception.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions.ixx">
+    <ClCompile Include="Modules\Exceptions\Exceptions.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Validation.ixx">
+    <ClCompile Include="Modules\Validation\Validation.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Extensions\Extended.ixx" />
-    <ClCompile Include="Modules\Extensions\String.ixx" />
-    <ClCompile Include="Modules\Extensions\Tuple.ixx" />
-    <ClCompile Include="Modules\Extensions\Vector.ixx" />
-    <ClCompile Include="Modules\Extensions.ixx" />
-    <ClCompile Include="Modules\Converters\DoubleConverter.ixx" />
-    <ClCompile Include="Modules\Converters\Converter.ixx" />
-    <ClCompile Include="Modules\Converters.ixx" />
-    <ClCompile Include="Modules\Converters\FloatConverter.ixx" />
-    <ClCompile Include="Modules\Converters\IntConverter.ixx" />
-    <ClCompile Include="Modules\Converters\LongConverter.ixx" />
-    <ClCompile Include="Modules\Converters\LongLongConverter.ixx" />
-    <ClCompile Include="Modules\Converters\StringConverter.ixx" />
-    <ClCompile Include="Modules\Converters\BoolConverter.ixx" />
-    <ClCompile Include="Modules\Converters\UnsignedIntConverter.ixx" />
-    <ClCompile Include="Modules\Converters\UnsignedLongConverter.ixx" />
-    <ClCompile Include="Modules\Converters\UnsignedLongLongConverter.ixx" />
-    <ClCompile Include="Modules\Extensions\Throw.ixx" />
-    <ClCompile Include="Modules\Converters\Convert.ixx" />
-    <ClCompile Include="Modules\BaseTypes\String.ixx" />
-    <ClCompile Include="Modules\BaseTypes.ixx" />
+    <ClCompile Include="Modules\Extensions\Implementations\Extended.ixx" />
+    <ClCompile Include="Modules\Extensions\Implementations\String.ixx" />
+    <ClCompile Include="Modules\Extensions\Implementations\Tuple.ixx" />
+    <ClCompile Include="Modules\Extensions\Implementations\Vector.ixx" />
+    <ClCompile Include="Modules\Extensions\Extensions.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\DoubleConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Converters.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\FloatConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\IntConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\LongConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\LongLongConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\StringConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\BoolConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\UnsignedIntConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\UnsignedLongConverter.ixx" />
+    <ClCompile Include="Modules\Converters\Implementations\UnsignedLongLongConverter.ixx" />
+    <ClCompile Include="Modules\Extensions\Implementations\Throw.ixx" />
+    <ClCompile Include="Modules\BaseTypes\Implementations\String.ixx" />
+    <ClCompile Include="Modules\BaseTypes\BaseTypes.ixx" />
   </ItemGroup>
 </Project>

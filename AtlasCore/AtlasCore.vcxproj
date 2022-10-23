@@ -160,20 +160,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Modules\Configuration.ixx" />
-    <ClCompile Include="Modules\Definitions\Implementations.ixx" />
+    <ClCompile Include="Modules\Integration\Implementations\Adapter.ixx" />
+    <ClCompile Include="Modules\Integration\Implementations\Converter.ixx" />
+    <ClCompile Include="Modules\Integration\Integrations.ixx" />
     <ClCompile Include="Modules\TypeInfo\Type.ixx">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Modules\Concepts.ixx" />
-    <ClCompile Include="Modules\Concepts\FunctionalConcepts.ixx" />
-    <ClCompile Include="Modules\Concepts\RelationalConcepts.ixx" />
-    <ClCompile Include="Modules\Concepts\BasicConcepts.ixx" />
-    <ClCompile Include="Modules\Concepts\VariadicConteps.ixx" />
-    <ClCompile Include="Modules\Definitions.ixx" />
-    <ClCompile Include="Modules\Definitions\TypeDeducers.ixx" />
-    <ClCompile Include="Modules\Definitions\TypeDefinitions.ixx" />
-    <ClCompile Include="Modules\TypeInfo.ixx" />
+    <ClCompile Include="Modules\Concepts\Concepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\FunctionalConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\RelationalConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\BasicConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\VariadicConteps.ixx" />
+    <ClCompile Include="Modules\Definitions\Definitions.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations\TypeDeducers.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations\TypeDefinitions.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h" />

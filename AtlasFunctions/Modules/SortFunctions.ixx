@@ -129,7 +129,7 @@ export namespace Atlas
 			}
 		
 			private:
-			constexpr inline static void Swap( CollectionType& collection , const unsigned int pos1 , const unsigned int pos2 )
+			constexpr static inline void Swap( CollectionType& collection , const unsigned int pos1 , const unsigned int pos2 )
 			{
 				DataType temp = collection[pos1];
 				collection[pos1] = collection[pos2];
@@ -359,7 +359,7 @@ export namespace Atlas
 		}
 	
 		private: template<typename CollectionType>
-		constexpr inline static void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
+		constexpr static inline void Validate( const CollectionType& collection , const unsigned int inclusiveFrom , const unsigned int exclusiveTo )
 		{
 			const auto count = Adapter::Count( collection );
 

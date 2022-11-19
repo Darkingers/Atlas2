@@ -16,16 +16,16 @@ export namespace Atlas::Trait
 		private: using DataType = Deduce::CollectionContainedType<DerivedType>;
 
 
-		public: template<typename... Args>
-		constexpr bool Contains( const Args&... arguments ) const  final
+		public: template<typename... Arguments>
+		constexpr bool Contains( const Arguments&... arguments ) const  final
 		{
-			return DataFunctions::Contains( This( ) , std::forward<const Args&>( arguments )... );
+			return DataFunctions::Contains( This( ) , std::forward<const Arguments&>( arguments )... );
 		}
 
-		public: template< typename... Args>
-		constexpr unsigned int Count( const Args&... arguments ) const  final
+		public: template< typename... Arguments>
+		constexpr unsigned int Count( const Arguments&... arguments ) const  final
 		{
-			return DataFunctions::Count( This( ) , std::forward<const Args&>( arguments )... );
+			return DataFunctions::Count( This( ) , std::forward<const Arguments&>( arguments )... );
 		}
 
 		public: 
@@ -34,28 +34,28 @@ export namespace Atlas::Trait
 			return This( ).GetSize( );
 		}
 
-		public: template<typename... Args>
-		constexpr bool All(  const Args&... arguments ) const  final
+		public: template<typename... Arguments>
+		constexpr bool All(  const Arguments&... arguments ) const  final
 		{
-			return DataFunctions::All( This( ) , std::forward<const Args&>( arguments )... );
+			return DataFunctions::All( This( ) , std::forward<const Arguments&>( arguments )... );
 		}
 
-		public: template<typename... Args>
-		constexpr bool Any( const Args&... arguments ) const  final
+		public: template<typename... Arguments>
+		constexpr bool Any( const Arguments&... arguments ) const  final
 		{
-			return DataFunctions::Any( This( ) , std::forward<const Args&>( arguments )... );
+			return DataFunctions::Any( This( ) , std::forward<const Arguments&>( arguments )... );
 		}
 
-		public: template<typename... Args>
-		constexpr DataType& First(  const Args&... arguments )const final
+		public: template<typename... Arguments>
+		constexpr DataType& First(  const Arguments&... arguments )const final
 		{
-			return DataFunctions::First( This() , std::forward<const Args&>( arguments )... );
+			return DataFunctions::First( This() , std::forward<const Arguments&>( arguments )... );
 		}
 
-		public: template<typename... Args>
-		constexpr DataType* FirstOrNullptr(  const Args&... arguments )const  final
+		public: template<typename... Arguments>
+		constexpr DataType* FirstOrNullptr(  const Arguments&... arguments )const  final
 		{
-			return DataFunctions::FirstOrNullptr( This( ) , std::forward<const Args&>( arguments )... );
+			return DataFunctions::FirstOrNullptr( This( ) , std::forward<const Arguments&>( arguments )... );
 		}
 
 		private:

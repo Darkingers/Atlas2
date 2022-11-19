@@ -6,10 +6,10 @@ export module AtlasInterfaces:IInvokable;
 
 export namespace Atlas::Interface
 {
-	template<typename ReturnType , typename... Args>
+	template<typename ReturnType , typename... Arguments>
 	class DLLApi IInvokable
 	{
 		public:
-		virtual ReturnType Invoke( Args&&... arguments ) = 0;
+		virtual ReturnType Invoke( Arguments&&... arguments ) = 0;
 	};
 }

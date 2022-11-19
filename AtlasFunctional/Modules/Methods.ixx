@@ -13,16 +13,16 @@ export namespace Atlas
 {
 	class DLLApi Method
 	{
-		public: template<typename ReturnType , typename... Args>
-			inline static auto BindValidates( Definition::LambdaFunction<ReturnType , Args...> invoker , Args&&... arguments )
+		public: template<typename ReturnType , typename... Arguments>
+			inline static auto BindValidates( Definition::LambdaFunction<ReturnType , Arguments...> invoker , Arguments&&... arguments )
 		{
-			return BoundMethod<ReturnType , Args...>( invoker , std::forward<Args&&>( arguments )... );
+			return BoundMethod<ReturnType , Arguments...>( invoker , std::forward<Arguments&&>( arguments )... );
 		}
 
-		public:  template<typename ReturnType , typename ClassType , typename... Args>
-			inline static auto Create( ClassType* instance , Definition::MemberFunction<ReturnType , ClassType , Args...> invoked )
+		public:  template<typename ReturnType , typename ClassType , typename... Arguments>
+			inline static auto Create( ClassType* instance , Definition::MemberFunction<ReturnType , ClassType , Arguments...> invoked )
 		{
-			return MemberMethod<ReturnType , ClassType , Args...>( instance , invoked );
+			return MemberMethod<ReturnType , ClassType , Arguments...>( instance , invoked );
 		}
 	};
 }

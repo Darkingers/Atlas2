@@ -8,81 +8,89 @@ export module AtlasDefinitions:TypeDeducers;
 
 namespace Atlas::Implementation
 {
-	template<typename DataType>
+	template<typename T>
 	struct SimpleType
 	{
-		using type = DataType;
+		using type = T;
 	};
 
-	template<typename DataType>
-	struct SimpleType<DataType*>
+	template<typename T>
+	struct SimpleType<T*>
 	{
-		using type = DataType*;
+		using type = T*;
 	};
 
-	template<typename DataType>
-	struct SimpleType<DataType&>
+	template<typename T>
+	struct SimpleType<T&>
 	{
-		using type = DataType;
+		using type = T;
 	};
 
-	template<typename DataType>
-	struct SimpleType<const DataType>
+	template<typename T>
+	struct SimpleType<const T>
 	{
-		using type = DataType;
+		using type = T;
 	};
 
-	template<typename DataType>
-	struct SimpleType<const DataType*>
+	template<typename T>
+	struct SimpleType<const T*>
 	{
-		using type = DataType*;
+		using type = T*;
 	};
 
-	template<typename DataType>
-	struct SimpleType<const DataType&>
+	template<typename T>
+	struct SimpleType<const T&>
 	{
-		using type = DataType;
+		using type = T;
 	};
 }
 
 export namespace Atlas::Deduce
 {
+	template<typename Type>
+	using DereferencedType = decltype( std::declval<Type>( ).operator*( ) );
+
+	template<typename InvokableType , typename... Arguments>
+	using ReturnType = typename std::invoke_result_t<InvokableType( Arguments... )>;
+
+	template<typename DataType>
+	using SimpleType = typename Atlas::Implementation::SimpleType<DataType>::type;
+	
+	
 	template<typename IteratorType>
-	using IteratedType = decltype( std::declval<IteratorType>( ).operator*( ) );
+	using IteratedType = DereferencedType<IteratorType>;
 
 	template<typename CollectionType>
 	using BeginIteratorType = typename std::remove_pointer_t<decltype( std::begin( CollectionType( ) ) )>;
 
 	template<typename CollectionType>
 	using EndIteratorType = typename std::remove_pointer_t<decltype( std::end( CollectionType( ) ) )>;
-
-	template<typename CollectionType>
-	using IteratorType = BeginIteratorType<CollectionType>;
-
+	
 	template<typename CollectionType>
 	using ConstBeginIteratorType = typename std::remove_pointer_t<decltype( std::cbegin( CollectionType( ) ) )>;
 
 	template<typename CollectionType>
 	using ConstEndIteratorType = typename std::remove_pointer_t<decltype( std::cend( CollectionType( ) ) )>;
+	
+	template<typename CollectionType>
+	using IteratorType = BeginIteratorType<CollectionType>;
 
 	template<typename CollectionType>
 	using ConstIteratorType = ConstBeginIteratorType<CollectionType>;
 
+	
 	template<typename CollectionType , typename IndexType>
 	using CollectionIndexedType = decltype( std::declval<CollectionType>( )->operator[]( IndexType( ) ) );
 
-	template<unsigned int Index , typename Tuple>
-	using TupleIndexedType = decltype( std::get<Index>( Tuple( ) ) );
-
 	template<typename CollectionType>
-	using CollectionContainedType = IteratedType<BeginIteratorType<CollectionType>>;
+	using CollectionElementType = IteratedType<BeginIteratorType<CollectionType>>;
 
-	template<unsigned int Index , typename... Args>
-	using IndexedArgumentType = typename std::tuple_element<Index , std::tuple<Args...>>;
+	
+	template<unsigned int Index , typename TupleType>
+	using TupleIndexedType = decltype( std::get<Index>( std::declval<TupleType>( ) ) );
 
-	template<typename Invokable , typename... Args>
-	using ReturnType = typename std::invoke_result_t<Invokable( Args... )>;
+	
+	template<unsigned int Index , typename... Arguments>
+	using IndexedArgumentType = typename std::tuple_element<Index , std::tuple<Arguments...>>;
 
-	template<typename DataType>
-	using SimpleType = typename Atlas::Implementation::SimpleType<DataType>::type;
 }

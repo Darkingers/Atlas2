@@ -8,14 +8,14 @@ import AtlasInterfaces;
 
 export namespace Atlas::Trait
 {
-	template<typename ReturnType, typename DerivedType, typename... Args>
+	template<typename ReturnType, typename DerivedType, typename... Arguments>
 	class DLLApi Invokable :
-		public Interface::IInvokable<ReturnType, Args...>
+		public Interface::IInvokable<ReturnType, Arguments...>
 	{
 		public:
-		constexpr ReturnType operator()( Args&&... arguments )
+		constexpr ReturnType operator()( Arguments&&... arguments )
 		{
-			return This( ).Invoke( std::forward<Args&&>( arguments )... );
+			return This( ).Invoke( std::forward<Arguments&&>( arguments )... );
 		}
 
 		private:

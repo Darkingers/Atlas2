@@ -20,8 +20,8 @@ export module AtlasCollections:List;
 //		protected: LinkType* _last;
 //
 //
-//		public: template<typename... Args> 
-//		List( Args... arguments )  :
+//		public: template<typename... Arguments> 
+//		List( Arguments... arguments )  :
 //			_size(0),
 //			_start(nullptr),
 //			_last(nullptr)
@@ -42,15 +42,15 @@ export module AtlasCollections:List;
 //			}
 //		}
 //
-//		public: template<typename... Args>
-//		ListType& Add( Args... arguments )
+//		public: template<typename... Arguments>
+//		ListType& Add( Arguments... arguments )
 //		{
 //			_size += Helpher::Count( arguments... );
 //			this->Add( arguments... );
 //		}
 //
-//		public: template<typename... Args>
-//		ListType& Add(DataType& data, Args... arguments )
+//		public: template<typename... Arguments>
+//		ListType& Add(DataType& data, Arguments... arguments )
 //		{
 //			if ( _first == nullptr )
 //			{
@@ -71,8 +71,8 @@ export module AtlasCollections:List;
 //			return *this;
 //		}
 //
-//		public: template<typename CollectionType, typename... Args> requires AtlasIterableCollection<CollectionType, DataType, void( * )( DataType& ), bool( * )( DataType& )>
-//		ListType& Add( CollectionType& collection, Args... arguments )
+//		public: template<typename CollectionType, typename... Arguments> requires AtlasIterableCollection<CollectionType, DataType, void( * )( DataType& ), bool( * )( DataType& )>
+//		ListType& Add( CollectionType& collection, Arguments... arguments )
 //		{
 //			if ( _first == nullptr )
 //			{
@@ -92,8 +92,8 @@ export module AtlasCollections:List;
 //			}
 //		}
 //
-//		public: template<typename CollectionType, typename... Args> requires StandardIterableCollection<CollectionType>
-//		ListType& Add( CollectionType& collection, Args... arguments )
+//		public: template<typename CollectionType, typename... Arguments> requires StandardIterableCollection<CollectionType>
+//		ListType& Add( CollectionType& collection, Arguments... arguments )
 //		{
 //
 //		}

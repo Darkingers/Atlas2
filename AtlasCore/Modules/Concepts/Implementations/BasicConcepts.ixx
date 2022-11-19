@@ -6,11 +6,10 @@ module;
 #include <typeinfo>
 
 export module AtlasConcepts:BasicConcepts;
-import AtlasDefinitions;
 
 namespace Atlas::Concept::Implementation
 {
-	template <typename TestedType>
+	template <typename T>
 	class IsTuple :
 		public std::false_type
 	{};
@@ -23,30 +22,30 @@ namespace Atlas::Concept::Implementation
 
 export namespace Atlas::Concept
 {
-	template<typename TestedType>
-	concept IsPointer = std::is_pointer<TestedType>::value;
+	template<typename T>
+	concept IsPointer = std::is_pointer<T>::value;
 
-	template<typename TestedType>
-	concept IsReference = std::is_reference<TestedType>::value;
+	template<typename T>
+	concept IsReference = std::is_reference<T>::value;
 
-	template<typename TestedType>
-	concept IsValue = !IsPointer<TestedType> && !IsReference<TestedType>;
+	template<typename T>
+	concept IsValue = !IsPointer<T> && !IsReference<T>;
 
-	template<typename TestedType>
-	concept IsFundamental = std::is_fundamental<TestedType>::value;
+	template<typename T>
+	concept IsFundamental = std::is_fundamental<T>::value;
 
-	template<typename TestedType>
-	concept IsConst = std::is_const<TestedType>::value;
+	template<typename T>
+	concept IsConst = std::is_const<T>::value;
 
-	template<typename TestedType>
-	concept IsFloat = std::is_floating_point<std::remove_reference<TestedType>>::value;
+	template<typename T>
+	concept IsFloat = std::is_floating_point<std::remove_reference<T>>::value;
 
-	template<typename TestedType>
-	concept IsBoolean = std::_Boolean_testable<std::remove_reference<TestedType>>;
+	template<typename T>
+	concept IsBoolean = std::_Boolean_testable<std::remove_reference<T>>;
 
-	template<typename TestedType>
-	concept IsInteger = std::is_integral<std::remove_reference<TestedType>>::value;
+	template<typename T>
+	concept IsInteger = std::is_integral<std::remove_reference<T>>::value;
 
-	template<typename TestedType>
-	concept IsTuple = Implementation::IsTuple<TestedType>::value;
+	template<typename T>
+	concept IsTuple = Implementation::IsTuple<T>::value;
 }

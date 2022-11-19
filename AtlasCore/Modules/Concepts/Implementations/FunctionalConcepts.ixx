@@ -6,30 +6,39 @@ module;
 #include <string>
 
 export module AtlasConcepts:FunctionalConcepts;
-import AtlasDefinitions;
 
 export namespace Atlas::Concept
 {
-	template<typename ReturnType , typename TestedType , typename... Args>
-	concept IsInvokable = std::is_invocable_r<ReturnType , TestedType , Args...>::value;
-
-	template<typename ReturnType , typename TestedType>
-	concept IsExecutable = std::is_invocable_r<ReturnType , TestedType>::value;
-
-	template<typename TestedType>
-	concept HasToString = requires ( TestedType testInstance )
+	template<typename ReturnType , typename InvokableType , typename... Arguments>
+	concept IsInvokable = requires( InvokableType invokable , Arguments... arguments )
 	{
 		{
-			testInstance.ToString( )
-		} -> std::convertible_to<const char*>;	
+			invokable( arguments... )
+		} -> std::convertible_to<ReturnType>;
 	};
 
-	template<typename TestedType , typename IndexType, typename IndexedType>
-	concept HasIndexOperator = requires( TestedType instance , const IndexType index )
+	template<typename ReturnType , typename ExecutableType>
+	concept IsExecutable = requires( ExecutableType executable )
+	{
+		{
+			executable( )
+		} ->  std::convertible_to<ReturnType>;
+	};
+
+	template<typename T>
+	concept HasToString = requires ( T instance )
+	{
+		{
+			instance.ToString( )
+		} -> std::convertible_to<char*>;	
+	};
+
+	template<typename ReturnType, typename IndexableType , typename IndexType>
+	concept HasIndexOperator = requires( IndexableType instance , const IndexType index )
 	{
 		{
 			instance[index]
-		} -> std::convertible_to<IndexedType>;
+		} -> std::convertible_to<ReturnType>;
 	};
 
 	template<typename TypeA , typename TypeB>
@@ -37,7 +46,7 @@ export namespace Atlas::Concept
 	{
 		{
 			x == y
-		} -> std::convertible_to<const bool>;
+		} -> std::convertible_to<bool>;
 	};
 
 	template<typename TypeA , typename TypeB>
@@ -53,7 +62,7 @@ export namespace Atlas::Concept
 	{
 		{
 			x < y
-		} -> std::convertible_to<const bool>;
+		} -> std::convertible_to<bool>;
 	};
 
 	template<typename TypeA , typename TypeB>
@@ -61,7 +70,7 @@ export namespace Atlas::Concept
 	{
 		{
 			x <= y
-		} -> std::convertible_to<const bool>;
+		} -> std::convertible_to<bool>;
 	};
 
 	template<typename TypeA , typename TypeB>
@@ -69,7 +78,7 @@ export namespace Atlas::Concept
 	{
 		{
 			x > y
-		} -> std::convertible_to<const bool>;
+		} -> std::convertible_to<bool>;
 	};
 
 	template<typename TypeA , typename TypeB>
@@ -77,107 +86,80 @@ export namespace Atlas::Concept
 	{
 		{
 			x >= y
-		} -> std::convertible_to<const bool>;
+		} -> std::convertible_to<bool>;
 	};
 
-	template<typename TestedType>
-	concept IsIterable = requires ( TestedType testInstance )
+	template<typename IterableType>
+	concept IsIterable = requires ( IterableType instance )
 	{
 		{
-			testInstance.begin( )
+			instance.begin( )
 		};
 		{
-			testInstance.end( )
+			instance.end( )
 		};
 	};
 
-	template<typename TestedType , typename DataType>
-	concept IsIterableWith = requires ( TestedType testInstance )
+	template<typename IterableType , typename IteratedType>
+	concept IsIterableWith = requires ( IterableType instance )
 	{
 		{
-			*(testInstance.begin( ))
-		} -> std::convertible_to<DataType>;
+			*( instance.begin( ))
+		} -> std::convertible_to<IteratedType>;
 		{
-			*(testInstance.end( ))
-		} -> std::convertible_to<DataType>;
+			*( instance.end( ))
+		} -> std::convertible_to<IteratedType>;
 	};	
 
-	template<typename TestedType>
-	concept IsStandardHashable = requires( const TestedType testInstance )
+	template<typename HashableType>
+	concept IsStandardHashable = requires( const HashableType instance )
 	{
 		{
-			std::hash<TestedType>( testInstance )
+			std::hash<HashableType>( instance )
 		}->std::convertible_to<size_t>;
 	};
 
-	template<typename TestedType>
-	concept IsStandardClearable = requires ( TestedType testInstance )
+	template<typename ClearableType>
+	concept IsStandardClearable = requires ( ClearableType instance )
 	{
-		testInstance.clear( );
+		instance.clear( );
 	};
 
-	template<typename TestedType>
-	concept IsStandardCountable = requires ( const TestedType testInstance )
+	template<typename CountableType>
+	concept IsStandardCountable = requires ( const CountableType instance )
 	{
 		{
-			testInstance.size( )
+			instance.size( )
 		}->std::convertible_to<size_t>;
 	};
 
-	template<typename TestedType>
-	concept HasClearFunction = requires ( TestedType testInstance )
+	template<typename ClearableType>
+	concept HasClearFunction = requires ( ClearableType instance )
 	{
-		testInstance.Clear( );
+		instance.Clear( );
 	};
 
-	template<typename TestedType>
-	concept HasCountFunction = requires ( const TestedType testInstance )
+	template<typename CountableType>
+	concept HasCountFunction = requires ( const CountableType instance )
 	{
 		{
-			testInstance.Count( )
-		}->std::convertible_to<const unsigned int>;
-	};
-
-	template<typename TestedType , typename DataType>
-	concept HasContainFunction = requires ( const TestedType testInstance , const DataType data )
-	{
-		{
-			testInstance.Contains( data )
-		}->std::convertible_to<const bool>;
-	};
-
-	template<typename TestedType>
-	concept HasGetHashFunction = requires( const TestedType testInstance )
-	{
-		{
-			testInstance.GetHash( )
+			instance.Count( )
 		}->std::convertible_to<unsigned int>;
 	};
 
-	template<template<typename...> typename AdapterType , typename... AdapterArguments>
-	concept HasAdapter = AdapterType<AdapterArguments...>::value;
+	template<typename CollectionType , typename ElementType>
+	concept HasContainFunction = requires ( const CollectionType collection , const ElementType element )
+	{
+		{
+			collection.Contains( element )
+		}->std::convertible_to<bool>;
+	};
 
-	template<typename CollectionType>
-	concept IsNoexceptBegin = noexcept( std::begin( CollectionType( ) ) );
-
-	template<typename CollectionType>
-	concept IsNoexceptConstBegin = noexcept( std::cbegin( CollectionType( ) ) );
-
-	template<typename CollectionType>
-	concept IsNoexceptEnd = noexcept( std::end( CollectionType( ) ) );
-
-	template<typename CollectionType>
-	concept IsNoexceptConstEnd = noexcept( std::cend( CollectionType( ) ) );
-
-	template<typename CollectionType>
-	concept IsNoexceptIterable = 
-		IsNoexceptBegin<CollectionType> &&
-		IsNoexceptConstEnd<CollectionType> &&
-		noexcept( std::advance( std::declval<Deduce::BeginIteratorType<CollectionType>>( ) , std::declval<unsigned int>( ) ) );
-		
-	template<typename CollectionType, typename DataType>
-	concept IsNoexceptIterableWith = IsNoexceptIterable<CollectionType> && IsIterableWith<CollectionType , DataType>;
-
-	template<typename CollectionType1, typename CollectionType2>
-	concept IsSameContainedDataType = std::is_same<Deduce::CollectionContainedType<CollectionType1> ,Deduce::CollectionContainedType<CollectionType2>>::value;
+	template<typename TestedType>
+	concept HasGetHashFunction = requires( const TestedType instance )
+	{
+		{
+			instance.GetHash( )
+		}->std::convertible_to<unsigned int>;
+	};
 }

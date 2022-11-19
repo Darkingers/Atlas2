@@ -15,7 +15,7 @@ export namespace Atlas
 {
 	class String
 	{	
-		private: template<typename CurrentType , typename... Args>
+		private: template<typename CurrentType , typename... Arguments>
 		struct IsNoexceptConvertible
 		{
 			public:
@@ -23,9 +23,9 @@ export namespace Atlas
 			{
 				bool result = noexcept( Convert<std::string>::From( CurrentType() ) );
 
-				if constexpr ( sizeof ...( Args ) > 0 )
+				if constexpr ( sizeof ...( Arguments ) > 0 )
 				{
-					result = result && IsNoexceptConvertible<Args...>::value;
+					result = result && IsNoexceptConvertible<Arguments...>::value;
 				}
 
 				return result;
@@ -34,13 +34,13 @@ export namespace Atlas
 			public: constexpr static bool value = NoexceptCheck( );
 		};
 
-		public: template<typename... Args>
-		constexpr static inline std::string Concat( const std::string& current , const Args&... arguments)
-			noexcept ( IsNoexceptConvertible<Args...>::value )
+		public: template<typename... Arguments>
+		constexpr static inline std::string Concat( const std::string& current , const Arguments&... arguments)
+			noexcept ( IsNoexceptConvertible<Arguments...>::value )
 		{
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
-				return current + String::Concat( std::forward<const Args&>( arguments )... );
+				return current + String::Concat( std::forward<const Arguments&>( arguments )... );
 			}
 			else
 			{
@@ -48,13 +48,13 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename... Args>
-		constexpr static inline std::string Concat( const char* current, const Args&... arguments ) 
-			noexcept ( IsNoexceptConvertible<Args...>::value )
+		public: template<typename... Arguments>
+		constexpr static inline std::string Concat( const char* current, const Arguments&... arguments ) 
+			noexcept ( IsNoexceptConvertible<Arguments...>::value )
 		{
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
-				return current + String::Concat( std::forward<const Args&>( arguments )... );
+				return current + String::Concat( std::forward<const Arguments&>( arguments )... );
 			}
 			else
 			{
@@ -62,15 +62,15 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename CurrentType , typename... Args>
-		constexpr static inline std::string Concat( const CurrentType& current , const Args&... arguments )
-			noexcept ( IsNoexceptConvertible<Args...>::value )
+		public: template<typename CurrentType , typename... Arguments>
+		constexpr static inline std::string Concat( const CurrentType& current , const Arguments&... arguments )
+			noexcept ( IsNoexceptConvertible<Arguments...>::value )
 		{
 			std::string data = Convert<std::string>::From( current );
 
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
-				return data + String::Concat( std::forward<const Args&>( arguments )... );
+				return data + String::Concat( std::forward<const Arguments&>( arguments )... );
 			}
 			else
 			{
@@ -78,13 +78,13 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename... Args>
-		constexpr static inline std::string* CreateArrayFrom( const Args&... arguments )
-			noexcept ( IsNoexceptConvertible<Args...>::value )
+		public: template<typename... Arguments>
+		constexpr static inline std::string* CreateArrayFrom( const Arguments&... arguments )
+			noexcept ( IsNoexceptConvertible<Arguments...>::value )
 		{
 			std::string strings[sizeof...( arguments )];
 
-			String::ConvertFrom<0>( strings , std::forward<const Args&>( arguments )... );
+			String::ConvertFrom<0>( strings , std::forward<const Arguments&>( arguments )... );
 
 			return strings;
 		}
@@ -284,9 +284,9 @@ export namespace Atlas
 			return result;
 		}
 
-		public: template<typename... Args>
-		constexpr static std::string ReplaceSymbols( const std::string& string , const Args&... arguments )
-			noexcept ( IsNoexceptConvertible<Args...>::value && noexcept( Convert<int>::From( std::string() )) )
+		public: template<typename... Arguments>
+		constexpr static std::string ReplaceSymbols( const std::string& string , const Arguments&... arguments )
+			noexcept ( IsNoexceptConvertible<Arguments...>::value && noexcept( Convert<int>::From( std::string() )) )
 		{
 			const unsigned int stringLength = string.length( );
 			if ( stringLength < 3 )
@@ -295,7 +295,7 @@ export namespace Atlas
 			}
 
 			std::string replaceArray[sizeof...( arguments )];
-			String::ConvertFrom<0>( replaceArray , std::forward<const Args&>( arguments )... );
+			String::ConvertFrom<0>( replaceArray , std::forward<const Arguments&>( arguments )... );
 
 			std::string result;
 
@@ -325,15 +325,15 @@ export namespace Atlas
 			return result;
 		}
 
-		private: template<unsigned int Index , typename CurrentType , typename... Args>
-		constexpr void ConvertFrom( std::string result[] , const CurrentType& current , const Args&... arguments ) 
-			noexcept ( noexcept( Convert<std::string>::From( CurrentType() ) ) && IsNoexceptConvertible<Args...>::value )
+		private: template<unsigned int Index , typename CurrentType , typename... Arguments>
+		constexpr void ConvertFrom( std::string result[] , const CurrentType& current , const Arguments&... arguments ) 
+			noexcept ( noexcept( Convert<std::string>::From( CurrentType() ) ) && IsNoexceptConvertible<Arguments...>::value )
 		{
 			result[Index] = Convert<std::string>::From( current );
 
 			if constexpr ( sizeof...( arguments ) > 0 )
 			{
-				String::ConvertFrom<Index + 1>( result , std::forward<const Args&>( arguments )... );
+				String::ConvertFrom<Index + 1>( result , std::forward<const Arguments&>( arguments )... );
 			}
 		}
 	};

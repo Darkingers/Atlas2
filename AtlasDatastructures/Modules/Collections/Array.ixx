@@ -41,12 +41,12 @@ export namespace Atlas
 		private: AllocatorType _allocator;
 
 
-		public: template<typename... Args>
-		constexpr ArrayBase( Args&&... arguments ) noexcept
+		public: template<typename... Arguments>
+		constexpr ArrayBase( Arguments&&... arguments ) noexcept
 		{
 			if constexpr (sizeof...(arguments) > 0 )
 			{
-				ArrayType::Add( std::forward<Args&&>( arguments )... );
+				ArrayType::Add( std::forward<Arguments&&>( arguments )... );
 			}
 		}
 
@@ -131,15 +131,15 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		constexpr ArrayType& Add( Args&&... arguments )
+		public: template<typename... Arguments>
+		constexpr ArrayType& Add( Arguments&&... arguments )
 		{
 			const unsigned int index = ArrayType::GetSize( );
-			const unsigned int added = Variadic::Count( std::forward<const Args&>( arguments )... );
+			const unsigned int added = Variadic::Count( std::forward<const Arguments&>( arguments )... );
 
 			ArrayType::Reserve( added );
 
-			DataFunctions::ReplaceFrom( *this, index , std::forward<Args&&>( arguments )... );
+			DataFunctions::ReplaceFrom( *this, index , std::forward<Arguments&&>( arguments )... );
 
 			if constexpr ( DoEventHandling )
 			{
@@ -149,14 +149,14 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		constexpr ArrayType& Remove( const Args&... arguments )
+		public: template<typename... Arguments>
+		constexpr ArrayType& Remove( const Arguments&... arguments )
 		{
 			unsigned int removed = 0;
 
 			for ( unsigned int i = 0; i < ArrayType::GetSize( ); ++i )
 			{
-				if ( Variadic::AnyFulfills( _allocator[i] , std::forward<const Args&>( arguments )... ) )
+				if ( Variadic::AnyFulfills( _allocator[i] , std::forward<const Arguments&>( arguments )... ) )
 				{
 					++removed;
 				}
@@ -180,16 +180,16 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		constexpr ArrayType& Insert( const unsigned int index , Args&&... arguments )
+		public: template<typename... Arguments>
+		constexpr ArrayType& Insert( const unsigned int index , Arguments&&... arguments )
 		{
 			ArrayType::ValidateIndex( index );
 
-			const unsigned int inserted = Variadic::Count( std::forward<Args&&>( arguments )... );
+			const unsigned int inserted = Variadic::Count( std::forward<Arguments&&>( arguments )... );
 			
 			ArrayType::ShiftRight( index , inserted );
 
-			DataFunctions::ReplaceFrom( *this , index , std::forward<Args&&>( arguments )... );
+			DataFunctions::ReplaceFrom( *this , index , std::forward<Arguments&&>( arguments )... );
 
 			if constexpr ( DoEventHandling )
 			{
@@ -199,18 +199,18 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		constexpr ArrayType& ReplaceFrom( const unsigned int index , Args&&... arguments )
+		public: template<typename... Arguments>
+		constexpr ArrayType& ReplaceFrom( const unsigned int index , Arguments&&... arguments )
 		{
 			ArrayType::ValidateIndex( index );
 
-			const unsigned int replaced = Variadic::Count( std::forward<const Args&>( arguments )... );
+			const unsigned int replaced = Variadic::Count( std::forward<const Arguments&>( arguments )... );
 
 			if constexpr (DoEventHandling )
 			{
 				auto removed = CreatePackage( GetLocation( index ) , replaced , true );
 
-				DataFunctions::ReplaceFrom( *this , index , std::forward<Args&&>( arguments )... );
+				DataFunctions::ReplaceFrom( *this , index , std::forward<Arguments&&>( arguments )... );
 
 				auto added = CreatePackage( GetLocation( index ) , replaced , true );
 
@@ -218,7 +218,7 @@ export namespace Atlas
 			}
 			else
 			{
-				DataFunctions::ReplaceFrom( *this , index , std::forward<Args&&>( arguments )... );
+				DataFunctions::ReplaceFrom( *this , index , std::forward<Arguments&&>( arguments )... );
 			}
 
 			return *this;

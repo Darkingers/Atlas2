@@ -36,9 +36,9 @@ export namespace Atlas::Concept
 	template<typename TestedType , typename TargetType>
 	concept IsNoexceptConvertibleTo = std::is_nothrow_convertible<TestedType , TargetType>::value;
 
-	template<typename TestedType, typename... ConstructorArgs>
-	concept IsConstructible = std::is_constructible<TestedType , ConstructorArgs...>::value;
+	template<typename TestedType, typename... ConstructorArguments>
+	concept IsConstructible = std::is_constructible<TestedType , ConstructorArguments...>::value;
 
-	template<typename TestedType, typename... ConstructorArgs>
-	concept IsNoexceptConstructible = std::is_nothrow_constructible<TestedType , ConstructorArgs...>::value;
+	template<typename TestedType, typename... ConstructorArguments>
+	concept IsNoexceptConstructible = std::is_nothrow_constructible<TestedType , ConstructorArguments...>::value;
 }

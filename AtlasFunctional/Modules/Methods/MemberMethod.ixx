@@ -10,12 +10,12 @@ import AtlasFunctionalTraits;
 
 export namespace Atlas
 {
-	template<typename ReturnType, typename ClassType, typename... Args>
+	template<typename ReturnType, typename ClassType, typename... Arguments>
 	class DLLApi MemberMethod :
-		public Trait::Invokable<ReturnType, MemberMethod<ReturnType , ClassType , Args...>, Args...>
+		public Trait::Invokable<ReturnType, MemberMethod<ReturnType , ClassType , Arguments...>, Arguments...>
 	{
-		private: using MemberMethodType = MemberMethod<ReturnType , ClassType , Args...>;
-		private: using InvokedType = Definition::MemberFunction<ReturnType , ClassType , Args...>;
+		private: using MemberMethodType = MemberMethod<ReturnType , ClassType , Arguments...>;
+		private: using InvokedType = Definition::MemberFunction<ReturnType , ClassType , Arguments...>;
 		
 
 		private: ClassType* _instance;
@@ -31,9 +31,9 @@ export namespace Atlas
 		}	
 
 		public: 
-		ReturnType Invoke( Args&&... arguments )
+		ReturnType Invoke( Arguments&&... arguments )
 		{
-			return ( _instance->*_invoked )( std::forward<Args&&>( arguments )... );
+			return ( _instance->*_invoked )( std::forward<Arguments&&>( arguments )... );
 		}
 	};
 }

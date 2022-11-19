@@ -40,11 +40,11 @@ export namespace Atlas::Implementation
 		public: PropertyHolder ExtendedProperties;
 
 
-		public: template<typename... BaseConstructorArgs>
-		constexpr ExtendedBaseType( PropertyHolder&& propertyHolder , BaseConstructorArgs&&... baseArgs )
-			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArgs&&...> ) :
+		public: template<typename... BaseConstructorArguments>
+		constexpr ExtendedBaseType( PropertyHolder&& propertyHolder , BaseConstructorArguments&&... baseArguments )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArguments&&...> ) :
 			ExtendedProperties( std::move( propertyHolder ) ) ,
-			BaseType( std::forward<BaseConstructorArgs&&>( baseArgs )... )
+			BaseType( std::forward<BaseConstructorArguments&&>( baseArguments )... )
 		{
 
 		}
@@ -85,10 +85,10 @@ export namespace Atlas::Implementation
 	class DLLApi ExtendedType :
 		public ExtendedBaseType<BaseType , PropertyHolder>
 	{			
-		public: template<typename... BaseConstructorArgs>
-		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorArgs&&... baseArgs )
-			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArgs&&...> ) :
-			ExtendedBaseType<BaseType , PropertyHolder>( std::move(propertyHolder) , std::forward<BaseConstructorArgs&&>( baseArgs )... )
+		public: template<typename... BaseConstructorArguments>
+		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorArguments&&... baseArguments )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArguments&&...> ) :
+			ExtendedBaseType<BaseType , PropertyHolder>( std::move(propertyHolder) , std::forward<BaseConstructorArguments&&>( baseArguments )... )
 		{}
 
 		public:
@@ -103,10 +103,10 @@ export namespace Atlas::Implementation
 		private: constexpr static bool IsNoexceptToString = noexcept( std::declval<BaseType>( ).ToString( ) );
 		private: constexpr static bool IsNoexceptExtendedToString = noexcept( Convert<std::string>::From( PropertyHolder() ) );
 	
-		public: template<typename... BaseConstructorArgs>
-		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorArgs&&... baseArgs )
-			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArgs&&...> ) :
-			ExtendedBaseType<BaseType , PropertyHolder>( std::move( propertyHolder ) , std::forward<BaseConstructorArgs&&>( baseArgs )... )
+		public: template<typename... BaseConstructorArguments>
+		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorArguments&&... baseArguments )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArguments&&...> ) :
+			ExtendedBaseType<BaseType , PropertyHolder>( std::move( propertyHolder ) , std::forward<BaseConstructorArguments&&>( baseArguments )... )
 		{}
 
 		public:
@@ -119,74 +119,74 @@ export namespace Atlas::Implementation
 		}
 	};
 
-	template<typename ConstructedType, typename... BaseConstructorArgs>
+	template<typename ConstructedType, typename... BaseConstructorArguments>
 	class DLLApi Constructor
 	{
-		public: template<typename CurrentType, typename... ExtendedArgs>
-		constexpr static auto Construct( BaseConstructorArgs&&... bArgs, CurrentType&& current, ExtendedArgs&&... eArgs )
+		public: template<typename CurrentType, typename... ExtendedArguments>
+		constexpr static auto Construct( BaseConstructorArguments&&... bArguments, CurrentType&& current, ExtendedArguments&&... eArguments )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArgs...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
 			{
-				return Implementation::ExtendedType<ConstructedType, std::tuple<CurrentType, ExtendedArgs...>>(std::make_tuple( std::forward<CurrentType&&>( current ), std::forward<ExtendedArgs&&>( eArgs )...) , std::forward<BaseConstructorArgs&&>( bArgs )... );
+				return Implementation::ExtendedType<ConstructedType, std::tuple<CurrentType, ExtendedArguments...>>(std::make_tuple( std::forward<CurrentType&&>( current ), std::forward<ExtendedArguments&&>( eArguments )...) , std::forward<BaseConstructorArguments&&>( bArguments )... );
 			} 
-			else if constexpr( sizeof...( eArgs )>0 )
+			else if constexpr( sizeof...( eArguments )>0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArgs... , CurrentType>::Construct( std::forward<BaseConstructorArgs&&>( bArgs )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... );
+				return Constructor<ConstructedType , BaseConstructorArguments... , CurrentType>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArgs ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
 			}
 		}	
 
-		public: template<typename CurrentType , typename... ExtendedArgs>
-		constexpr static auto Construct( BaseConstructorArgs&&... bArgs , const CurrentType& current , ExtendedArgs&&... eArgs )
+		public: template<typename CurrentType , typename... ExtendedArguments>
+		constexpr static auto Construct( BaseConstructorArguments&&... bArguments , const CurrentType& current , ExtendedArguments&&... eArguments )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArgs...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
 			{
-				return Implementation::ExtendedType<ConstructedType ,std::tuple<const CurrentType&, ExtendedArgs...>>(std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )...) , std::forward<BaseConstructorArgs&&>( bArgs )... );
+				return Implementation::ExtendedType<ConstructedType ,std::tuple<const CurrentType&, ExtendedArguments...>>(std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )...) , std::forward<BaseConstructorArguments&&>( bArguments )... );
 			}
-			else if constexpr ( sizeof...( eArgs ) > 0 )
+			else if constexpr ( sizeof...( eArguments ) > 0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArgs... , const CurrentType&>::Construct( std::forward<BaseConstructorArgs&&>( bArgs )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... );
+				return Constructor<ConstructedType , BaseConstructorArguments... , const CurrentType&>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArgs ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
 			}
 		}
 
-		public: template<typename CurrentType , typename... ExtendedArgs>
-		constexpr static auto Allocate( BaseConstructorArgs&&... bArgs , CurrentType&& current , ExtendedArgs&&... eArgs )
+		public: template<typename CurrentType , typename... ExtendedArguments>
+		constexpr static auto Allocate( BaseConstructorArguments&&... bArguments , CurrentType&& current , ExtendedArguments&&... eArguments )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArgs...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
 			{
-				return new Implementation::ExtendedType<ConstructedType , std::tuple<CurrentType , ExtendedArgs...>>( std::make_tuple( std::forward<CurrentType&&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... ) , std::forward<BaseConstructorArgs&&>( bArgs )... );
+				return new Implementation::ExtendedType<ConstructedType , std::tuple<CurrentType , ExtendedArguments...>>( std::make_tuple( std::forward<CurrentType&&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... ) , std::forward<BaseConstructorArguments&&>( bArguments )... );
 			}
-			else if constexpr ( sizeof...( eArgs ) > 0 )
+			else if constexpr ( sizeof...( eArguments ) > 0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArgs... , CurrentType>::Construct( std::forward<BaseConstructorArgs&&>( bArgs )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... );
+				return Constructor<ConstructedType , BaseConstructorArguments... , CurrentType>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArgs ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
 			}
 		}
 
-		public: template<typename CurrentType , typename... ExtendedArgs>
-		constexpr static auto Allocate( BaseConstructorArgs&&... bArgs , const CurrentType& current , ExtendedArgs&&... eArgs )
+		public: template<typename CurrentType , typename... ExtendedArguments>
+		constexpr static auto Allocate( BaseConstructorArguments&&... bArguments , const CurrentType& current , ExtendedArguments&&... eArguments )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArgs...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
 			{
-				return new Implementation::ExtendedType<ConstructedType , std::tuple<const CurrentType& , ExtendedArgs...>>( std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... ) , std::forward<BaseConstructorArgs&&>( bArgs )... );
+				return new Implementation::ExtendedType<ConstructedType , std::tuple<const CurrentType& , ExtendedArguments...>>( std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... ) , std::forward<BaseConstructorArguments&&>( bArguments )... );
 			}
-			else if constexpr ( sizeof...( eArgs ) > 0 )
+			else if constexpr ( sizeof...( eArguments ) > 0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArgs... , const CurrentType&>::Construct( std::forward<BaseConstructorArgs&&>( bArgs )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedArgs&&>( eArgs )... );
+				return Constructor<ConstructedType , BaseConstructorArguments... , const CurrentType&>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArgs ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
 			}
 		}
 	};

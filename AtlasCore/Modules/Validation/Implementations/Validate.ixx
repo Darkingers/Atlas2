@@ -320,8 +320,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename ComparedType, typename CurrentType, typename... Args>
-		constexpr static inline void IsAny( const ComparedType& compared, const CurrentType& current, const Args&... arguments) 
+		public: template<typename ComparedType, typename CurrentType, typename... Arguments>
+		constexpr static inline void IsAny( const ComparedType& compared, const CurrentType& current, const Arguments&... arguments) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -344,8 +344,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename ComparedType , typename CurrentType , typename... Args>
-		constexpr static inline void IsNone( const ComparedType& compared , const CurrentType& current , const Args&... arguments ) 
+		public: template<typename ComparedType , typename CurrentType , typename... Arguments>
+		constexpr static inline void IsNone( const ComparedType& compared , const CurrentType& current , const Arguments&... arguments ) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )

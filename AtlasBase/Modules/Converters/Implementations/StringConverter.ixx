@@ -11,6 +11,7 @@ export module AtlasConverters:StringConverter;
 import AtlasConcepts;
 import AtlasDefinitions;
 import AtlasIntegration;
+import AtlasTypeInfo;
 
 export namespace Atlas
 {

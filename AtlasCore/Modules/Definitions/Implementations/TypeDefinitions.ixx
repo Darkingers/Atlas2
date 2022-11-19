@@ -8,27 +8,28 @@ export module AtlasDefinitions:TypeDefinitions;
 
 export namespace Atlas::Definition
 {
-	template<typename ReturnType , typename... Args>
-	using StaticFunction = ReturnType( * )( Args... );
+	template<typename ReturnType , typename... Arguments>
+	using StaticFunction = ReturnType( * )( Arguments... );
 
-	template<typename ReturnType , typename InstanceType , typename... Args>
-	using MemberFunction = ReturnType( InstanceType::* )( Args... );
+	template<typename ReturnType , typename ClassType , typename... Arguments>
+	using MemberFunction = ReturnType( ClassType::* )( Arguments... );
 
-	template<typename ReturnType , typename... Args>
-	using ExternalFunction = ReturnType( __stdcall* )( Args... );
+	template<typename ReturnType , typename... Arguments>
+	using ExternalFunction = ReturnType( __stdcall* )( Arguments... );
 
-	template<typename ReturnType , typename... Args>
-	using LambdaFunction = std::function<ReturnType( Args... )>;
+	template<typename ReturnType , typename... Arguments>
+	using LambdaFunction = std::function<ReturnType( Arguments... )>;
 
-	template<typename ConversionType , typename ConvertedType>
-	using Converter = LambdaFunction<ConversionType , ConvertedType>;
+	
+	template<typename TargetType , typename SourceType>
+	using ConverterFunction = LambdaFunction<TargetType , SourceType>;
 
 	template<typename ComparedType>
-	using Comparator = LambdaFunction<int , const ComparedType&, const ComparedType&>;
+	using ComparatorFunction = LambdaFunction<int , const ComparedType&, const ComparedType&>;
 
-	template<typename DataType>
-	using Condition = LambdaFunction<bool , const DataType&>;
+	template<typename T>
+	using ConditionFunction = LambdaFunction<bool , const T&>;
 
-	template<typename DataType, typename KeyType>
-	using KeyGenerator = LambdaFunction<KeyType , const DataType&>;
+	template<typename T, typename KeyType>
+	using KeyGeneratorFunction = LambdaFunction<KeyType , const T&>;
 }

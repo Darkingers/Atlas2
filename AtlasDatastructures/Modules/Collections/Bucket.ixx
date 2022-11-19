@@ -43,8 +43,8 @@ export namespace Atlas
 				return hash;
 			}
 
-			public: template<typename... Args>
-			Bucket( Args&&... argumentss )
+			public: template<typename... Arguments>
+			Bucket( Arguments&&... argumentss )
 			{
 				if constexpr ( sizeof...( arguments ) > 0 )
 				{
@@ -76,8 +76,8 @@ export namespace Atlas
 				return  *( _data + GetIndex( key ) );
 			}
 
-			public: template<typename... Args>
-			HashMapType& Add( PairType& pair , Args... arguments )
+			public: template<typename... Arguments>
+			HashMapType& Add( PairType& pair , Arguments... arguments )
 			{
 				const unsigned int index = GetIndex( pair.Key );
 
@@ -113,14 +113,14 @@ export namespace Atlas
 
 			}
 
-			public: template<typename... Args>
-			HashMapType& Add( const KeyType& key , ValueType& value , Args... arguments )
+			public: template<typename... Arguments>
+			HashMapType& Add( const KeyType& key , ValueType& value , Arguments... arguments )
 			{
 				return this->Add( *new PairType( key , value ) , arguments... );
 			}
 
-			public: template<typename CollectionType , typename... Args> requires Concepts::AtlasIterableCollection<CollectionType , PairType , Functor<PairType> , Condition<PairType>>
-			HashMapType& Add( CollectionType& collection , Args... arguments )
+			public: template<typename CollectionType , typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType , PairType , Functor<PairType> , Condition<PairType>>
+			HashMapType& Add( CollectionType& collection , Arguments... arguments )
 			{
 				collection.ForEach( [ ]( PairType& pair ) mutable
 				{
@@ -137,8 +137,8 @@ export namespace Atlas
 				}
 			}
 
-			public: template<typename CollectionType , typename... Args> requires Concepts::StandardIterableCollection<CollectionType , PairType>
-			HashMapType& Add( CollectionType& collection , Args... arguments )
+			public: template<typename CollectionType , typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType , PairType>
+			HashMapType& Add( CollectionType& collection , Arguments... arguments )
 			{
 				for ( auto pair : collection )
 				{

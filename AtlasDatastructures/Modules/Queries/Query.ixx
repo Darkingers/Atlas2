@@ -76,20 +76,20 @@ export namespace Atlas
 			return _results;
 		}
 
-		public: template<typename... Args>
-		QueryType& Where( Args&&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Where( Arguments&&... arguments ) 
 		{
 			const unsigned int index = _conditions;
 
 			_conditions.Resize( _conditions + VariadicCounter<DataType>::Count( arguments... ) );
 
-			Memory::ReplaceFrom( &_conditions[index], index, std::forward<Args>( arguments )... );
+			Memory::ReplaceFrom( &_conditions[index], index, std::forward<Arguments>( arguments )... );
 
 			return *this;
 		}
 
-		private: template<typename... Args>
-		const unsigned int UnionConcat( unsigned int distinctCount, const DataType& data,const Args&... arguments )
+		private: template<typename... Arguments>
+		const unsigned int UnionConcat( unsigned int distinctCount, const DataType& data,const Arguments&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -118,8 +118,8 @@ export namespace Atlas
 			}
 		}
 
-		private: template<typename CollectionType, typename... Args> requires IsIterableWith<CollectionType, DataType>
-		const unsigned int UnionConcat( unsigned int distinctCount, const CollectionType& collection, const Args&... arguments )
+		private: template<typename CollectionType, typename... Arguments> requires IsIterableWith<CollectionType, DataType>
+		const unsigned int UnionConcat( unsigned int distinctCount, const CollectionType& collection, const Arguments&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -154,8 +154,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename... Args>
-		QueryType& Union( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Union( const Arguments&... arguments ) 
 		{
 			Distinct();
 
@@ -166,8 +166,8 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		QueryType& Intersect( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Intersect( const Arguments&... arguments ) 
 		{
 			Evaluate();
 
@@ -190,8 +190,8 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		QueryType& Except( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Except( const Arguments&... arguments ) 
 		{
 			Evaluate();
 
@@ -214,8 +214,8 @@ export namespace Atlas
 			return  *this;
 		}
 
-		public: template<typename... Args>
-		QueryType& Concat( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Concat( const Arguments&... arguments ) 
 		{
 			Evaluate();
 
@@ -228,7 +228,7 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename ComparatorType, typename... Args>
+		public: template<typename ComparatorType, typename... Arguments>
 		QueryType& Distinct( const ComparatorType comparator = DefaultComparator<const DataType&> ) 
 		{
 			Evaluate();
@@ -260,7 +260,7 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
+		public: template<typename... Arguments>
 		QueryType& Between( const unsigned int from, const unsigned int to ) 
 		{
 			assert( from >= 0 && to >= 0 && from <= to );
@@ -518,20 +518,20 @@ export namespace Atlas
 			return _results;
 		}
 
-		public: template<typename... Args>
-		QueryType& Where( Args&&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Where( Arguments&&... arguments ) 
 		{
 			const unsigned int index = _conditions;
 
 			_conditions.Resize( _conditions + VariadicCounter<DataType>::Count( arguments... ) );
 
-			Memory::ReplaceFrom( &_conditions[index], index, std::forward<Args>( arguments )... );
+			Memory::ReplaceFrom( &_conditions[index], index, std::forward<Arguments>( arguments )... );
 
 			return *this;
 		}
 
-		private: template<typename... Args>
-		unsigned int UnionConcat (unsigned int distinctCount, const DataType& data, Args&... arguments )
+		private: template<typename... Arguments>
+		unsigned int UnionConcat (unsigned int distinctCount, const DataType& data, Arguments&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -560,8 +560,8 @@ export namespace Atlas
 			}
 		}
 
-		private: template<typename CollectionType, typename... Args> requires IsIterableWith<const CollectionType, const DataType>
-		unsigned int UnionConcat(unsigned int distinctCount, const CollectionType& collection, Args&... arguments )
+		private: template<typename CollectionType, typename... Arguments> requires IsIterableWith<const CollectionType, const DataType>
+		unsigned int UnionConcat(unsigned int distinctCount, const CollectionType& collection, Arguments&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -596,8 +596,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename... Args>
-		QueryType& Union( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Union( const Arguments&... arguments ) 
 		{
 			Distinct();
 
@@ -608,8 +608,8 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		QueryType& Intersect( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Intersect( const Arguments&... arguments ) 
 		{
 			Evaluate();
 
@@ -632,8 +632,8 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
-		QueryType& Except( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Except( const Arguments&... arguments ) 
 		{
 			Evaluate();
 
@@ -656,8 +656,8 @@ export namespace Atlas
 			return  *this;
 		}
 
-		private: template<typename... Args>
-		void ReplaceFrom( unsigned int index, const DataType& data, Args&... arguments )
+		private: template<typename... Arguments>
+		void ReplaceFrom( unsigned int index, const DataType& data, Arguments&... arguments )
 		{
 			assert( index >= 0 );
 
@@ -669,8 +669,8 @@ export namespace Atlas
 			}
 		}
 
-		private: template<typename CollectionType, typename... Args> requires IsIterable<const CollectionType, const DataType>
-		void ReplaceFrom( unsigned int index, const CollectionType& collection, Args&... arguments )
+		private: template<typename CollectionType, typename... Arguments> requires IsIterable<const CollectionType, const DataType>
+		void ReplaceFrom( unsigned int index, const CollectionType& collection, Arguments&... arguments )
 		{
 			assert( index >= 0 );
 
@@ -685,8 +685,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename... Args>
-		QueryType& Concat( const Args&... arguments ) 
+		public: template<typename... Arguments>
+		QueryType& Concat( const Arguments&... arguments ) 
 		{
 			Evaluate();
 
@@ -699,7 +699,7 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename ComparatorType typename... Args>
+		public: template<typename ComparatorType typename... Arguments>
 		QueryType& Distinct( const ComparatorType comparator = DefaultComparator<const DataType&> ) 
 		{
 			bool distinct;
@@ -729,7 +729,7 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Args>
+		public: template<typename... Arguments>
 		QueryType& Between( const unsigned int from, const unsigned int to ) 
 		{
 			assert( from >= 0 && to >= 0 && from <= to );

@@ -9,7 +9,7 @@ import AtlasIntegration;
 export namespace Atlas
 {
 	class DLLApi ValidationException :
-		public Exception
+		public IException
 	{
 		private: const char* _message;
 

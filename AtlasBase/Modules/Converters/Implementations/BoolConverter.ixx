@@ -36,7 +36,13 @@ export namespace Atlas
 		{
 			bool isTrue = data == Configuration::TrueString;
 			
-			Validate<Configuration::EnableBoolConverterCheck>::IsSame( data , Configuration::FalseString );
+			if constexpr ( Configuration::EnableBoolConverterCheck )
+			{
+				if ( !isTrue )
+				{
+					Validate::IsSame( data , Configuration::FalseString );
+				}
+			}
 
 			return isTrue;
 		}
@@ -52,7 +58,13 @@ export namespace Atlas
 		{
 			bool isTrue = data == Configuration::TrueString;
 
-			Validate<Configuration::EnableBoolConverterCheck>::IsSame( data , Configuration::FalseString );
+			if constexpr ( Configuration::EnableBoolConverterCheck )
+			{
+				if(!isTrue )
+				{
+					Validate::IsSame( data , Configuration::FalseString );
+				}
+			}
 
 			return isTrue;
 		}

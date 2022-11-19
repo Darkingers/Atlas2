@@ -15,14 +15,14 @@ import AtlasMethods;
 
 export namespace Atlas
 {
-	template<typename... Args>
+	template<typename... Arguments>
 	class DLLApi Event :
-		public Trait::Invokable<void , Event<Args...>, Args...>
+		public Trait::Invokable<void , Event<Arguments...>, Arguments...>
 	{
-		private: using LambdaType = Definition::LambdaFunction<void , Args...>;
-		private: using StaticType = Definition::StaticFunction<void , Args...>;
-		private: using InterfaceType = Interface::IInvokable<void , Args...>;
-		private: using EventType = Event<Args...>;
+		private: using LambdaType = Definition::LambdaFunction<void , Arguments...>;
+		private: using StaticType = Definition::StaticFunction<void , Arguments...>;
+		private: using InterfaceType = Interface::IInvokable<void , Arguments...>;
+		private: using EventType = Event<Arguments...>;
 
 		struct InstanceWrapper
 		{
@@ -48,21 +48,21 @@ export namespace Atlas
 		{}
 
 		public:
-		void Invoke( Args&&... arguments )
+		void Invoke( Arguments&&... arguments )
 		{
 			for ( auto invoked : _lambdas )
 			{
-				invoked( std::forward<Args&&>( arguments )... );
+				invoked( std::forward<Arguments&&>( arguments )... );
 			}
 
 			for ( auto invoked : _static )
 			{
-				invoked( std::forward<Args&&>( arguments )... );
+				invoked( std::forward<Arguments&&>( arguments )... );
 			}
 
 			for ( auto wrapper : _wrapped )
 			{
-				wrapper.Invoked( std::forward<Args&&>( arguments )... );
+				wrapper.Invoked( std::forward<Arguments&&>( arguments )... );
 			}
 		}
 

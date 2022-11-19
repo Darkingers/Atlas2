@@ -15,17 +15,17 @@ export namespace Atlas
 {
 	class DLLApi Tuple
 	{
-		private: template<unsigned int Current , unsigned int End , typename... Args>
+		private: template<unsigned int Current , unsigned int End , typename... Arguments>
 		struct IsNoexceptReassign
 		{
 			public:
 			constexpr static bool NoexceptCheck( )
 			{
-				bool result = noexcept( Tuple::Set<Current>( std::tuple<Args...>( ) , Deduce::IndexedArgumentType<Current , Args...>( ) ) );
+				bool result = noexcept( Tuple::Set<Current>( std::tuple<Arguments...>( ) , Deduce::IndexedArgumentType<Current , Arguments...>( ) ) );
 
 				if constexpr ( End > Current -1)
 				{
-					result = result && IsNoexceptReassign<Current + 1 , End , Args...>::value;
+					result = result && IsNoexceptReassign<Current + 1 , End , Arguments...>::value;
 				}
 
 				return result;
@@ -40,30 +40,30 @@ export namespace Atlas
 		public: template <unsigned int Index , typename TupleType>
 		using ElementType = std::tuple_element_t<Index , TupleType>;
 		
-		public: template<typename... Args>
-		constexpr static inline void Reassign( std::tuple<Args...>& tuple , Args&&... arguments )
-			noexcept ( IsNoexceptReassign<0 , sizeof...( Args ) , Args...>::value )
+		public: template<typename... Arguments>
+		constexpr static inline void Reassign( std::tuple<Arguments...>& tuple , Arguments&&... arguments )
+			noexcept ( IsNoexceptReassign<0 , sizeof...( Arguments ) , Arguments...>::value )
 		{
-			Tuple::Reassign<0, sizeof...(Args)>( tuple , std::forward<Args&&>( arguments )... );
+			Tuple::Reassign<0, sizeof...(Arguments)>( tuple , std::forward<Arguments&&>( arguments )... );
 		}
 			
-		private: template<unsigned int InclusiveFrom , unsigned int ExclusiveTo,typename TupleType, typename CurrentType, typename... Args>
-		constexpr static inline void Reassign( TupleType& tuple , CurrentType&& current, Args&&... arguments )
-			noexcept ( IsNoexceptReassign<InclusiveFrom , ExclusiveTo , Args...>::value )
+		private: template<unsigned int InclusiveFrom , unsigned int ExclusiveTo,typename TupleType, typename CurrentType, typename... Arguments>
+		constexpr static inline void Reassign( TupleType& tuple , CurrentType&& current, Arguments&&... arguments )
+			noexcept ( IsNoexceptReassign<InclusiveFrom , ExclusiveTo , Arguments...>::value )
 		{
 			Tuple::Set<InclusiveFrom>( tuple , std::forward<CurrentType&&>(current) );
 		
 			if constexpr ( InclusiveFrom < ExclusiveTo )
 			{
-				Tuple::Reassign<InclusiveFrom + 1 , ExclusiveTo>( tuple , std::forward<Args&&>( arguments )... );
+				Tuple::Reassign<InclusiveFrom + 1 , ExclusiveTo>( tuple , std::forward<Arguments&&>( arguments )... );
 			}
 		}
 
-		public: template<typename... Args>
-		constexpr static inline auto Make(Args&&... arguments )
-			noexcept( Type<std::tuple<Args...>>::template IsNoexceptConstructible<Args&&...> )
+		public: template<typename... Arguments>
+		constexpr static inline auto Make(Arguments&&... arguments )
+			noexcept( Type<std::tuple<Arguments...>>::template IsNoexceptConstructible<Arguments&&...> )
 		{
-			return std::tuple<Args...>( std::forward<Args&&>( arguments )... );
+			return std::tuple<Arguments...>( std::forward<Arguments&&>( arguments )... );
 		}
 			
 		public: template<unsigned int Index, typename TupleType>
@@ -80,9 +80,9 @@ export namespace Atlas
 			return std::make_tuple( std::get<Indexes>( std::forward<TupleType&&>( tuple ) )... );
 		}
 
-		public: template<unsigned int Index , typename... Args>
-		constexpr static inline void Set( std::tuple<Args...>& tuple , Deduce::IndexedArgumentType<Index,Args...> value )
-			noexcept ( noexcept ( std::get<Index>( std::tuple<Args...>() ) = Deduce::IndexedArgumentType<Index , Args...>( ) ) )
+		public: template<unsigned int Index , typename... Arguments>
+		constexpr static inline void Set( std::tuple<Arguments...>& tuple , Deduce::IndexedArgumentType<Index,Arguments...> value )
+			noexcept ( noexcept ( std::get<Index>( std::tuple<Arguments...>() ) = Deduce::IndexedArgumentType<Index , Arguments...>( ) ) )
 		{
 			std::get<Index>( tuple ) = value;
 		}

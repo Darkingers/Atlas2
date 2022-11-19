@@ -21,8 +21,8 @@ export module AtlasCollections:Tree;
 //		protected: TreeType*[ChildCount] _children;
 //
 //
-//		public: template<typename... Args>
-//		const bool Contains( const DataType& data, Args... arguments )const 
+//		public: template<typename... Arguments>
+//		const bool Contains( const DataType& data, Arguments... arguments )const 
 //		{
 //			if ( Data == data )
 //			{
@@ -56,8 +56,8 @@ export module AtlasCollections:Tree;
 //			return false;
 //		}
 //
-//		public: template<typename CollectionType, typename... Args> requires Concepts::AtlasIterableCollection<CollectionType, DataType, FunctorType, ConditionType>
-//		const bool Contains( const CollectionType& collection, Args... arguments )const 
+//		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, DataType, FunctorType, ConditionType>
+//		const bool Contains( const CollectionType& collection, Arguments... arguments )const 
 //		{
 //			bool returnValue = true;
 //
@@ -84,8 +84,8 @@ export module AtlasCollections:Tree;
 //			}
 //		}
 //
-//		public: template<typename CollectionType, typename... Args> requires  Concepts::StandardIterableCollection<CollectionType, DataType>
-//		const bool Contains( const CollectionType& collection, Args... arguments )const 
+//		public: template<typename CollectionType, typename... Arguments> requires  Concepts::StandardIterableCollection<CollectionType, DataType>
+//		const bool Contains( const CollectionType& collection, Arguments... arguments )const 
 //		{
 //			for ( auto data : collection )
 //			{
@@ -120,14 +120,14 @@ export module AtlasCollections:Tree;
 //			return counter;
 //		}
 //
-//		public: template<typename... Args>
-//		TreeType& Get( Args... arguments )
+//		public: template<typename... Arguments>
+//		TreeType& Get( Arguments... arguments )
 //		{
 //			return this->NavigateTo( arguments... ).Data;
 //		}
 //
-//		public: template<typename... Args>
-//		TreeType& NavigateTo(unsigned int index, Args... arguments )
+//		public: template<typename... Arguments>
+//		TreeType& NavigateTo(unsigned int index, Arguments... arguments )
 //		{
 //			if constexpr ( sizeof...( arguments ) == 0 )
 //			{
@@ -139,8 +139,8 @@ export module AtlasCollections:Tree;
 //			}
 //		}
 //
-//		public: template<typename CollectionType, typename... Args> requires Concepts::AtlasIterableCollection<CollectionType, unsigned int, FunctorType, ConditionType>
-//		DataType& NavigateTo( CollectionType collection, Args... arguments )
+//		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, unsigned int, FunctorType, ConditionType>
+//		DataType& NavigateTo( CollectionType collection, Arguments... arguments )
 //		{
 //			TreeType* current = this;
 //
@@ -159,8 +159,8 @@ export module AtlasCollections:Tree;
 //			}			
 //		}
 //
-//		public: template<typename CollectionType, typename... Args> requires Concepts::StandardIterableCollection<CollectionType, unsigned int>
-//		DataType& NavigateTo( CollectionType collection, Args... arguments )
+//		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, unsigned int>
+//		DataType& NavigateTo( CollectionType collection, Arguments... arguments )
 //		{
 //			TreeType* current = this;
 //
@@ -179,8 +179,8 @@ export module AtlasCollections:Tree;
 //			}
 //		}
 //
-//		public: template<typename... Args>
-//		TreeType* BreathFirstSearch( Args... arguments ) 
+//		public: template<typename... Arguments>
+//		TreeType* BreathFirstSearch( Arguments... arguments ) 
 //		{
 //			if ( Checker::CheckALL( Data, arguments... ))
 //			{
@@ -217,8 +217,8 @@ export module AtlasCollections:Tree;
 //			return nullptr;
 //		}
 //
-//		public: template<typename... Args>
-//		TreeType* DepthFirstSearch( Args... arguments ) 
+//		public: template<typename... Arguments>
+//		TreeType* DepthFirstSearch( Arguments... arguments ) 
 //		{
 //			if ( Checker::CheckAll( Data, arguments... ) )
 //			{

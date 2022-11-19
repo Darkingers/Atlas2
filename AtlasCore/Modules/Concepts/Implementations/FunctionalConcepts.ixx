@@ -10,18 +10,18 @@ import AtlasDefinitions;
 
 export namespace Atlas::Concept
 {
-	template<typename ReturnType , typename InvokedType , typename... Args>
-	concept IsInvokable = std::is_invocable_r<ReturnType , InvokedType , Args...>::value;
+	template<typename ReturnType , typename TestedType , typename... Args>
+	concept IsInvokable = std::is_invocable_r<ReturnType , TestedType , Args...>::value;
 
-	template<typename ReturnType , typename ExecutedType>
-	concept IsExecutable = std::is_invocable_r<ReturnType , ExecutedType>::value;
+	template<typename ReturnType , typename TestedType>
+	concept IsExecutable = std::is_invocable_r<ReturnType , TestedType>::value;
 
 	template<typename TestedType>
 	concept HasToString = requires ( TestedType testInstance )
 	{
 		{
 			testInstance.ToString( )
-		} -> std::convertible_to<std::string>;
+		} -> std::convertible_to<const char*>;	
 	};
 
 	template<typename TestedType , typename IndexType, typename IndexedType>

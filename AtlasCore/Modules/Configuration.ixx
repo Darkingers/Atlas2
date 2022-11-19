@@ -14,6 +14,10 @@ export namespace Atlas::Configuration
 #define ATLAS_FALSE_STRING "false"
 #endif
 
+#ifndef ATLAS_MATH_PI
+#define ATLAS_MATH_PI 3.141592653589793238462643383279502884197169
+#endif
+
 #ifndef ATLAS_CONVERTER_CHECK
 #define ATLAS_CONVERTER_CHECK true
 #endif
@@ -58,9 +62,47 @@ export namespace Atlas::Configuration
 #define ATLAS_UNSIGNEDLONGLONG_CONVERTER_CHECK true
 #endif
 	
+
+#ifndef ATLAS_STATISTICS_CHECK
+#define ATLAS_STATISTICS_CHECK true
+#endif
+	
+#ifndef ATLAS_STATISTICS_AVERAGE_CHECK
+#define ATLAS_STATISTICS_AVERAGE_CHECK true
+#endif
+
+#ifndef ATLAS_STATISTICS_DEVIATION_CHECK
+#define ATLAS_STATISTICS_DEVIATION_CHECK true
+#endif
+	
+#ifndef ATLAS_STATISTICS_MAXIMUM_CHECK
+#define ATLAS_STATISTICS_MAXIMUM_CHECK true
+#endif
+	
+#ifndef ATLAS_STATISTICS_MINIMUM_CHECK
+#define ATLAS_STATISTICS_MINIMUM_CHECK true
+#endif
+	
+#ifndef ATLAS_STATISTICS_SUM_CHECK
+#define ATLAS_STATISTICS_SUM_CHECK true
+#endif
+		
+#ifndef ATLAS_STATISTICS_SUMMARY_CHECK
+#define ATLAS_STATISTICS_SUMMARY_CHECK true
+#endif
+
+#ifndef ATLAS_MATH_COS_PRECISION
+#define ATLAS_MATH_COS_PRECISION 1
+#endif
+
+#ifndef ATLAS_MATH_SIN_PRECISION
+#define ATLAS_MATH_SIN_PRECISION 1
+#endif
+	
 	constexpr const char* TrueString = ATLAS_TRUE_STRING;
 	constexpr const char* FalseString = ATLAS_FALSE_STRING;
-		
+	constexpr double PI = ATLAS_MATH_PI;
+	
 	constexpr bool EnableConverterCheck = ATLAS_CONVERTER_CHECK;
 	constexpr bool EnableBoolConverterCheck = EnableConverterCheck && ATLAS_BOOL_CONVERTER_CHECK;
 	constexpr bool EnableDoubleConverterCheck = EnableConverterCheck && ATLAS_DOUBLE_CONVERTER_CHECK;
@@ -73,5 +115,16 @@ export namespace Atlas::Configuration
 	constexpr bool EnableUnsignedLongConverterCheck = EnableConverterCheck && ATLAS_UNSIGNEDLONG_CONVERTER_CHECK;
 	constexpr bool EnableUnsignedLongLongConverterCheck = EnableConverterCheck && ATLAS_UNSIGNEDLONGLONG_CONVERTER_CHECK;
 
+	constexpr bool EnableStatisticsCheck = ATLAS_STATISTICS_CHECK;
+	constexpr bool EnableStatisticsAverageCheck = EnableStatisticsCheck && ATLAS_STATISTICS_AVERAGE_CHECK;
+	constexpr bool EnableStatisticsDeviationCheck = EnableStatisticsCheck && ATLAS_STATISTICS_DEVIATION_CHECK;
+	constexpr bool EnableStatisticsMaximumCheck = EnableStatisticsCheck && ATLAS_STATISTICS_MAXIMUM_CHECK;
+	constexpr bool EnableStatisticsMinimumCheck = EnableStatisticsCheck && ATLAS_STATISTICS_MINIMUM_CHECK;
+	constexpr bool EnableStatisticsSumCheck = EnableStatisticsCheck && ATLAS_STATISTICS_SUM_CHECK;
+	constexpr bool EnableStatisticsSummaryCheck = EnableStatisticsCheck && ATLAS_STATISTICS_SUMMARY_CHECK;
+
+	constexpr int CosPrecision = ATLAS_MATH_COS_PRECISION;
+	constexpr int SinPrecision = ATLAS_MATH_SIN_PRECISION;
+	
 }
 

@@ -5,8 +5,7 @@ module;
 export module AtlasValidation:Validate;
 
 import AtlasDefinitions;
-import AtlasAdapters;
-import AtlasExceptions;
+import :ValidationException;
 
 export namespace Atlas
 {
@@ -82,7 +81,7 @@ export namespace Atlas
 				return;
 			}
 
-			if ( !Adapter::Equals( a,b ) )
+			if ( a!=b)
 			{
 				throw ValidationException( "Condition: a==b is not fulfilled!");
 			}
@@ -97,9 +96,28 @@ export namespace Atlas
 				return;
 			}
 
-			if ( Adapter::Equals( a , b ) )
+			if ( a==b )
 			{
 				throw ValidationException( "Condition: a!=b is not fulfilled!");
+			}
+		}
+
+		public: template<typename DataType, typename NumberType>
+		constexpr static inline void IsArray( const DataType* array, const NumberType& size )
+			noexcept( !IsEnabled )
+		{
+			if constexpr ( !IsEnabled )
+			{
+				return;
+			}
+
+			if ( size<0 )
+			{
+				throw ValidationException( "Condition: size>0 is not fulfilled!" );
+			}
+			else if ( size > 0 && array == nullptr )
+			{
+				throw ValidationException( "Condition: array!=nullptr is not fulfilled!" );
 			}
 		}
 
@@ -194,7 +212,7 @@ export namespace Atlas
 		}
 						
 		public: template<typename TestedType , typename TypeA , typename TypeB>
-		constexpr static inline void ExlclusiveRange( const TestedType& tested , const TypeA& from , const TypeB& to )
+		constexpr static inline void ExclusiveRange( const TestedType& tested , const TypeA& from , const TypeB& to )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )

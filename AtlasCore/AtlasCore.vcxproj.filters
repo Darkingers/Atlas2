@@ -46,7 +46,7 @@
     <ClCompile Include="Modules\Definitions\Implementations\TypeDefinitions.ixx">
       <Filter>Modules\Definitions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TypeInfo\Type.ixx">
+    <ClCompile Include="Modules\TypeInfo\TypeInfo.ixx">
       <Filter>Modules\Type</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Configuration.ixx">
@@ -55,6 +55,10 @@
     <ClCompile Include="Modules\Integration\Integrations.ixx" />
     <ClCompile Include="Modules\Integration\Implementations\Adapter.ixx" />
     <ClCompile Include="Modules\Integration\Implementations\Converter.ixx" />
+    <ClCompile Include="Modules\Integration\Implementations\Exception.ixx" />
+    <ClCompile Include="Modules\Validation\Implementations\Validate.ixx" />
+    <ClCompile Include="Modules\Validation\Implementations\ValidationException.ixx" />
+    <ClCompile Include="Modules\Validation\Validation.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

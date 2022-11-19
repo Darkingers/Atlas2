@@ -36,9 +36,6 @@
     <ClCompile Include="Modules\Adapters\Implementations\ContainAllAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Adapters\Implementations\EqualityAdapter.ixx">
-      <Filter>Modules\Adapters</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\Adapters\Implementations\HashAdapter.ixx">
       <Filter>Modules\Adapters</Filter>
     </ClCompile>
@@ -78,19 +75,7 @@
     <ClCompile Include="Modules\Exceptions\Implementations\TimeoutException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Exceptions\Implementations\ValidationException.ixx">
-      <Filter>Modules\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Validation\Implementations\Validate.ixx">
-      <Filter>Modules\Validation</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Exceptions\Implementations\Exception.ixx">
-      <Filter>Modules\Exceptions</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\Exceptions\Exceptions.ixx">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Validation\Validation.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Extensions\Implementations\Extended.ixx" />
@@ -112,5 +97,8 @@
     <ClCompile Include="Modules\Extensions\Implementations\Throw.ixx" />
     <ClCompile Include="Modules\BaseTypes\Implementations\StaticString.ixx" />
     <ClCompile Include="Modules\BaseTypes\BaseTypes.ixx" />
+    <ClCompile Include="Modules\Exceptions\Implementations\ExceptionBase.ixx" />
+    <ClCompile Include="Modules\BaseTypes\Implementations\String.ixx" />
+    <ClCompile Include="Modules\BaseTypes\Implementations\Span.ixx" />
   </ItemGroup>
 </Project>

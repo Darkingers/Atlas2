@@ -138,7 +138,7 @@ export namespace Atlas
 	class DLLApi Converter<const char*, double> :
 		public std::true_type
 	{
-		private:  inline static double DecimalMultipliers[] = {
+		private: constexpr inline static double DecimalMultipliers[] = {
 			0.1,
 			0.01,
 			0.001,

@@ -4,26 +4,26 @@ module;
 
 export module AtlasExceptions:AbortRequestedException;
 
-import :Exception;
+import :ExceptionBase;
 
 export namespace Atlas
 {
 	class DLLApi AbortRequestedException :
-		public Exception
+		public ExceptionBase
 	{
 		public:
 		constexpr AbortRequestedException( const std::string& message ) noexcept :
-			Exception( message , nullptr )
+			ExceptionBase( message , nullptr )
 		{}
 
 		public: 
 		constexpr AbortRequestedException( const std::string& message , const void* source ) noexcept :
-			Exception( message , source )
+			ExceptionBase( message , source )
 		{}
 
 		public: 
 		constexpr AbortRequestedException( const AbortRequestedException& other ) noexcept :
-			Exception( other )
+			ExceptionBase( other )
 		{}	
 	};
 }

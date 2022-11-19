@@ -159,24 +159,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Modules\DataFunctions.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\DefaultFunctions.ixx" />
-    <ClCompile Include="Modules\MathFunctions.ixx" />
-    <ClCompile Include="Modules\MemoryFunctions.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\SearchFunctions.ixx" />
-    <ClCompile Include="Modules\SortFunctions.ixx" />
-    <ClCompile Include="Modules\AnalysisFunctions.ixx" />
+    <ClCompile Include="Modules\Default\Default.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Abs.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Ceil.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Factorial.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Floor.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Log.ixx" />
+    <ClCompile Include="Modules\Math\Math.ixx" />
+    <ClCompile Include="Modules\Statistics\Statistics.ixx" />
+    <ClCompile Include="Modules\Statistics\Implementations\Average.ixx" />
+    <ClCompile Include="Modules\Statistics\Implementations\Deviation.ixx" />
+    <ClCompile Include="Modules\Statistics\Implementations\Maximum.ixx" />
+    <ClCompile Include="Modules\Statistics\Implementations\Minimum.ixx" />
+    <ClCompile Include="Modules\Statistics\Implementations\Sum.ixx" />
+    <ClCompile Include="Modules\Datamanipulation\Implementations\Copy.ixx" />
+    <ClCompile Include="Modules\Datamanipulation\Implementations\ReplaceFrom.ixx" />
+    <ClCompile Include="Modules\Datamanipulation\Implementations\Shift.ixx" />
+    <ClCompile Include="Modules\Default\Implementations\Compare.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\ACos.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\ASin.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Cos.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Pow.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Sin.ixx" />
+    <ClCompile Include="Modules\Math\Implementations\Sqrt.ixx" />
+    <ClCompile Include="Modules\Query\Implementations\All.ixx" />
+    <ClCompile Include="Modules\Query\Implementations\Any.ixx" />
+    <ClCompile Include="Modules\Query\Implementations\Contains.ixx" />
+    <ClCompile Include="Modules\Query\Implementations\Count.ixx" />
+    <ClCompile Include="Modules\Query\Implementations\First.ixx" />
+    <ClCompile Include="Modules\Query\Implementations\FirstOrDefault.ixx" />
+    <ClCompile Include="Modules\Query\Implementations\Match.ixx" />
+    <ClCompile Include="Modules\Searching\Implementations\Binary.ixx" />
+    <ClCompile Include="Modules\Searching\Implementations\Jump.ixx" />
+    <ClCompile Include="Modules\Searching\Implementations\Linear.ixx" />
+    <ClCompile Include="Modules\Sorting\Implementation\Heap.ixx" />
+    <ClCompile Include="Modules\Sorting\Implementation\Insertion.ixx" />
+    <ClCompile Include="Modules\Sorting\Implementation\Intro.ixx" />
+    <ClCompile Include="Modules\Sorting\Implementation\Merge.ixx" />
+    <ClCompile Include="Modules\Sorting\Implementation\Quick.ixx" />
+    <ClCompile Include="Modules\Sorting\Implementation\Selection.ixx" />
+    <ClCompile Include="Modules\Statistics\Implementations\Summary.ixx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AtlasBase\AtlasBase.vcxproj">
-      <Project>{b5053f47-5a8f-45e3-b449-b53a0b754d8d}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\AtlasCore\AtlasCore.vcxproj">
       <Project>{e0088580-341c-4a8a-88e4-ddd2d06a992b}</Project>
     </ProjectReference>

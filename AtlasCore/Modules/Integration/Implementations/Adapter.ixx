@@ -3,7 +3,9 @@ module;
 #include "../../../../Macros/Macros.h"
 
 export module AtlasIntegration:Adapter;
+
 import AtlasDefinitions;
+import AtlasTypeInfo;
 
 export namespace Atlas
 {
@@ -33,13 +35,19 @@ export namespace Atlas
 		}
 	};
 
-	template<typename TypeA , typename TypeB>
-	class DLLApi EqualityAdapter :
+	template<typename DataType>
+	class DLLApi HashAdapter :
 		public std::false_type
 	{};
 
-	template<typename DataType>
-	class DLLApi HashAdapter :
+	template<typename CollectionType>
+	class DLLApi IterableAdapter :
+		public std::false_type
+	{};
+		
+
+	template<typename CollectionType>
+	class DLLApi IteratorAdapter:
 		public std::false_type
 	{};
 
@@ -54,14 +62,35 @@ export namespace Atlas
 		template<typename CollectionType , typename ContainedCollectionType>
 		concept IsNoexceptContainAll = noexcept( ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::ContainAll( std::declval<CollectionType>( ) , std::declval<ContainedCollectionType>( ) ) );
 
-		template<typename DataTypeType>
-		concept IsNoexceptCount = noexcept( SizeAdapter<Deduce::SimpleType<DataTypeType>>::Count( std::declval<DataTypeType>( ) ) );
-
-		template<typename TypeA , typename TypeB>
-		concept IsNoexceptEquality = noexcept( EqualityAdapter<Deduce::SimpleType<TypeA> , Deduce::SimpleType<TypeB>>::Equality( std::declval<TypeA>( ) , std::declval<TypeB>( ) ) );
+		template<typename DataType>
+		concept IsNoexceptCount = noexcept( SizeAdapter<Deduce::SimpleType<DataType>>::Count( std::declval<DataType>( ) ) );
 
 		template<typename DataType>
 		concept IsNoexceptHash = noexcept( HashAdapter<Deduce::SimpleType<DataType>>::Hash( std::declval<DataType>( ) ) );
+
+		template<typename CollectionType>
+		concept IsNoexceptBegin = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::Begin( std::declval<CollectionType>( ) ) );
+
+		template<typename CollectionType>
+		concept IsNoexceptEnd = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::End( std::declval<CollectionType>( ) ) );
+
+		template<typename CollectionType>
+		concept IsNoexceptConstBegin = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::ConstBegin( std::declval<CollectionType>( ) ) );
+		
+		template<typename CollectionType>
+		concept IsNoexceptConstEnd = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::ConstEnd( std::declval<CollectionType>( ) ) );
+
+		template<typename IteratorType>
+		concept IsNoexceptCurrentValue = noexcept( IteratorAdapter<Deduce::SimpleType<IteratorType>>::CurrentValue( std::declval<IteratorType>( ) ) );
+
+		template<typename IteratorType>
+		concept IsNoexceptIterable = noexcept( IteratorAdapter<Deduce::SimpleType<IteratorType>>::Iterate( std::declval<IteratorType>( ), std::declval<int>() ) );	
+
+		template<typename CollectionType>
+		concept HasNoexceptIterator = IsNoexceptBegin<CollectionType> && IsNoexceptEnd<CollectionType> && IsNoexceptIterable<TypeDetails<CollectionType>::IteratorType> && IsNoexceptCurrentValue<TypeDetails<CollectionType>::IteratorType>;
+
+		template<typename CollectionType>
+		concept HasNoexceptConstIterator = IsNoexceptConstBegin<CollectionType> && IsNoexceptConstEnd<CollectionType> && IsNoexceptIterable<TypeDetails<CollectionType>::ConstIteratorType> && IsNoexceptCurrentValue<TypeDetails<CollectionType>::ConstIteratorType>;
 	}
 	
 	class DLLApi Adapter
@@ -94,18 +123,53 @@ export namespace Atlas
 			return SizeAdapter<Deduce::SimpleType<DataType>>::Size( data );
 		}
 
-		public: template<typename TypeA , typename TypeB>
-		constexpr static inline bool Equals( const TypeA& a , const TypeB& b )
-			noexcept ( Concept::IsNoexceptEquality<TypeA,TypeB> )
-		{
-			return EqualityAdapter<Deduce::SimpleType<TypeA> , Deduce::SimpleType<TypeB>>::Equals( a , b );
-		}
-
 		public: template<typename DataType>
 		constexpr static inline void GetHash( const DataType& data )
-			noexcept ( Concept::IsNoexceptHash )
+			noexcept ( Concept::IsNoexceptHash<DataType> )
 		{
 			return HashAdapter<Deduce::SimpleType<DataType>>::GetHash( data );
+		}
+
+		public: template<typename CollectionType>
+		constexpr static inline auto Begin( const CollectionType& collection )
+			noexcept ( Concept::IsNoexceptBegin<CollectionType> )
+		{
+			return IterableAdapter<Deduce::SimpleType<CollectionType>>::Begin( collection );
+		}
+
+		public: template<typename CollectionType>
+		constexpr static inline auto ConstBegin( const CollectionType& collection )
+			noexcept ( Concept::IsNoexceptConstBegin<CollectionType> )
+		{
+			return IterableAdapter<Deduce::SimpleType<CollectionType>>::ConstBegin( collection );
+		}
+
+		public: template<typename CollectionType>
+		constexpr static inline auto End( const CollectionType& collection )
+			noexcept ( Concept::IsNoexceptEnd<CollectionType> )
+		{
+			return IterableAdapter<Deduce::SimpleType<CollectionType>>::End( collection );
+		}
+
+		public: template<typename CollectionType>
+		constexpr static inline auto ConstEnd( const CollectionType& collection )
+			noexcept ( Concept::IsNoexceptConstEnd<CollectionType> )
+		{
+			return IterableAdapter<Deduce::SimpleType<CollectionType>>::ConstEnd( collection );
+		}
+
+		public: template<typename IteratorType>
+		constexpr static inline auto CurrentValue( const IteratorType& iterator )
+			noexcept ( Concept::IsNoexceptCurrentValue<IteratorType> )
+		{
+			return IteratorAdapter<Deduce::SimpleType<IteratorType>>::CurrentValue( iterator );
+		}
+
+		public: template<typename IteratorType>
+		constexpr static inline void Iterate( IteratorType& iterator, int step = 1 )
+			noexcept ( Concept::IsNoexceptIterable<IteratorType> )
+		{
+			IteratorAdapter<Deduce::SimpleType<IteratorType>>::Iterate( iterator, step );
 		}
 	};
 }

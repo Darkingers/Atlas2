@@ -162,8 +162,12 @@
     <ClCompile Include="Modules\Configuration.ixx" />
     <ClCompile Include="Modules\Integration\Implementations\Adapter.ixx" />
     <ClCompile Include="Modules\Integration\Implementations\Converter.ixx" />
+    <ClCompile Include="Modules\Integration\Implementations\Exception.ixx">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Modules\Integration\Integrations.ixx" />
-    <ClCompile Include="Modules\TypeInfo\Type.ixx">
+    <ClCompile Include="Modules\TypeInfo\TypeInfo.ixx">
       <SubType>
       </SubType>
     </ClCompile>
@@ -175,6 +179,9 @@
     <ClCompile Include="Modules\Definitions\Definitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TypeDeducers.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TypeDefinitions.ixx" />
+    <ClCompile Include="Modules\Validation\Implementations\Validate.ixx" />
+    <ClCompile Include="Modules\Validation\Implementations\ValidationException.ixx" />
+    <ClCompile Include="Modules\Validation\Validation.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h" />

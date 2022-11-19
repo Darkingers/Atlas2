@@ -9,14 +9,14 @@ export module AtlasConcepts:RelationalConcepts;
 
 export namespace Atlas::Concept
 {
-	template<typename BaseType , typename DerivedType>
-	concept IsBaseOf = std::is_base_of<BaseType , DerivedType>::value;
+	template<typename TestedType , typename DerivedType>
+	concept IsBaseOf = std::is_base_of<TestedType , DerivedType>::value;
 
-	template<typename DerivedType , typename BaseType>
-	concept IsDerivedFrom = std::is_base_of<DerivedType , BaseType>::value;
+	template<typename TestedType , typename BaseType>
+	concept IsDerivedFrom = std::is_base_of<BaseType , TestedType>::value;
 
-	template<typename AssignLeft , typename AssignRight>
-	concept IsAssignableFrom = std::is_assignable<AssignLeft , AssignRight>::value;
+	template<typename TestedType , typename ValueType>
+	concept IsAssignableFrom = std::is_assignable<TestedType , ValueType>::value;
 
 	template<unsigned int A , unsigned int B>
 	concept IsMore = A > B;
@@ -30,11 +30,11 @@ export namespace Atlas::Concept
 	template<unsigned int A , unsigned int B>
 	concept IsLessOrEqual = A <= B;
 
-	template<typename SourceType, typename TargetType>
-	concept IsConvertibleTo = std::is_convertible<SourceType , TargetType>::value;
+	template<typename TestedType, typename TargetType>
+	concept IsConvertibleTo = std::is_convertible<TestedType , TargetType>::value;
 
-	template<typename SourceType , typename TargetType>
-	concept IsNoexceptConvertibleTo = std::is_nothrow_convertible<SourceType , TargetType>::value;
+	template<typename TestedType , typename TargetType>
+	concept IsNoexceptConvertibleTo = std::is_nothrow_convertible<TestedType , TargetType>::value;
 
 	template<typename TestedType, typename... ConstructorArgs>
 	concept IsConstructible = std::is_constructible<TestedType , ConstructorArgs...>::value;

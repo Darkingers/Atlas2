@@ -1,11 +1,11 @@
 module;
 
-#include "../../../../../Macros/Macros.h"
+#include "../../../../Macros/Macros.h"
 
 export module AtlasIntegration:Adapter;
 
 import AtlasDefinitions;
-import AtlasTypeInfo;
+import AtlasConcepts;
 
 export namespace Atlas
 {
@@ -18,11 +18,11 @@ export namespace Atlas
 			ClearAdapter<Deduce::SimpleType<CollectionType>>::Clear( collection );
 		}
 
-		public: template<typename CollectionType , typename DataType>
-		constexpr static inline bool Contains( const CollectionType& collection , const DataType& contained )
-			noexcept ( Concept::IsNoexceptContain<CollectionType, DataType> )
+		public: template<typename CollectionType , typename ElementType>
+		constexpr static inline bool Contains( const CollectionType& collection , const ElementType& element )
+			noexcept ( Concept::IsNoexceptContain<CollectionType, ElementType> )
 		{
-			return ContainAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<DataType>>::Contains( collection , contained );
+			return ContainAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ElementType>>::Contains( collection , element );
 		}
 
 		public: template<typename CollectionType , typename ContainedCollectionType>
@@ -32,11 +32,11 @@ export namespace Atlas
 			return ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::ContainsAll( collection , containedContainer );
 		}
 
-		public: template<typename DataType>
-		constexpr static inline auto Size( const DataType& data )
-			noexcept ( Concept::IsNoexceptCount<DataType> )
+		public: template<typename ExpectedType, typename ActualType>
+		constexpr static inline auto Count( const ActualType& data )
+			noexcept ( Concept::IsNoexceptCount<ExpectedType, ActualType> )
 		{
-			return SizeAdapter<Deduce::SimpleType<DataType>>::Size( data );
+			return CountAdapter<Deduce::SimpleType<ExpectedType>,Deduce::SimpleType<ActualType>>::Count( data );
 		}
 
 		public: template<typename DataType>

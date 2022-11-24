@@ -11,9 +11,9 @@ export namespace Atlas
 		public std::false_type
 	{
 		public: 
-		constexpr static inline TargetType Convert( const SourceType& data )
+		consteval static inline TargetType Convert( const SourceType& data )
 		{
-			static_assert( false , "No converter defined for this type combination." );
+			throw "No converter defined for this type combination.";
 		}
 	};
 }

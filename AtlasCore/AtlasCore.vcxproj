@@ -165,13 +165,14 @@
     <ClCompile Include="Modules\Definitions\Implementations\AdapterDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\ConverterDefinition.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TraitDefinitions.ixx" />
-    <ClCompile Include="Modules\Integration\Implementations\Definitions\Adapter.ixx" />
-    <ClCompile Include="Modules\Integration\Implementations\Definitions\Converter.ixx" />
-    <ClCompile Include="Modules\Integration\Implementations\Interfaces\IException.ixx">
+    <ClCompile Include="Modules\API\Dispatchers\Adapter.ixx" />
+    <ClCompile Include="Modules\API\Dispatchers\Converter.ixx" />
+    <ClCompile Include="Modules\API\Interfaces\IException.ixx">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Modules\Integration\Integrations.ixx" />
+    <ClCompile Include="Modules\API\Integrations.ixx" />
+    <ClCompile Include="Modules\TypeInfo\TypeNameExtractor.ixx" />
     <ClCompile Include="Modules\TypeInfo\TypeInfo.ixx">
       <SubType>
       </SubType>

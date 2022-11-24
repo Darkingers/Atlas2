@@ -7,6 +7,7 @@ module;
 #include "../../../Macros/Macros.h"
 
 export module AtlasTypeInfo;
+import :TypeNameExtractor;
 
 import AtlasConcepts;
 import AtlasDefinitions;
@@ -16,7 +17,7 @@ export namespace Atlas
 	template<typename T>
 	class DLLApi Type
 	{
-		public: inline static const char* Name = typeid( T ).name( );	
+		public: constexpr static inline auto Name = Implementation::TypeName::Extract<T>( );
 		public: constexpr static inline bool IsFundamental = Concept::IsFundamental<T>;
 		public: constexpr static inline bool IsConst = Concept::IsConst<T>;
 		public: constexpr static inline bool IsReference = Concept::IsReference<T>;

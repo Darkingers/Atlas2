@@ -11,9 +11,9 @@ export namespace Atlas
 		public std::false_type
 	{
 		public:
-		constexpr static inline auto Clear( ClearedType& instance )
+		consteval static inline auto Clear( ClearedType& instance )
 		{
-			static_assert( false , "ClearAdapter::Clear is not implemented for this type" );
+			throw "ClearAdapter::Clear is not implemented for this type";
 		}
 	};
 
@@ -22,9 +22,9 @@ export namespace Atlas
 		public std::false_type
 	{
 		public:
-		constexpr static inline auto Contain( const CollectionType& collection , const ElementType& element )
+		consteval static inline auto Contain( const CollectionType& collection , const ElementType& element )
 		{
-			static_assert( false , "ContainAdapter::Contain is not implemented for this type" );
+			throw "ContainAdapter::Contain is not implemented for this type";
 		}
 	};
 
@@ -33,20 +33,20 @@ export namespace Atlas
 		public std::false_type
 	{
 		public:
-		constexpr static inline auto ContainAll( const CollectionType& collection , const ContainedCollectionType& containedCollection )
+		consteval static inline auto ContainAll( const CollectionType& collection , const ContainedCollectionType& containedCollection )
 		{
-			static_assert( false , "ContainAllAdapter::ContainAll is not implemented for these types" );
+			throw "ContainAllAdapter::ContainAll is not implemented for these types";
 		}
 	};
 
-	template<typename T>
-	class DLLApi SizeAdapter :
+	template<typename ExpectedType, typename ActualType>
+	class DLLApi CountAdapter :
 		public std::true_type
 	{
 		public:
-		constexpr static inline auto Size( const T& instance ) noexcept
+		consteval static inline auto Count( const ActualType& instance ) noexcept
 		{
-			static_assert( false , "SizeAdapter::Size is not implemented for this type" );
+			throw "CountAdapter::Count is not implemented for this type";
 		}
 	};
 
@@ -55,9 +55,9 @@ export namespace Atlas
 		public std::false_type
 	{
 		public:
-		constexpr static inline auto Hash( const HashableType& instance ) noexcept
+		consteval static inline auto Hash( const HashableType& instance ) noexcept
 		{
-			static_assert( false , "HashAdapter::Hash is not implemented for this type" );
+			throw "HashAdapter::Hash is not implemented for this type";
 		}
 	};
 
@@ -66,27 +66,27 @@ export namespace Atlas
 		public std::false_type
 	{
 		public:
-		constexpr static inline auto Begin( CollectionType& collection )
+		consteval static inline auto Begin( CollectionType& collection )
 		{
-			static_assert( false , "IterableAdapter::Begin is not implemented for this type" );
+			throw "IterableAdapter::Begin is not implemented for this type";
 		}
 		
 		public:
-		constexpr static inline auto ConstBegin( const CollectionType& collection )
+		consteval static inline auto ConstBegin( const CollectionType& collection )
 		{
-			static_assert( false , "IterableAdapter::ConstBegin is not implemented for this type" );
+			throw "IterableAdapter::ConstBegin is not implemented for this type";
 		}
 
 		public:
-		constexpr static inline auto End( CollectionType& collection )
+		consteval static inline auto End( CollectionType& collection )
 		{
-			static_assert( false , "IterableAdapter::End is not implemented for this type" );
+			throw "IterableAdapter::End is not implemented for this type";
 		}
 
 		public:
-		constexpr static inline auto ConstEnd( const CollectionType& collection )
+		consteval static inline auto ConstEnd( const CollectionType& collection )
 		{
-			static_assert( false , "IterableAdapter::ConstEnd is not implemented for this type" );
+			throw "IterableAdapter::ConstEnd is not implemented for this type";
 		}
 	};
 
@@ -95,15 +95,15 @@ export namespace Atlas
 		public std::false_type
 	{
 		public:
-		constexpr static inline auto Move( IteratorType& iterator )
+		consteval static inline auto Move( IteratorType& iterator )
 		{
-			static_assert( false , "IteratorAdapter::Move is not implemented for this type" );
+			throw "IteratorAdapter::Move is not implemented for this type";
 		}
 
 		public:
-		constexpr static inline auto Current( const IteratorType& iterator )
+		consteval static inline auto Current( const IteratorType& iterator )
 		{
-			static_assert( false , "IteratorAdapter::Current is not implemented for this type" );
+			throw"IteratorAdapter::Current is not implemented for this type";
 		}
 	};
 }

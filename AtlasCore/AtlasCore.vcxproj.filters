@@ -52,10 +52,10 @@
     <ClCompile Include="Modules\Configuration.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Integration\Integrations.ixx" />
-    <ClCompile Include="Modules\Integration\Implementations\Definitions\Adapter.ixx" />
-    <ClCompile Include="Modules\Integration\Implementations\Definitions\Converter.ixx" />
-    <ClCompile Include="Modules\Integration\Implementations\Interfaces\IException.ixx" />
+    <ClCompile Include="Modules\API\Integrations.ixx" />
+    <ClCompile Include="Modules\API\Dispatchers\Adapter.ixx" />
+    <ClCompile Include="Modules\API\Dispatchers\Converter.ixx" />
+    <ClCompile Include="Modules\API\Interfaces\IException.ixx" />
     <ClCompile Include="Modules\Validation\Implementations\Validate.ixx" />
     <ClCompile Include="Modules\Validation\Implementations\ValidationException.ixx" />
     <ClCompile Include="Modules\Validation\Validation.ixx" />
@@ -64,6 +64,7 @@
     <ClCompile Include="Modules\Definitions\Implementations\TraitDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\ConverterDefinition.ixx" />
     <ClCompile Include="Modules\Concepts\Implementations\ConverterConcepts.ixx" />
+    <ClCompile Include="Modules\TypeInfo\TypeNameExtractor.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

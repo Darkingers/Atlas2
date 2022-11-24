@@ -55,8 +55,7 @@ export namespace Atlas::Deduce
 
 	template<typename DataType>
 	using SimpleType = typename Atlas::Implementation::SimpleType<DataType>::type;
-	
-	
+		
 	template<typename IteratorType>
 	using IteratedType = DereferencedType<IteratorType>;
 
@@ -78,18 +77,15 @@ export namespace Atlas::Deduce
 	template<typename CollectionType>
 	using ConstIteratorType = ConstBeginIteratorType<CollectionType>;
 
-	
 	template<typename CollectionType , typename IndexType>
 	using CollectionIndexedType = decltype( std::declval<CollectionType>( )->operator[]( IndexType( ) ) );
 
 	template<typename CollectionType>
 	using CollectionElementType = IteratedType<BeginIteratorType<CollectionType>>;
-
 	
 	template<unsigned int Index , typename TupleType>
 	using TupleIndexedType = decltype( std::get<Index>( std::declval<TupleType>( ) ) );
 
-	
 	template<unsigned int Index , typename... Arguments>
 	using IndexedArgumentType = typename std::tuple_element<Index , std::tuple<Arguments...>>;
 

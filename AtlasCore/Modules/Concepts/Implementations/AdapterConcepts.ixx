@@ -6,22 +6,22 @@ export module AtlasConcepts:AdapterConcepts;
 
 import AtlasDefinitions;
 
-export namespace Atlas::Concepts
+export namespace Atlas::Concept
 {
 	template<typename CollectionType>
 	concept IsNoexceptClear = noexcept( ClearAdapter<Deduce::SimpleType<CollectionType>>::Clear( std::declval<CollectionType>( ) ) );
 
-	template<typename CollectionType , typename DataType>
-	concept IsNoexceptContain = noexcept( ContainAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<DataType>>::Contain( std::declval<CollectionType>( ) , std::declval<DataType>( ) ) );
+	template<typename CollectionType , typename ElementType>
+	concept IsNoexceptContain = noexcept( ContainAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ElementType>>::Contain( std::declval<CollectionType>( ) , std::declval<ElementType>( ) ) );
 
 	template<typename CollectionType , typename ContainedCollectionType>
 	concept IsNoexceptContainAll = noexcept( ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::ContainAll( std::declval<CollectionType>( ) , std::declval<ContainedCollectionType>( ) ) );
 
-	template<typename DataType>
-	concept IsNoexceptCount = noexcept( SizeAdapter<Deduce::SimpleType<DataType>>::Count( std::declval<DataType>( ) ) );
+	template<typename ExpectedType , typename ActualType>
+	concept IsNoexceptCount = noexcept( CountAdapter<Deduce::SimpleType<ActualType>, Deduce::SimpleType<ExpectedType>>::Count( std::declval<ActualType>( ) ) );
 
-	template<typename DataType>
-	concept IsNoexceptHash = noexcept( HashAdapter<Deduce::SimpleType<DataType>>::Hash( std::declval<DataType>( ) ) );
+	template<typename T>
+	concept IsNoexceptHash = noexcept( HashAdapter<Deduce::SimpleType<T>>::Hash( std::declval<T>( ) ) );
 
 	template<typename CollectionType>
 	concept IsNoexceptBegin = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::Begin( std::declval<CollectionType>( ) ) );

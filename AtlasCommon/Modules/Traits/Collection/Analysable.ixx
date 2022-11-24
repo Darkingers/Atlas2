@@ -25,9 +25,9 @@ export namespace Atlas::Trait
 			return Analysis::Maximum( This() , comparator );
 		}
 		public:
-		constexpr DataType Maximum( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) const final
+		constexpr DataType Maximum( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator ) const final
 		{
-			return Analysis::Maximum( This(), inclusiveFrom , exclusiveTo , comparator );
+			return Analysis::Maximum( This(), inclusiveStart , exclusiveEnd , comparator );
 		}
 
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
@@ -36,9 +36,9 @@ export namespace Atlas::Trait
 			return Analysis::Maximum( This(), converter , comparator );
 		}
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
-		constexpr ConvertResultType Maximum( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
+		constexpr ConvertResultType Maximum( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
 		{
-			return Analysis::Maximum( This(), inclusiveFrom , exclusiveTo , converter , comparator );
+			return Analysis::Maximum( This(), inclusiveStart , exclusiveEnd , converter , comparator );
 		}
 
 		public:
@@ -47,9 +47,9 @@ export namespace Atlas::Trait
 			return Analysis::MaximumBy( This(), comparator );
 		}
 		public:
-		constexpr Iterator MaximumBy( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType comparator = Default::Comparator )const
+		constexpr Iterator MaximumBy( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType comparator = Default::Comparator )const
 		{
-			return Analysis::MaximumBy( This(), inclusiveFrom , exclusiveTo , comparator );
+			return Analysis::MaximumBy( This(), inclusiveStart , exclusiveEnd , comparator );
 		}
 
 		public: template<typename ConverterType>
@@ -58,9 +58,9 @@ export namespace Atlas::Trait
 			return Analysis::MaximumBy( This(), converter , comparator );
 		}	
 		public: template<typename ConverterType>
-		constexpr Iterator MaximumBy( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
+		constexpr Iterator MaximumBy( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
 		{
-			return Analysis::MaximumBy( This(), inclusiveFrom , exclusiveTo , converter , comparator );
+			return Analysis::MaximumBy( This(), inclusiveStart , exclusiveEnd , converter , comparator );
 		}
 
 		public:
@@ -69,9 +69,9 @@ export namespace Atlas::Trait
 			return Analysis::Minimumn( This(), comparator );
 		}
 		public:
-		constexpr DataType Minimumn( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator )const final
+		constexpr DataType Minimumn( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator )const final
 		{
-			return Analysis::Minimumn( This(), inclusiveFrom , exclusiveTo , comparator );
+			return Analysis::Minimumn( This(), inclusiveStart , exclusiveEnd , comparator );
 		}
 
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
@@ -80,9 +80,9 @@ export namespace Atlas::Trait
 			return Analysis::Minimumn( This(), converter , comparator );
 		}	
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
-		constexpr ConvertResultType Minimumn( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
+		constexpr ConvertResultType Minimumn( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
 		{
-			return Analysis::Minimumn( This(), inclusiveFrom , exclusiveTo , converter , comparator );
+			return Analysis::Minimumn( This(), inclusiveStart , exclusiveEnd , converter , comparator );
 		}
 
 		public:
@@ -91,9 +91,9 @@ export namespace Atlas::Trait
 			return Analysis::MinimumBy( This(), comparator );
 		}	
 		public:
-		constexpr Iterator MinimumBy( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator )const
+		constexpr Iterator MinimumBy( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator )const
 		{
-			return Analysis::MinimumBy( This(), inclusiveFrom , exclusiveTo , comparator );
+			return Analysis::MinimumBy( This(), inclusiveStart , exclusiveEnd , comparator );
 		}
 
 		public: template<typename ConverterType>
@@ -102,9 +102,9 @@ export namespace Atlas::Trait
 			return Analysis::MinimumBy( This(), converter , comparator );
 		}	
 		public: template<typename ConverterType>
-		constexpr Iterator MinimumBy( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
+		constexpr Iterator MinimumBy( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ConverterType& converter , const ComparatorType& comparator = Default::Comparator )const
 		{
-			return Analysis::MinimumBy( This(), inclusiveFrom , exclusiveTo , converter , comparator );
+			return Analysis::MinimumBy( This(), inclusiveStart , exclusiveEnd , converter , comparator );
 		}
 
 		public: 
@@ -113,9 +113,9 @@ export namespace Atlas::Trait
 			return Analysis::Sum( This() );
 		}	
 		public:
-		constexpr DataType Sum( const unsigned int inclusiveFrom , const unsigned int exclusiveTo )const final
+		constexpr DataType Sum( const unsigned int inclusiveStart , const unsigned int exclusiveEnd )const final
 		{
-			return Analysis::Sum( This(), inclusiveFrom , exclusiveTo );
+			return Analysis::Sum( This(), inclusiveStart , exclusiveEnd );
 		}
 
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
@@ -124,9 +124,9 @@ export namespace Atlas::Trait
 			return Analysis::Sum( This(), converter );
 		}	
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
-		constexpr ConvertResultType Sum( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter )const
+		constexpr ConvertResultType Sum( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ConverterType& converter )const
 		{
-			return Analysis::Sum( This(), inclusiveFrom , exclusiveTo , converter );
+			return Analysis::Sum( This(), inclusiveStart , exclusiveEnd , converter );
 		}
 
 		public: 
@@ -135,9 +135,9 @@ export namespace Atlas::Trait
 			return Analysis::Average( This() );
 		}	
 		public:
-		constexpr DataType Average( const unsigned int inclusiveFrom , const unsigned int exclusiveTo )const final
+		constexpr DataType Average( const unsigned int inclusiveStart , const unsigned int exclusiveEnd )const final
 		{
-			return Analysis::Average( This(), inclusiveFrom , exclusiveTo );
+			return Analysis::Average( This(), inclusiveStart , exclusiveEnd );
 		}
 
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
@@ -146,9 +146,9 @@ export namespace Atlas::Trait
 			return Analysis::Average( This(), converter );
 		}		
 		public: template<typename ConverterType , typename ConvertResultType = Deduce::ReturnType<ConverterType , DataType>>
-		constexpr ConvertResultType Average( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ConverterType& converter )const
+		constexpr ConvertResultType Average( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ConverterType& converter )const
 		{
-			return Analysis::Average( This(), inclusiveFrom , exclusiveTo , converter );
+			return Analysis::Average( This(), inclusiveStart , exclusiveEnd , converter );
 		}
 
 		private:

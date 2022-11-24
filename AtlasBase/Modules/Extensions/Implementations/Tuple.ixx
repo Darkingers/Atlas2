@@ -34,8 +34,8 @@ export namespace Atlas
 			public: constexpr static bool value = NoexceptCheck( );
 		};
 
-		public: template <unsigned int InclusiveFrom, unsigned int ExclusiveTo, typename TupleType>
-		using SliceType = decltype( Tuple::Slice<InclusiveFrom , ExclusiveTo>( TupleType {} ) );
+		public: template <unsigned int inclusiveStart, unsigned int exclusiveEnd, typename TupleType>
+		using SliceType = decltype( Tuple::Slice<inclusiveStart , exclusiveEnd>( TupleType {} ) );
 
 		public: template <unsigned int Index , typename TupleType>
 		using ElementType = std::tuple_element_t<Index , TupleType>;
@@ -47,15 +47,15 @@ export namespace Atlas
 			Tuple::Reassign<0, sizeof...(Arguments)>( tuple , std::forward<Arguments&&>( arguments )... );
 		}
 			
-		private: template<unsigned int InclusiveFrom , unsigned int ExclusiveTo,typename TupleType, typename CurrentType, typename... Arguments>
+		private: template<unsigned int inclusiveStart , unsigned int exclusiveEnd,typename TupleType, typename CurrentType, typename... Arguments>
 		constexpr static inline void Reassign( TupleType& tuple , CurrentType&& current, Arguments&&... arguments )
-			noexcept ( IsNoexceptReassign<InclusiveFrom , ExclusiveTo , Arguments...>::value )
+			noexcept ( IsNoexceptReassign<inclusiveStart , exclusiveEnd , Arguments...>::value )
 		{
-			Tuple::Set<InclusiveFrom>( tuple , std::forward<CurrentType&&>(current) );
+			Tuple::Set<inclusiveStart>( tuple , std::forward<CurrentType&&>(current) );
 		
-			if constexpr ( InclusiveFrom < ExclusiveTo )
+			if constexpr ( inclusiveStart < exclusiveEnd )
 			{
-				Tuple::Reassign<InclusiveFrom + 1 , ExclusiveTo>( tuple , std::forward<Arguments&&>( arguments )... );
+				Tuple::Reassign<inclusiveStart + 1 , exclusiveEnd>( tuple , std::forward<Arguments&&>( arguments )... );
 			}
 		}
 
@@ -87,11 +87,11 @@ export namespace Atlas
 			std::get<Index>( tuple ) = value;
 		}
 
-		public: template<unsigned int InclusiveFrom, unsigned int ExclusiveTo, typename TupleType>
+		public: template<unsigned int inclusiveStart, unsigned int exclusiveEnd, typename TupleType>
 		constexpr static inline auto Slice( TupleType&& tuple )
-			noexcept( noexcept ( Tuple::SliceImpl<InclusiveFrom>( TupleType( ) , std::make_index_sequence<ExclusiveTo - InclusiveFrom>{} ) ) )
+			noexcept( noexcept ( Tuple::SliceImpl<inclusiveStart>( TupleType( ) , std::make_index_sequence<exclusiveEnd - inclusiveStart>{} ) ) )
 		{
-			return Tuple::SliceImpl<InclusiveFrom>( std::forward<TupleType&&>( tuple ) , std::make_index_sequence<ExclusiveTo - InclusiveFrom>{} );
+			return Tuple::SliceImpl<inclusiveStart>( std::forward<TupleType&&>( tuple ) , std::make_index_sequence<exclusiveEnd - inclusiveStart>{} );
 		}
 
 		public: template<unsigned int Start, unsigned int... Indexes, typename TupleType>

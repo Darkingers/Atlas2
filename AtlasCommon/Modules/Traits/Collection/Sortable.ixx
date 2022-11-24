@@ -20,10 +20,10 @@ export namespace Atlas::Trait
 
 
 		public: 
-		constexpr static void MergeSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void MergeSort( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator ) final
 		{
 
-			Sort::MergeSort( This() , inclusiveFrom , exclusiveTo , comparator );
+			Sort::MergeSort( This() , inclusiveStart , exclusiveEnd , comparator );
 		}
 		public:
 		constexpr static void MergeSort( const ComparatorType comparator = Default::Comparator ) final
@@ -32,9 +32,9 @@ export namespace Atlas::Trait
 		}
 
 		public: 
-		constexpr static void QuickSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void QuickSort( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator ) final
 		{
-			Sort::QuickSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
+			Sort::QuickSort( This( ) , inclusiveStart , exclusiveEnd , comparator );
 		}
 		public:
 		constexpr static void QuickSort( const ComparatorType& comparator = Default::Comparator ) final
@@ -43,9 +43,9 @@ export namespace Atlas::Trait
 		}
 
 		public: 
-		constexpr static void HeapSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void HeapSort( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator ) final
 		{
-			Sort::HeapSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
+			Sort::HeapSort( This( ) , inclusiveStart , exclusiveEnd , comparator );
 		}
 		public:
 		constexpr static void HeapSort( const ComparatorType& comparator = Default::Comparator ) final
@@ -54,9 +54,9 @@ export namespace Atlas::Trait
 		}
 
 		public:  
-		constexpr static void SelectionSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator ) final
+		constexpr static void SelectionSort( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator ) final
 		{
-			Sort::SelectionSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
+			Sort::SelectionSort( This( ) , inclusiveStart , exclusiveEnd , comparator );
 		}
 		public: 
 		constexpr static void SelectionSort( const ComparatorType& comparator = Default::Comparator ) final
@@ -65,9 +65,9 @@ export namespace Atlas::Trait
 		}
 
 		public: 
-		constexpr static void InsertionSort( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType& comparator = Default::Comparator )final
+		constexpr static void InsertionSort( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType& comparator = Default::Comparator )final
 		{
-			Sort::InsertionSort( This( ) , inclusiveFrom , exclusiveTo , comparator );
+			Sort::InsertionSort( This( ) , inclusiveStart , exclusiveEnd , comparator );
 		}
 		public: 
 		constexpr static void InsertionSort( const ComparatorType& comparator = Default::Comparator )  final

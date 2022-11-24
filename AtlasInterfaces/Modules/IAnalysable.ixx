@@ -16,21 +16,21 @@ export namespace Atlas::Interface
 		public: 
 		virtual DataType Maximum( const ComparatorType comparator = Default::Comparator ) const = 0;
 		public:
-		virtual DataType Maximum( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType comparator = Default::Comparator )const = 0;
+		virtual DataType Maximum( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType comparator = Default::Comparator )const = 0;
 
 		public: 
 		virtual DataType Minimumn( const ComparatorType comparator = Default::Comparator )const = 0;
 		public:
-		virtual DataType Minimumn( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const ComparatorType comparator = Default::Comparator ) const = 0;
+		virtual DataType Minimumn( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const ComparatorType comparator = Default::Comparator ) const = 0;
 	
 		public:
 		virtual DataType Sum( ) const = 0;
 		public:
-		virtual DataType Sum( const unsigned int inclusiveFrom , const unsigned int exclusiveTo )const = 0;
+		virtual DataType Sum( const unsigned int inclusiveStart , const unsigned int exclusiveEnd )const = 0;
 
 		public:
 		virtual DataType Average( )const = 0;
 		public: 
-		virtual DataType Average( const unsigned int inclusiveFrom , const unsigned int exclusiveTo )const = 0;
+		virtual DataType Average( const unsigned int inclusiveStart , const unsigned int exclusiveEnd )const = 0;
 	};
 }

@@ -14,6 +14,14 @@ export namespace Atlas::Configuration
 #define ATLAS_FALSE_STRING "false"
 #endif
 
+#ifndef ATLAS_STATIC_STRING_BUFFER_SIZE
+#define ATLAS_STATIC_STRING_BUFFER_SIZE 1024
+#endif
+
+#ifndef ATLAS_STATIC_STRING_CHECK
+#define ATLAS_STATIC_STRING_CHECK true
+#endif
+
 #ifndef ATLAS_MATH_PI
 #define ATLAS_MATH_PI 3.141592653589793238462643383279502884197169
 #endif
@@ -102,6 +110,10 @@ export namespace Atlas::Configuration
 	constexpr const char* TrueString = ATLAS_TRUE_STRING;
 	constexpr const char* FalseString = ATLAS_FALSE_STRING;
 	constexpr double PI = ATLAS_MATH_PI;
+	constexpr unsigned int StaticStringBufferSize = ATLAS_STATIC_STRING_BUFFER_SIZE;
+	
+	constexpr bool EnableStaticStringCheck = ATLAS_STATIC_STRING_CHECK;
+
 	
 	constexpr bool EnableConverterCheck = ATLAS_CONVERTER_CHECK;
 	constexpr bool EnableBoolConverterCheck = EnableConverterCheck && ATLAS_BOOL_CONVERTER_CHECK;

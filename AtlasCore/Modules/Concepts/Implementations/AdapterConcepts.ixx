@@ -21,6 +21,9 @@ export namespace Atlas::Concept
 	concept IsNoexceptCount = noexcept( CountAdapter<Deduce::SimpleType<ActualType>, Deduce::SimpleType<ExpectedType>>::Count( std::declval<ActualType>( ) ) );
 
 	template<typename T>
+	concept IsNoexceptSize = noexcept( SizeAdapter<Deduce::SimpleType<T>>::Size( std::declval<T>( ) ) );
+
+	template<typename T>
 	concept IsNoexceptHash = noexcept( HashAdapter<Deduce::SimpleType<T>>::Hash( std::declval<T>( ) ) );
 
 	template<typename CollectionType>

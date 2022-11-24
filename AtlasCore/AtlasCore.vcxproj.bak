@@ -164,15 +164,24 @@
     <ClCompile Include="Modules\Configuration.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\AdapterDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\ConverterDefinition.ixx" />
-    <ClCompile Include="Modules\Definitions\Implementations\DataAlgorithmDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TraitDefinitions.ixx" />
+    <ClCompile Include="Modules\Adapter.ixx" />
+    <ClCompile Include="Modules\Converter.ixx" />
+    <ClCompile Include="Modules\API\Interfaces\IException.ixx">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Modules\API\Integrations.ixx" />
     <ClCompile Include="Modules\Dispatchers\Dispatchers.ixx" />
     <ClCompile Include="Modules\Dispatchers\Implementations\Adapter.ixx" />
     <ClCompile Include="Modules\Dispatchers\Implementations\Converter.ixx" />
     <ClCompile Include="Modules\Interfaces\CoreInterfaces.ixx" />
     <ClCompile Include="Modules\Interfaces\Implementations\IException.ixx" />
     <ClCompile Include="Modules\TypeInfo\TypeNameExtractor.ixx" />
-    <ClCompile Include="Modules\TypeInfo\TypeInfo.ixx" />
+    <ClCompile Include="Modules\TypeInfo\TypeInfo.ixx">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Modules\Concepts\Concepts.ixx" />
     <ClCompile Include="Modules\Concepts\Implementations\FunctionalConcepts.ixx" />
     <ClCompile Include="Modules\Concepts\Implementations\RelationalConcepts.ixx" />
@@ -181,8 +190,6 @@
     <ClCompile Include="Modules\Definitions\Definitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TypeDeducers.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TypeDefinitions.ixx" />
-    <ClCompile Include="Modules\Types\Implementations\StaticString.ixx" />
-    <ClCompile Include="Modules\Types\Types.ixx" />
     <ClCompile Include="Modules\Validation\Implementations\Validate.ixx" />
     <ClCompile Include="Modules\Validation\Implementations\ValidationException.ixx" />
     <ClCompile Include="Modules\Validation\Validation.ixx" />

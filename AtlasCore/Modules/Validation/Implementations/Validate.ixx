@@ -3,8 +3,6 @@ module;
 #include "../../../../Macros/Macros.h"
 
 export module AtlasValidation:Validate;
-
-import AtlasDefinitions;
 import :ValidationException;
 
 export namespace Atlas
@@ -257,7 +255,7 @@ export namespace Atlas
 		}
 
 		public: template<typename TypeA , typename TypeB, typename TypeC>
-		constexpr static inline void IsInRange( const TypeA& number , const TypeB& inclusiveFrom, const TypeC& exclusiveTo )
+		constexpr static inline void IsInRange( const TypeA& number , const TypeB& inclusiveStart, const TypeC& exclusiveEnd )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -265,60 +263,12 @@ export namespace Atlas
 				return;
 			}
 
-			if ( number < inclusiveFrom || number >= exclusiveTo )
+			if ( number < inclusiveStart || number >= exclusiveEnd )
 			{
-				throw ValidationException( "Condition: number >= inclusiveFrom && number < exclusiveTo is not fulfilled!");
+				throw ValidationException( "Condition: number >= inclusiveStart && number < exclusiveEnd is not fulfilled!");
 			}
 		}
 
-		public: template<typename CollectionType>
-		constexpr static inline void IsEmpty( const CollectionType& collection ) 
-			noexcept( !IsEnabled )
-		{
-			if constexpr ( !IsEnabled )
-			{
-				return;
-			}
-
-			const auto collectionCount = Adapter::Count( collection );
-
-			if ( collectionCount != 0 )
-			{
-				throw ValidationException( "Condition: collection.Count==0 is not fulfilled!" );
-			}
-		}
-
-		public: template<typename CollectionType>
-		constexpr static inline void IsNotEmpty( const CollectionType& collection )
-			noexcept( !IsEnabled )
-		{
-			if constexpr ( !IsEnabled )
-			{
-				return;
-			}
-
-			const auto collectionCount = Adapter::Count( collection );
-
-			if ( collectionCount <= 0 )
-			{
-				throw ValidationException( "Condition: collection.Count>0 is not fulfilled!" );
-			}
-		}
-
-		public: template<typename CollectionType, typename DataType = Deduce::CollectionContainedType<CollectionType>>
-		constexpr static inline void Contains( const CollectionType& collection , const DataType& data ) 
-			noexcept( !IsEnabled )
-		{
-			if constexpr ( !IsEnabled )
-			{
-				return;
-			}
-
-			if ( !Adapter::Contains( collection , data))
-			{
-				throw ValidationException( "Condition: collection.Countains(data) is not fulfilled" );
-			}
-		}
 
 		public: template<typename ComparedType, typename CurrentType, typename... Arguments>
 		constexpr static inline void IsAny( const ComparedType& compared, const CurrentType& current, const Arguments&... arguments) 

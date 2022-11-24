@@ -4,7 +4,7 @@ module;
 
 export module AtlasValidation:ValidationException;
 
-import AtlasIntegration;
+import AtlasCoreInterfaces;
 
 export namespace Atlas
 {

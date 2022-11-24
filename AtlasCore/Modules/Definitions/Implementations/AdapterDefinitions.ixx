@@ -41,12 +41,23 @@ export namespace Atlas
 
 	template<typename ExpectedType, typename ActualType>
 	class DLLApi CountAdapter :
-		public std::true_type
+		public std::false_type
 	{
 		public:
-		consteval static inline auto Count( const ActualType& instance ) noexcept
+		consteval static inline auto Count( const ActualType& instance )
 		{
 			throw "CountAdapter::Count is not implemented for this type";
+		}
+	};
+
+	template<typename T>
+	class DLLApi SizeAdapter :
+		public std::false_type
+	{
+		public:
+		consteval static inline auto Size( const T& instance )
+		{
+			throw "SizeAdapter::Size is not implemented for this type";
 		}
 	};
 
@@ -55,7 +66,7 @@ export namespace Atlas
 		public std::false_type
 	{
 		public:
-		consteval static inline auto Hash( const HashableType& instance ) noexcept
+		consteval static inline auto Hash( const HashableType& instance )
 		{
 			throw "HashAdapter::Hash is not implemented for this type";
 		}

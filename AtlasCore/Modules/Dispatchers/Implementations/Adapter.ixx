@@ -2,7 +2,7 @@ module;
 
 #include "../../../../Macros/Macros.h"
 
-export module AtlasIntegration:Adapter;
+export module AtlasDispatchers:Adapter;
 
 import AtlasDefinitions;
 import AtlasConcepts;
@@ -37,6 +37,13 @@ export namespace Atlas
 			noexcept ( Concept::IsNoexceptCount<ExpectedType, ActualType> )
 		{
 			return CountAdapter<Deduce::SimpleType<ExpectedType>,Deduce::SimpleType<ActualType>>::Count( data );
+		}
+
+		public: template<typename T>
+			constexpr static inline auto Size( const T& data )
+			noexcept ( Concept::IsNoexceptSize<T> )
+		{
+			return SizeAdapter<Deduce::SimpleType<T>>::Size( data );
 		}
 
 		public: template<typename DataType>

@@ -297,16 +297,16 @@ export namespace Atlas
 		}
 
 		public: template<typename StringType>
-		String SubString(unsigned int inclusiveFrom, unsigned int exclusiveTo ) const
+		String SubString(unsigned int inclusiveStart, unsigned int exclusiveEnd ) const
 		{
-			Validate<Configuration::EnableStringSubStringCheck>::ExclusiveRange( inclusiveFrom , -1 , _size );
-			Validate<Configuration::EnableStringSubStringCheck>::ExclusiveRange( exclusiveTo , inclusiveFrom , _size );
+			Validate<Configuration::EnableStringSubStringCheck>::ExclusiveRange( inclusiveStart , -1 , _size );
+			Validate<Configuration::EnableStringSubStringCheck>::ExclusiveRange( exclusiveEnd , inclusiveStart , _size );
 
-			const unsigned int newSize = exclusiveTo - inclusiveFrom;
+			const unsigned int newSize = exclusiveEnd - inclusiveStart;
 			char* newData = new char[newSize];
 			for ( unsigned int i = 0; i < newSize; ++i )
 			{
-				newData[i] = _data[inclusiveFrom + i];
+				newData[i] = _data[inclusiveStart + i];
 			}
 
 			return String( newData , newSize );

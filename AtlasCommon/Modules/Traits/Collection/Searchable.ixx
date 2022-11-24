@@ -19,9 +19,9 @@ export namespace Atlas::Trait
 
 
 		public:
-		constexpr unsigned int BinarySearch( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType value ,const ComparatorType& comparator = Default::Comparator ) const final
+		constexpr unsigned int BinarySearch( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const DataType value ,const ComparatorType& comparator = Default::Comparator ) const final
 		{
-			return Search::BinarySearch( This( ) , inclusiveFrom , exclusiveTo , value , comparator );
+			return Search::BinarySearch( This( ) , inclusiveStart , exclusiveEnd , value , comparator );
 		}
 		public: 
 		constexpr unsigned int BinarySearch( const DataType& value ,const ComparatorType& comparator = Default::Comparator )const  final
@@ -30,9 +30,9 @@ export namespace Atlas::Trait
 		}
 
 		public:
-		constexpr unsigned int LinearSearch(  const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType value , const ComparatorType comparator ) const final
+		constexpr unsigned int LinearSearch(  const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const DataType value , const ComparatorType comparator ) const final
 		{
-			return Search::LinearSearch( This( ) , inclusiveFrom , exclusiveTo , value , comparator );
+			return Search::LinearSearch( This( ) , inclusiveStart , exclusiveEnd , value , comparator );
 		}
 		public: 
 		constexpr unsigned int LinearSearch( const DataType& value , const ComparatorType& comparator = Default::Comparator )const  final
@@ -41,9 +41,9 @@ export namespace Atlas::Trait
 		}
 
 		public:
-		constexpr unsigned int JumpSearch( const unsigned int inclusiveFrom , const unsigned int exclusiveTo , const DataType& value , const ComparatorType& comparator = Default::Comparator ) const final
+		constexpr unsigned int JumpSearch( const unsigned int inclusiveStart , const unsigned int exclusiveEnd , const DataType& value , const ComparatorType& comparator = Default::Comparator ) const final
 		{
-			return Search::JumpSearch( This( ) , inclusiveFrom , exclusiveTo , value , comparator );
+			return Search::JumpSearch( This( ) , inclusiveStart , exclusiveEnd , value , comparator );
 		}
 		public: 
 		constexpr unsigned int JumpSearch( const DataType value , const ComparatorType& comparator = Default::Comparator )const  final

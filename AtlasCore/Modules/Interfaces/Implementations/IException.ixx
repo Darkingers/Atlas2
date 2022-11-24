@@ -2,7 +2,7 @@ module;
 
 #include "../../../../Macros/Macros.h"
 
-export module AtlasIntegration:IException;
+export module AtlasCoreInterfaces:IException;
 
 export namespace Atlas
 {

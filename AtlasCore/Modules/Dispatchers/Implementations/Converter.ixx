@@ -2,7 +2,7 @@ module;
 
 #include "../../../../Macros/Macros.h"
 
-export module AtlasIntegration:Converter;
+export module AtlasDispatchers:Converter;
 import AtlasDefinitions;
 import AtlasConcepts;
 

@@ -159,16 +159,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Modules\API\Implementations\IteratorAPI.ixx" />
     <ClCompile Include="Modules\Concepts\Implementations\AdapterConcepts.ixx" />
     <ClCompile Include="Modules\Concepts\Implementations\ConverterConcepts.ixx" />
     <ClCompile Include="Modules\Configuration.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\AdapterDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\ConverterDefinition.ixx" />
-    <ClCompile Include="Modules\Definitions\Implementations\DataAlgorithmDefinitions.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations\AlgorithmDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TraitDefinitions.ixx" />
-    <ClCompile Include="Modules\Dispatchers\Dispatchers.ixx" />
-    <ClCompile Include="Modules\Dispatchers\Implementations\Adapter.ixx" />
-    <ClCompile Include="Modules\Dispatchers\Implementations\Converter.ixx" />
+    <ClCompile Include="Modules\API\API.ixx" />
+    <ClCompile Include="Modules\API\Implementations\CollectionAPI.ixx" />
+    <ClCompile Include="Modules\API\Implementations\ConverterAPI.ixx" />
+    <ClCompile Include="Modules\API\Implementations\TypeAPI.ixx" />
     <ClCompile Include="Modules\Interfaces\CoreInterfaces.ixx" />
     <ClCompile Include="Modules\Interfaces\Implementations\IException.ixx" />
     <ClCompile Include="Modules\TypeInfo\TypeNameExtractor.ixx" />

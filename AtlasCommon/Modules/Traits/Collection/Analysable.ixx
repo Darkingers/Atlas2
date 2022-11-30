@@ -15,7 +15,7 @@ export namespace Atlas::Trait
 		public Interface::IAnalysable<Deduce::CollectionContainedType<DerivedType>>
 	{
 		private: using DataType = Deduce::CollectionContainedType<DerivedType>;
-		private: using Iterator = Deduce::ConstBeginIteratorType<DerivedType>;
+		private: using Iterator = Deduce::ConstBeginTIterator<DerivedType>;
 		private: using ComparatorType = Definition::Comparator<DataType>;
 
 

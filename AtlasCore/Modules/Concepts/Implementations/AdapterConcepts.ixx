@@ -8,51 +8,51 @@ import AtlasDefinitions;
 
 export namespace Atlas::Concept
 {
-	template<typename CollectionType>
-	concept IsNoexceptClear = noexcept( ClearAdapter<Deduce::SimpleType<CollectionType>>::Clear( std::declval<CollectionType>( ) ) );
-
-	template<typename CollectionType , typename ElementType>
-	concept IsNoexceptContain = noexcept( ContainAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ElementType>>::Contain( std::declval<CollectionType>( ) , std::declval<ElementType>( ) ) );
-
-	template<typename CollectionType , typename ContainedCollectionType>
-	concept IsNoexceptContainAll = noexcept( ContainAllAdapter<Deduce::SimpleType<CollectionType> , Deduce::SimpleType<ContainedCollectionType>>::ContainAll( std::declval<CollectionType>( ) , std::declval<ContainedCollectionType>( ) ) );
-
-	template<typename ExpectedType , typename ActualType>
-	concept IsNoexceptCount = noexcept( CountAdapter<Deduce::SimpleType<ActualType>, Deduce::SimpleType<ExpectedType>>::Count( std::declval<ActualType>( ) ) );
-
 	template<typename T>
 	concept IsNoexceptSize = noexcept( SizeAdapter<Deduce::SimpleType<T>>::Size( std::declval<T>( ) ) );
 
 	template<typename T>
 	concept IsNoexceptHash = noexcept( HashAdapter<Deduce::SimpleType<T>>::Hash( std::declval<T>( ) ) );
 
-	template<typename CollectionType>
-	concept IsNoexceptBegin = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::Begin( std::declval<CollectionType>( ) ) );
+	template<typename TIterator>
+	concept IsNoexceptMove = noexcept( IteratorAdapter<Deduce::SimpleType<TIterator>>::Move( std::declval<TIterator>( ) , std::declval<int>( ) ) );
 
-	template<typename CollectionType>
-	concept IsNoexceptEnd = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::End( std::declval<CollectionType>( ) ) );
+	template<typename TIterator>
+	concept IsNoexceptIterators = IsNoexceptMove<TIterator> && IsNoexceptCurrent<TIterator>;;
 
-	template<typename CollectionType>
-	concept IsNoexceptConstBegin = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::ConstBegin( std::declval<CollectionType>( ) ) );
+	template<typename TCollection>
+	concept IsNoexceptClear = noexcept( ClearAdapter<Deduce::SimpleType<TCollection>>::Clear( std::declval<TCollection>( ) ) );
 
-	template<typename CollectionType>
-	concept IsNoexceptConstEnd = noexcept( IterableAdapter<Deduce::SimpleType<CollectionType>>::ConstEnd( std::declval<CollectionType>( ) ) );
+	template<typename TCollection , typename TElement>
+	concept IsNoexceptContain = noexcept( ContainAdapter<Deduce::SimpleType<TCollection> , Deduce::SimpleType<TElement>>::Contain( std::declval<TCollection>( ) , std::declval<TElement>( ) ) );
 
-	template<typename IteratorType>
-	concept IsNoexceptCurrent = noexcept( IteratorAdapter<Deduce::SimpleType<IteratorType>>::Current( std::declval<IteratorType>( ) ) );
+	template<typename TCollectionA , typename TCollectionB>
+	concept IsNoexceptContainAll = noexcept( ContainAllAdapter<Deduce::SimpleType<TCollectionA> , Deduce::SimpleType<TCollectionB>>::ContainAll( std::declval<TCollectionA>( ) , std::declval<TCollectionB>( ) ) );
 
-	template<typename IteratorType>
-	concept IsNoexceptMove = noexcept( IteratorAdapter<Deduce::SimpleType<IteratorType>>::Move( std::declval<IteratorType>( ) , std::declval<int>( ) ) );
+	template<typename TExpected , typename TActual>
+	concept IsNoexceptCount = noexcept( CountAdapter<Deduce::SimpleType<TActual>, Deduce::SimpleType<TExpected>>::Count( std::declval<TActual>( ) ) );
 
-	template<typename IteratorType>
-	concept IsNoexceptIterators = IsNoexceptMove<IteratorType> && IsNoexceptCurrent<IteratorType>;;
-	
-	template<typename CollectionType>
-	concept HasNoexceptIterator = IsNoexceptBegin<CollectionType> && IsNoexceptEnd<CollectionType> && IsNoexceptIterators<Deduce::IteratorType<CollectionType>>;
+	template<typename TCollection>
+	concept IsNoexceptBegin = noexcept( IterableAdapter<Deduce::SimpleType<TCollection>>::Begin( std::declval<TCollection>( ) ) );
 
-	template<typename CollectionType>
-	concept HasNoexceptConstIterator = IsNoexceptConstBegin<CollectionType> && IsNoexceptConstEnd<CollectionType> && IsNoexceptIterators<Deduce::IteratorType<CollectionType>>;
+	template<typename TCollection>
+	concept IsNoexceptEnd = noexcept( IterableAdapter<Deduce::SimpleType<TCollection>>::End( std::declval<TCollection>( ) ) );
 
-	template<template<typename...> typename AdapterTemplate, typename... Arguments>
-	concept HasAdapter = AdapterTemplate<Arguments...>::value;
+	template<typename TCollection>
+	concept IsNoexceptConstBegin = noexcept( IterableAdapter<Deduce::SimpleType<TCollection>>::ConstBegin( std::declval<TCollection>( ) ) );
+
+	template<typename TCollection>
+	concept IsNoexceptConstEnd = noexcept( IterableAdapter<Deduce::SimpleType<TCollection>>::ConstEnd( std::declval<TCollection>( ) ) );
+
+	template<typename TCollection>
+	concept IsNoexceptCurrent = noexcept( IteratorAdapter<Deduce::SimpleType<TCollection>>::Current( std::declval<TCollection>( ) ) );
+
+	template<typename TCollection>
+	concept HasNoexceptIterator = IsNoexceptBegin<TCollection> && IsNoexceptEnd<TCollection> && IsNoexceptIterators<CollectionTraits<TCollection>::IteratorType>;
+
+	template<typename TCollection>
+	concept HasNoexceptConstIterator = IsNoexceptConstBegin<TCollection> && IsNoexceptConstEnd<TCollection> && IsNoexceptIterators<CollectionTraits<TCollection>::IteratorType>;
+
+	template<template<typename...> typename Adapter, typename... TArgs>
+	concept HasAdapter = Adapter<TArgs...>::value;
 }

@@ -10,53 +10,53 @@ export import AtlasDefault:Compare;
 
 export namespace Atlas
 {
-	template<typename TypeA, typename TypeB>
+	template<typename TA, typename TB>
 	class DLLApi Compare
 	{
 		public:
-		constexpr static inline auto Difference( const TypeA a , const TypeB b )
+		constexpr static inline auto Difference( const TA a , const TB b )
 			noexcept( noexcept( a - b ) )
 		{
 			return a - b;
 		}
 		
 		public: 
-		constexpr static inline auto Equal( const TypeA& a , const TypeB& b )
+		constexpr static inline auto Equal( const TA& a , const TB& b )
 			noexcept( noexcept( a == b ) )
 		{
 			return a == b;
 		}
 
 		public: 
-		constexpr static inline auto NotEqual( const TypeA& a , const TypeB& b )
+		constexpr static inline auto NotEqual( const TA& a , const TB& b )
 			noexcept( noexcept( a != b ) )
 		{
 			return a != b;
 		}
 
 		public: 
-		constexpr static inline auto LessThan( const TypeA& a , const TypeB& b )
+		constexpr static inline auto LessThan( const TA& a , const TB& b )
 			noexcept( noexcept( a < b ) )
 		{
 			return a < b;
 		}
 
 		public:
-		constexpr static inline auto LessThanOrEqual( const TypeA& a , const TypeB& b )
+		constexpr static inline auto LessThanOrEqual( const TA& a , const TB& b )
 			noexcept( noexcept( a <= b ) )
 		{
 			return a <= b;
 		}
 
 		public:
-		constexpr static inline auto GreaterThan( const TypeA& a , const TypeB& b )
+		constexpr static inline auto GreaterThan( const TA& a , const TB& b )
 			noexcept( noexcept( a > b ) )
 		{
 			return a > b;
 		}
 
 		public: 
-		constexpr static inline auto GreaterThanOrEqual( const TypeA& a , const TypeB& b )
+		constexpr static inline auto GreaterThanOrEqual( const TA& a , const TB& b )
 			noexcept( noexcept( a >= b ) )
 		{
 			return a >= b;

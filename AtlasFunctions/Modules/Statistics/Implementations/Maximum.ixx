@@ -12,12 +12,12 @@ import AtlasConfiguration;
 
 export namespace Atlas
 {
-	template<typename CollectionType>
+	template<typename TCollection>
 	class DLLApi Maximum
 	{		
 		public:
-		constexpr static auto Calculate( const CollectionType& collection )
-			noexcept( !Configuration::EnableStatisticsMaximumCheck && Concept::HasNoexceptConstIterator<CollectionType> )
+		constexpr static auto Calculate( const TCollection& collection )
+			noexcept( !Configuration::EnableStatisticsMaximumCheck && Concept::HasNoexceptConstIterator<TCollection> )
 		{
 			auto current = Adapter::ConstBegin( collection );
 			auto end = Adapter::ConstEnd( collection );

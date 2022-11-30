@@ -20,15 +20,15 @@ export module AtlasCollections:List;
 //		protected: LinkType* _last;
 //
 //
-//		public: template<typename... Arguments> 
-//		List( Arguments... arguments )  :
+//		public: template<typename... TArgs> 
+//		List( TArgs... arguments )  :
 //			_size(0),
 //			_start(nullptr),
 //			_last(nullptr)
 //		{
-//			if constexpr ( sizeof...( arguments ) > 0 )
+//			if constexpr ( sizeof...( TArgs ) > 0 )
 //			{
-//				this->Add( arguments... );
+//				this->Add( TArgs... );
 //			}
 //		}
 //		
@@ -42,15 +42,15 @@ export module AtlasCollections:List;
 //			}
 //		}
 //
-//		public: template<typename... Arguments>
-//		ListType& Add( Arguments... arguments )
+//		public: template<typename... TArgs>
+//		ListType& Add( TArgs... arguments )
 //		{
-//			_size += Helpher::Count( arguments... );
-//			this->Add( arguments... );
+//			_size += Helpher::Count( TArgs... );
+//			this->Add( TArgs... );
 //		}
 //
-//		public: template<typename... Arguments>
-//		ListType& Add(DataType& data, Arguments... arguments )
+//		public: template<typename... TArgs>
+//		ListType& Add(DataType& data, TArgs... arguments )
 //		{
 //			if ( _first == nullptr )
 //			{
@@ -63,16 +63,16 @@ export module AtlasCollections:List;
 //				_last = _last->Next;
 //			}
 //
-//			if constexpr ( sizeof...( arguments ) > 0 )
+//			if constexpr ( sizeof...( TArgs ) > 0 )
 //			{
-//				this->Add( arguments... );
+//				this->Add( TArgs... );
 //			}
 //
 //			return *this;
 //		}
 //
-//		public: template<typename CollectionType, typename... Arguments> requires AtlasIterableCollection<CollectionType, DataType, void( * )( DataType& ), bool( * )( DataType& )>
-//		ListType& Add( CollectionType& collection, Arguments... arguments )
+//		public: template<typename TCollection, typename... TArgs> requires AtlasIterableCollection<TCollection, DataType, void( * )( DataType& ), bool( * )( DataType& )>
+//		ListType& Add( TCollection& collection, TArgs... arguments )
 //		{
 //			if ( _first == nullptr )
 //			{
@@ -92,8 +92,8 @@ export module AtlasCollections:List;
 //			}
 //		}
 //
-//		public: template<typename CollectionType, typename... Arguments> requires StandardIterableCollection<CollectionType>
-//		ListType& Add( CollectionType& collection, Arguments... arguments )
+//		public: template<typename TCollection, typename... TArgs> requires StandardIterableCollection<TCollection>
+//		ListType& Add( TCollection& collection, TArgs... arguments )
 //		{
 //
 //		}

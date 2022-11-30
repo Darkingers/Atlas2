@@ -24,12 +24,12 @@ export namespace Atlas
 
 		}
 
-		public: template<typename... Arguments>
-		LinkNode( Arguments&&... arguments ) 
+		public: template<typename... TArgs>
+		LinkNode( TArgs&&... arguments ) 
 		{
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				this->Add( std::forward<Arguments>(arguments)... );
+				this->Add( std::forward<TArgs>(TArgs)... );
 			}
 		}
 
@@ -333,8 +333,8 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Arguments>
-		LinkType& InsertBefore( LinkType& inserted, Arguments... arguments ) 
+		public: template<typename... TArgs>
+		LinkType& InsertBefore( LinkType& inserted, TArgs... arguments ) 
 		{
 			LinkType* previous = Previous;
 
@@ -348,24 +348,24 @@ export namespace Atlas
 				previous->Next = &inserted;
 			}
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return inserted;
 			}
 			else
 			{
-				return inserted.InsertBefore( arguments... );				
+				return inserted.InsertBefore( TArgs... );				
 			}		
 		}
 		
-		public: template<typename... Arguments>
-		LinkType& InsertBefore( DataType& inserted, Arguments... arguments ) 
+		public: template<typename... TArgs>
+		LinkType& InsertBefore( DataType& inserted, TArgs... arguments ) 
 		{
-			return this->InsertBefore( *new LinkType( inserted ), arguments... );
+			return this->InsertBefore( *new LinkType( inserted ), TArgs... );
 		}
 		
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, DataType, Functor<DataType>, Condition<DataType>>
-		LinkType& InsertBefore( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, DataType, Functor<DataType>, Condition<DataType>>
+		LinkType& InsertBefore( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			collection.ForEach( [&last] ( DataType& data ) mutable
@@ -373,18 +373,18 @@ export namespace Atlas
 				last = &last->InsertBefore( data );
 			} );
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertBefore( arguments... );				
+				return last->InsertBefore( TArgs... );				
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, LinkType, Functor<LinkType>, Condition<LinkType>>
-		LinkType& InsertBefore( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, LinkType, Functor<LinkType>, Condition<LinkType>>
+		LinkType& InsertBefore( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			collection.ForEach( [&last] ( LinkType& link ) mutable
@@ -392,18 +392,18 @@ export namespace Atlas
 				last = &last->InsertBefore( link );
 			} );
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertBefore( arguments... );			
+				return last->InsertBefore( TArgs... );			
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, DataType>
-		LinkType& InsertBefore( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::StandardIterableCollection<TCollection, DataType>
+		LinkType& InsertBefore( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			for ( auto data : collection )
@@ -411,18 +411,18 @@ export namespace Atlas
 				last = &last->InsertBefore( *data );
 			}
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertBefore( arguments... );
+				return last->InsertBefore( TArgs... );
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, LinkType>
-		LinkType& InsertBefore( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::StandardIterableCollection<TCollection, LinkType>
+		LinkType& InsertBefore( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			for ( auto link : collection )
@@ -430,18 +430,18 @@ export namespace Atlas
 				last = &last->InsertBefore( *link );
 			}
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertBefore( arguments... );			
+				return last->InsertBefore( TArgs... );			
 			}
 		}
 
-		public: template<typename... Arguments>
-		LinkType& InsertAfter( LinkType& inserted, Arguments... arguments ) 
+		public: template<typename... TArgs>
+		LinkType& InsertAfter( LinkType& inserted, TArgs... arguments ) 
 		{
 			LinkType* next = Next;
 
@@ -456,24 +456,24 @@ export namespace Atlas
 			}
 
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return inserted;
 			}
 			else
 			{
-				return inserted.InsertAfter( arguments... );			
+				return inserted.InsertAfter( TArgs... );			
 			}
 		}
 
-		public: template<typename... Arguments>
-		LinkType& InsertAfter( DataType& inserted, Arguments... arguments ) 
+		public: template<typename... TArgs>
+		LinkType& InsertAfter( DataType& inserted, TArgs... arguments ) 
 		{
-			return this->InsertAfter( *new LinkType( inserted ), arguments... );
+			return this->InsertAfter( *new LinkType( inserted ), TArgs... );
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, DataType, Functor<DataType>, Condition<DataType>>
-		LinkType& InsertAfter( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, DataType, Functor<DataType>, Condition<DataType>>
+		LinkType& InsertAfter( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			collection.ForEach( [&last] ( DataType& data ) mutable
@@ -481,18 +481,18 @@ export namespace Atlas
 				last = &last->InsertAfter( data );
 			} );
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertAfter( arguments... );			
+				return last->InsertAfter( TArgs... );			
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, LinkType, Functor<LinkType>, Condition<LinkType>>
-		LinkType& InsertAfter( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, LinkType, Functor<LinkType>, Condition<LinkType>>
+		LinkType& InsertAfter( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			collection.ForEach( [&last] ( LinkType& link ) mutable
@@ -500,18 +500,18 @@ export namespace Atlas
 				last = &last->InsertAfter( link );
 			} );
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertAfter( arguments... );
+				return last->InsertAfter( TArgs... );
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, DataType>
-		LinkType& InsertAfter( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::StandardIterableCollection<TCollection, DataType>
+		LinkType& InsertAfter( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			for ( auto data : collection )
@@ -519,18 +519,18 @@ export namespace Atlas
 				last = &last->InsertAfter( *data );
 			}
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertAfter( arguments... );				
+				return last->InsertAfter( TArgs... );				
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, LinkType>
-		LinkType& InsertAfter( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::StandardIterableCollection<TCollection, LinkType>
+		LinkType& InsertAfter( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			for ( auto link : collection )
@@ -538,46 +538,46 @@ export namespace Atlas
 				last = &last->InsertAfter( *link );
 			}
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->InsertAfter( arguments... );			
+				return last->InsertAfter( TArgs... );			
 			}
 		}
 
-		public: template<typename... Arguments>
-		LinkType& Add( Arguments... arguments )
+		public: template<typename... TArgs>
+		LinkType& Add( TArgs... arguments )
 		{
-			return this->Add( arguments... );
+			return this->Add( TArgs... );
 		}
 
-		public: template<typename... Arguments>
-		LinkType& Add( DataType& data, Arguments... arguments )
+		public: template<typename... TArgs>
+		LinkType& Add( DataType& data, TArgs... arguments )
 		{
-			return this->Add( *new LinkType( data), arguments... ) );
+			return this->Add( *new LinkType( data), TArgs... ) );
 		}
 
-		public: template<typename... Arguments>
-		LinkType& Add( LinkType& link, Arguments... arguments )
+		public: template<typename... TArgs>
+		LinkType& Add( LinkType& link, TArgs... arguments )
 		{
 			Next = link;
 			link->Previous = *this;
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return link;
 			}
 			else
 			{
-				return link->Add( arguments... );
+				return link->Add( TArgs... );
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, DataType, Functor<DataType>, Condition<DataType>>
-		LinkType& Add( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, DataType, Functor<DataType>, Condition<DataType>>
+		LinkType& Add( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			collection.ForEach( [&last] ( DataType& data ) mutable
@@ -585,18 +585,18 @@ export namespace Atlas
 				last = &last->Add( data );
 			} );
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->Add( arguments... );
+				return last->Add( TArgs... );
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, LinkType, Functor<LinkType>, Condition<LinkType>>
-		LinkType& Add( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, LinkType, Functor<LinkType>, Condition<LinkType>>
+		LinkType& Add( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			collection.ForEach( [&last] ( LinkType& link ) mutable
@@ -604,18 +604,18 @@ export namespace Atlas
 				last = &last->Add( link );
 			} );
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->Add( arguments... );
+				return last->Add( TArgs... );
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, DataType>
-		LinkType& Add( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::StandardIterableCollection<TCollection, DataType>
+		LinkType& Add( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			for ( DataType* data : collection )
@@ -623,18 +623,18 @@ export namespace Atlas
 				last = &last->Add( data );
 			}
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->Add( arguments... );
+				return last->Add( TArgs... );
 			}
 		}
 
-		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, LinkType>
-		LinkType& Add( CollectionType& collection, Arguments... arguments )
+		public: template<typename TCollection, typename... TArgs> requires Concepts::StandardIterableCollection<TCollection, LinkType>
+		LinkType& Add( TCollection& collection, TArgs... arguments )
 		{
 			LinkType* last = this;
 			for ( LinkType* link : collection )
@@ -642,13 +642,13 @@ export namespace Atlas
 				last = &last->Add( data );
 			}
 
-			if constexpr ( sizeof...( arguments ) == 0 )
+			if constexpr ( sizeof...( TArgs ) == 0 )
 			{
 				return *last;
 			}
 			else
 			{
-				return last->Add( arguments... );
+				return last->Add( TArgs... );
 			}
 		}*/
 	//};

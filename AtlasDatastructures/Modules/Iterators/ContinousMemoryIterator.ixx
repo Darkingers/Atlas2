@@ -11,7 +11,7 @@ export namespace Atlas
     class DLLApi ContinousMemoryIterator :
         public Interface::IIterator<DataType>
     {
-        private: using IteratorType = ContinousMemoryIterator<DataType>;
+        private: using TIterator = ContinousMemoryIterator<DataType>;
 
         public: using iterator_category = std::random_access_iterator_tag;
         public: using difference_type = std::ptrdiff_t;
@@ -49,41 +49,41 @@ export namespace Atlas
         }
 
         public: 
-        constexpr IteratorType& operator++()  final
+        constexpr TIterator& operator++()  final
         {
             _current++;
             return *this; 
         }
 
         public:
-        constexpr IteratorType operator++( int ) final
+        constexpr TIterator operator++( int ) final
         { 
-            IteratorType tmp = *this;
+            TIterator tmp = *this;
             ++( *this );
             return tmp; 
         }
 
         public:
-        constexpr IteratorType& operator--( )  final
+        constexpr TIterator& operator--( )  final
         {
             _current--;
             return *this;
         }
 
         public:
-        constexpr IteratorType operator--( int ) final
+        constexpr TIterator operator--( int ) final
         {
-            IteratorType tmp = *this;
+            TIterator tmp = *this;
             --( *this );
             return tmp;
         }
 
-        constexpr friend bool operator== ( const IteratorType& a, const IteratorType& b )
+        constexpr friend bool operator== ( const TIterator& a, const TIterator& b )
         {
             return a._current == b._current;
         };
 
-        constexpr friend bool operator!= ( const IteratorType& a, const IteratorType& b )
+        constexpr friend bool operator!= ( const TIterator& a, const TIterator& b )
         { 
             return a._current != b._current;
         };

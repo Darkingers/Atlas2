@@ -11,14 +11,14 @@ import AtlasConfiguration;
 
 export namespace Atlas
 {
-	template<typename CollectionType>
+	template<typename TCollection>
 	class DLLApi BinarySearch
 	{
-		private: using DataType = TypeDetails<CollectionType>::ElementType;
+		private: using DataType = TypeDetails<TCollection>::TElement;
 
 		public: 
-		constexpr static auto Search( const CollectionType& collection , const DataType& value )
-			noexcept( !Configuration::EnableSearchingBinaryCheck && Concept::HasNoexceptConstIterator<CollectionType> )
+		constexpr static auto Search( const TCollection& collection , const DataType& value )
+			noexcept( !Configuration::EnableSearchingBinaryCheck && Concept::HasNoexceptConstIterator<TCollection> )
 		{
 			auto current = Adapter::ConstBegin( collection );
 			auto end = Adapter::ConstEnd( collection );

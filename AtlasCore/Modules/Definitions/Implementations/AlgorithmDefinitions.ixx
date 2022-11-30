@@ -6,6 +6,9 @@ export module AtlasDefinitions:DataAlgorithmDefinitions;
 
 export namespace Atlas
 {
-	template<typename TargetType , typename SourceType>
+	template<typename TTarget , typename TSource>
 	class DLLApi Copy
+	{
+		
+	};
 }

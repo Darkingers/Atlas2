@@ -40,11 +40,11 @@ export namespace Atlas::Implementation
 		public: PropertyHolder ExtendedProperties;
 
 
-		public: template<typename... BaseConstructorArguments>
-		constexpr ExtendedBaseType( PropertyHolder&& propertyHolder , BaseConstructorArguments&&... baseArguments )
-			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArguments&&...> ) :
+		public: template<typename... BaseConstructorTArgs>
+		constexpr ExtendedBaseType( PropertyHolder&& propertyHolder , BaseConstructorTArgs&&... baseTArgs )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorTArgs&&...> ) :
 			ExtendedProperties( std::move( propertyHolder ) ) ,
-			BaseType( std::forward<BaseConstructorArguments&&>( baseArguments )... )
+			BaseType( std::forward<BaseConstructorTArgs&&>( baseTArgs )... )
 		{
 
 		}
@@ -67,7 +67,7 @@ export namespace Atlas::Implementation
 		}
 
 		public: template<unsigned int Index>
-		constexpr Tuple::ElementType<Index , ActualType>& get( )
+		constexpr Tuple::TElement<Index , ActualType>& get( )
 			noexcept( IsNoexceptGet<Index> )
 		{
 			if constexpr ( Index == 0 )
@@ -85,10 +85,10 @@ export namespace Atlas::Implementation
 	class DLLApi ExtendedType :
 		public ExtendedBaseType<BaseType , PropertyHolder>
 	{			
-		public: template<typename... BaseConstructorArguments>
-		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorArguments&&... baseArguments )
-			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArguments&&...> ) :
-			ExtendedBaseType<BaseType , PropertyHolder>( std::move(propertyHolder) , std::forward<BaseConstructorArguments&&>( baseArguments )... )
+		public: template<typename... BaseConstructorTArgs>
+		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorTArgs&&... baseTArgs )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorTArgs&&...> ) :
+			ExtendedBaseType<BaseType , PropertyHolder>( std::move(propertyHolder) , std::forward<BaseConstructorTArgs&&>( baseTArgs )... )
 		{}
 
 		public:
@@ -103,10 +103,10 @@ export namespace Atlas::Implementation
 		private: constexpr static bool IsNoexceptToString = noexcept( std::declval<BaseType>( ).ToString( ) );
 		private: constexpr static bool IsNoexceptExtendedToString = noexcept( Convert<std::string>::From( PropertyHolder() ) );
 	
-		public: template<typename... BaseConstructorArguments>
-		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorArguments&&... baseArguments )
-			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorArguments&&...> ) :
-			ExtendedBaseType<BaseType , PropertyHolder>( std::move( propertyHolder ) , std::forward<BaseConstructorArguments&&>( baseArguments )... )
+		public: template<typename... BaseConstructorTArgs>
+		constexpr ExtendedType( PropertyHolder&& propertyHolder , BaseConstructorTArgs&&... baseTArgs )
+			noexcept ( Type<BaseType>::template IsNoexceptConstructible<BaseConstructorTArgs&&...> ) :
+			ExtendedBaseType<BaseType , PropertyHolder>( std::move( propertyHolder ) , std::forward<BaseConstructorTArgs&&>( baseTArgs )... )
 		{}
 
 		public:
@@ -119,74 +119,74 @@ export namespace Atlas::Implementation
 		}
 	};
 
-	template<typename ConstructedType, typename... BaseConstructorArguments>
+	template<typename ConstructedType, typename... BaseConstructorTArgs>
 	class DLLApi Constructor
 	{
-		public: template<typename CurrentType, typename... ExtendedArguments>
-		constexpr static auto Construct( BaseConstructorArguments&&... bArguments, CurrentType&& current, ExtendedArguments&&... eArguments )
+		public: template<typename CurrentType, typename... ExtendedTArgs>
+		constexpr static auto Construct( BaseConstructorTArgs&&... bTArgs, CurrentType&& current, ExtendedTArgs&&... eTArgs )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorTArgs...> )
 			{
-				return Implementation::ExtendedType<ConstructedType, std::tuple<CurrentType, ExtendedArguments...>>(std::make_tuple( std::forward<CurrentType&&>( current ), std::forward<ExtendedArguments&&>( eArguments )...) , std::forward<BaseConstructorArguments&&>( bArguments )... );
+				return Implementation::ExtendedType<ConstructedType, std::tuple<CurrentType, ExtendedTArgs...>>(std::make_tuple( std::forward<CurrentType&&>( current ), std::forward<ExtendedTArgs&&>( eTArgs )...) , std::forward<BaseConstructorTArgs&&>( bTArgs )... );
 			} 
-			else if constexpr( sizeof...( eArguments )>0 )
+			else if constexpr( sizeof...( eTArgs )>0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArguments... , CurrentType>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
+				return Constructor<ConstructedType , BaseConstructorTArgs... , CurrentType>::Construct( std::forward<BaseConstructorTArgs&&>( bTArgs )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedTArgs&&>( eTArgs )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eTArgs ) == 0 , "No constructor found for type" );
 			}
 		}	
 
-		public: template<typename CurrentType , typename... ExtendedArguments>
-		constexpr static auto Construct( BaseConstructorArguments&&... bArguments , const CurrentType& current , ExtendedArguments&&... eArguments )
+		public: template<typename CurrentType , typename... ExtendedTArgs>
+		constexpr static auto Construct( BaseConstructorTArgs&&... bTArgs , const CurrentType& current , ExtendedTArgs&&... eTArgs )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorTArgs...> )
 			{
-				return Implementation::ExtendedType<ConstructedType ,std::tuple<const CurrentType&, ExtendedArguments...>>(std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )...) , std::forward<BaseConstructorArguments&&>( bArguments )... );
+				return Implementation::ExtendedType<ConstructedType ,std::tuple<const CurrentType&, ExtendedTArgs...>>(std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedTArgs&&>( eTArgs )...) , std::forward<BaseConstructorTArgs&&>( bTArgs )... );
 			}
-			else if constexpr ( sizeof...( eArguments ) > 0 )
+			else if constexpr ( sizeof...( eTArgs ) > 0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArguments... , const CurrentType&>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
+				return Constructor<ConstructedType , BaseConstructorTArgs... , const CurrentType&>::Construct( std::forward<BaseConstructorTArgs&&>( bTArgs )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedTArgs&&>( eTArgs )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eTArgs ) == 0 , "No constructor found for type" );
 			}
 		}
 
-		public: template<typename CurrentType , typename... ExtendedArguments>
-		constexpr static auto Allocate( BaseConstructorArguments&&... bArguments , CurrentType&& current , ExtendedArguments&&... eArguments )
+		public: template<typename CurrentType , typename... ExtendedTArgs>
+		constexpr static auto Allocate( BaseConstructorTArgs&&... bTArgs , CurrentType&& current , ExtendedTArgs&&... eTArgs )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorTArgs...> )
 			{
-				return new Implementation::ExtendedType<ConstructedType , std::tuple<CurrentType , ExtendedArguments...>>( std::make_tuple( std::forward<CurrentType&&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... ) , std::forward<BaseConstructorArguments&&>( bArguments )... );
+				return new Implementation::ExtendedType<ConstructedType , std::tuple<CurrentType , ExtendedTArgs...>>( std::make_tuple( std::forward<CurrentType&&>( current ) , std::forward<ExtendedTArgs&&>( eTArgs )... ) , std::forward<BaseConstructorTArgs&&>( bTArgs )... );
 			}
-			else if constexpr ( sizeof...( eArguments ) > 0 )
+			else if constexpr ( sizeof...( eTArgs ) > 0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArguments... , CurrentType>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
+				return Constructor<ConstructedType , BaseConstructorTArgs... , CurrentType>::Construct( std::forward<BaseConstructorTArgs&&>( bTArgs )... , std::forward<CurrentType&&>( current ) , std::forward<ExtendedTArgs&&>( eTArgs )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eTArgs ) == 0 , "No constructor found for type" );
 			}
 		}
 
-		public: template<typename CurrentType , typename... ExtendedArguments>
-		constexpr static auto Allocate( BaseConstructorArguments&&... bArguments , const CurrentType& current , ExtendedArguments&&... eArguments )
+		public: template<typename CurrentType , typename... ExtendedTArgs>
+		constexpr static auto Allocate( BaseConstructorTArgs&&... bTArgs , const CurrentType& current , ExtendedTArgs&&... eTArgs )
 		{
-			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorArguments...> )
+			if constexpr ( Type<ConstructedType>::template IsConstructible<BaseConstructorTArgs...> )
 			{
-				return new Implementation::ExtendedType<ConstructedType , std::tuple<const CurrentType& , ExtendedArguments...>>( std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... ) , std::forward<BaseConstructorArguments&&>( bArguments )... );
+				return new Implementation::ExtendedType<ConstructedType , std::tuple<const CurrentType& , ExtendedTArgs...>>( std::make_tuple( std::forward<const CurrentType&>( current ) , std::forward<ExtendedTArgs&&>( eTArgs )... ) , std::forward<BaseConstructorTArgs&&>( bTArgs )... );
 			}
-			else if constexpr ( sizeof...( eArguments ) > 0 )
+			else if constexpr ( sizeof...( eTArgs ) > 0 )
 			{
-				return Constructor<ConstructedType , BaseConstructorArguments... , const CurrentType&>::Construct( std::forward<BaseConstructorArguments&&>( bArguments )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedArguments&&>( eArguments )... );
+				return Constructor<ConstructedType , BaseConstructorTArgs... , const CurrentType&>::Construct( std::forward<BaseConstructorTArgs&&>( bTArgs )... , std::forward<const CurrentType&>( current ) , std::forward<ExtendedTArgs&&>( eTArgs )... );
 			}
 			else
 			{
-				static_assert( sizeof...( eArguments ) == 0 , "No constructor found for type" );
+				static_assert( sizeof...( eTArgs ) == 0 , "No constructor found for type" );
 			}
 		}
 	};
@@ -197,16 +197,16 @@ export namespace Atlas
 	template<typename BaseType>
 	class DLLApi Extended
 	{
-		public: template<typename... Arguments>
-		constexpr static inline auto Construct( Arguments&&... args )
+		public: template<typename... TArgs>
+		constexpr static inline auto Construct( TArgs&&... args )
 		{
-			return Implementation::Constructor<BaseType>::Construct( std::forward<Arguments&&>( args )... );
+			return Implementation::Constructor<BaseType>::Construct( std::forward<TArgs&&>( args )... );
 		}
 
-		public:  template<typename... Arguments>
-		constexpr static inline auto Allocate( Arguments&&... args )
+		public:  template<typename... TArgs>
+		constexpr static inline auto Allocate( TArgs&&... args )
 		{
-			return Implementation::Constructor<BaseType>::Allocate( std::forward<Arguments&&>( args )... );
+			return Implementation::Constructor<BaseType>::Allocate( std::forward<TArgs&&>( args )... );
 		}
 	};
 }

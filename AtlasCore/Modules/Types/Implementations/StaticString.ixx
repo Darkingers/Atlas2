@@ -6,7 +6,7 @@ export module AtlasTypes:StaticString;
 
 import AtlasConfiguration;
 import AtlasValidation;
-import AtlasDispatchers;
+import AtlasAPI;
 
 namespace Atlas
 {
@@ -21,7 +21,7 @@ namespace Atlas
 		constexpr StaticString( const char( &data )[OtherSize] )
 			noexcept(!Configuration::EnableStaticStringCheck )
 		{
-			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( Bufferize , OtherSize );
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , OtherSize );
 
 			CopyImpl( data ,0, OtherSize );
 
@@ -38,7 +38,7 @@ namespace Atlas
 				char current;
 				while ( ( current = data[i] ) != '\0' )
 				{
-					Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( Bufferize , i );
+					Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , i );
 					
 					_data[i++] = current;
 				}
@@ -55,9 +55,9 @@ namespace Atlas
 		constexpr StaticString( const StringType& string )
 			noexcept( !Configuration::EnableStaticStringCheck )
 		{
-			auto length = Adapter::Size( string );
+			auto length = CollectionAPI::Count<char>( string );
 
-			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( Bufferize , length );
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , length );
 
 			CopyImpl( string , 0 , length );
 
@@ -97,19 +97,19 @@ namespace Atlas
 		constexpr void Copy( const StringType& string , unsigned int inclusivStart , unsigned int exclusiveEnd )
 			noexcept( !Configuration::EnableStaticStringCheck )
 		{
-			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( Bufferize , end );
-			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( end , start );
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , exclusiveEnd );
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( exclusiveEnd , inclusivStart );
 
 			CopyImpl( string , inclusivStart , exclusiveEnd );
 
-			_length = end - start;
+			_length = exclusiveEnd - inclusivStart;
 		}
 
 		public:
 		constexpr char operator[]( unsigned int index )
 			noexcept ( !Configuration::EnableStaticStringCheck )
 		{
-			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( Bufferize , index );
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , index );
 
 			return _data[index];
 		}	
@@ -118,7 +118,7 @@ namespace Atlas
 		constexpr void CopyImpl( const StringType& string , unsigned int inclusivStart , unsigned int exclusiveEnd )
 			noexcept
 		{
-			for ( unsigned int i = start; i < end; ++i )
+			for ( unsigned int i = inclusivStart; i < exclusiveEnd; ++i )
 			{
 				_data[i] = string[i];
 			}

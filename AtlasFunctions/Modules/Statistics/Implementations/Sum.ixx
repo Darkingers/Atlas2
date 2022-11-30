@@ -12,12 +12,12 @@ import AtlasConfiguration;
 
 export namespace Atlas
 {
-	template<typename CollectionType>
+	template<typename TCollection>
 	class DLLApi Sum
 	{
 		public:
-		constexpr static auto Calculate( const CollectionType& collection )
-			noexcept( !Configuration::EnableStatisticsSumCheck && Concept::HasNoexceptConstIterator<CollectionType> )
+		constexpr static auto Calculate( const TCollection& collection )
+			noexcept( !Configuration::EnableStatisticsSumCheck && Concept::HasNoexceptConstIterator<TCollection> )
 		{
 			auto current = Adapter::ConstBegin( collection );
 			auto end = Adapter::ConstEnd( collection );

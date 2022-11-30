@@ -12,14 +12,14 @@ import AtlasIntegration;
 
 export namespace Atlas
 {
-	template<typename SourceType>
-		requires Concept::IsConvertibleTo<SourceType,double>
-	class DLLApi Converter<SourceType,double> :
+	template<typename TSource>
+		requires Concept::IsConvertibleTo<TSource,double>
+	class DLLApi Converter<TSource,double> :
 		public std::true_type
 	{
 		public:
-		constexpr static inline double Convert( const SourceType& data ) 
-			noexcept( Concept::IsNoexceptConvertibleTo<SourceType , double> )
+		constexpr static inline double Convert( const TSource& data ) 
+			noexcept( Concept::IsNoexceptConvertibleTo<TSource , double> )
 		{
 			return data;
 		}

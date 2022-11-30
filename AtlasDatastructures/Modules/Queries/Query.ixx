@@ -76,20 +76,20 @@ export namespace Atlas
 			return _results;
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Where( Arguments&&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Where( TArgs&&... arguments ) 
 		{
 			const unsigned int index = _conditions;
 
-			_conditions.Resize( _conditions + VariadicCounter<DataType>::Count( arguments... ) );
+			_conditions.Resize( _conditions + VariadicCounter<DataType>::Count( TArgs... ) );
 
-			Memory::ReplaceFrom( &_conditions[index], index, std::forward<Arguments>( arguments )... );
+			Memory::ReplaceFrom( &_conditions[index], index, std::forward<TArgs>( TArgs )... );
 
 			return *this;
 		}
 
-		private: template<typename... Arguments>
-		const unsigned int UnionConcat( unsigned int distinctCount, const DataType& data,const Arguments&... arguments )
+		private: template<typename... TArgs>
+		const unsigned int UnionConcat( unsigned int distinctCount, const DataType& data,const TArgs&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -108,9 +108,9 @@ export namespace Atlas
 				_results[distinctCount++] = data;
 			}
 
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				return UnionConcat( distinctCount, arguments... );
+				return UnionConcat( distinctCount, TArgs... );
 			}
 			else
 			{
@@ -118,8 +118,8 @@ export namespace Atlas
 			}
 		}
 
-		private: template<typename CollectionType, typename... Arguments> requires IsIterableWith<CollectionType, DataType>
-		const unsigned int UnionConcat( unsigned int distinctCount, const CollectionType& collection, const Arguments&... arguments )
+		private: template<typename TCollection, typename... TArgs> requires IsIterableWith<TCollection, DataType>
+		const unsigned int UnionConcat( unsigned int distinctCount, const TCollection& collection, const TArgs&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -144,9 +144,9 @@ export namespace Atlas
 				}
 			}
 
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				return UnionConcat( distinctCount, arguments... );
+				return UnionConcat( distinctCount, TArgs... );
 			}
 			else
 			{
@@ -154,20 +154,20 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Union( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Union( const TArgs&... arguments ) 
 		{
 			Distinct();
 
-			_results.Resize( _results, VariadicCounter<DataType>::Count( arguments... ) );
+			_results.Resize( _results, VariadicCounter<DataType>::Count( TArgs... ) );
 
-			_results.Resize( UnionConcat( _results, _results, arguments... ) );
+			_results.Resize( UnionConcat( _results, _results, TArgs... ) );
 
 			return *this;
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Intersect( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Intersect( const TArgs&... arguments ) 
 		{
 			Evaluate();
 
@@ -175,7 +175,7 @@ export namespace Atlas
 
 			for ( unsigned int i = 0, limit = _results; i < limit; ++i )
 			{
-				if ( VariadicContainChecker<DataType>::All( _results[i], arguments... ) )
+				if ( VariadicContainChecker<DataType>::All( _results[i], TArgs... ) )
 				{
 					_results[i - removed] = _results[i];
 				}
@@ -190,8 +190,8 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Except( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Except( const TArgs&... arguments ) 
 		{
 			Evaluate();
 
@@ -199,7 +199,7 @@ export namespace Atlas
 
 			for ( unsigned int i = 0, limit = _results; i < limit; ++i )
 			{
-				if ( !VariadicContainChecker<DataType>::Any( _results[i], arguments... ) )
+				if ( !VariadicContainChecker<DataType>::Any( _results[i], TArgs... ) )
 				{
 					_results[i - removed] = _results[i];
 				}
@@ -214,21 +214,21 @@ export namespace Atlas
 			return  *this;
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Concat( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Concat( const TArgs&... arguments ) 
 		{
 			Evaluate();
 
 			const unsigned int index = _results;
 
-			_results.Resize( _results + VariadicCounter::Count( arguments... ) );
+			_results.Resize( _results + VariadicCounter::Count( TArgs... ) );
 
-			Memory::ReplaceFrom( _results, index, arguments... );
+			Memory::ReplaceFrom( _results, index, TArgs... );
 
 			return *this;
 		}
 
-		public: template<typename ComparatorType, typename... Arguments>
+		public: template<typename ComparatorType, typename... TArgs>
 		QueryType& Distinct( const ComparatorType comparator = DefaultComparator<const DataType&> ) 
 		{
 			Evaluate();
@@ -260,7 +260,7 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Arguments>
+		public: template<typename... TArgs>
 		QueryType& Between( const unsigned int from, const unsigned int to ) 
 		{
 			assert( from >= 0 && to >= 0 && from <= to );
@@ -324,10 +324,10 @@ export namespace Atlas
 		}
 	};
 
-	template<typename SourceCollectionType, typename DataType>
+	template<typename SourceTCollection, typename DataType>
 	class DLLApi Query
 	{
-		private: using QueryType = Query<SourceCollectionType, DataType>;
+		private: using QueryType = Query<SourceTCollection, DataType>;
 
 		class Iterator
 		{
@@ -397,7 +397,7 @@ export namespace Atlas
 		};
 
 
-		private: SourceCollectionType* _sourceCollection;
+		private: SourceTCollection* _sourceCollection;
 
 		private: SpeedFriendlyMemoryHandler<ConditionType> _conditions;
 		private: SpeedFriendlyMemoryHandler<DataType*> _results;
@@ -406,25 +406,25 @@ export namespace Atlas
 
 
 		public:
-		Query( SourceCollectionType* sourceCollection )  :
+		Query( SourceTCollection* sourceCollection )  :
 			_sourceCollection( sourceCollection ),
-			_results( SizeAdapter<SourceCollectionType>::Count( *sourceCollection ) ),
+			_results( SizeAdapter<SourceTCollection>::Count( *sourceCollection ) ),
 			_deleteSource(false)
 		{
 		}
 
 		public:
-		Query( SourceCollectionType& sourceCollection )  :
+		Query( SourceTCollection& sourceCollection )  :
 			_sourceCollection( &sourceCollection ),
-			_results( SizeAdapter<SourceCollectionType>::Count( sourceCollection ) ),
+			_results( SizeAdapter<SourceTCollection>::Count( sourceCollection ) ),
 			_deleteSource( false )
 		{
 		}
 
 		public:
-		Query( SourceCollectionType&& sourceCollection )  :
+		Query( SourceTCollection&& sourceCollection )  :
 			_sourceCollection( sourceCollection ),
-			_results( SizeAdapter<SourceCollectionType>::Count( sourceCollection ) ),
+			_results( SizeAdapter<SourceTCollection>::Count( sourceCollection ) ),
 			_deleteSource( true )
 		{
 		}
@@ -518,20 +518,20 @@ export namespace Atlas
 			return _results;
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Where( Arguments&&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Where( TArgs&&... arguments ) 
 		{
 			const unsigned int index = _conditions;
 
-			_conditions.Resize( _conditions + VariadicCounter<DataType>::Count( arguments... ) );
+			_conditions.Resize( _conditions + VariadicCounter<DataType>::Count( TArgs... ) );
 
-			Memory::ReplaceFrom( &_conditions[index], index, std::forward<Arguments>( arguments )... );
+			Memory::ReplaceFrom( &_conditions[index], index, std::forward<TArgs>( TArgs )... );
 
 			return *this;
 		}
 
-		private: template<typename... Arguments>
-		unsigned int UnionConcat (unsigned int distinctCount, const DataType& data, Arguments&... arguments )
+		private: template<typename... TArgs>
+		unsigned int UnionConcat (unsigned int distinctCount, const DataType& data, TArgs&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -550,9 +550,9 @@ export namespace Atlas
 				_results[distinctCount++] = &data;
 			}
 
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				return UnionConcat( distinctCount, arguments... );
+				return UnionConcat( distinctCount, TArgs... );
 			}
 			else
 			{
@@ -560,8 +560,8 @@ export namespace Atlas
 			}
 		}
 
-		private: template<typename CollectionType, typename... Arguments> requires IsIterableWith<const CollectionType, const DataType>
-		unsigned int UnionConcat(unsigned int distinctCount, const CollectionType& collection, Arguments&... arguments )
+		private: template<typename TCollection, typename... TArgs> requires IsIterableWith<const TCollection, const DataType>
+		unsigned int UnionConcat(unsigned int distinctCount, const TCollection& collection, TArgs&... arguments )
 		{
 			assert( distinctCount >= 0 );
 
@@ -586,9 +586,9 @@ export namespace Atlas
 				}
 			}
 
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				return UnionConcat( distinctCount, arguments... );
+				return UnionConcat( distinctCount, TArgs... );
 			}
 			else
 			{
@@ -596,20 +596,20 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Union( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Union( const TArgs&... arguments ) 
 		{
 			Distinct();
 
-			_results.Resize( _results, VariadicCounter::Count( arguments... ) );
+			_results.Resize( _results, VariadicCounter::Count( TArgs... ) );
 
-			_results.Resize( UnionConcat( _results, _results, arguments...) );
+			_results.Resize( UnionConcat( _results, _results, TArgs...) );
 
 			return *this;
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Intersect( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Intersect( const TArgs&... arguments ) 
 		{
 			Evaluate();
 
@@ -617,7 +617,7 @@ export namespace Atlas
 
 			for ( unsigned int i = 0, limit = _results; i < limit; ++i )
 			{
-				if ( VariadicContainChecker<DataType>::All( _results[i], arguments... ) )
+				if ( VariadicContainChecker<DataType>::All( _results[i], TArgs... ) )
 				{
 					_results[i - removed] = _results[i];
 				}
@@ -632,8 +632,8 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Except( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Except( const TArgs&... arguments ) 
 		{
 			Evaluate();
 
@@ -641,7 +641,7 @@ export namespace Atlas
 
 			for ( unsigned int i = 0, limit=_results; i < limit; ++i )
 			{
-				if ( !VariadicContainChecker<DataType>::Any( _results[i], arguments... ) )
+				if ( !VariadicContainChecker<DataType>::Any( _results[i], TArgs... ) )
 				{
 					_results[i - removed] = _results[i];
 				}
@@ -656,21 +656,21 @@ export namespace Atlas
 			return  *this;
 		}
 
-		private: template<typename... Arguments>
-		void ReplaceFrom( unsigned int index, const DataType& data, Arguments&... arguments )
+		private: template<typename... TArgs>
+		void ReplaceFrom( unsigned int index, const DataType& data, TArgs&... arguments )
 		{
 			assert( index >= 0 );
 
 			_results[index++] = &data;
 
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				ReplaceFrom( index, arguments... );
+				ReplaceFrom( index, TArgs... );
 			}
 		}
 
-		private: template<typename CollectionType, typename... Arguments> requires IsIterable<const CollectionType, const DataType>
-		void ReplaceFrom( unsigned int index, const CollectionType& collection, Arguments&... arguments )
+		private: template<typename TCollection, typename... TArgs> requires IsIterable<const TCollection, const DataType>
+		void ReplaceFrom( unsigned int index, const TCollection& collection, TArgs&... arguments )
 		{
 			assert( index >= 0 );
 
@@ -679,27 +679,27 @@ export namespace Atlas
 				_results[index++] = &data;
 			}
 
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				ReplaceFrom( index, arguments... );
+				ReplaceFrom( index, TArgs... );
 			}
 		}
 
-		public: template<typename... Arguments>
-		QueryType& Concat( const Arguments&... arguments ) 
+		public: template<typename... TArgs>
+		QueryType& Concat( const TArgs&... arguments ) 
 		{
 			Evaluate();
 
 			const unsigned int index = _results;
 
-			_results.Resize( _results + VariadicCounter::Count( arguments... ) );
+			_results.Resize( _results + VariadicCounter::Count( TArgs... ) );
 
-			ReplaceFrom( index, arguments... );
+			ReplaceFrom( index, TArgs... );
 
 			return *this;
 		}
 
-		public: template<typename ComparatorType typename... Arguments>
+		public: template<typename ComparatorType typename... TArgs>
 		QueryType& Distinct( const ComparatorType comparator = DefaultComparator<const DataType&> ) 
 		{
 			bool distinct;
@@ -729,7 +729,7 @@ export namespace Atlas
 			return *this;
 		}
 
-		public: template<typename... Arguments>
+		public: template<typename... TArgs>
 		QueryType& Between( const unsigned int from, const unsigned int to ) 
 		{
 			assert( from >= 0 && to >= 0 && from <= to );

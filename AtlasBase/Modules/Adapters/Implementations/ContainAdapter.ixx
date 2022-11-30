@@ -24,27 +24,27 @@ export namespace Atlas
 		}
 	};
 	
-	template<typename CollectionType, typename DataType> 
-		requires Concept::HasContainFunction<CollectionType, DataType>
-	class DLLApi ContainAdapter<CollectionType, DataType> :
+	template<typename TCollection, typename DataType> 
+		requires Concept::HasContainFunction<TCollection, DataType>
+	class DLLApi ContainAdapter<TCollection, DataType> :
 		public std::true_type
 	{
 	    public:
-		constexpr static inline bool Contains(const CollectionType& collection, const DataType& contained)
+		constexpr static inline bool Contains(const TCollection& collection, const DataType& contained)
 			noexcept ( noexcept ( collection.Contains( contained ) ) )
 		{
 			return collection.Contains(contained);
 		}
 	};
 
-	template<typename CollectionType, typename DataType>
-		requires Concept::IsIterableWith<CollectionType, DataType>
-	class DLLApi ContainAdapter<CollectionType, DataType> :
+	template<typename TCollection, typename DataType>
+		requires Concept::IsIterableWith<TCollection, DataType>
+	class DLLApi ContainAdapter<TCollection, DataType> :
 		public std::true_type
 	{
 		public:
-		constexpr inline bool Contains( const CollectionType& collection , const DataType& contained ) 
-			noexcept( Concept::IsNoexceptIterableWith<CollectionType , DataType> )
+		constexpr inline bool Contains( const TCollection& collection , const DataType& contained ) 
+			noexcept( Concept::IsNoexceptIterableWith<TCollection , DataType> )
 		{
 			auto iterator = std::cbegin( collection );
 			const auto endIterator = std::cend( collection );

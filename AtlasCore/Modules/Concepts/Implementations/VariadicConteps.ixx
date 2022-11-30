@@ -9,15 +9,15 @@ export module AtlasConcepts:VariadicConcepts;
 
 export namespace Atlas::Concept
 {
-	export template<typename TestedType , typename RequiredType>
-	concept IsSame = std::is_same<TestedType , RequiredType>::value;
+	export template<typename TActual , typename TExpected>
+	concept IsSame = std::is_same<TActual , TExpected>::value;
 
-	template<typename TestedType , typename... RequiredType>
-	concept IsAll = std::conjunction<std::is_same<RequiredType,TestedType>...>::value;
+	template<typename TActual , typename... TExpected>
+	concept IsAll = std::conjunction<std::is_same<TExpected , TActual>...>::value;
 
-	template<typename TestedType , typename... RequiredType>
-	concept IsAny = std::disjunction<std::is_same<RequiredType,TestedType>...>::value;
+	template<typename TActual , typename... TExpected>
+	concept IsAny = std::disjunction<std::is_same<TExpected , TActual>...>::value;
 
-	template<typename TestedType , typename... RequiredType>
-	concept IsNone = !IsAny<TestedType , RequiredType...>;
+	template<typename TActual , typename... TExpected>
+	concept IsNone = !IsAny<TActual , TExpected...>;
 }

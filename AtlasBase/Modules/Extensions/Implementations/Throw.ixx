@@ -10,10 +10,10 @@ import :Extended;
 
 export namespace Atlas
 {
-	template<typename ExceptionType, typename... Arguments>
-	constexpr DLLApi void Throw( Arguments&&... arguments )
+	template<typename ExceptionType, typename... TArgs>
+	constexpr DLLApi void Throw( TArgs&&... arguments )
 	{
-		throw Extended<ExceptionType>::Construct( std::forward<Arguments&&>( arguments )... );
+		throw Extended<ExceptionType>::Construct( std::forward<TArgs&&>( TArgs )... );
 	}
 
 	template<typename ExceptionType>

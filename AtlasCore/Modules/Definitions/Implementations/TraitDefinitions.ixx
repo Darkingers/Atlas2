@@ -20,6 +20,7 @@ export namespace Atlas::Definition
 	template<typename T>
 	class DLLApi CollectionTraits
 	{
+		public: using ConstIteratorType = void;
 		public: using IteratorType = void;
 		public: using ElementType = void;
 	};

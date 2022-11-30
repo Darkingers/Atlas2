@@ -8,28 +8,28 @@ export module AtlasDefinitions:TypeDefinitions;
 
 export namespace Atlas::Definition
 {
-	template<typename ReturnType , typename... Arguments>
-	using StaticFunction = ReturnType( * )( Arguments... );
+	template<typename TReturn , typename... TArgs>
+	using StaticFunction = TReturn( * )( TArgs... );
 
-	template<typename ReturnType , typename ClassType , typename... Arguments>
-	using MemberFunction = ReturnType( ClassType::* )( Arguments... );
+	template<typename ReturnType , typename ClassType , typename... TArgs>
+	using MemberFunction = ReturnType( ClassType::* )( TArgs... );
 
-	template<typename ReturnType , typename... Arguments>
-	using ExternalFunction = ReturnType( __stdcall* )( Arguments... );
+	template<typename ReturnType , typename... TArgs>
+	using ExternalFunction = ReturnType( __stdcall* )( TArgs... );
 
-	template<typename ReturnType , typename... Arguments>
-	using LambdaFunction = std::function<ReturnType( Arguments... )>;
+	template<typename ReturnType , typename... TArgs>
+	using GeneralFunction = std::function<ReturnType( TArgs... )>;
 
 	
-	template<typename TargetType , typename SourceType>
-	using ConverterFunction = LambdaFunction<TargetType , SourceType>;
+	template<typename TTarget , typename TSource>
+	using ConverterFunction = GeneralFunction<TTarget , TSource>;
 
 	template<typename ComparedType>
-	using ComparatorFunction = LambdaFunction<int , const ComparedType&, const ComparedType&>;
+	using ComparatorFunction = GeneralFunction<int , const ComparedType&, const ComparedType&>;
 
 	template<typename T>
-	using ConditionFunction = LambdaFunction<bool , const T&>;
+	using ConditionFunction = GeneralFunction<bool , const T&>;
 
 	template<typename T, typename KeyType>
-	using KeyGeneratorFunction = LambdaFunction<KeyType , const T&>;
+	using KeyGeneratorFunction = GeneralFunction<KeyType , const T&>;
 }

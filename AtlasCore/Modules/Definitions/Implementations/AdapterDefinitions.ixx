@@ -6,45 +6,74 @@ export module AtlasDefinitions:AdapterDefinitions;
 
 export namespace Atlas
 {
-	template<typename ClearedType>
+	template<typename TCollection>
 	class DLLApi ClearAdapter :
 		public std::false_type
 	{
 		public:
-		consteval static inline auto Clear( ClearedType& instance )
+		consteval static inline auto Clear( TCollection& instance )
 		{
 			throw "ClearAdapter::Clear is not implemented for this type";
 		}
 	};
 
-	template<typename CollectionType , typename ElementType>
+	template<typename TCollection , typename TElement>
 	class DLLApi ContainAdapter :
 		public std::false_type
 	{
 		public:
-		consteval static inline auto Contain( const CollectionType& collection , const ElementType& element )
+		consteval static inline auto Contain( const TCollection& collection , const TElement& element )
 		{
 			throw "ContainAdapter::Contain is not implemented for this type";
 		}
 	};
 
-	template<typename CollectionType , typename ContainedCollectionType>
+	template<typename TCollectionA , typename TCollectionB>
 	class DLLApi ContainAllAdapter :
 		public std::false_type
 	{
 		public:
-		consteval static inline auto ContainAll( const CollectionType& collection , const ContainedCollectionType& containedCollection )
+		consteval static inline auto ContainAll( const TCollectionA& collection , const TCollectionB& containedCollection )
 		{
 			throw "ContainAllAdapter::ContainAll is not implemented for these types";
 		}
 	};
 
-	template<typename ExpectedType, typename ActualType>
+	template<typename TCollection>
+	class DLLApi IterableAdapter :
+		public std::false_type
+	{
+		public:
+		consteval static inline auto Begin( TCollection& collection )
+		{
+			throw "IterableAdapter::Begin is not implemented for this type";
+		}
+
+		public:
+		consteval static inline auto ConstBegin( const TCollection& collection )
+		{
+			throw "IterableAdapter::ConstBegin is not implemented for this type";
+		}
+
+		public:
+		consteval static inline auto End( TCollection& collection )
+		{
+			throw "IterableAdapter::End is not implemented for this type";
+		}
+
+		public:
+		consteval static inline auto ConstEnd( const TCollection& collection )
+		{
+			throw "IterableAdapter::ConstEnd is not implemented for this type";
+		}
+	};
+	
+	template<typename TExpected, typename TActual>
 	class DLLApi CountAdapter :
 		public std::false_type
 	{
 		public:
-		consteval static inline auto Count( const ActualType& instance )
+		consteval static inline auto Count( const TActual& instance )
 		{
 			throw "CountAdapter::Count is not implemented for this type";
 		}
@@ -61,58 +90,29 @@ export namespace Atlas
 		}
 	};
 
-	template<typename HashableType>
+	template<typename T>
 	class DLLApi HashAdapter :
 		public std::false_type
 	{
 		public:
-		consteval static inline auto Hash( const HashableType& instance )
+		consteval static inline auto Hash( const T& instance )
 		{
 			throw "HashAdapter::Hash is not implemented for this type";
 		}
 	};
 
-	template<typename CollectionType>
-	class DLLApi IterableAdapter :
-		public std::false_type
-	{
-		public:
-		consteval static inline auto Begin( CollectionType& collection )
-		{
-			throw "IterableAdapter::Begin is not implemented for this type";
-		}
-		
-		public:
-		consteval static inline auto ConstBegin( const CollectionType& collection )
-		{
-			throw "IterableAdapter::ConstBegin is not implemented for this type";
-		}
-
-		public:
-		consteval static inline auto End( CollectionType& collection )
-		{
-			throw "IterableAdapter::End is not implemented for this type";
-		}
-
-		public:
-		consteval static inline auto ConstEnd( const CollectionType& collection )
-		{
-			throw "IterableAdapter::ConstEnd is not implemented for this type";
-		}
-	};
-
-	template<typename IteratorType>
+	template<typename TIterator>
 	class DLLApi IteratorAdapter :
 		public std::false_type
 	{
 		public:
-		consteval static inline auto Move( IteratorType& iterator )
+		consteval static inline auto Move( TIterator& iterator )
 		{
 			throw "IteratorAdapter::Move is not implemented for this type";
 		}
 
 		public:
-		consteval static inline auto Current( const IteratorType& iterator )
+		consteval static inline auto Current( const TIterator& iterator )
 		{
 			throw"IteratorAdapter::Current is not implemented for this type";
 		}

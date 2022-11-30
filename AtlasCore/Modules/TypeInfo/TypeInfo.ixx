@@ -31,11 +31,11 @@ export namespace Atlas
 		public: template<typename CastedType>
 		constexpr static inline bool IsNoexceptConvertibleTo = Concept::IsNoexceptConvertibleTo<T , CastedType>;
 
-		public: template<typename... ConstructorArguments>
-		constexpr static inline bool IsConstructible = Concept::IsConstructible<T , ConstructorArguments...>;
+		public: template<typename... ConstructorTArgs>
+		constexpr static inline bool IsConstructible = Concept::IsConstructible<T , ConstructorTArgs...>;
 
-		public: template<typename... ConstructorArguments>
-		constexpr static inline bool IsNoexceptConstructible = Concept::IsNoexceptConstructible<T , ConstructorArguments...>;
+		public: template<typename... ConstructorTArgs>
+		constexpr static inline bool IsNoexceptConstructible = Concept::IsNoexceptConstructible<T , ConstructorTArgs...>;
 
 		public: template<typename ComparedType>
 		constexpr static inline bool IsSame = Concept::IsSame<T , ComparedType>;
@@ -56,7 +56,7 @@ export namespace Atlas
 		constexpr static inline bool IsDerivedFrom = Concept::IsDerivedFrom<T , BaseType>;
 
 		public: template<typename AssignedType>
-		constexpr static inline bool IsAssignableFrom = Concept::IsAssignableFrom<T , AssignedType>;
+		constexpr static inline bool IsAssignable = Concept::IsAssignable<T , AssignedType>;
 
 
 		public: using BaseType = typename Deduce::SimpleType<T>;

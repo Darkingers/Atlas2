@@ -15,17 +15,17 @@ export namespace Atlas
 {
 	class DLLApi Tuple
 	{
-		private: template<unsigned int Current , unsigned int End , typename... Arguments>
+		private: template<unsigned int Current , unsigned int End , typename... TArgs>
 		struct IsNoexceptReassign
 		{
 			public:
 			constexpr static bool NoexceptCheck( )
 			{
-				bool result = noexcept( Tuple::Set<Current>( std::tuple<Arguments...>( ) , Deduce::IndexedArgumentType<Current , Arguments...>( ) ) );
+				bool result = noexcept( Tuple::Set<Current>( std::tuple<TArgs...>( ) , Deduce::IndexedArgumentType<Current , TArgs...>( ) ) );
 
 				if constexpr ( End > Current -1)
 				{
-					result = result && IsNoexceptReassign<Current + 1 , End , Arguments...>::value;
+					result = result && IsNoexceptReassign<Current + 1 , End , TArgs...>::value;
 				}
 
 				return result;
@@ -38,32 +38,32 @@ export namespace Atlas
 		using SliceType = decltype( Tuple::Slice<inclusiveStart , exclusiveEnd>( TupleType {} ) );
 
 		public: template <unsigned int Index , typename TupleType>
-		using ElementType = std::tuple_element_t<Index , TupleType>;
+		using TElement = std::tuple_element_t<Index , TupleType>;
 		
-		public: template<typename... Arguments>
-		constexpr static inline void Reassign( std::tuple<Arguments...>& tuple , Arguments&&... arguments )
-			noexcept ( IsNoexceptReassign<0 , sizeof...( Arguments ) , Arguments...>::value )
+		public: template<typename... TArgs>
+		constexpr static inline void Reassign( std::tuple<TArgs...>& tuple , TArgs&&... arguments )
+			noexcept ( IsNoexceptReassign<0 , sizeof...( TArgs ) , TArgs...>::value )
 		{
-			Tuple::Reassign<0, sizeof...(Arguments)>( tuple , std::forward<Arguments&&>( arguments )... );
+			Tuple::Reassign<0, sizeof...(TArgs)>( tuple , std::forward<TArgs&&>( TArgs )... );
 		}
 			
-		private: template<unsigned int inclusiveStart , unsigned int exclusiveEnd,typename TupleType, typename CurrentType, typename... Arguments>
-		constexpr static inline void Reassign( TupleType& tuple , CurrentType&& current, Arguments&&... arguments )
-			noexcept ( IsNoexceptReassign<inclusiveStart , exclusiveEnd , Arguments...>::value )
+		private: template<unsigned int inclusiveStart , unsigned int exclusiveEnd,typename TupleType, typename CurrentType, typename... TArgs>
+		constexpr static inline void Reassign( TupleType& tuple , CurrentType&& current, TArgs&&... arguments )
+			noexcept ( IsNoexceptReassign<inclusiveStart , exclusiveEnd , TArgs...>::value )
 		{
 			Tuple::Set<inclusiveStart>( tuple , std::forward<CurrentType&&>(current) );
 		
 			if constexpr ( inclusiveStart < exclusiveEnd )
 			{
-				Tuple::Reassign<inclusiveStart + 1 , exclusiveEnd>( tuple , std::forward<Arguments&&>( arguments )... );
+				Tuple::Reassign<inclusiveStart + 1 , exclusiveEnd>( tuple , std::forward<TArgs&&>( TArgs )... );
 			}
 		}
 
-		public: template<typename... Arguments>
-		constexpr static inline auto Make(Arguments&&... arguments )
-			noexcept( Type<std::tuple<Arguments...>>::template IsNoexceptConstructible<Arguments&&...> )
+		public: template<typename... TArgs>
+		constexpr static inline auto Make(TArgs&&... arguments )
+			noexcept( Type<std::tuple<TArgs...>>::template IsNoexceptConstructible<TArgs&&...> )
 		{
-			return std::tuple<Arguments...>( std::forward<Arguments&&>( arguments )... );
+			return std::tuple<TArgs...>( std::forward<TArgs&&>( TArgs )... );
 		}
 			
 		public: template<unsigned int Index, typename TupleType>
@@ -80,9 +80,9 @@ export namespace Atlas
 			return std::make_tuple( std::get<Indexes>( std::forward<TupleType&&>( tuple ) )... );
 		}
 
-		public: template<unsigned int Index , typename... Arguments>
-		constexpr static inline void Set( std::tuple<Arguments...>& tuple , Deduce::IndexedArgumentType<Index,Arguments...> value )
-			noexcept ( noexcept ( std::get<Index>( std::tuple<Arguments...>() ) = Deduce::IndexedArgumentType<Index , Arguments...>( ) ) )
+		public: template<unsigned int Index , typename... TArgs>
+		constexpr static inline void Set( std::tuple<TArgs...>& tuple , Deduce::IndexedArgumentType<Index,TArgs...> value )
+			noexcept ( noexcept ( std::get<Index>( std::tuple<TArgs...>() ) = Deduce::IndexedArgumentType<Index , TArgs...>( ) ) )
 		{
 			std::get<Index>( tuple ) = value;
 		}

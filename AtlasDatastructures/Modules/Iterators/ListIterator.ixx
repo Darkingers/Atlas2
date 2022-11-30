@@ -11,7 +11,7 @@ export namespace Atlas
 	class DLLApi ListIterator :
         public Interface::IIterator<DataType>
 	{
-        private: using IteratorType = ListIterator<DataType, NodeType>;
+        private: using TIterator = ListIterator<DataType, NodeType>;
 
         public: using iterator_category = std::bidirectional_iterator_tag;
         public: using difference_type = std::ptrdiff_t;
@@ -49,41 +49,41 @@ export namespace Atlas
         }
 
         public:
-        constexpr IteratorType& operator++( ) final
+        constexpr TIterator& operator++( ) final
         {
             _current = _current->Next;
             return *this;
         }
 
         public:
-        constexpr IteratorType& operator++( int) final
+        constexpr TIterator& operator++( int) final
         {
-            IteratorType tmp = *this;
+            TIterator tmp = *this;
             _current = _current->Next;
             return tmp;
         }
 
         public:
-        constexpr IteratorType& operator--( ) final
+        constexpr TIterator& operator--( ) final
         {
             _current = _current->Previous;
             return *this;
         }
 
         public:
-        constexpr IteratorType operator--( int ) final
+        constexpr TIterator operator--( int ) final
         {
-            IteratorType tmp = *this; 
+            TIterator tmp = *this; 
             _current = _current->Previous;
             return tmp;
         }
 
-        constexpr friend bool operator== ( const IteratorType& a , const IteratorType& b )
+        constexpr friend bool operator== ( const TIterator& a , const TIterator& b )
         {
             return a._current == b._current;
         };
 
-        constexpr friend bool operator!= ( const IteratorType& a , const IteratorType& b )
+        constexpr friend bool operator!= ( const TIterator& a , const TIterator& b )
         {
             return a._current != b._current;
         };

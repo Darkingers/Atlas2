@@ -6,12 +6,12 @@ export module AtlasDefinitions:ConverterDefinitions;
 
 export namespace Atlas
 {
-	template<typename SourceType , typename TargetType>
+	template<typename TSource , typename TTarget>
 	class DLLApi Converter :
 		public std::false_type
 	{
 		public: 
-		consteval static inline TargetType Convert( const SourceType& data )
+		consteval static inline TTarget Convert( const TSource& data )
 		{
 			throw "No converter defined for this type combination.";
 		}

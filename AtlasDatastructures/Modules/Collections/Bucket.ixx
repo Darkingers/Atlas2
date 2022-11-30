@@ -43,12 +43,12 @@ export namespace Atlas
 				return hash;
 			}
 
-			public: template<typename... Arguments>
-			Bucket( Arguments&&... argumentss )
+			public: template<typename... TArgs>
+			Bucket( TArgs&&... argumentss )
 			{
-				if constexpr ( sizeof...( arguments ) > 0 )
+				if constexpr ( sizeof...( TArgs ) > 0 )
 				{
-					this->Add( arguments... );
+					this->Add( TArgs... );
 				}
 			}
 
@@ -76,8 +76,8 @@ export namespace Atlas
 				return  *( _data + GetIndex( key ) );
 			}
 
-			public: template<typename... Arguments>
-			HashMapType& Add( PairType& pair , Arguments... arguments )
+			public: template<typename... TArgs>
+			HashMapType& Add( PairType& pair , TArgs... arguments )
 			{
 				const unsigned int index = GetIndex( pair.Key );
 
@@ -102,56 +102,56 @@ export namespace Atlas
 
 				entry->Add( *new LinkType( pair );
 
-				if constexpr ( sizeof...( arguments ) == 0 )
+				if constexpr ( sizeof...( TArgs ) == 0 )
 				{
 					return *this;
 				}
 				else
 				{
-					return this->Add( arguments... );
+					return this->Add( TArgs... );
 				}
 
 			}
 
-			public: template<typename... Arguments>
-			HashMapType& Add( const KeyType& key , ValueType& value , Arguments... arguments )
+			public: template<typename... TArgs>
+			HashMapType& Add( const KeyType& key , ValueType& value , TArgs... arguments )
 			{
-				return this->Add( *new PairType( key , value ) , arguments... );
+				return this->Add( *new PairType( key , value ) , TArgs... );
 			}
 
-			public: template<typename CollectionType , typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType , PairType , Functor<PairType> , Condition<PairType>>
-			HashMapType& Add( CollectionType& collection , Arguments... arguments )
+			public: template<typename TCollection , typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection , PairType , Functor<PairType> , Condition<PairType>>
+			HashMapType& Add( TCollection& collection , TArgs... arguments )
 			{
 				collection.ForEach( [ ]( PairType& pair ) mutable
 				{
 					this->Add( pair );
 				} );
 
-				if constexpr ( sizeof...( arguments ) == 0 )
+				if constexpr ( sizeof...( TArgs ) == 0 )
 				{
 					return *this;
 				}
 				else
 				{
-					return this->Add( arguments... );
+					return this->Add( TArgs... );
 				}
 			}
 
-			public: template<typename CollectionType , typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType , PairType>
-			HashMapType& Add( CollectionType& collection , Arguments... arguments )
+			public: template<typename TCollection , typename... TArgs> requires Concepts::StandardIterableCollection<TCollection , PairType>
+			HashMapType& Add( TCollection& collection , TArgs... arguments )
 			{
 				for ( auto pair : collection )
 				{
 					this->Add( pair );
 				}
 
-				if constexpr ( sizeof...( arguments ) == 0 )
+				if constexpr ( sizeof...( TArgs ) == 0 )
 				{
 					return *this;
 				}
 				else
 				{
-					return this->Add( arguments... );
+					return this->Add( TArgs... );
 				}
 			}
 

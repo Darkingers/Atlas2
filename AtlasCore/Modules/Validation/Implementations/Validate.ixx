@@ -70,8 +70,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA , typename TypeB>
-		constexpr static inline void IsSame( const TypeA& a, const TypeB& b) 
+		public: template<typename TA , typename TB>
+		constexpr static inline void IsSame( const TA& a, const TB& b) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -85,8 +85,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA , typename TypeB>
-		constexpr static inline void IsNotSame( const TypeA& a , const TypeB& b )
+		public: template<typename TA , typename TB>
+		constexpr static inline void IsNotSame( const TA& a , const TB& b )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -149,8 +149,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA , typename TypeB>
-		constexpr static inline void IsLess( const TypeA& a, const TypeB& b ) 
+		public: template<typename TA , typename TB>
+		constexpr static inline void IsLess( const TA& a, const TB& b ) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -164,8 +164,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA, typename TypeB>
-		constexpr static inline void IsMore( const TypeA& a , const TypeB& b )
+		public: template<typename TA, typename TB>
+		constexpr static inline void IsMore( const TA& a , const TB& b )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -179,8 +179,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA , typename TypeB>
-		constexpr static inline void PositiveRange( const TypeA& a, const TypeB& b ) 
+		public: template<typename TA , typename TB>
+		constexpr static inline void PositiveRange( const TA& a, const TB& b ) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -194,8 +194,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TestedType , typename TypeA , typename TypeB>
-		constexpr static inline void InclusiveRange( const TestedType& tested, const TypeA& from , const TypeB& to )
+		public: template<typename TestedType , typename TA , typename TB>
+		constexpr static inline void InclusiveRange( const TestedType& tested, const TA& from , const TB& to )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -209,8 +209,8 @@ export namespace Atlas
 			}
 		}
 						
-		public: template<typename TestedType , typename TypeA , typename TypeB>
-		constexpr static inline void ExclusiveRange( const TestedType& tested , const TypeA& from , const TypeB& to )
+		public: template<typename TestedType , typename TA , typename TB>
+		constexpr static inline void ExclusiveRange( const TestedType& tested , const TA& from , const TB& to )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -224,8 +224,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA , typename TypeB>
-		constexpr static inline void IsLessOrEqual( const TypeA& a , const TypeB& b )
+		public: template<typename TA , typename TB>
+		constexpr static inline void IsLessOrEqual( const TA& a , const TB& b )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -239,8 +239,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA , typename TypeB>
-		constexpr static inline void IsMoreOrEqual( const TypeA& a , const TypeB& b ) 
+		public: template<typename TA , typename TB>
+		constexpr static inline void IsMoreOrEqual( const TA& a , const TB& b ) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -254,8 +254,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TypeA , typename TypeB, typename TypeC>
-		constexpr static inline void IsInRange( const TypeA& number , const TypeB& inclusiveStart, const TypeC& exclusiveEnd )
+		public: template<typename TA , typename TB, typename TypeC>
+		constexpr static inline void IsInRange( const TA& number , const TB& inclusiveStart, const TypeC& exclusiveEnd )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -270,8 +270,8 @@ export namespace Atlas
 		}
 
 
-		public: template<typename ComparedType, typename CurrentType, typename... Arguments>
-		constexpr static inline void IsAny( const ComparedType& compared, const CurrentType& current, const Arguments&... arguments) 
+		public: template<typename ComparedType, typename CurrentType, typename... TArgs>
+		constexpr static inline void IsAny( const ComparedType& compared, const CurrentType& current, const TArgs&... args) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -284,9 +284,9 @@ export namespace Atlas
 				return;
 			}
 			
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				Validate<IsEnabled>::IsAny( compared , arguments... );
+				Validate<IsEnabled>::IsAny( compared , args... );
 			}
 			else
 			{
@@ -294,8 +294,8 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename ComparedType , typename CurrentType , typename... Arguments>
-		constexpr static inline void IsNone( const ComparedType& compared , const CurrentType& current , const Arguments&... arguments ) 
+		public: template<typename ComparedType , typename CurrentType , typename... TArgs>
+		constexpr static inline void IsNone( const ComparedType& compared , const CurrentType& current , const TArgs&... arguments ) 
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -308,9 +308,9 @@ export namespace Atlas
 				throw ValidationException( "Condition: compared != current is not fulfilled!" );
 			}
 
-			if constexpr ( sizeof...( arguments ) > 0 )
+			if constexpr ( sizeof...( TArgs ) > 0 )
 			{
-				Validate<IsEnabled>::IsNone( compared , arguments... );
+				Validate<IsEnabled>::IsNone( compared , TArgs... );
 			}
 			else
 			{

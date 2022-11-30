@@ -9,20 +9,45 @@ export module AtlasConcepts:FunctionalConcepts;
 
 export namespace Atlas::Concept
 {
-	template<typename ReturnType , typename InvokableType , typename... Arguments>
-	concept IsInvokable = requires( InvokableType invokable , Arguments... arguments )
+	export namespace Standard
+	{
+		template<typename T>
+		concept IsHashable = requires( const T instance )
+		{
+			{
+				std::hash<T>( instance )
+			}->std::convertible_to<size_t>;
+		};
+
+		template<typename TCollection>
+		concept IsClearable = requires ( TCollection instance )
+		{
+			instance.clear( );
+		};
+
+		template<typename TCollection>
+		concept IsCountable = requires ( const TCollection instance )
+		{
+			{
+				instance.size( )
+			}->std::convertible_to<size_t>;
+		};
+	}
+
+	template<typename TReturn , typename TInvokable , typename... TArgs>
+	concept IsInvokable = requires( TInvokable invokable , TArgs... arguments )
 	{
 		{
 			invokable( arguments... )
-		} -> std::convertible_to<ReturnType>;
+		} -> std::convertible_to<TReturn>;
 	};
 
-	template<typename ReturnType , typename ExecutableType>
-	concept IsExecutable = requires( ExecutableType executable )
+	template<typename TReturn , typename TExecutable>
+	concept IsExecutable = requires( TExecutable executable )
 	{
 		{
 			executable( )
-		} ->  std::convertible_to<ReturnType>;
+		} ->  std::convertible_to<TReturn>;
 	};
 
 	template<typename T>
@@ -33,64 +58,71 @@ export namespace Atlas::Concept
 		} -> std::convertible_to<char*>;	
 	};
 
-	template<typename ReturnType, typename IndexableType , typename IndexType>
-	concept HasIndexOperator = requires( IndexableType instance , const IndexType index )
+	template<typename TReturn , typename TIndexed , typename TIndex>
+	concept HasIndexOperator = requires( TIndexed instance , const TIndex index )
 	{
 		{
 			instance[index]
-		} -> std::convertible_to<ReturnType>;
+		} -> std::convertible_to<TReturn>;
 	};
 
-	template<typename TypeA , typename TypeB>
-	concept HasEqualOperator = requires( const TypeA x , const TypeB y )
+	template<typename TA , typename TB>
+	concept HasEqualOperator = requires( const TA x , const TB y )
 	{
 		{
 			x == y
 		} -> std::convertible_to<bool>;
 	};
 
-	template<typename TypeA , typename TypeB>
-	concept HasNotEqualOperator = requires( const TypeA x , const TypeB y )
+	template<typename TA , typename TB>
+	concept HasNotEqualOperator = requires( const TA x , const TB y )
 	{
 		{
 			x != y
 		} -> std::convertible_to<const bool>;
 	};
 
-	template<typename TypeA , typename TypeB>
-	concept HasLessOperator = requires( const TypeA x , const TypeB y )
+	template<typename TA , typename TB>
+	concept HasLessOperator = requires( const TA x , const TB y )
 	{
 		{
 			x < y
 		} -> std::convertible_to<bool>;
 	};
 
-	template<typename TypeA , typename TypeB>
-	concept HasLessOperatorOrEqual = requires( const TypeA x , const TypeB y )
+	template<typename TA , typename TB>
+	concept HasLessOperatorOrEqual = requires( const TA x , const TB y )
 	{
 		{
 			x <= y
 		} -> std::convertible_to<bool>;
 	};
 
-	template<typename TypeA , typename TypeB>
-	concept HasMoreOperator = requires( const TypeA x , const TypeB y )
+	template<typename TA , typename TB>
+	concept HasMoreOperator = requires( const TA x , const TB y )
 	{
 		{
 			x > y
 		} -> std::convertible_to<bool>;
 	};
 
-	template<typename TypeA , typename TypeB>
-	concept HasMoreOperatorOrEqual = requires( const TypeA x , const TypeB y )
+	template<typename TA , typename TB>
+	concept HasMoreOperatorOrEqual = requires( const TA x , const TB y )
 	{
 		{
 			x >= y
 		} -> std::convertible_to<bool>;
 	};
 
-	template<typename IterableType>
-	concept IsIterable = requires ( IterableType instance )
+	template<typename TCollection , typename TElement>
+	concept HasContainFunction = requires ( const TCollection collection , const TElement element )
+	{
+		{
+			collection.Contains( element )
+		}->std::convertible_to<bool>;
+	};
+	template<typename TIterable>
+	concept IsIterable = requires ( TIterable instance )
 	{
 		{
 			instance.begin( )
@@ -100,63 +132,33 @@ export namespace Atlas::Concept
 		};
 	};
 
-	template<typename IterableType , typename IteratedType>
-	concept IsIterableWith = requires ( IterableType instance )
+	template<typename TIterable , typename TIterated>
+	concept IsIterableWith = requires ( TIterable instance )
 	{
 		{
-			*( instance.begin( ))
-		} -> std::convertible_to<IteratedType>;
+			*( instance.begin( ) )
+		} -> std::convertible_to<TIterated>;
 		{
-			*( instance.end( ))
-		} -> std::convertible_to<IteratedType>;
-	};	
-
-	template<typename HashableType>
-	concept IsStandardHashable = requires( const HashableType instance )
-	{
-		{
-			std::hash<HashableType>( instance )
-		}->std::convertible_to<size_t>;
+			*( instance.end( ) )
+		} -> std::convertible_to<TIterated>;
 	};
 
-	template<typename ClearableType>
-	concept IsStandardClearable = requires ( ClearableType instance )
-	{
-		instance.clear( );
-	};
-
-	template<typename CountableType>
-	concept IsStandardCountable = requires ( const CountableType instance )
-	{
-		{
-			instance.size( )
-		}->std::convertible_to<size_t>;
-	};
-
-	template<typename ClearableType>
-	concept HasClearFunction = requires ( ClearableType instance )
+	template<typename TCollection>
+	concept IsClearable = requires ( TCollection instance )
 	{
 		instance.Clear( );
 	};
 
-	template<typename CountableType>
-	concept HasCountFunction = requires ( const CountableType instance )
+	template<typename TCollection>
+	concept IsCountable = requires ( const TCollection instance )
 	{
 		{
 			instance.Count( )
 		}->std::convertible_to<unsigned int>;
 	};
 
-	template<typename CollectionType , typename ElementType>
-	concept HasContainFunction = requires ( const CollectionType collection , const ElementType element )
-	{
-		{
-			collection.Contains( element )
-		}->std::convertible_to<bool>;
-	};
-
-	template<typename TestedType>
-	concept HasGetHashFunction = requires( const TestedType instance )
+	template<typename T>
+	concept IsHashable = requires( const T instance )
 	{
 		{
 			instance.GetHash( )

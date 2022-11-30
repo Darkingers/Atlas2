@@ -21,18 +21,18 @@ export module AtlasCollections:Tree;
 //		protected: TreeType*[ChildCount] _children;
 //
 //
-//		public: template<typename... Arguments>
-//		const bool Contains( const DataType& data, Arguments... arguments )const 
+//		public: template<typename... TArgs>
+//		const bool Contains( const DataType& data, TArgs... arguments )const 
 //		{
 //			if ( Data == data )
 //			{
-//				if constexpr ( sizeof...( arguments ) == 0 )
+//				if constexpr ( sizeof...( TArgs ) == 0 )
 //				{
 //					return true;
 //				}
 //				else
 //				{
-//					return this->Contains( arguments... );
+//					return this->Contains( TArgs... );
 //				}		
 //			}
 //			else
@@ -41,13 +41,13 @@ export module AtlasCollections:Tree;
 //				{
 //					if (_children[i]!=nullptr && _children[i++]->Contains( data ) )
 //					{
-//						if constexpr ( sizeof...( arguments ) == 0 )
+//						if constexpr ( sizeof...( TArgs ) == 0 )
 //						{
 //							return true;
 //						}
 //						else
 //						{
-//							return this->Contains( arguments... );
+//							return this->Contains( TArgs... );
 //						}
 //					}
 //				}
@@ -56,8 +56,8 @@ export module AtlasCollections:Tree;
 //			return false;
 //		}
 //
-//		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, DataType, FunctorType, ConditionType>
-//		const bool Contains( const CollectionType& collection, Arguments... arguments )const 
+//		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, DataType, FunctorType, ConditionType>
+//		const bool Contains( const TCollection& collection, TArgs... arguments )const 
 //		{
 //			bool returnValue = true;
 //
@@ -74,18 +74,18 @@ export module AtlasCollections:Tree;
 //				}
 //			} );
 //
-//			if constexpr ( sizeof...( arguments ) == 0 )
+//			if constexpr ( sizeof...( TArgs ) == 0 )
 //			{
 //				return returnValue;
 //			}
 //			else
 //			{
-//				return returnValue && this->Contains( arguments... );
+//				return returnValue && this->Contains( TArgs... );
 //			}
 //		}
 //
-//		public: template<typename CollectionType, typename... Arguments> requires  Concepts::StandardIterableCollection<CollectionType, DataType>
-//		const bool Contains( const CollectionType& collection, Arguments... arguments )const 
+//		public: template<typename TCollection, typename... TArgs> requires  Concepts::StandardIterableCollection<TCollection, DataType>
+//		const bool Contains( const TCollection& collection, TArgs... arguments )const 
 //		{
 //			for ( auto data : collection )
 //			{
@@ -95,13 +95,13 @@ export module AtlasCollections:Tree;
 //				}
 //			}
 //
-//			if constexpr ( sizeof...( arguments ) == 0 )
+//			if constexpr ( sizeof...( TArgs ) == 0 )
 //			{
 //				return true;
 //			}
 //			else
 //			{
-//				return this->Contains( arguments... );
+//				return this->Contains( TArgs... );
 //			}
 //		}
 //
@@ -120,27 +120,27 @@ export module AtlasCollections:Tree;
 //			return counter;
 //		}
 //
-//		public: template<typename... Arguments>
-//		TreeType& Get( Arguments... arguments )
+//		public: template<typename... TArgs>
+//		TreeType& Get( TArgs... arguments )
 //		{
-//			return this->NavigateTo( arguments... ).Data;
+//			return this->NavigateTo( TArgs... ).Data;
 //		}
 //
-//		public: template<typename... Arguments>
-//		TreeType& NavigateTo(unsigned int index, Arguments... arguments )
+//		public: template<typename... TArgs>
+//		TreeType& NavigateTo(unsigned int index, TArgs... arguments )
 //		{
-//			if constexpr ( sizeof...( arguments ) == 0 )
+//			if constexpr ( sizeof...( TArgs ) == 0 )
 //			{
 //				return *_children[index];
 //			}
 //			else
 //			{
-//				return _children[index]->NavigateTo( arguments... );
+//				return _children[index]->NavigateTo( TArgs... );
 //			}
 //		}
 //
-//		public: template<typename CollectionType, typename... Arguments> requires Concepts::AtlasIterableCollection<CollectionType, unsigned int, FunctorType, ConditionType>
-//		DataType& NavigateTo( CollectionType collection, Arguments... arguments )
+//		public: template<typename TCollection, typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection, unsigned int, FunctorType, ConditionType>
+//		DataType& NavigateTo( TCollection collection, TArgs... arguments )
 //		{
 //			TreeType* current = this;
 //
@@ -149,18 +149,18 @@ export module AtlasCollections:Tree;
 //				current = current->_children[index];
 //			} );
 //
-//			if constexpr ( sizeof...( arguments ) == 0 )
+//			if constexpr ( sizeof...( TArgs ) == 0 )
 //			{
 //				return *current;
 //			}
 //			else
 //			{
-//				return current->NavigateTo( arguments... );
+//				return current->NavigateTo( TArgs... );
 //			}			
 //		}
 //
-//		public: template<typename CollectionType, typename... Arguments> requires Concepts::StandardIterableCollection<CollectionType, unsigned int>
-//		DataType& NavigateTo( CollectionType collection, Arguments... arguments )
+//		public: template<typename TCollection, typename... TArgs> requires Concepts::StandardIterableCollection<TCollection, unsigned int>
+//		DataType& NavigateTo( TCollection collection, TArgs... arguments )
 //		{
 //			TreeType* current = this;
 //
@@ -169,20 +169,20 @@ export module AtlasCollections:Tree;
 //				current = current->_children[index];
 //			}
 //
-//			if constexpr ( sizeof...( arguments ) == 0 )
+//			if constexpr ( sizeof...( TArgs ) == 0 )
 //			{
 //				return *current;
 //			}
 //			else
 //			{
-//				return current->NavigateTo( arguments... );
+//				return current->NavigateTo( TArgs... );
 //			}
 //		}
 //
-//		public: template<typename... Arguments>
-//		TreeType* BreathFirstSearch( Arguments... arguments ) 
+//		public: template<typename... TArgs>
+//		TreeType* BreathFirstSearch( TArgs... arguments ) 
 //		{
-//			if ( Checker::CheckALL( Data, arguments... ))
+//			if ( Checker::CheckALL( Data, TArgs... ))
 //			{
 //				return this;
 //			}
@@ -198,7 +198,7 @@ export module AtlasCollections:Tree;
 //					for ( unsigned int i = 0; i < ChildCount; )
 //					{
 //						child = node->__children[i++];
-//						if ( Checker::CheckALL( child.Data, arguments... ))
+//						if ( Checker::CheckALL( child.Data, TArgs... ))
 //						{
 //							return child;
 //						}
@@ -217,10 +217,10 @@ export module AtlasCollections:Tree;
 //			return nullptr;
 //		}
 //
-//		public: template<typename... Arguments>
-//		TreeType* DepthFirstSearch( Arguments... arguments ) 
+//		public: template<typename... TArgs>
+//		TreeType* DepthFirstSearch( TArgs... arguments ) 
 //		{
-//			if ( Checker::CheckAll( Data, arguments... ) )
+//			if ( Checker::CheckAll( Data, TArgs... ) )
 //			{
 //				return this;
 //			}
@@ -230,7 +230,7 @@ export module AtlasCollections:Tree;
 //			{
 //				if ( _children[i] != nullptr )
 //				{
-//					childResult = _children[i]->DepthFirstSearch( arguments... );
+//					childResult = _children[i]->DepthFirstSearch( TArgs... );
 //
 //					if ( childresult != nullptr )
 //					{

@@ -12,17 +12,17 @@ import AtlasExtensions;
 
 export namespace Atlas
 {
-	template<typename ReturnType , typename... Arguments>
+	template<typename ReturnType , typename... TArgs>
 	class DLLApi BoundMethod :
-		public Trait::Invokable<ReturnType, BoundMethod<ReturnType, Arguments...>, Arguments...>
+		public Trait::Invokable<ReturnType, BoundMethod<ReturnType, TArgs...>, TArgs...>
 	{
-		private: using BoundMethodType = BoundMethod<ReturnType , Arguments...>;
-		private: using FunctionType = Definition::LambdaFunction<ReturnType , Arguments...>;	
-		private: using ValidateHolder = std::tuple<Arguments...>;
+		private: using BoundMethodType = BoundMethod<ReturnType , TArgs...>;
+		private: using FunctionType = Definition::LambdaFunction<ReturnType , TArgs...>;	
+		private: using ValidateHolder = std::tuple<TArgs...>;
 					   
 		
 		private: FunctionType _invoked;
-		private: ValidateHolder _arguments;
+		private: ValidateHolder _TArgs;
 
 
 		public:
@@ -31,21 +31,21 @@ export namespace Atlas
 		{}	
 		
 		public:
-		BoundMethod( FunctionType invoked, Arguments&&... args ) noexcept :
+		BoundMethod( FunctionType invoked, TArgs&&... args ) noexcept :
 			_invoked( invoked ),
-			_arguments(std::forward<Arguments&&>(args )... )
+			_TArgs(std::forward<TArgs&&>(args )... )
 		{}
 
 		public:
-		BoundMethodType& Rebind( Arguments&&... args )
+		BoundMethodType& Rebind( TArgs&&... args )
 		{
-			Tuple::Reassign( _arguments , std::forward<Arguments&&>( args )... );
+			Tuple::Reassign( _TArgs , std::forward<TArgs&&>( args )... );
 		}
 
 		public:
 		ReturnType Invoke()
 		{
-			return std::apply( _invoked , _arguments );
+			return std::apply( _invoked , _TArgs );
 		}
 	};
 

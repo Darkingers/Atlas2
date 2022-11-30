@@ -12,30 +12,30 @@ export namespace Atlas
 {
 	class DLLApi VariadicHelper
 	{
-		public: template<typename... Arguments>
-		constexpr static inline auto Size( const Arguments&... arguments )
-			noexcept( ( (noexcept( Adapter::Size( arguments ) ) ) && ...) )
+		public: template<typename... TArgs>
+		constexpr static inline auto Size( const TArgs&... arguments )
+			noexcept( ( (noexcept( Adapter::Size( TArgs ) ) ) && ...) )
 		{
-			return ( (Adapter::Size( arguments ) ) + ...);
+			return ( (Adapter::Size( TArgs ) ) + ...);
 		}
 
-		public: template<typename DataType , typename... Arguments>
-		constexpr static inline bool AnyFulfills( const DataType& data , const Arguments&... conditions )
+		public: template<typename DataType , typename... TArgs>
+		constexpr static inline bool AnyFulfills( const DataType& data , const TArgs&... conditions )
 			noexcept( ( (noexcept( conditions(data ) ) ) && ...) )
 		{
 			return ( (conditions( data ) ) || ...);
 		}
 
-		public: template<typename DataType , typename... Arguments>
-		constexpr static inline bool AllFulfills( const DataType& data ,  const Arguments&... conditions )
+		public: template<typename DataType , typename... TArgs>
+		constexpr static inline bool AllFulfills( const DataType& data ,  const TArgs&... conditions )
 			noexcept( ( (noexcept( conditions( data ) ) ) && ...) )
 		{
 			return ( (conditions( data ) ) && ...);
 		}
 
-		public: template<typename CollectionType , typename... Arguments>
-		constexpr static inline auto CountAnyFulfills( const CollectionType& collection , const Arguments&... conditions )
-			noexcept( Concept::IsNoexceptIterable && ( (noexcept( conditions( std::declval<Deduce::CollectionContainedType<CollectionType>>() ) ) ) && ...) )
+		public: template<typename TCollection , typename... TArgs>
+		constexpr static inline auto CountAnyFulfills( const TCollection& collection , const TArgs&... conditions )
+			noexcept( Concept::IsNoexceptIterable && ( (noexcept( conditions( std::declval<Deduce::CollectionContainedType<TCollection>>() ) ) ) && ...) )
 		{
 			const auto endIterator = std::cend(collection);
 			auto currentIterator = std::begin(collection);
@@ -50,9 +50,9 @@ export namespace Atlas
 			return counter;
 		}
 
-		public: template<typename CollectionType , typename... Arguments>
-		constexpr static inline auto CountAllFullfills( const CollectionType& collection , const Arguments&... conditions )
-			noexcept( Concept::IsNoexceptIterable && ((noexcept( conditions( std::declval<Deduce::CollectionContainedType<CollectionType>>( ) ) ) ) && ... ) )
+		public: template<typename TCollection , typename... TArgs>
+		constexpr static inline auto CountAllFullfills( const TCollection& collection , const TArgs&... conditions )
+			noexcept( Concept::IsNoexceptIterable && ((noexcept( conditions( std::declval<Deduce::CollectionContainedType<TCollection>>( ) ) ) ) && ... ) )
 		{
 			const auto endIterator = std::cend( collection );
 			auto currentIterator = std::begin( collection );
@@ -67,18 +67,18 @@ export namespace Atlas
 			return counter;
 		}
 	
-		public: template<typename DataType , typename... Arguments>
-		constexpr static inline bool AnyContains( const DataType& data , const Arguments&... arguments )
-			noexcept( ( (noexcept( Adapter::Contains(arguments, data ) ) ) && ...) )
+		public: template<typename DataType , typename... TArgs>
+		constexpr static inline bool AnyContains( const DataType& data , const TArgs&... arguments )
+			noexcept( ( (noexcept( Adapter::Contains(TArgs, data ) ) ) && ...) )
 		{
-			return ((Adapter::Contains( data , arguments )) || ... );
+			return ((Adapter::Contains( data , TArgs )) || ... );
 		}
 
-		public: template<typename DataType , typename... Arguments>
-		constexpr static inline bool AllContains( const DataType& data , const Arguments&... arguments )
-			noexcept( ( (noexcept( Adapter::Contains(arguments, data ) ) ) && ...) )
+		public: template<typename DataType , typename... TArgs>
+		constexpr static inline bool AllContains( const DataType& data , const TArgs&... arguments )
+			noexcept( ( (noexcept( Adapter::Contains(TArgs, data ) ) ) && ...) )
 		{
-			return ((Adapter::Contains( data , arguments ) ) && ...);
+			return ((Adapter::Contains( data , TArgs ) ) && ...);
 		}
 	};
 }

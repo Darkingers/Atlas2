@@ -11,7 +11,7 @@ export namespace Atlas
 		public std::false_type
 	{
 		public: 
-		consteval static inline TTarget Convert( const TSource& data )
+		consteval static inline TTarget Convert( TSource data )
 		{
 			throw "No converter defined for this type combination.";
 		}

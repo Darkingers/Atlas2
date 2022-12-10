@@ -77,7 +77,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Where( TArgs&&... arguments ) 
+		QueryType& Where( TArgs&&... args ) 
 		{
 			const unsigned int index = _conditions;
 
@@ -89,7 +89,7 @@ export namespace Atlas
 		}
 
 		private: template<typename... TArgs>
-		const unsigned int UnionConcat( unsigned int distinctCount, const DataType& data,const TArgs&... arguments )
+		const unsigned int UnionConcat( unsigned int distinctCount, const DataType& data,const TArgs&... args )
 		{
 			assert( distinctCount >= 0 );
 
@@ -119,7 +119,7 @@ export namespace Atlas
 		}
 
 		private: template<typename TCollection, typename... TArgs> requires IsIterableWith<TCollection, DataType>
-		const unsigned int UnionConcat( unsigned int distinctCount, const TCollection& collection, const TArgs&... arguments )
+		const unsigned int UnionConcat( unsigned int distinctCount, const TCollection& collection, const TArgs&... args )
 		{
 			assert( distinctCount >= 0 );
 
@@ -155,7 +155,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Union( const TArgs&... arguments ) 
+		QueryType& Union( const TArgs&... args ) 
 		{
 			Distinct();
 
@@ -167,7 +167,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Intersect( const TArgs&... arguments ) 
+		QueryType& Intersect( const TArgs&... args ) 
 		{
 			Evaluate();
 
@@ -191,7 +191,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Except( const TArgs&... arguments ) 
+		QueryType& Except( const TArgs&... args ) 
 		{
 			Evaluate();
 
@@ -215,7 +215,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Concat( const TArgs&... arguments ) 
+		QueryType& Concat( const TArgs&... args ) 
 		{
 			Evaluate();
 
@@ -519,7 +519,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Where( TArgs&&... arguments ) 
+		QueryType& Where( TArgs&&... args ) 
 		{
 			const unsigned int index = _conditions;
 
@@ -531,7 +531,7 @@ export namespace Atlas
 		}
 
 		private: template<typename... TArgs>
-		unsigned int UnionConcat (unsigned int distinctCount, const DataType& data, TArgs&... arguments )
+		unsigned int UnionConcat (unsigned int distinctCount, const DataType& data, TArgs&... args )
 		{
 			assert( distinctCount >= 0 );
 
@@ -561,7 +561,7 @@ export namespace Atlas
 		}
 
 		private: template<typename TCollection, typename... TArgs> requires IsIterableWith<const TCollection, const DataType>
-		unsigned int UnionConcat(unsigned int distinctCount, const TCollection& collection, TArgs&... arguments )
+		unsigned int UnionConcat(unsigned int distinctCount, const TCollection& collection, TArgs&... args )
 		{
 			assert( distinctCount >= 0 );
 
@@ -597,7 +597,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Union( const TArgs&... arguments ) 
+		QueryType& Union( const TArgs&... args ) 
 		{
 			Distinct();
 
@@ -609,7 +609,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Intersect( const TArgs&... arguments ) 
+		QueryType& Intersect( const TArgs&... args ) 
 		{
 			Evaluate();
 
@@ -633,7 +633,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Except( const TArgs&... arguments ) 
+		QueryType& Except( const TArgs&... args ) 
 		{
 			Evaluate();
 
@@ -657,7 +657,7 @@ export namespace Atlas
 		}
 
 		private: template<typename... TArgs>
-		void ReplaceFrom( unsigned int index, const DataType& data, TArgs&... arguments )
+		void ReplaceFrom( unsigned int index, const DataType& data, TArgs&... args )
 		{
 			assert( index >= 0 );
 
@@ -670,7 +670,7 @@ export namespace Atlas
 		}
 
 		private: template<typename TCollection, typename... TArgs> requires IsIterable<const TCollection, const DataType>
-		void ReplaceFrom( unsigned int index, const TCollection& collection, TArgs&... arguments )
+		void ReplaceFrom( unsigned int index, const TCollection& collection, TArgs&... args )
 		{
 			assert( index >= 0 );
 
@@ -686,7 +686,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		QueryType& Concat( const TArgs&... arguments ) 
+		QueryType& Concat( const TArgs&... args ) 
 		{
 			Evaluate();
 

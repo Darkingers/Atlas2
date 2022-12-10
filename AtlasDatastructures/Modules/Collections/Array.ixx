@@ -42,7 +42,7 @@ export namespace Atlas
 
 
 		public: template<typename... TArgs>
-		constexpr ArrayBase( TArgs&&... arguments ) noexcept
+		constexpr ArrayBase( TArgs&&... args ) noexcept
 		{
 			if constexpr (sizeof...(TArgs) > 0 )
 			{
@@ -132,7 +132,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		constexpr ArrayType& Add( TArgs&&... arguments )
+		constexpr ArrayType& Add( TArgs&&... args )
 		{
 			const unsigned int index = ArrayType::GetSize( );
 			const unsigned int added = Variadic::Count( std::forward<const TArgs&>( TArgs )... );
@@ -150,7 +150,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		constexpr ArrayType& Remove( const TArgs&... arguments )
+		constexpr ArrayType& Remove( const TArgs&... args )
 		{
 			unsigned int removed = 0;
 
@@ -181,7 +181,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		constexpr ArrayType& Insert( const unsigned int index , TArgs&&... arguments )
+		constexpr ArrayType& Insert( const unsigned int index , TArgs&&... args )
 		{
 			ArrayType::ValidateIndex( index );
 
@@ -200,7 +200,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		constexpr ArrayType& ReplaceFrom( const unsigned int index , TArgs&&... arguments )
+		constexpr ArrayType& ReplaceFrom( const unsigned int index , TArgs&&... args )
 		{
 			ArrayType::ValidateIndex( index );
 

@@ -8,22 +8,31 @@ import AtlasConcepts;
 
 export namespace Atlas
 {
+	/// <summary>
+	/// An API that calls the appropriate converter between types
+	/// </summary>
 	template<typename TTarget>
 	class DLLApi Convert
 	{
+		/// <summary>
+		/// Convert the given value to the target type
+		/// </summary>
 		public: template<typename TSource>
 		constexpr static inline TTarget From( const TSource& data )
-			noexcept( Concept::IsNoexceptConvertable<TSource , TTarget> )
+			noexcept( Concept::IsNoexceptConvertable<const TSource& , TTarget> )
 		{
-			return Converter<Deduce::SimpleType<TSource> , Deduce::SimpleType<TTarget>>::Convert( data );
+			return Converter<const TSource&, TTarget>::Convert( data );
 		}
 
+		 /// <summary>
+		/// Convert the given value to the target type
+		/// </summary>
 		public: template<typename TSource>
-			requires Concept::IsPointer<TSource>
-		constexpr static inline TTarget From( const TSource data )
-			noexcept( Concept::IsNoexceptConvertable<TSource,TTarget> )
+			requires Concept::IsFundamental<TSource>
+		constexpr static inline TTarget From( TSource data )
+			noexcept( Concept::IsNoexceptConvertable<TSource , TTarget> )
 		{
-			return Converter<Deduce::SimpleType<TSource> , Deduce::SimpleType<TTarget>>::Convert( data );
+			return Converter<TSource, TTarget>::Convert( data );
 		}
 	};
 }

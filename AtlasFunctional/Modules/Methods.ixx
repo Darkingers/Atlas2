@@ -14,7 +14,7 @@ export namespace Atlas
 	class DLLApi Method
 	{
 		public: template<typename ReturnType , typename... TArgs>
-			inline static auto BindValidates( Definition::LambdaFunction<ReturnType , TArgs...> invoker , TArgs&&... arguments )
+			inline static auto BindValidates( Definition::LambdaFunction<ReturnType , TArgs...> invoker , TArgs&&... args )
 		{
 			return BoundMethod<ReturnType , TArgs...>( invoker , std::forward<TArgs&&>( TArgs )... );
 		}

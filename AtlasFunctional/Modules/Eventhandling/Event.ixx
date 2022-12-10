@@ -48,7 +48,7 @@ export namespace Atlas
 		{}
 
 		public:
-		void Invoke( TArgs&&... arguments )
+		void Invoke( TArgs&&... args )
 		{
 			for ( auto invoked : _lambdas )
 			{

@@ -10,6 +10,9 @@ export module AtlasTypeInfo:TypeNameExtractor;
 
 export namespace Atlas::Implementation
 {
+	/// <summary>
+	/// Helper class to extract a compile-time compatible type name
+	/// </summary>
 	template<typename T>
 	class DLLApi TypeName
 	{

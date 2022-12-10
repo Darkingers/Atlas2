@@ -35,10 +35,10 @@ export namespace Atlas::Concept
 	}
 
 	template<typename TReturn , typename TInvokable , typename... TArgs>
-	concept IsInvokable = requires( TInvokable invokable , TArgs... arguments )
+	concept IsInvokable = requires( TInvokable invokable , TArgs... args )
 	{
 		{
-			invokable( arguments... )
+			invokable( args... )
 		} -> std::convertible_to<TReturn>;
 	};
 

@@ -17,13 +17,13 @@ export namespace Atlas::Trait
 
 
 		public: template<typename... TArgs>
-		constexpr bool Contains( const TArgs&... arguments ) const  final
+		constexpr bool Contains( const TArgs&... args ) const  final
 		{
 			return DataFunctions::Contains( This( ) , std::forward<const TArgs&>( TArgs )... );
 		}
 
 		public: template< typename... TArgs>
-		constexpr unsigned int Count( const TArgs&... arguments ) const  final
+		constexpr unsigned int Count( const TArgs&... args ) const  final
 		{
 			return DataFunctions::Count( This( ) , std::forward<const TArgs&>( TArgs )... );
 		}
@@ -35,25 +35,25 @@ export namespace Atlas::Trait
 		}
 
 		public: template<typename... TArgs>
-		constexpr bool All(  const TArgs&... arguments ) const  final
+		constexpr bool All(  const TArgs&... args ) const  final
 		{
 			return DataFunctions::All( This( ) , std::forward<const TArgs&>( TArgs )... );
 		}
 
 		public: template<typename... TArgs>
-		constexpr bool Any( const TArgs&... arguments ) const  final
+		constexpr bool Any( const TArgs&... args ) const  final
 		{
 			return DataFunctions::Any( This( ) , std::forward<const TArgs&>( TArgs )... );
 		}
 
 		public: template<typename... TArgs>
-		constexpr DataType& First(  const TArgs&... arguments )const final
+		constexpr DataType& First(  const TArgs&... args )const final
 		{
 			return DataFunctions::First( This() , std::forward<const TArgs&>( TArgs )... );
 		}
 
 		public: template<typename... TArgs>
-		constexpr DataType* FirstOrNullptr(  const TArgs&... arguments )const  final
+		constexpr DataType* FirstOrNullptr(  const TArgs&... args )const  final
 		{
 			return DataFunctions::FirstOrNullptr( This( ) , std::forward<const TArgs&>( TArgs )... );
 		}

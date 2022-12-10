@@ -13,7 +13,7 @@ export namespace Atlas::Trait
 		public Interface::IInvokable<ReturnType, TArgs...>
 	{
 		public:
-		constexpr ReturnType operator()( TArgs&&... arguments )
+		constexpr ReturnType operator()( TArgs&&... args )
 		{
 			return This( ).Invoke( std::forward<TArgs&&>( TArgs )... );
 		}

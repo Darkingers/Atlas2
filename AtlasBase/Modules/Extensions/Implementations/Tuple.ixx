@@ -41,14 +41,14 @@ export namespace Atlas
 		using TElement = std::tuple_element_t<Index , TupleType>;
 		
 		public: template<typename... TArgs>
-		constexpr static inline void Reassign( std::tuple<TArgs...>& tuple , TArgs&&... arguments )
+		constexpr static inline void Reassign( std::tuple<TArgs...>& tuple , TArgs&&... args )
 			noexcept ( IsNoexceptReassign<0 , sizeof...( TArgs ) , TArgs...>::value )
 		{
 			Tuple::Reassign<0, sizeof...(TArgs)>( tuple , std::forward<TArgs&&>( TArgs )... );
 		}
 			
 		private: template<unsigned int inclusiveStart , unsigned int exclusiveEnd,typename TupleType, typename CurrentType, typename... TArgs>
-		constexpr static inline void Reassign( TupleType& tuple , CurrentType&& current, TArgs&&... arguments )
+		constexpr static inline void Reassign( TupleType& tuple , CurrentType&& current, TArgs&&... args )
 			noexcept ( IsNoexceptReassign<inclusiveStart , exclusiveEnd , TArgs...>::value )
 		{
 			Tuple::Set<inclusiveStart>( tuple , std::forward<CurrentType&&>(current) );
@@ -60,7 +60,7 @@ export namespace Atlas
 		}
 
 		public: template<typename... TArgs>
-		constexpr static inline auto Make(TArgs&&... arguments )
+		constexpr static inline auto Make(TArgs&&... args )
 			noexcept( Type<std::tuple<TArgs...>>::template IsNoexceptConstructible<TArgs&&...> )
 		{
 			return std::tuple<TArgs...>( std::forward<TArgs&&>( TArgs )... );

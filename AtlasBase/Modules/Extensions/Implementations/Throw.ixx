@@ -11,7 +11,7 @@ import :Extended;
 export namespace Atlas
 {
 	template<typename ExceptionType, typename... TArgs>
-	constexpr DLLApi void Throw( TArgs&&... arguments )
+	constexpr DLLApi void Throw( TArgs&&... args )
 	{
 		throw Extended<ExceptionType>::Construct( std::forward<TArgs&&>( TArgs )... );
 	}

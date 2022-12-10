@@ -21,7 +21,7 @@ export module AtlasCollections:List;
 //
 //
 //		public: template<typename... TArgs> 
-//		List( TArgs... arguments )  :
+//		List( TArgs... args )  :
 //			_size(0),
 //			_start(nullptr),
 //			_last(nullptr)
@@ -43,14 +43,14 @@ export module AtlasCollections:List;
 //		}
 //
 //		public: template<typename... TArgs>
-//		ListType& Add( TArgs... arguments )
+//		ListType& Add( TArgs... args )
 //		{
 //			_size += Helpher::Count( TArgs... );
 //			this->Add( TArgs... );
 //		}
 //
 //		public: template<typename... TArgs>
-//		ListType& Add(DataType& data, TArgs... arguments )
+//		ListType& Add(DataType& data, TArgs... args )
 //		{
 //			if ( _first == nullptr )
 //			{
@@ -72,7 +72,7 @@ export module AtlasCollections:List;
 //		}
 //
 //		public: template<typename TCollection, typename... TArgs> requires AtlasIterableCollection<TCollection, DataType, void( * )( DataType& ), bool( * )( DataType& )>
-//		ListType& Add( TCollection& collection, TArgs... arguments )
+//		ListType& Add( TCollection& collection, TArgs... args )
 //		{
 //			if ( _first == nullptr )
 //			{
@@ -93,7 +93,7 @@ export module AtlasCollections:List;
 //		}
 //
 //		public: template<typename TCollection, typename... TArgs> requires StandardIterableCollection<TCollection>
-//		ListType& Add( TCollection& collection, TArgs... arguments )
+//		ListType& Add( TCollection& collection, TArgs... args )
 //		{
 //
 //		}

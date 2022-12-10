@@ -44,7 +44,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... TArgs>
-			Bucket( TArgs&&... argumentss )
+			Bucket( TArgs&&... argss )
 			{
 				if constexpr ( sizeof...( TArgs ) > 0 )
 				{
@@ -77,7 +77,7 @@ export namespace Atlas
 			}
 
 			public: template<typename... TArgs>
-			HashMapType& Add( PairType& pair , TArgs... arguments )
+			HashMapType& Add( PairType& pair , TArgs... args )
 			{
 				const unsigned int index = GetIndex( pair.Key );
 
@@ -114,13 +114,13 @@ export namespace Atlas
 			}
 
 			public: template<typename... TArgs>
-			HashMapType& Add( const KeyType& key , ValueType& value , TArgs... arguments )
+			HashMapType& Add( const KeyType& key , ValueType& value , TArgs... args )
 			{
 				return this->Add( *new PairType( key , value ) , TArgs... );
 			}
 
 			public: template<typename TCollection , typename... TArgs> requires Concepts::AtlasIterableCollection<TCollection , PairType , Functor<PairType> , Condition<PairType>>
-			HashMapType& Add( TCollection& collection , TArgs... arguments )
+			HashMapType& Add( TCollection& collection , TArgs... args )
 			{
 				collection.ForEach( [ ]( PairType& pair ) mutable
 				{
@@ -138,7 +138,7 @@ export namespace Atlas
 			}
 
 			public: template<typename TCollection , typename... TArgs> requires Concepts::StandardIterableCollection<TCollection , PairType>
-			HashMapType& Add( TCollection& collection , TArgs... arguments )
+			HashMapType& Add( TCollection& collection , TArgs... args )
 			{
 				for ( auto pair : collection )
 				{

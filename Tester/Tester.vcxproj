@@ -133,14 +133,6 @@
   <ItemGroup>
     <ClCompile Include="Tester.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AtlasBase\AtlasBase.vcxproj">
-      <Project>{b5053f47-5a8f-45e3-b449-b53a0b754d8d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\AtlasCore\AtlasCore.vcxproj">
-      <Project>{e0088580-341c-4a8a-88e4-ddd2d06a992b}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

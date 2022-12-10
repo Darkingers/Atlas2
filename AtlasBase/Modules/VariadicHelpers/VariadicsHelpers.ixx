@@ -13,7 +13,7 @@ export namespace Atlas
 	class DLLApi VariadicHelper
 	{
 		public: template<typename... TArgs>
-		constexpr static inline auto Size( const TArgs&... arguments )
+		constexpr static inline auto Size( const TArgs&... args )
 			noexcept( ( (noexcept( Adapter::Size( TArgs ) ) ) && ...) )
 		{
 			return ( (Adapter::Size( TArgs ) ) + ...);
@@ -68,14 +68,14 @@ export namespace Atlas
 		}
 	
 		public: template<typename DataType , typename... TArgs>
-		constexpr static inline bool AnyContains( const DataType& data , const TArgs&... arguments )
+		constexpr static inline bool AnyContains( const DataType& data , const TArgs&... args )
 			noexcept( ( (noexcept( Adapter::Contains(TArgs, data ) ) ) && ...) )
 		{
 			return ((Adapter::Contains( data , TArgs )) || ... );
 		}
 
 		public: template<typename DataType , typename... TArgs>
-		constexpr static inline bool AllContains( const DataType& data , const TArgs&... arguments )
+		constexpr static inline bool AllContains( const DataType& data , const TArgs&... args )
 			noexcept( ( (noexcept( Adapter::Contains(TArgs, data ) ) ) && ...) )
 		{
 			return ((Adapter::Contains( data , TArgs ) ) && ...);

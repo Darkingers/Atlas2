@@ -10,6 +10,6 @@ export namespace Atlas::Interface
 	class DLLApi IInvokable
 	{
 		public:
-		virtual ReturnType Invoke( TArgs&&... arguments ) = 0;
+		virtual ReturnType Invoke( TArgs&&... args ) = 0;
 	};
 }

@@ -31,7 +31,7 @@ export namespace Atlas
 		}	
 
 		public: 
-		ReturnType Invoke( TArgs&&... arguments )
+		ReturnType Invoke( TArgs&&... args )
 		{
 			return ( _instance->*_invoked )( std::forward<TArgs&&>( TArgs )... );
 		}

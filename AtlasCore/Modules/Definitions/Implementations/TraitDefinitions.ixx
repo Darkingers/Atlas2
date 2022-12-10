@@ -4,7 +4,7 @@ module;
 
 export module AtlasDefinitions:TraitDefinitions;
 
-export namespace Atlas::Definition
+export namespace Atlas
 {
 	template<typename T>
 	class DLLApi TypeTraits

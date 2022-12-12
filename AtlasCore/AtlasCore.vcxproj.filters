@@ -68,9 +68,9 @@
     <ClCompile Include="Modules\Interfaces\CoreInterfaces.ixx" />
     <ClCompile Include="Modules\Types\Implementations\StaticString.ixx" />
     <ClCompile Include="Modules\Types\Types.ixx" />
-    <ClCompile Include="Modules\Definitions\Implementations\AlgorithmDefinitions.ixx" />
     <ClCompile Include="Modules\API\Implementations\TypeAPI.ixx" />
     <ClCompile Include="Modules\API\Implementations\IteratorAPI.ixx" />
+    <ClCompile Include="Modules\API\Implementations\DataAPI.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

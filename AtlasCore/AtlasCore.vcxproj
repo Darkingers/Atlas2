@@ -166,7 +166,6 @@
     <ClCompile Include="Modules\Configuration.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\AdapterDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\ConverterDefinition.ixx" />
-    <ClCompile Include="Modules\Definitions\Implementations\AlgorithmDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TraitDefinitions.ixx" />
     <ClCompile Include="Modules\API\API.ixx" />
     <ClCompile Include="Modules\API\Implementations\CollectionAPI.ixx" />

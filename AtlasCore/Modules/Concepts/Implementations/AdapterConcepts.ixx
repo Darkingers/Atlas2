@@ -50,6 +50,12 @@ export namespace Atlas::Concept
 	template<typename TCollection>
 	concept HasNoexceptConstIterator = IsNoexceptConstBegin<TCollection> && IsNoexceptConstEnd<TCollection> && IsNoexceptIterators<typename CollectionTraits<TCollection>::IteratorType>;
 
+	template<typename TTarget, typename TSource>
+	concept IsNoexceptCopy= noexcept( CopyAdapter<TTarget , TSource>::Copy( std::declval<TTarget>( ) , std::declval<TSource>( ) ) );
+
+	template<typename TIterator, typename TSource>
+	concept IsNoexceptReplaceFrom = noexcept( ReplaceFromAdapter<TIterator, TSource>::ReplaceFrom( std::declval<TIterator>( ) , std::declval<TSource>( ) ) );
+
 	template<template<typename...> typename Adapter, typename... TArgs>
 	concept HasAdapter = Adapter<TArgs...>::value;
 }

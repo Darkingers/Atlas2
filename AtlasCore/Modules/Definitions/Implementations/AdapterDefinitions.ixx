@@ -106,4 +106,26 @@ export namespace Atlas
 			throw"IteratorAdapter::Current is not implemented for this type";
 		}
 	};
+
+	template<typename TTarget , typename TSource>
+	class DLLApi CopyAdapter:
+		public std::false_type
+	{
+		public:
+		consteval static inline void Copy( TTarget target , TSource source )
+		{
+			throw "CopyAdapter::Copy is not implemented for this type";
+		}
+	};
+
+	template<typename TIterator , typename TSource>
+	class DLLApi ReplaceFromAdapter :
+		public std::false_type
+	{
+		public:
+		consteval static inline void ReplaceFrom( TIterator iterator , TSource source )
+		{
+			throw "ReplaceFromAdapter::ReplaceFrom is not implemented for this type";
+		}
+	};
 }

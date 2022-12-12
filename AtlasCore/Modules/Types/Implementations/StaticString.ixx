@@ -20,27 +20,21 @@ namespace Atlas
 		private: char _data[BufferSize];
 		private: unsigned int _length;
 
-		
-		public: template<unsigned int OtherSize>
-		constexpr StaticString( const char( &data )[OtherSize] )
-			noexcept(!Configuration::EnableStaticStringCheck )
-		{
-			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , OtherSize );
 
-			CopyImpl( data ,0, OtherSize );
-
-			_length = OtherSize;
-		}
-
-		public: template<typename StringType>
-		constexpr StaticString( const StringType& string )
+		public: template<typename... StringType>
+		constexpr StaticString( const StringType&... strings )
 			noexcept( !Configuration::EnableStaticStringCheck )
+			:
+			_length( 0 )
 		{
-			auto length = CollectionAPI::Count<char>( string );
+			auto length = CollectionAPI::Count<char>( strings );
 
 			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , length );
 
-			CopyImpl( string , 0 , length );
+			if ( length > 0 )
+			{
+				this->Concat( strings... );
+			}
 
 			_length = length;
 		}

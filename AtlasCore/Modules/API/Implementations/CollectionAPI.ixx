@@ -13,10 +13,13 @@ export namespace Atlas
 	/// </summary>
 	class DLLApi CollectionAPI
 	{
+		
+	public:
+		
 		/// <summary>
 		/// Clear the given collection.
 		/// </summary>
-		public: template<typename TCollection>
+		 template<typename TCollection>
 		constexpr static inline void Clear( TCollection& collection )
 			noexcept( Concept::IsNoexceptClear<TCollection&> )
 		{
@@ -26,7 +29,7 @@ export namespace Atlas
 		/// <summary>
 		/// Check if the collection contains the given element
 		/// </summary>
-		public: template<typename TCollection , typename TElement>
+		template<typename TCollection , typename TElement>
 		constexpr static inline bool Contains( const TCollection& collection , const TElement& element )
 			noexcept ( Concept::IsNoexceptContain<const TCollection& , const TElement&> )
 		{
@@ -36,7 +39,7 @@ export namespace Atlas
 	    /// <summary>
 	    /// Check if the collection contains the given element
 	    /// </summary>
-		public: template<typename TCollection , typename TElement>
+		template<typename TCollection , typename TElement>
 			requires Concept::IsFundamental<TElement>
 		constexpr static inline bool Contains( const TCollection& collection , TElement element )			
 			noexcept ( Concept::IsNoexceptContain<const TCollection& , TElement> )
@@ -47,7 +50,7 @@ export namespace Atlas
 		/// <summary>
 		/// Count the elements with TExpected type in the given collection
 		/// </summary>
-		public: template<typename TExpected, typename TActual>
+		template<typename TExpected, typename TActual>
 		constexpr static inline auto Count( const TActual& data )
 			noexcept ( Concept::IsNoexceptCount<TExpected , const TActual&> )
 		{
@@ -57,7 +60,7 @@ export namespace Atlas
 		/// <summary>
 		/// Count the elements with TExpected type in the given collection
 		/// </summary>
-		public: template<typename TExpected , typename TActual>
+		template<typename TExpected , typename TActual>
 			requires Concept::IsFundamental<TActual>
 		constexpr static inline auto Count( TActual data )
 			noexcept ( Concept::IsNoexceptCount<TExpected , TActual> )
@@ -68,7 +71,7 @@ export namespace Atlas
 		/// <summary>
 		/// Get the begin iterator of the collection
 		/// </summary>
-		public: template<typename TCollection>
+		template<typename TCollection>
 		constexpr static inline auto Begin( const TCollection& collection )
 			noexcept ( Concept::IsNoexceptBegin<const TCollection&> )
 		{
@@ -78,7 +81,7 @@ export namespace Atlas
 		/// <summary>
 		/// Get the read-only begin iterator of the collection
 		/// </summary>
-		public: template<typename TCollection>
+		template<typename TCollection>
 		constexpr static inline auto ConstBegin( const TCollection& collection )
 			noexcept ( Concept::IsNoexceptConstBegin<const TCollection&> )
 		{
@@ -88,7 +91,7 @@ export namespace Atlas
 		/// <summary>
 		/// Get the end iterator of the collection
 		/// </summary>
-		public: template<typename TCollection>
+		template<typename TCollection>
 		constexpr static inline auto End( const TCollection& collection )
 			noexcept ( Concept::IsNoexceptEnd<const TCollection&> )
 		{
@@ -98,7 +101,7 @@ export namespace Atlas
 		/// <summary>
 		/// Get the read-only end iterator of the collection
 		/// </summary>
-		public: template<typename TCollection>
+		template<typename TCollection>
 		constexpr static inline auto ConstEnd( const TCollection& collection )
 			noexcept ( Concept::IsNoexceptConstEnd<const TCollection&> )
 		{

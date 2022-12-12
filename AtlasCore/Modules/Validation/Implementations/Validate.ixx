@@ -14,10 +14,12 @@ export namespace Atlas
 	template<bool IsEnabled = true>
 	class DLLApi Validate 
 	{
+
+	public:
+	
 		/// <summary>
 		/// Checks whether the given criteria is true
 		/// </summary>
-		public:
 		constexpr static inline void IsTrue( const bool a ) 
 			noexcept( !IsEnabled )
 		{
@@ -35,7 +37,6 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given criteria is false
 		/// </summary>
-		public:
 		constexpr static inline void IsFalse( const bool a ) 
 			noexcept( !IsEnabled )
 		{
@@ -53,7 +54,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given pointer is null
 		/// </summary>
-		public: template<typename DataType>
+		template<typename DataType>
 		constexpr static inline void IsNull( const DataType* pointer ) 
 			noexcept( !IsEnabled )
 		{
@@ -71,7 +72,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given pointer is not null
 		/// </summary>
-		public: template<typename DataType>
+		template<typename DataType>
 		constexpr static inline void IsNotNull( const DataType* pointer ) 
 			noexcept( !IsEnabled )
 		{
@@ -89,7 +90,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is equal to the other value
 		/// </summary>
-		public: template<typename TA , typename TB>
+		template<typename TA , typename TB>
 		constexpr static inline void IsSame( const TA& a, const TB& b) 
 			noexcept( !IsEnabled )
 		{
@@ -107,7 +108,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is not equal to the other value
 		/// </summary>
-		public: template<typename TA , typename TB>
+		template<typename TA , typename TB>
 		constexpr static inline void IsNotSame( const TA& a , const TB& b )
 			noexcept( !IsEnabled )
 		{
@@ -125,7 +126,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is positive
 		/// </summary>
-		public: template<typename DataType>
+		template<typename DataType>
 		constexpr static inline void IsPositive( const DataType& a) 
 			noexcept( !IsEnabled )
 		{
@@ -143,7 +144,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is negative
 		/// </summary>
-		public: template<typename DataType>
+		template<typename DataType>
 		constexpr static inline void IsNegative( const DataType& a )
 			noexcept( !IsEnabled )
 		{
@@ -161,7 +162,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is less than the other value
 		/// </summary>
-		public: template<typename TA , typename TB>
+		template<typename TA , typename TB>
 		constexpr static inline void IsLess( const TA& a, const TB& b ) 
 			noexcept( !IsEnabled )
 		{
@@ -179,7 +180,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is greater than the other value
 		/// </summary>
-		public: template<typename TA, typename TB>
+		template<typename TA, typename TB>
 		constexpr static inline void IsMore( const TA& a , const TB& b )
 			noexcept( !IsEnabled )
 		{
@@ -196,7 +197,7 @@ export namespace Atlas
 
 		/// <summary>
 		///Checks whether the given values define a valid positive range
-		public: template<typename TA , typename TB>
+		template<typename TA , typename TB>
 		constexpr static inline void PositiveRange( const TA& from, const TB& to ) 
 			noexcept( !IsEnabled )
 		{
@@ -214,7 +215,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the tested value fits in the given inclusive range
 		/// </summary>
-		public: template<typename TestedType , typename TA , typename TB>
+		template<typename TestedType , typename TA , typename TB>
 		constexpr static inline void IsInInclusiveRange( const TestedType& tested, const TA& from , const TB& to )
 			noexcept( !IsEnabled )
 		{
@@ -232,7 +233,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the tested value fits in the given exclusive range
 		/// </summary>
-		public: template<typename TestedType , typename TA , typename TB>
+		template<typename TestedType , typename TA , typename TB>
 		constexpr static inline void IsInExclusiveRange( const TestedType& tested , const TA& from , const TB& to )
 			noexcept( !IsEnabled )
 		{
@@ -251,7 +252,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is less or equal to the other value
 		/// </summary>
-		public: template<typename TA , typename TB>
+		template<typename TA , typename TB>
 		constexpr static inline void IsLessOrEqual( const TA& a , const TB& b )
 			noexcept( !IsEnabled )
 		{
@@ -269,7 +270,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the given value is greater or equal to the other value
 		/// </summary>
-		public: template<typename TA , typename TB>
+		template<typename TA , typename TB>
 		constexpr static inline void IsMoreOrEqual( const TA& a , const TB& b ) 
 			noexcept( !IsEnabled )
 		{
@@ -284,7 +285,7 @@ export namespace Atlas
 			}
 		}
 
-		public: template<typename TA , typename TB, typename TypeC>
+		template<typename TA , typename TB, typename TypeC>
 		constexpr static inline void IsInRange( const TA& number , const TB& inclusiveStart, const TypeC& exclusiveEnd )
 			noexcept( !IsEnabled )
 		{
@@ -303,7 +304,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the tested value matches any other variadic value
 		/// </summary>
-		public: template<typename ComparedType, typename CurrentType, typename... TArgs>
+		template<typename ComparedType, typename CurrentType, typename... TArgs>
 		constexpr static inline void IsAny( const ComparedType& compared, const CurrentType& current, const TArgs&... args) 
 			noexcept( !IsEnabled )
 		{
@@ -330,8 +331,8 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the tested value matches any other variadic value
 		/// </summary>
-		public: template<typename ComparedType , typename CurrentType , typename... TArgs>
-			constexpr static inline void IsAll( const ComparedType& compared , const CurrentType& current , const TArgs&... args )
+		template<typename ComparedType , typename CurrentType , typename... TArgs>
+		constexpr static inline void IsAll( const ComparedType& compared , const CurrentType& current , const TArgs&... args )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )
@@ -353,7 +354,7 @@ export namespace Atlas
 		/// <summary>
 		/// Checks whether the tested value matches none other variadic value
 		/// </summary>
-		public: template<typename ComparedType , typename CurrentType , typename... TArgs>
+		template<typename ComparedType , typename CurrentType , typename... TArgs>
 		constexpr static inline void IsNone( const ComparedType& compared , const CurrentType& current , const TArgs&... args ) 
 			noexcept( !IsEnabled )
 		{

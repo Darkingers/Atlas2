@@ -11,13 +11,15 @@ export namespace Atlas
 	/// </summary>
 	class DLLApi IException 
 	{
-		public:
+		
+	public:
+
+		
 		virtual ~IException( ) = default;
 		
 		/// <summary>
 		/// Returns the details of the exception
 		/// </summary>
-		public:
 		virtual const char* ToString( ) const noexcept = 0;
 	};
 }

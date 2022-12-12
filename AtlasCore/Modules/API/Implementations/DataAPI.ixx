@@ -14,31 +14,34 @@ export namespace Atlas
 	/// </summary>
 	class DLLApi DataAPI
 	{
+
+	public:
+		
 		/// <summary>
 		/// Returns the size of the given object in bytes
 		/// </summary>
-		public: template<typename TTarget , typename TSource>
-		constexpr static inline void Copy( TTarget& target , const TSource& source )
+		 template<typename TTarget , typename TSource>
+		constexpr static inline void Copy( TTarget& target , const TSource& source, unsigned int count )
 			noexcept ( Concept::IsNoexceptCopy<TTarget&, const TSource&> )
 		{
-			CopyAdapter<TTarget& , const TSource&>::Copy( target , source );
+			CopyAdapter<TTarget& , const TSource&>::Copy( target , source, count );
 		}
 
 		/// <summary>
 		/// Returns the size of the given object in bytes
 		/// </summary>
-		public: template<typename TTarget , typename TSource>
+		template<typename TTarget , typename TSource>
 			requires Concept::IsFundamental<TSource>
-		constexpr static inline void Copy( TTarget& target , TSource source )
+		constexpr static inline void Copy( TTarget& target , TSource source, unsigned int count )
 			noexcept ( Concept::IsNoexceptCopy<TTarget& , TSource> )
 		{
-			CopyAdapter<TTarget& , const TSource&>::Copy( target , source );
+			CopyAdapter<TTarget& , const TSource&>::Copy( target , source, count );
 		}
 
 		/// <summary>
 		/// Replaces the values pointed by the iterator with the given arguments
 		/// </summary>
-		public: template<typename TIterator,typename CurrentSource, typename... TSource>
+		template<typename TIterator,typename CurrentSource, typename... TSource>
 		constexpr static inline void ReplaceFrom( TIterator& iterator ,const CurrentSource& current, const TSource&... source )
 			noexcept ( Concept::IsNoexceptReplaceFrom<TIterator& , const CurrentSource&> && Concept::IsNoexceptReplaceFrom<TIterator& , const TSource&...> )
 		{
@@ -53,7 +56,7 @@ export namespace Atlas
 		/// <summary>
 		/// Replaces the values pointed by the iterator with the given arguments
 		/// </summary>
-		public: template<typename TIterator , typename CurrentSource , typename... TSource>
+		template<typename TIterator , typename CurrentSource , typename... TSource>
 			requires Concept::IsFundamental<CurrentSource>
 		constexpr static inline void ReplaceFrom( TIterator& iterator , CurrentSource current , const TSource&... source )
 			noexcept ( Concept::IsNoexceptReplaceFrom<TIterator& , CurrentSource>&& Concept::IsNoexceptReplaceFrom<TIterator& , const TSource&...> )

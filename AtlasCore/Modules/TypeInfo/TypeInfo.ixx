@@ -20,55 +20,58 @@ export namespace Atlas
 	template<typename T>
 	class DLLApi Type
 	{
-		public: constexpr static inline auto Name = Implementation::TypeName::Extract<T>( );
-		public: constexpr static inline bool IsFundamental = Concept::IsFundamental<T>;
-		public: constexpr static inline bool IsConst = Concept::IsConst<T>;
-		public: constexpr static inline bool IsReference = Concept::IsReference<T>;
-		public: constexpr static inline bool IsPointer = Concept::IsPointer<T>;
-		public: constexpr static inline bool IsValue = Concept::IsValue<T>;
-		public: constexpr static inline bool IsTuple = Concept::IsTuple<T>;
+		
+	public:
 
-		public: template<typename CastedType>
+		constexpr static inline auto Name = Implementation::TypeName::Extract<T>( );
+		constexpr static inline bool IsFundamental = Concept::IsFundamental<T>;
+		constexpr static inline bool IsConst = Concept::IsConst<T>;
+		constexpr static inline bool IsReference = Concept::IsReference<T>;
+		constexpr static inline bool IsPointer = Concept::IsPointer<T>;
+		constexpr static inline bool IsValue = Concept::IsValue<T>;
+		constexpr static inline bool IsTuple = Concept::IsTuple<T>;
+
+		template<typename CastedType>
 		constexpr static inline bool IsConvertibleTo = Concept::IsConvertibleTo<T , CastedType>;
 			
-		public: template<typename CastedType>
+		template<typename CastedType>
 		constexpr static inline bool IsNoexceptConvertibleTo = Concept::IsNoexceptConvertibleTo<T , CastedType>;
 
-		public: template<typename... ConstructorTArgs>
+		template<typename... ConstructorTArgs>
 		constexpr static inline bool IsConstructible = Concept::IsConstructible<T , ConstructorTArgs...>;
 
-		public: template<typename... ConstructorTArgs>
+		template<typename... ConstructorTArgs>
 		constexpr static inline bool IsNoexceptConstructible = Concept::IsNoexceptConstructible<T , ConstructorTArgs...>;
 
-		public: template<typename ComparedType>
+		template<typename ComparedType>
 		constexpr static inline bool IsSame = Concept::IsSame<T , ComparedType>;
 
-		public: template<typename... ComparedType>
+		template<typename... ComparedType>
 		constexpr static inline bool IsAll = Concept::IsAll<T , ComparedType...>;
 
-		public: template<typename... ComparedType>
+		template<typename... ComparedType>
 		constexpr static inline bool IsAny = Concept::IsAny<T , ComparedType...>;
 
-		public: template<typename... ComparedType>
+		template<typename... ComparedType>
 		constexpr static inline bool IsNone = Concept::IsNone<T , ComparedType...>;
 
-		public: template<typename DerivedType>
+		template<typename DerivedType>
 		constexpr static inline bool IsBaseOf = Concept::IsBaseOf<T , DerivedType>;
 
-		public: template<typename BaseType>
+		template<typename BaseType>
 		constexpr static inline bool IsDerivedFrom = Concept::IsDerivedFrom<T , BaseType>;
 
-		public: template<typename AssignedType>
+		template<typename AssignedType>
 		constexpr static inline bool IsAssignable = Concept::IsAssignable<T , AssignedType>;
 
 
-		public: using BaseType = typename Deduce::SimpleType<T>;
-		public: using ConstType = const BaseType;
+		using BaseType = typename Deduce::SimpleType<T>;
+		using ConstType = const BaseType;
 
-		public: using ReferenceType = BaseType&;
-		public: using ConstReferenceType = const ReferenceType;
+		using ReferenceType = BaseType&;
+		using ConstReferenceType = const ReferenceType;
 
-		public: using PointerType = BaseType*;
-		public: using ConstPointerType = const PointerType*;
+		using PointerType = BaseType*;
+		using ConstPointerType = const PointerType*;
 	};
 }

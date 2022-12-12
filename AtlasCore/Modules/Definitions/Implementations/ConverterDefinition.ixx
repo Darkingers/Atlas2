@@ -10,7 +10,9 @@ export namespace Atlas
 	class DLLApi Converter :
 		public std::false_type
 	{
-		public: 
+		
+	public: 
+		
 		consteval static inline TTarget Convert( TSource data )
 		{
 			throw "No converter defined for this type combination.";

@@ -17,35 +17,31 @@ namespace Atlas
 	template<unsigned int BufferSize = Configuration::StaticStringBufferSize>
 	class DLLApi StaticString
 	{
-		private: char _data[BufferSize];
-		private: unsigned int _length;
+		
+	private: 
+		
+		char _data[BufferSize];
+		unsigned int _length;
 
-
-		public: template<typename... StringType>
+	public: 
+		
+		template<typename... StringType>
 		constexpr StaticString( const StringType&... strings )
 			noexcept( !Configuration::EnableStaticStringCheck )
 			:
 			_length( 0 )
 		{
-			auto length = CollectionAPI::Count<char>( strings );
-
-			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , length );
-
-			if ( length > 0 )
+			if constexpr ( sizeof...(strings ) > 0 )
 			{
 				this->Concat( strings... );
 			}
-
-			_length = length;
 		}
 			
-		public:
 		constexpr ~StaticString( ) = default;
 
 		/// <summary>
 		/// Returns the current length of the string
 		/// </summary>
-		public:
 		constexpr unsigned int Length( ) 
 			const noexcept
 		{
@@ -53,9 +49,17 @@ namespace Atlas
 		}
 
 		/// <summary>
+		/// Returns the string as a const char*
+		/// </summary>
+		constexpr const char* Data( )
+			const noexcept
+		{
+			return _data;
+		}
+
+		/// <summary>
 		/// Returns the maximum length of the string
 		/// </summary>
-		public:
 		constexpr unsigned int MaxLength( )
 			const noexcept
 		{
@@ -65,13 +69,13 @@ namespace Atlas
 		/// <summary>
 		/// Checks whether it contains the given string.
 		/// </summary>
-		public: template<typename StringType>
+		template<typename StringType>
 		constexpr bool Contains( const StringType& string )
 			const noexcept
 		{
 			auto length = CollectionAPI::Count<char>( string );
 
-			if ( length > _length )
+			if ( length > _length || length == 0 )
 			{
 				return false;
 			}
@@ -90,13 +94,13 @@ namespace Atlas
 		/// <summary>
 		/// Counts the occurence of the given string
 		/// </summary>
-		public: template<typename StringType>
+		template<typename StringType>
 		constexpr unsigned int Count( const StringType& string )
 			const noexcept
 		{
 			auto length = CollectionAPI::Count<char>( string );
 
-			if ( length > _length )
+			if ( length > _length || length == 0 )
 			{
 				return 0;
 			}
@@ -107,7 +111,6 @@ namespace Atlas
 		/// <summary>
 		/// Creates a substring with the specified range
 		/// </summary>
-		public:
 		constexpr auto SubString( unsigned int inclusiveStart , unsigned int exclusiveEnd )
 			const noexcept( !Configuration::EnableStaticStringCheck )
 		{
@@ -121,13 +124,13 @@ namespace Atlas
 		/// <summary>
 		/// Checks whether the it starts with the given string
 		/// </summary>
-		public: template<typename StringType>
+		template<typename StringType>
 		constexpr bool StartsWith( const StringType string )
 			const noexcept
 		{
 			auto length = CollectionAPI::Count<char>( string );
 
-			if ( length > _length )
+			if ( length > _length || length == 0 )
 			{
 				return false;
 			}
@@ -138,14 +141,13 @@ namespace Atlas
 		/// <summary>
 		/// Checks whether the it ends with the given string
 		/// </summary>
-		public:template<typename StringType>
+		template<typename StringType>
 		constexpr bool EndsWith( const StringType string )
 			const noexcept
 		{
 			auto length = CollectionAPI::Count<char>( string );
 
-			//Early check
-			if ( length > _length )
+			if ( length > _length || length == 0 )
 			{
 				return false;
 			}
@@ -156,40 +158,181 @@ namespace Atlas
 		/// <summary>
 		///Copies the given part of the the given string
 		/// </summary>
-		public: template<typename StringType>
-		constexpr void Copy( const StringType& string , unsigned int inclusivStart , unsigned int exclusiveEnd )
+		template<typename StringType>
+		constexpr auto CopyBetween( const StringType& string , unsigned int inclusivStart , unsigned int exclusiveEnd )
 			noexcept( !Configuration::EnableStaticStringCheck )
 		{
 			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , exclusiveEnd );
 			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( exclusiveEnd , inclusivStart );
 
-			this->CopyImpl( string , inclusivStart , exclusiveEnd );
+			this->CopyBetweenImpl( string , inclusivStart , exclusiveEnd );
 
 			_length = exclusiveEnd - inclusivStart;
+
+			return *this;
+		}
+
+		/// <summary>
+		///Copies the string from the specified index.
+		/// </summary>
+		template<typename StringType>
+		constexpr auto CopyFrom( const StringType& string , unsigned int start )
+			noexcept( !Configuration::EnableStaticStringCheck )
+		{
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , start );
+
+			auto length = CollectionAPI::Count<char>( string );
+
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize, start + length );
+
+			this->CopyFromImpl( string , start, length );
+			
+			auto newLength = start + length;
+
+			if ( newLength > _length )
+			{
+				_length = newLength;
+			}
+
+			return *this;
+		}
+
+		/// <summary>
+		/// Returns the index of the first occurence of the given string
+		/// </summary>
+		template<typename StringType>
+		constexpr long int IndexOf( const StringType& substring )
+			const noexcept
+		{
+			auto substringLength = CollectionAPI::Count<char>( substring );
+			if ( substringLength > _length )
+			{
+				return -1; // -1 indicates that the substring was not found
+			}
+
+			for ( unsigned int i = 0; i < _length; i++ )
+			{
+				if ( this->MatchFromImpl( substring , i , substringLength ) )
+				{
+					return i; // return the index of the first occurrence of the substring
+				}
+			}
+
+			return -1; // substring was not found
+		}
+		
+		/// <summary>
+		/// Returns the index of the last occurence of the given string
+		/// </summary>
+		template<typename StringType>
+		constexpr long int LastIndexOf( const StringType& substring )
+			const noexcept
+		{
+			auto substringLength = CollectionAPI::Count<char>( substring );
+			if ( substringLength > _length )
+			{
+				return -1; // -1 indicates that the substring was not found
+			}
+
+			for ( unsigned int i = _length - substringLength; i >= 0; i-- )
+			{
+				if ( this->MatchFromImpl( substring , i , substringLength ) )
+				{
+					return i; // return the index of the last occurrence of the substring
+				}
+			}
+
+			return -1; // substring was not found
+		}
+
+		template<typename StringType>
+		constexpr auto Trim( const StringType& trimString )
+		{
+			auto trimStringLength = CollectionAPI::Count<char>( trimString );
+
+			if ( trimStringLength == 0 )
+			{
+				return *this;
+			}
+			
+			// Trim from the end first, so we might have to copy less later
+			unsigned int end = _length - trimStringLength;
+			while ( this->MatchFrom( trimString , end , trimStringLength ) )
+			{
+				end -= trimStringLength;
+			}
+
+			_length = end + trimStringLength;
+			
+			// Trim from the start
+			unsigned int start = 0;
+				
+			while ( this->MatchFrom( trimString , start, trimStringLength ) )
+			{
+				start += trimStringLength;
+			}
+		
+			DataAPI::Copy( _data + start , _data , _length - start );
+			
+			_length -= start;
+
+			return *this;
+		}
+		
+		template<typename StringType>
+		constexpr auto TrimStart( const StringType& trimString )
+		{
+			unsigned int start = 0;
+			auto trimStringLength = CollectionAPI::Count<char>( trimString );
+
+			while ( this->MatchFrom( trimString , start , trimStringLength ) )
+			{
+				start += trimStringLength;
+			}
+
+			DataAPI::Copy( _data + start, _data , _length - start );
+			
+			_length -= start;
+
+			return *this;
+		}
+
+		template<typename StringType>
+		constexpr auto TrimEnd( const StringType& trimString )
+		{
+			auto trimStringLength = CollectionAPI::Count<char>( trimString );
+			
+			// Trim from the end
+			unsigned int end = _length - trimStringLength;
+			while ( this->MatchFrom( trimString , end , trimStringLength ) )
+			{
+				end -= trimStringLength;
+			}
+
+			_length = end + trimStringLength;
+
+			return *this;
 		}
 
 		/// <summary>
 		/// Concats the given strings to the current
 		/// </summary>
-		public: template<typename StringType, typename... Args>
+		template<typename StringType, typename... Args>
 		consteval auto Concat(const StringType& current, const Args&... args )
 			const noexcept
 		{
-			//Concat the current string
-			this->CopyImpl( current , _length , _length+CollectionAPI::Count<char>( current ) );
+			//Validate
+			auto length = CollectionAPI::Count<char>( current );
 			
-			//Concat the rest
-			if constexpr ( sizeof...( args ) > 0 )
-			{
-				return this->Concat( args... );
-			}
-			else
-			{
-				return *this;
-			}
+			Validate<Configuration::EnableStaticStringCheck>::IsMoreOrEqual( BufferSize , _length + length );
+
+			DataAPI::ReplaceFrom( _data[_length] , current , args... );
+
+			_length = _length + length;
+
+			return *this;
 		}
 
-		public:
 		constexpr char operator[]( unsigned int index )
 			noexcept ( !Configuration::EnableStaticStringCheck )
 		{
@@ -199,7 +342,9 @@ namespace Atlas
 			return _data[index];
 		}	
 		
-		private: template<typename StringType>
+	private: 
+		
+		template<typename StringType>
 		constexpr unsigned int CountImpl( const StringType& string, const unsigned int length )
 			const noexcept
 		{
@@ -216,22 +361,33 @@ namespace Atlas
 			return count;
 		}
 
-		private: template<typename StringType>
-		constexpr void CopyImpl( const StringType& string , unsigned int inclusivStart , unsigned int exclusiveEnd )
+	    template<typename StringType>
+		constexpr void CopyBetweenImpl( const StringType& string , unsigned int inclusivStart , unsigned int exclusiveEnd )
 			noexcept
 		{
-			//Copy the given range
+
 			for ( unsigned int i = inclusivStart; i < exclusiveEnd; ++i )
 			{
 				_data[i] = string[i];
 			}
 		}
 
-		private: template<typename StringType>
+		template<typename StringType>
+		constexpr void CopyFromImpl( const StringType& string , unsigned int start , unsigned int count )
+			noexcept
+		{
+			const unsigned int end = start + count;
+
+			for ( unsigned int i = start , j = 0; i < end; ++i , ++j )
+			{
+				_data[j] = string[i];
+			}
+		}
+
+		template<typename StringType>
 		constexpr void MatchFromImpl( const StringType& string , unsigned int start , unsigned int matchLength )
 			const noexcept
 		{
-			//Check if string matches from the start index
 			for ( unsigned int i = 0; i < matchLength; i++ )
 			{
 				if ( _data[start + i] != string[i] )

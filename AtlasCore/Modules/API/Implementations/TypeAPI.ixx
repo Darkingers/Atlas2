@@ -14,10 +14,13 @@ export namespace Atlas
 	/// </summary>
 	class DLLApi TypeAPI
 	{		
+
+	public:
+		
 		/// <summary>
 		/// Returns the size of the given object in bytes
 		/// </summary>
-		public: template<typename T>
+		template<typename T>
 		constexpr static inline auto Size( const T& data )
 			noexcept ( Concept::IsNoexceptSize<T> )
 		{
@@ -27,7 +30,7 @@ export namespace Atlas
 		/// <summary>
 		/// Returns the hash of the given object
 		/// </summary>
-		public: template<typename T>
+		template<typename T>
 		constexpr static inline unsigned int GetHash( const T& data )
 			noexcept ( Concept::IsNoexceptHash<T> )
 		{

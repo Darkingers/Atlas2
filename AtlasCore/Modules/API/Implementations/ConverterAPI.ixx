@@ -14,10 +14,13 @@ export namespace Atlas
 	template<typename TTarget>
 	class DLLApi Convert
 	{
+		
+	public:
+		
 		/// <summary>
 		/// Convert the given value to the target type
 		/// </summary>
-		public: template<typename TSource>
+		template<typename TSource>
 		constexpr static inline TTarget From( const TSource& data )
 			noexcept( Concept::IsNoexceptConvertable<const TSource& , TTarget> )
 		{
@@ -27,7 +30,7 @@ export namespace Atlas
 		 /// <summary>
 		/// Convert the given value to the target type
 		/// </summary>
-		public: template<typename TSource>
+		template<typename TSource>
 			requires Concept::IsFundamental<TSource>
 		constexpr static inline TTarget From( TSource data )
 			noexcept( Concept::IsNoexceptConvertable<TSource , TTarget> )

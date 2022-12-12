@@ -14,14 +14,20 @@ export namespace Atlas
 	template<typename T>
 	class DLLApi IteratorTraits
 	{
-		public: using IteratedType = void;
+	
+	public:
+		
+		using IteratedType = void;
 	};
 
 	template<typename T>
 	class DLLApi CollectionTraits
 	{
-		public: using ConstIteratorType = void;
-		public: using IteratorType = void;
-		public: using ElementType = void;
+		
+	public:
+		
+		using ConstIteratorType = void;
+		using IteratorType = void;
+		using ElementType = void;
 	};
 }

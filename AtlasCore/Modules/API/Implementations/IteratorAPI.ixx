@@ -14,10 +14,13 @@ export namespace Atlas
 	/// </summary>
 	class DLLApi IteratorAPI
 	{
+	
+	public:
+		
 		/// <summary>
 		/// Returns the element the iterator is on
 		/// </summary>
-		public: template<typename TIterator>
+		template<typename TIterator>
 		constexpr static inline auto Current( const TIterator& iterator )
 			noexcept ( Concept::IsNoexceptCurrent<const TIterator&> )
 		{
@@ -27,7 +30,7 @@ export namespace Atlas
 	    /// <summary>
 		///Moves the iterator the specified steps
 		/// </summary>
-		public: template<typename TIterator>
+		template<typename TIterator>
 		constexpr static inline bool Move( TIterator& iterator , int step = 1 )
 			noexcept ( Concept::IsNoexceptMove<TIterator&> )
 		{

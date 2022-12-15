@@ -28,8 +28,8 @@ export namespace Atlas::Definition
 	using ComparatorFunction = GeneralFunction<int , const ComparedType&, const ComparedType&>;
 
 	template<typename T>
-	using ConditionFunction = GeneralFunction<bool , const T&>;
+	using Predicate = GeneralFunction<bool , const T&>;
 
 	template<typename T, typename KeyType>
-	using KeyGeneratorFunction = GeneralFunction<KeyType , const T&>;
+	using KeyGenerator = GeneralFunction<KeyType , const T&>;
 }

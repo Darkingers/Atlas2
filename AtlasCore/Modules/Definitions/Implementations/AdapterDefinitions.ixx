@@ -83,6 +83,8 @@ export namespace Atlas
 		}
 	};
 
+	template<typename 
+
 	template<typename T>
 	class DLLApi SizeAdapter :
 		public std::false_type

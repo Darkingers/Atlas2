@@ -36,5 +36,45 @@ export namespace Atlas
 		{
 			return IteratorAdapter<TIterator&>::Move( iterator , step );
 		}
+
+		/// <summary>
+		/// Get the begin iterator of the collection
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline auto Begin( const TCollection& collection )
+			noexcept ( Concept::IsNoexceptBegin<const TCollection&> )
+		{
+			return IterableAdapter<const TCollection&>::Begin( collection );
+		}
+
+		/// <summary>
+		/// Get the read-only begin iterator of the collection
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline auto ConstBegin( const TCollection& collection )
+			noexcept ( Concept::IsNoexceptConstBegin<const TCollection&> )
+		{
+			return IterableAdapter<const TCollection&>::ConstBegin( collection );
+		}
+
+		/// <summary>
+		/// Get the end iterator of the collection
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline auto End( const TCollection& collection )
+			noexcept ( Concept::IsNoexceptEnd<const TCollection&> )
+		{
+			return IterableAdapter<const TCollection&>::End( collection );
+		}
+
+		/// <summary>
+		/// Get the read-only end iterator of the collection
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline auto ConstEnd( const TCollection& collection )
+			noexcept ( Concept::IsNoexceptConstEnd<const TCollection&> )
+		{
+			return IterableAdapter<const TCollection&>::ConstEnd( collection );
+		}
 	};
 }

@@ -19,14 +19,14 @@ export namespace Atlas
 		}
 	};
 
-	template<typename TCollection , typename TElement>
+	template<typename TITerator , typename TElement>
 	class DLLApi ContainAdapter :
 		public std::false_type
 	{
 		
 	public:
 		
-		consteval static inline auto Contain( TCollection collection , TElement element )
+		consteval static inline auto Contain(TITerator start, TITerator end, TElement element )
 		{
 			throw "ContainAdapter::Contain is not implemented for this type";
 		}
@@ -138,7 +138,7 @@ export namespace Atlas
 
 	public:
 
-		consteval static inline void Copy( TIteratorSource source , TITeratorTarget target , unsigned int count )
+		consteval static inline void Copy( TIteratorSource sourceStart, TIteratorSource sourceEnd , TITeratorTarget target)
 		{
 			throw "CopyAdapter::Copy is not implemented for this type";
 		}

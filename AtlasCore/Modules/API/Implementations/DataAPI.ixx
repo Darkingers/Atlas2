@@ -16,15 +16,25 @@ export namespace Atlas
 	{
 
 	public:
-		
+
+		/// <summary>
+		/// Clear the given collection.
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline void Clear( TCollection& collection )
+			noexcept( Concept::IsNoexceptClear<TCollection&> )
+		{
+			ClearAdapter<TCollection&>::Clear( collection );
+		}
+
 		/// <summary>
 		/// Returns the size of the given object in bytes
 		/// </summary>
 		 template<typename TTarget , typename TSource>
-		constexpr static inline void Copy( TTarget& target , const TSource& source, unsigned int count )
-			noexcept ( Concept::IsNoexceptCopy<TTarget&, const TSource&> )
+		constexpr static inline void Copy( const TSource& sourceStart, const TSource& sourceEnd , TTarget& target )
+			noexcept ( Concept::IsNoexceptCopy<const TSource&, TTarget&> )
 		{
-			CopyAdapter<TTarget& , const TSource&>::Copy( target , source, count );
+			CopyAdapter<const TSource& ,TTarget&>::Copy( sourceStart , sourceEnd , target );
 		}
 
 		/// <summary>
@@ -32,10 +42,10 @@ export namespace Atlas
 		/// </summary>
 		template<typename TTarget , typename TSource>
 			requires Concept::IsFundamental<TSource>
-		constexpr static inline void Copy( TTarget& target , TSource source, unsigned int count )
-			noexcept ( Concept::IsNoexceptCopy<TTarget& , TSource> )
+		constexpr static inline void Copy( const TSource sourceStart , const TSource sourceEnd , TTarget& target )
+			noexcept ( Concept::IsNoexceptCopy<const TSource, TTarget&> )
 		{
-			CopyAdapter<TTarget& , const TSource&>::Copy( target , source, count );
+			CopyAdapter<const TSource, TTarget&>::Copy( sourceStart , sourceEnd , target );
 		}
 
 		/// <summary>

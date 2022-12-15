@@ -62,7 +62,7 @@
     <ClCompile Include="Modules\Concepts\Implementations\ConverterConcepts.ixx" />
     <ClCompile Include="Modules\TypeInfo\TypeNameExtractor.ixx" />
     <ClCompile Include="Modules\Interfaces\Implementations\IException.ixx" />
-    <ClCompile Include="Modules\API\Implementations\CollectionAPI.ixx" />
+    <ClCompile Include="Modules\API\Implementations\QueryAPI.ixx" />
     <ClCompile Include="Modules\API\Implementations\ConverterAPI.ixx" />
     <ClCompile Include="Modules\API\API.ixx" />
     <ClCompile Include="Modules\Interfaces\CoreInterfaces.ixx" />

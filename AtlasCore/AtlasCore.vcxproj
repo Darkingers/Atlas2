@@ -168,7 +168,7 @@
     <ClCompile Include="Modules\Definitions\Implementations\ConverterDefinition.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TraitDefinitions.ixx" />
     <ClCompile Include="Modules\API\API.ixx" />
-    <ClCompile Include="Modules\API\Implementations\CollectionAPI.ixx" />
+    <ClCompile Include="Modules\API\Implementations\QueryAPI.ixx" />
     <ClCompile Include="Modules\API\Implementations\ConverterAPI.ixx" />
     <ClCompile Include="Modules\API\Implementations\TypeAPI.ixx" />
     <ClCompile Include="Modules\Interfaces\CoreInterfaces.ixx" />

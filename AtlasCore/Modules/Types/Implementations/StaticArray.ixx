@@ -30,6 +30,7 @@ namespace Atlas
 			noexcept( !Configuration::EnableStaticArrayCheck ) :
 			_length( 0 )
 		{
+			//If there are actual constructor arguments, try to concat them.
 			if constexpr ( sizeof...( args ) > 0 )
 			{
 				this->Concat( args... );
@@ -74,11 +75,13 @@ namespace Atlas
 		{
 			const auto length = QueryAPI::Count<TElement>( data );
 
+			//Length is too big, so return false
 			if ( length > _length || length == 0 )
 			{
 				return false;
 			}
 
+			//Iterate over the elements, and if there is a match from the given index, return true
 			for ( unsigned int i = 0; i < _length - length; ++i )
 			{
 				if ( QueryAPI::IsMatch( _data[i] , IteratorAPI::ConstBegin( data ), length ) )
@@ -87,6 +90,7 @@ namespace Atlas
 				}
 			}
 
+			//No match found, return false
 			return false;
 		}
 
@@ -99,6 +103,7 @@ namespace Atlas
 		{
 			const auto length = QueryAPI::Count<TElement>( data );
 
+			//Length is too big, so return false
 			if ( length > _length || length == 0 )
 			{
 				return 0;
@@ -106,6 +111,7 @@ namespace Atlas
 
 			unsigned int count = 0;
 
+			//Iterate over the elements, and if there is a match from the given index, increment counter
 			for ( unsigned int i = 0; i < _length - length; ++i )
 			{
 				if ( QueryAPI::IsMatch( _data[i] , IteratorAPI::ConstBegin( data ) , length ) )
@@ -116,15 +122,116 @@ namespace Atlas
 
 			return count;
 		}
+
+		/// <summary>
+		/// Clears the array
+		/// </summary>
+		constexpr void Clear( )
+			noexcept
+		{
+			//Destroy all elements
+			this->Destruct( 0 , _length );
+
+			_length = 0;
+		}
+
+		/// <summary>
+		///  Removes the last element from the array and returns it
+		/// </summary>
+		constexpr auto PopBack( )
+			noexcept( !Configuration::EnableStaticArrayCheck )
+		{
+			//Validate length
+			Validate<Configuration::EnableStaticArrayCheck>::IsMore( _length , 0, "Empty array cannot be popped!" );
+
+			//Return the last element
+			return _data[--_length];
+		}
+
+		/// <summary>
+		/// Inserts a given element at a specified index in the array
+		/// </summary>
+		template<typename T>
+		constexpr auto Insert( T data, unsigned int index)
+			noexcept( !Configuration::EnableStaticArrayCheck )
+		{
+			//Validate input
+			Validate<Configuration::EnableStaticArrayCheck>::IsLess( _length , BufferSize , "Array is full!" );
+			Validate<Configuration::EnableStaticArrayCheck>::IsLess( index , _length , "Index is out of bounds!" );
+
+			//Move all elements after the index to the right
+			for ( unsigned int i = _length; i > index; --i )
+			{
+				_data[i] = _data[i - 1];
+			}
+
+			//Insert the element
+			_data[index] = data;
+
+			//Increment length
+			_length++;
+
+			//Return the inserted element
+			return data;
+		}
+
+		/// <summary>
+		/// Removes a range of elements from the array, specified by a starting index and length
+		/// </summary>
+		constexpr auto Erase( unsigned int inclusiveFrom, unsigned int exclusiveTo )
+			noexcept( !Configuration::EnableStaticArrayCheck )
+		{
+			//Validate input
+			Validate<Configuration::EnableStaticArrayCheck>::IsLess( _length , BufferSize , "Array is full!" );
+			Validate<Configuration::EnableStaticArrayCheck>::IsLess( inclusiveFrom , _length , "Index is out of bounds!" );
+			Validate<Configuration::EnableStaticArrayCheck>::IsLess( exclusiveTo , _length , "Index is out of bounds!" );
+			Validate<Configuration::EnableStaticArrayCheck>::IsLess( inclusiveFrom , exclusiveTo , "Exclusive index must be greater than inclusive index!" );
+
+			//Destroy erased elements
+			this->Destruct( inclusiveFrom , exclusiveTo );
+
+			const auto length = exclusiveTo - inclusiveFrom;
+
+			//Move all elements after the index to the right
+			for ( unsigned int i = exclusiveTo; i < _length; ++i )
+			{
+				_data[i - length] = _data[i];
+			}
+
+			//Decrement length
+			_length -= length;
+
+			return *this;
+		}
+
+		/// <summary>
+		/// Reverses the order of the elements in the array
+		/// </summary>
+		constexpr auto Reverse( )
+			noexcept
+		{
+			//Iterate over the elements, and if there is a match from the given index, increment counter
+			for ( unsigned int i = 0; i < _length / 2; ++i )
+			{
+				const auto temp = _data[i];
+				_data[i] = _data[_length - i - 1];
+				_data[_length - i - 1] = temp;
+			}
 			
+			return *this;
+		}
+
+
 		/// <summary>
 		/// Creates a subarray with the specified range
 		/// </summary>
 		constexpr auto SubArray( unsigned int inclusiveStart , unsigned int exclusiveEnd )
 			const noexcept( !Configuration::EnableStaticArrayCheck )
 		{
+			
 			StaticArray<BufferSize> result;
 
+			//Copy the range into the array
 			result.CopyFromBetween( *this , inclusiveStart , exclusiveEnd );
 
 			return result;
@@ -139,11 +246,13 @@ namespace Atlas
 		{
 			const auto length = QueryAPI::Count<TElement>( data );
 
+			//Length is too big, so return false
 			if ( length > _length || length == 0 )
 			{
 				return false;
 			}
 
+			//Check if the data matches with the beginning of the array
 			return QueryAPI::IsMatch( _data[0] ,IteratorAPI::ConstBegin( data ) , length );
 		}
 	
@@ -156,11 +265,13 @@ namespace Atlas
 		{
 			const auto length = QueryAPI::Count<TElement>( data );
 
+			//Length is too big, so return false
 			if ( length > _length || length == 0 )
 			{
 				return false;
 			}
 	
+			//Check if the data matches with the end of the array
 			return QueryAPI::IsMatch( _data[_length - length] , IteratorAPI::ConstBegin( data ) , length );
 		}
 
@@ -173,11 +284,16 @@ namespace Atlas
 		{
 			const unsigned int copyLength = sourceExclusiveEnd - sourceInclusivStart;
 			
+			//Validate input
 			Validate<Configuration::EnableStaticArrayCheck>::IsPositive( sourceInclusivStart, "Source start index has to be positive!" );
 			Validate<Configuration::EnableStaticArrayCheck>::IsPositive( targetStart, "Target strat index has to be positive!" );
 			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( _length - targetStart , copyLength, "Copy cannot result in increased array length!" );
 			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( sourceExclusiveEnd , sourceInclusivStart, "Source end index has to be greater than the start!" );
 
+			//Manually calling destructors
+			this->Destruct( targetStart , targetStart + copyLength );
+
+			//Copy the data
 			DataAPI::Copy( IteratorAPI::ConstAt( data , sourceInclusivStart ) , _data[targetStart] , copyLength );
 
 			return *this;
@@ -192,10 +308,15 @@ namespace Atlas
 		{
 			const unsigned int copyLength = QueryAPI::Count<TElement>( data ) - sourceStart;
 
+			//Validate input
 			Validate<Configuration::EnableStaticArrayCheck>::IsPositive( sourceStart, "Source start index has to be positive!" );
 			Validate<Configuration::EnableStaticArrayCheck>::IsPositive( targetStart, "Target start index has to be positive!" );
 			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( _length - targetStart , copyLength, "Coppy cannot result in increased array length!" );
 
+			//Manually calling destructors
+			this->Destruct( targetStart , targetStart + copyLength );
+
+			//Copy the data
 			DataAPI::Copy( IteratorAPI::ConstAt( data , sourceStart ) , _data[targetStart] , copyLength );
 
 			return *this;
@@ -209,11 +330,14 @@ namespace Atlas
 			const noexcept
 		{
 			const auto subArrayLength = QueryAPI::Count<TElement>( data );
+
+			//Length is too big, so return -1
 			if ( subArrayLength > _length )
 			{
 				return -1; 
 			}
 
+			//Iterate over the elements, and if there is a match from the given index, return it
 			for ( unsigned int i = 0; i < _length; i++ )
 			{
 				if ( QueryAPI::IsMatch( _data[i] , IteratorAPI::ConstBegin( data ) , subArrayLength ) )
@@ -222,6 +346,7 @@ namespace Atlas
 				}
 			}
 
+			//No match found
 			return -1;
 		}
 		
@@ -233,11 +358,14 @@ namespace Atlas
 			const noexcept
 		{
 			const auto subArrayLength = QueryAPI::Count<char>( data );
+
+			//Length is too big, so return -1
 			if ( subArrayLength > _length )
 			{
 				return -1;
 			}
 
+			//Iterate over the elements, and if there is a match from the given index, return it
 			for ( unsigned int i = _length - subArrayLength; i >= 0; i-- )
 			{
 				if ( QueryAPI::IsMatch( _data[i] , IteratorAPI::ConstBegin( data ) , subArrayLength ) )
@@ -246,6 +374,7 @@ namespace Atlas
 				}
 			}
 
+			//No match found
 			return -1;
 		}
 
@@ -256,60 +385,91 @@ namespace Atlas
 		constexpr auto Replace( const T& oldData , const T& newData )
 			noexcept( !Configuration::EnableStaticArrayCheck )
 		{
+			// Calculate the length of the old and new data.
 			const auto oldDataLength = QueryAPI::Count<TElement>( oldData );
 			const auto newDataLength = QueryAPI::Count<TElement>( newData );
 
+			// If the old data is longer than the array, the replace operation is impossible.
 			if ( oldDataLength > _length )
 			{
+				// Return the unchanged array.
 				return *this;
 			}
-			
-			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( BufferSize , newDataLength, "The replacer data is larger than the array's maximum size!" );
 
+			// Validate that the new data is not longer than the maximum size of the array.
+			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( BufferSize , newDataLength , "The replacer data is larger than the array's maximum size!" );
+
+			// Calculate the difference in length between the old and new data.
 			const auto difference = newDataLength - oldDataLength;
-			if ( difference != 0)
+
+			// If the difference is not zero, the array will need to be resized.
+			if ( difference != 0 )
 			{
+				// Initialize an offset variable to keep track of the resizing.
 				auto offset = 0;
+
+				// Loop through the array.
 				for ( unsigned int i = 0; i < _length - oldDataLength;)
 				{
+					// If the current element matches the old data.
 					if ( QueryAPI::IsMatch( _data[i] , oldData , oldDataLength ) )
 					{
+						// If the array has been resized previously, shift the elements after the current element by the offset amount.
 						if ( offset != 0 )
 						{
-							Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( BufferSize , _length + offset, "Replacing would result in an array overflow! Function aborted!" );
+							// Validate that the array will not overflow after the shift operation.
+							Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( BufferSize , _length + offset , "Replacing would result in an array overflow! Function aborted!" );
+
+							//Manually destroy elements
+							this->Destruct( i + offset , i + offset + oldDataLength );
 							
+							// Shift the elements after the current element by the offset amount.
 							DataAPI::Shift( _data , i + oldDataLength , offset );
 						}
 
+						// Replace the current element with the new data.
 						DataAPI::Copy( IteratorAPI::ConstBegin( newData ) , _data[i] , newDataLength );
 
+						// Move to the next element after the old data.
 						i += oldDataLength;
 
+						// Update the offset variable with the difference in length between the old and new data.
 						offset += difference;
 					}
 					else
 					{
+						// Move to the next element.
 						i++;
 					}
 				}
 			}
+			// If the difference is zero, the array does not need to be resized.
 			else
 			{
+				// Loop through the array.
 				for ( unsigned int i = 0; i < _length - oldDataLength;)
 				{
+					// If the current element matches the old data.
 					if ( QueryAPI::IsMatch( _data[i] , oldData , oldDataLength ) )
 					{
+						//Manually destroy elements
+						this->Destruct( i , i + oldDataLength );
+						
+						// Replace the current element with the new data.
 						DataAPI::Copy( IteratorAPI::ConstBegin( newData ) , _data[i] , oldDataLength );
 
+						// Move to the next element after the old data.
 						i += oldDataLength;
 					}
 					else
 					{
+						// Move to the next element.
 						i++;
 					}
 				}
 			}
 
+			// Return the modified array.
 			return *this;
 		}
 
@@ -321,32 +481,11 @@ namespace Atlas
 		{
 			const auto trimDataLength = QueryAPI::Count<TElement>( data );
 
-			if ( trimDataLength == 0 )
-			{
-				return *this;
-			}
-			
-			// Trim from the end first, so we might have to copy less later
-			unsigned int end = _length - trimDataLength;
-			
-			while ( QueryAPI::IsMatch( _data[end] , IteratorAPI::ConstBegin( data ) , trimDataLength ) )
-			{
-				end -= trimDataLength;
-			}
+			//Trim from end first, in case it results in less shifting later
+			this->TrimEndImpl( data , trimDataLength );
 
-			_length = end + trimDataLength;
-			
-			// Trim from the start
-			unsigned int start = 0;
-				
-			while ( QueryAPI::IsMatch( _data[start] , IteratorAPI::ConstBegin( data ) , trimDataLength ) )
-			{
-				start += trimDataLength;
-			}
-		
-			DataAPI::Copy( _data + start , _data , _length - start );
-			
-			_length -= start;
+			//Trim from start
+			this->TrimStartImpl( data , trimDataLength );
 
 			return *this;
 		}
@@ -357,17 +496,9 @@ namespace Atlas
 		template<typename T>
 		constexpr auto TrimStart( const T& data )
 		{
-			unsigned int start = 0;
 			const auto trimDataLength = QueryAPI::Count<TElement>( data );
 
-			while ( QueryAPI::IsMatch( _data[start] , IteratorAPI::ConstBegin( data ) , trimDataLength ) )
-			{
-				start += trimDataLength;
-			}
-
-			DataAPI::Copy( _data + start, _data , _length - start );
-			
-			_length -= start;
+			this->TrimStartImpl( data , trimDataLength );
 
 			return *this;
 		}
@@ -380,13 +511,7 @@ namespace Atlas
 		{
 			const auto trimDataLength = QueryAPI::Count<TElement>( data );
 			
-			unsigned int end = _length - trimDataLength;
-			while ( QueryAPI::IsMatch( _data[end] , IteratorAPI::ConstBegin( data ) , trimDataLength ) )
-			{
-				end -= trimDataLength;
-			}
-
-			_length = end + trimDataLength;
+			this->TrimEndImpl( data , trimDataLength );
 
 			return *this;
 		}
@@ -398,11 +523,12 @@ namespace Atlas
 		consteval auto Concat(const Args&... args )
 			const noexcept
 		{
-			//Validate
 			const auto length = (QueryAPI::Count<TElement>( args ) + ...);
 			
+			//Validate that the array will not overflow after the concat operation.
 			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( BufferSize , _length + length, "Concatting data would result in an array overflow! Aborting function..." );
 
+			//Replace starting from the end.
 			DataAPI::ReplaceFrom( _data[_length] , args... );
 
 			_length = _length + length;
@@ -418,5 +544,53 @@ namespace Atlas
 
 			return _data[index];
 		}	
+
+	private:
+		
+		template<typename T>
+		constexpr void TrimStartImpl( const T& data, auto trimDataLength )
+		{
+			unsigned int start = 0;
+
+			//Find the trimmed length from the start
+			while ( QueryAPI::IsMatch( _data[start] , IteratorAPI::ConstBegin( data ) , trimDataLength ) )
+			{
+				start += trimDataLength;
+			}
+
+			//Destroy trimmed objects
+			this->Destruct( 0 , start );
+
+			//Shift remaining objects
+			DataAPI::Copy( _data + start , _data , _length - start );
+
+			_length -= start;
+		}
+
+		template<typename T>
+		constexpr void TrimEndImpl( const T& data, auto trimDataLength )
+		{
+			unsigned int end = _length - trimDataLength;
+
+			//Find trim length from end
+			while ( QueryAPI::IsMatch( _data[end] , IteratorAPI::ConstBegin( data ) , trimDataLength ) )
+			{
+				end -= trimDataLength;
+			}
+
+			//Destroy trimmed objects
+			this->Destruct( end + trimDataLength , _length );
+
+			_length = end + trimDataLength;
+		}
+
+		constexpr void Destruct(unsigned int iclusiveFrom, unsigned int exclusiveTo ) 
+			noexcept
+		{
+			for ( unsigned int i = iclusiveFrom; i < exclusiveTo; i++ )
+			{
+				_data[i].~TElement( );
+			}
+		}
 	};
 }

@@ -28,6 +28,12 @@ export namespace Atlas::Concept
 
 	template<typename TExpected , typename TActual>
 	concept IsNoexceptCount = noexcept( CountAdapter<TExpected, TActual>::Count( std::declval<TActual>( ) ) );
+	
+	template<typename TCollection>
+	concept IsNoexceptAt = noexcept( IterableAdapter<TCollection>::At( std::declval<TCollection>( ) ) , std::declval<unsigned int>( ) );
+
+	template<typename TCollection>
+	concept IsNoexceptConstAt = noexcept( IterableAdapter<TCollection>::ConstAt( std::declval<TCollection>( ) ) , std::declval<unsigned int>( ) );
 
 	template<typename TCollection>
 	concept IsNoexceptBegin = noexcept( IterableAdapter<TCollection>::Begin( std::declval<TCollection>( ) ) );
@@ -54,7 +60,13 @@ export namespace Atlas::Concept
 	concept IsNoexceptReplaceFrom = noexcept( ReplaceFromAdapter<TIterator, TSource>::ReplaceFrom( std::declval<TIterator>( ) , std::declval<TSource>( ) ) );
 
 	template<typename TIteratorSource , typename TIteratorTarget>
-	concept IsNoexceptCopy = noexcept( CopyAdapter<TIteratorSource , TIteratorTarget>::Move( std::declval<TIteratorSource>( ) , std::declval<TIteratorSource>( ) , std::declval<TIteratorTarget>( ) ) );
+	concept IsNoexceptCopy = noexcept( CopyAdapter<TIteratorSource , TIteratorTarget>::Move( std::declval<TIteratorSource>( ) ,  std::declval<TIteratorTarget>( ) ), std::declval<unsigned int>( ) );
+
+	template<typename TA, typename TB>
+	concept IsNoexceptMatch = noexcept( MatchAdapter<TA , TB>::Match( std::declval<TA>( ) , std::declval<TB>( ) , std::declval<unsigned int>( ) ) );
+
+	template<typename T>
+	concept IsNoexceptShift = noexcept ( ShiftAdapter<T>::Shift( std::declval<T>( ) , std::declval<unsigned int>( ) ) , std::declval<int>( ) );
 
 	template<template<typename...> typename Adapter, typename... TArgs>
 	concept HasAdapter = Adapter<TArgs...>::value;

@@ -31,10 +31,10 @@ export namespace Atlas
 		/// Returns the size of the given object in bytes
 		/// </summary>
 		 template<typename TTarget , typename TSource>
-		constexpr static inline void Copy( const TSource& sourceStart, const TSource& sourceEnd , TTarget& target )
+		constexpr static inline void Copy( const TSource& source, TTarget& target, const unsigned int count )
 			noexcept ( Concept::IsNoexceptCopy<const TSource&, TTarget&> )
 		{
-			CopyAdapter<const TSource& ,TTarget&>::Copy( sourceStart , sourceEnd , target );
+			CopyAdapter<const TSource& ,TTarget&>::Copy( source ,  target, count );
 		}
 
 		/// <summary>
@@ -42,10 +42,10 @@ export namespace Atlas
 		/// </summary>
 		template<typename TTarget , typename TSource>
 			requires Concept::IsFundamental<TSource>
-		constexpr static inline void Copy( const TSource sourceStart , const TSource sourceEnd , TTarget& target )
+		constexpr static inline void Copy( const TSource source, TTarget& target, const unsigned int count )
 			noexcept ( Concept::IsNoexceptCopy<const TSource, TTarget&> )
 		{
-			CopyAdapter<const TSource, TTarget&>::Copy( sourceStart , sourceEnd , target );
+			CopyAdapter<const TSource, TTarget&>::Copy( source , target, count );
 		}
 
 		/// <summary>
@@ -77,6 +77,16 @@ export namespace Atlas
 			{
 				DataAPI::ReplaceFrom( iterator , source... );
 			}
+		}
+
+		/// <summary>
+		/// Shifts elements of collection starting from a step by given offset
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline void Shift( TCollection& collection , unsigned int shiftStart , int shiftOffset )
+			noexcept ( Concept::IsNoexceptShift<TCollection&> )
+		{
+			ShiftAdapter<TCollection&>::Shift( collection , shiftStart , shiftOffset );
 		}
 	};
 }

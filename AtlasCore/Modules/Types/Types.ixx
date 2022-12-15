@@ -1,2 +1,2 @@
 export module AtlasTypes;
-export import :StaticString;
+export import :StaticArray;

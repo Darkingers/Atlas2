@@ -26,7 +26,7 @@ export namespace Atlas
 		
 	public:
 		
-		consteval static inline auto Contain(TITerator start, TITerator end, TElement element )
+		consteval static inline auto Contain(TITerator start, unsigned int step, TElement element )
 		{
 			throw "ContainAdapter::Contain is not implemented for this type";
 		}
@@ -38,7 +38,17 @@ export namespace Atlas
 	{
 		
 	public:
-		
+
+		consteval static inline auto At( TCollection collection, unsigned int step )
+		{
+			throw "IterableAdapter::At is not implemented for this type";
+		}
+
+		consteval static inline auto ConstAt( TCollection collection , unsigned int step )
+		{
+			throw "IterableAdapter::ConstAt is not implemented for this type";
+		}
+
 		consteval static inline auto Begin( TCollection collection )
 		{
 			throw "IterableAdapter::Begin is not implemented for this type";
@@ -138,9 +148,36 @@ export namespace Atlas
 
 	public:
 
-		consteval static inline void Copy( TIteratorSource sourceStart, TIteratorSource sourceEnd , TITeratorTarget target)
+		consteval static inline void Copy( TIteratorSource source, TITeratorTarget target, unsigned int count)
 		{
 			throw "CopyAdapter::Copy is not implemented for this type";
 		}
 	};
+
+	template<typename TA,typename TB>
+	class DLLApi MatchAdapter :
+		public std::false_type
+	{
+		
+	public:
+
+		consteval static inline auto Match( TA a , TB b, unsigned int matchLength )
+		{
+			throw "MatchAdapter::Match is not implemented for this type";
+		}
+	};
+
+	///Generate ShiftAdapter for collection
+	template<typename T>
+	class DLLApi ShiftAdapter
+	{
+
+	public:
+
+		consteval static inline auto Shift( T shifted, unsigned int shiftStart, int shiftOffset )
+		{
+			throw "ShiftAdapter::Shift is not implemented for this type";
+		}
+	};
+
 }

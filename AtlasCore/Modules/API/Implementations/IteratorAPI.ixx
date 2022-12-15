@@ -36,6 +36,26 @@ export namespace Atlas
 		{
 			return IteratorAdapter<TIterator&>::Move( iterator , step );
 		}
+		
+		/// <summary>
+		/// Returns an iterator standing at 'step'
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline auto At( const TCollection& collection, const unsigned int step )
+			noexcept ( Concept::IsNoexceptAt<const TCollection&> )
+		{
+			return IterableAdapter<const TCollection&>::At( collection , step );
+		}
+
+		/// <summary>
+		/// Returns a read-only iterator standing at 'step'
+		/// </summary>
+		template<typename TCollection>
+		constexpr static inline auto ConstAt( const TCollection& collection , const unsigned int step )
+			noexcept ( Concept::IsNoexceptConstAt<const TCollection&> )
+		{
+			return IterableAdapter<const TCollection&>::ConstAt( collection , step );
+		}
 
 		/// <summary>
 		/// Get the begin iterator of the collection

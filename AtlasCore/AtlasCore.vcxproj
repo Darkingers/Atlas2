@@ -183,7 +183,7 @@
     <ClCompile Include="Modules\Definitions\Definitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TypeDeducers.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TypeDefinitions.ixx" />
-    <ClCompile Include="Modules\Types\Implementations\StaticString.ixx" />
+    <ClCompile Include="Modules\Types\Implementations\StaticArray.ixx" />
     <ClCompile Include="Modules\Types\Types.ixx" />
     <ClCompile Include="Modules\Validation\Implementations\Validate.ixx" />
     <ClCompile Include="Modules\Validation\Implementations\ValidationException.ixx" />

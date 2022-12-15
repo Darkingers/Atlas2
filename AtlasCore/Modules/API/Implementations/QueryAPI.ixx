@@ -20,14 +20,14 @@ export namespace Atlas
 		/// Check if the collection contains the given element
 		/// </summary>
 		template<typename TITerator , typename TElement, typename... Args>
-		constexpr static inline bool Contains( const TITerator& start, const TITerator& end , const TElement& element, const Args&... args )
-			noexcept ( Concept::IsNoexceptContain<const TITerator& , const TElement&> )
+		constexpr static inline bool Contains( const TITerator start, const unsigned int step , const TElement& element, const Args&... args )
+			noexcept ( Concept::IsNoexceptContain<const TITerator , const TElement&> )
 		{
-			bool contains =  ContainAdapter<const TITerator&,const TElement&>::Contains( start, end , element );
+			bool contains =  ContainAdapter<const TITerator, const TElement&>::Contains( start, step , element );
 			
 			if constexpr ( sizeof...( args ) > 0 )
 			{
-				return contains && QueryAPI::Contains( start , end , args... );
+				return contains && QueryAPI::Contains( start , step , args... );
 			}
 			else
 			{
@@ -40,14 +40,14 @@ export namespace Atlas
 	    /// </summary>
 		template<typename TITerator , typename TElement , typename... Args>
 			requires Concept::IsFundamental<TElement>
-		constexpr static inline bool Contains( const TITerator& start , const TITerator& end , const TElement element , const Args&... args )
-			noexcept ( Concept::IsNoexceptContain<const TITerator& , const TElement&> )
+		constexpr static inline bool Contains( const TITerator start , const unsigned int step , const TElement element , const Args&... args )
+			noexcept ( Concept::IsNoexceptContain<const TITerator , const TElement> )
 		{
-			bool contains = ContainAdapter<const TITerator& , const TElement&>::Contains( start , end , element );
+			bool contains = ContainAdapter<const TITerator , const TElement>::Contains( start , step , element );
 
 			if constexpr ( sizeof...( args ) > 0 )
 			{
-				return contains && QueryAPI::Contains( start , end , args... );
+				return contains && QueryAPI::Contains( start , step , args... );
 			}
 			else
 			{
@@ -76,5 +76,14 @@ export namespace Atlas
 			return CountAdapter<TExpected ,TActual>::Count( data );
 		}
 
+		/// <summary>
+		/// Matches a collection against another.
+		/// </summary>
+		template<typename TA, typename TB>
+		constexpr static inline auto IsMatch( const TA& a , const TB& b , const unsigned int aStart, const unsigned int bStart , const unsigned int matchLength )
+			noexcept ( Concept::IsNoexceptMatch<const TA& , const TB&> )
+		{
+			return MatchAdapter<const TA& , const TB&>::Match( a , b , aStart , bStart , matchLength );
+		}
 	};
 }

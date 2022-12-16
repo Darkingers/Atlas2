@@ -12,7 +12,7 @@ export namespace Atlas
 	/// <summary>
 	/// Calls the appropriate adapter for given objects
 	/// </summary>
-	class DLLApi DataAPI
+	class DLLApi ManipulationAPI
 	{
 
 	public:
@@ -31,10 +31,10 @@ export namespace Atlas
 		/// Returns the size of the given object in bytes
 		/// </summary>
 		 template<typename TTarget , typename TSource>
-		constexpr static inline void Copy( const TSource& source, TTarget& target, const unsigned int count )
+		constexpr static inline void Copy( const TSource& source, TTarget& target, const unsigned int copyLength )
 			noexcept ( Concept::IsNoexceptCopy<const TSource&, TTarget&> )
 		{
-			CopyAdapter<const TSource& ,TTarget&>::Copy( source ,  target, count );
+			CopyAdapter<const TSource& ,TTarget&>::Copy( source ,  target, copyLength );
 		}
 
 		/// <summary>
@@ -42,10 +42,10 @@ export namespace Atlas
 		/// </summary>
 		template<typename TTarget , typename TSource>
 			requires Concept::IsFundamental<TSource>
-		constexpr static inline void Copy( const TSource source, TTarget& target, const unsigned int count )
+		constexpr static inline void Copy( const TSource source, TTarget& target, const unsigned int copyLength )
 			noexcept ( Concept::IsNoexceptCopy<const TSource, TTarget&> )
 		{
-			CopyAdapter<const TSource, TTarget&>::Copy( source , target, count );
+			CopyAdapter<const TSource, TTarget&>::Copy( source , target, copyLength );
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@ export namespace Atlas
 
 			if constexpr ( sizeof...( TSource ) > 0 )
 			{
-				DataAPI::ReplaceFrom( iterator , source... );
+				ManipulationAPI::ReplaceFrom( iterator , source... );
 			}
 		}
 
@@ -75,7 +75,7 @@ export namespace Atlas
 
 			if constexpr ( sizeof...( TSource ) > 0 )
 			{
-				DataAPI::ReplaceFrom( iterator , source... );
+				ManipulationAPI::ReplaceFrom( iterator , source... );
 			}
 		}
 
@@ -83,7 +83,7 @@ export namespace Atlas
 		/// Shifts elements of collection starting from a step by given offset
 		/// </summary>
 		template<typename TCollection>
-		constexpr static inline void Shift( TCollection& collection , unsigned int shiftStart , int shiftOffset )
+		constexpr static inline void Shift( TCollection& collection , const unsigned int shiftStart , const int shiftOffset,const unsigned int shiftLength )
 			noexcept ( Concept::IsNoexceptShift<TCollection&> )
 		{
 			ShiftAdapter<TCollection&>::Shift( collection , shiftStart , shiftOffset );

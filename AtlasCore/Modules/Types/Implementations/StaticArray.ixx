@@ -294,7 +294,7 @@ namespace Atlas
 			this->Destruct( targetStart , targetStart + copyLength );
 
 			//Copy the data
-			DataAPI::Copy( IteratorAPI::ConstAt( data , sourceInclusivStart ) , _data[targetStart] , copyLength );
+			ManipulationAPI::Copy( IteratorAPI::ConstAt( data , sourceInclusivStart ) , _data[targetStart] , copyLength );
 
 			return *this;
 		}
@@ -317,7 +317,7 @@ namespace Atlas
 			this->Destruct( targetStart , targetStart + copyLength );
 
 			//Copy the data
-			DataAPI::Copy( IteratorAPI::ConstAt( data , sourceStart ) , _data[targetStart] , copyLength );
+			ManipulationAPI::Copy( IteratorAPI::ConstAt( data , sourceStart ) , _data[targetStart] , copyLength );
 
 			return *this;
 		}
@@ -424,11 +424,11 @@ namespace Atlas
 							this->Destruct( i + offset , i + offset + oldDataLength );
 							
 							// Shift the elements after the current element by the offset amount.
-							DataAPI::Shift( _data , i + oldDataLength , offset );
+							ManipulationAPI::Shift( _data , i + oldDataLength , offset );
 						}
 
 						// Replace the current element with the new data.
-						DataAPI::Copy( IteratorAPI::ConstBegin( newData ) , _data[i] , newDataLength );
+						ManipulationAPI::Copy( IteratorAPI::ConstBegin( newData ) , _data[i] , newDataLength );
 
 						// Move to the next element after the old data.
 						i += oldDataLength;
@@ -456,7 +456,7 @@ namespace Atlas
 						this->Destruct( i , i + oldDataLength );
 						
 						// Replace the current element with the new data.
-						DataAPI::Copy( IteratorAPI::ConstBegin( newData ) , _data[i] , oldDataLength );
+						ManipulationAPI::Copy( IteratorAPI::ConstBegin( newData ) , _data[i] , oldDataLength );
 
 						// Move to the next element after the old data.
 						i += oldDataLength;
@@ -529,7 +529,7 @@ namespace Atlas
 			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( BufferSize , _length + length, "Concatting data would result in an array overflow! Aborting function..." );
 
 			//Replace starting from the end.
-			DataAPI::ReplaceFrom( _data[_length] , args... );
+			ManipulationAPI::ReplaceFrom( _data[_length] , args... );
 
 			_length = _length + length;
 
@@ -562,7 +562,7 @@ namespace Atlas
 			this->Destruct( 0 , start );
 
 			//Shift remaining objects
-			DataAPI::Copy( _data + start , _data , _length - start );
+			ManipulationAPI::Copy( _data + start , _data , _length - start );
 
 			_length -= start;
 		}

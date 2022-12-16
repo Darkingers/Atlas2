@@ -55,8 +55,6 @@
     <ClCompile Include="Modules\Validation\Implementations\Validate.ixx" />
     <ClCompile Include="Modules\Validation\Implementations\ValidationException.ixx" />
     <ClCompile Include="Modules\Validation\Validation.ixx" />
-    <ClCompile Include="Modules\Definitions\Implementations\AdapterDefinitions.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\AdapterConcepts.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\TraitDefinitions.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\ConverterDefinition.ixx" />
     <ClCompile Include="Modules\Concepts\Implementations\ConverterConcepts.ixx" />
@@ -70,7 +68,19 @@
     <ClCompile Include="Modules\Types\Types.ixx" />
     <ClCompile Include="Modules\API\Implementations\TypeAPI.ixx" />
     <ClCompile Include="Modules\API\Implementations\IteratorAPI.ixx" />
-    <ClCompile Include="Modules\API\Implementations\DataAPI.ixx" />
+    <ClCompile Include="Modules\API\Implementations\ManipulationAPI.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations\Adapters\QueryAdapters.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations\Adapters\ManipulationAdapters.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations\Adapters\IteratorAdapters.ixx" />
+    <ClCompile Include="Modules\Definitions\Implementations\Adapters\TypeAdapters.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Adapters\IteratorAdaptersConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Adapters\ManipulationAdaptersConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Adapters\QueryAdaptersConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Adapters\TypeAdaptersConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\IteratorAdapters.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\ManipulationAdapters.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\QueryAdapters.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\TypeAdapters.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

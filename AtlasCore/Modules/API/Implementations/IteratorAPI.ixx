@@ -31,7 +31,7 @@ export namespace Atlas
 		///Moves the iterator the specified steps
 		/// </summary>
 		template<typename TIterator>
-		constexpr static inline bool Move( TIterator& iterator , int step = 1 )
+		constexpr static inline bool Move( TIterator& iterator ,const int step = 1 )
 			noexcept ( Concept::IsNoexceptMove<TIterator&> )
 		{
 			return IteratorAdapter<TIterator&>::Move( iterator , step );

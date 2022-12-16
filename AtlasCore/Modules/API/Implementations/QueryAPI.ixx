@@ -80,10 +80,10 @@ export namespace Atlas
 		/// Matches a collection against another.
 		/// </summary>
 		template<typename TA, typename TB>
-		constexpr static inline auto IsMatch( const TA& a , const TB& b , const unsigned int aStart, const unsigned int bStart , const unsigned int matchLength )
+		constexpr static inline auto IsMatch( const TA& a , const TB& b ,const unsigned int matchLength )
 			noexcept ( Concept::IsNoexceptMatch<const TA& , const TB&> )
 		{
-			return MatchAdapter<const TA& , const TB&>::Match( a , b , aStart , bStart , matchLength );
+			return MatchAdapter<const TA& , const TB&>::Match( a , b , matchLength );
 		}
 	};
 }

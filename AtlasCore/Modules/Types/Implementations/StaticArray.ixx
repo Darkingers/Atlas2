@@ -71,7 +71,7 @@ namespace Atlas
 		/// Checks whether it contains the given data.
 		/// </summary>
 		template<typename T>
-		constexpr bool AnyMatch( const T& data )
+		constexpr bool ContainsPattern( const T& data )
 			const noexcept
 		{
 			const auto length = QueryAPI::Length( data );
@@ -82,7 +82,7 @@ namespace Atlas
 				return false;
 			}
 
-			return QueryAPI::ContainsPattern( _data , data , length );
+			return QueryAPI::ContainsPattern( *this , data , length );
 		}
 
 		/// <summary>
@@ -91,7 +91,7 @@ namespace Atlas
 		constexpr bool Contains( const TElement& element )
 			const noexcept
 		{
-			return QueryAPI::Contains( _data , _length , element );
+			return QueryAPI::Contains( *this , element );
 		}
 
 		/// <summary>
@@ -100,17 +100,7 @@ namespace Atlas
 		constexpr bool Any( const Predicate<TElement>& predicate )
 			const noexcept
 		{
-			//Iterate over the elements, and if there is a match from the given index, return true
-			for ( unsigned int i = 0; i < _length; ++i )
-			{
-				if ( predicate( _data[i] ) )
-				{
-					return true;
-				}
-			}
-
-			//No match found, return false
-			return false;
+			return QueryAPI::Any( *this , predicate );
 		}
 
 		/// <summary>
@@ -119,17 +109,7 @@ namespace Atlas
 		constexpr bool All( const Predicate<TElement>& predicate )
 			const noexcept
 		{
-			//Iterate over the elements, and if there is a match from the given index, return true
-			for ( unsigned int i = 0; i < _length; ++i )
-			{
-				if ( !predicate( _data[i] ) )
-				{
-					return false;
-				}
-			}
-
-			//No match found, return false
-			return true;
+			return QueryAPI::All( *this , predicate );
 		}
 
 

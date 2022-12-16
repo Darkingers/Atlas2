@@ -83,4 +83,28 @@ export namespace Atlas
 			throw "PatternMatchAdapter::Match is not implemented for this type";
 		}
 	};
+
+	template<typename TCollection, typename TPredicate>
+	class DLLApi AnyAdapter :
+		public std::false_type
+	{
+		public:
+
+		consteval static inline auto Any( TCollection collection , TPredicate predicate )
+		{
+			throw "AnyAdapter::Any is not implemented for this type";
+		}
+	};
+
+	template<typename TCollection , typename TPredicate>
+	class DLLApi AllAdapter :
+		public std::false_type
+	{
+		public:
+
+		consteval static inline auto All( TCollection collection , TPredicate predicate )
+		{
+			throw "AllAdapter::All is not implemented for this type";
+		}
+	};
 }

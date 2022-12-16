@@ -168,6 +168,7 @@
     <ClCompile Include="Modules\Adapters\Implementations\Query\IteratorAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\LengthAdapters.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\MatchAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\PredicateAdapters.ixx" />
     <ClCompile Include="Modules\Converters\Converters.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\BoolConverter.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\DoubleConverter.ixx" />

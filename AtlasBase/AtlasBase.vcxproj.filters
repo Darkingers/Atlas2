@@ -85,5 +85,6 @@
     <ClCompile Include="Modules\Adapters\Implementations\Query\MatchAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\ContainPatternAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\IteratorAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\PredicateAdapters.ixx" />
   </ItemGroup>
 </Project>

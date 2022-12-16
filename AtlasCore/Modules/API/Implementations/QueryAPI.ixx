@@ -20,14 +20,14 @@ export namespace Atlas
 		/// Check if the collection contains the given element
 		/// </summary>
 		template<typename TCollection , typename TElement, typename... Args>
-		constexpr static inline bool Contains( const TCollection collection, const TElement& element, const Args&... args )
+		constexpr static inline bool Contains( const TCollection collection , const TElement& element, const Args&... args )
 			noexcept ( Concept::IsNoexceptContain<const TCollection , const TElement&> )
 		{
 			bool contains =  ContainAdapter<const TCollection , const TElement&>::Contains( collection , element );
 			
 			if constexpr ( sizeof...( args ) > 0 )
 			{
-				return contains && QueryAPI::Contains( collection , args... );
+				return contains && QueryAPI::Contains( collection, args... );
 			}
 			else
 			{
@@ -43,11 +43,11 @@ export namespace Atlas
 		constexpr static inline bool Contains( const TCollection collection , const TElement element , const Args&... args )
 			noexcept ( Concept::IsNoexceptContain<const TCollection , const TElement> )
 		{
-			bool contains = ContainAdapter<const TCollection , const TElement>::Contains( collection , element );
+			bool contains = ContainAdapter<const TCollection , const TElement>::Contains( collection, element );
 
 			if constexpr ( sizeof...( args ) > 0 )
 			{
-				return contains && QueryAPI::Contains( collection ,  args... );
+				return contains && QueryAPI::Contains( collection, args... );
 			}
 			else
 			{
@@ -114,7 +114,38 @@ export namespace Atlas
 		constexpr static inline auto ContainsPattern( const TCollection& collection , const TPattern& pattern , const unsigned int matchLength )
 			noexcept ( Concept::IsNoexceptContainPattern<const TCollection& , const TPattern&> )
 		{
-			return MatchAdapter<const TCollection& , const TPattern&>::Contains( collection , pattern , matchLength );
+			return ContainPatternAdapter<const TCollection& , const TPattern&>::Contains( collection , pattern , matchLength );
+		}
+
+		/// <summary>
+		/// Checks whether a collection contains a pattern
+		/// </summary>
+		template<typename TCollection , typename TPattern> requires
+			Concept::IsFundamental<TPattern>
+		constexpr static inline auto ContainsPattern( const TCollection& collection , const TPattern pattern , const unsigned int matchLength )
+			noexcept ( Concept::IsNoexceptContainPattern<const TCollection& , const TPattern> )
+		{
+			return ContainPatternAdapter<const TCollection& , const TPattern>::Contains( collection , pattern , matchLength );
+		}
+
+		/// <summary>
+		/// Checks whether any element matches the predicate
+		/// </summary>
+		template<typename TCollection , typename TPredicate>
+		constexpr static inline auto Any( const TCollection& collection , const TPredicate& predicate )
+			noexcept ( Concept::IsNoexceptAny<const TCollection& , const TPredicate&> )
+		{
+			return AnyAdapter<const TCollection& , const TPredicate&>::Any( collection , predicate );
+		}
+
+		/// <summary>
+		/// Checks whether all elements match the predicate
+		/// </summary>
+		template<typename TCollection , typename TPredicate>
+		constexpr static inline auto All( const TCollection& collection , const TPredicate& predicate )
+			noexcept ( Concept::IsNoexceptAll<const TCollection& , const TPredicate&> )
+		{
+			return AllAdapter<const TCollection& , const TPredicate&>::All( collection , predicate );
 		}
 	};
 }

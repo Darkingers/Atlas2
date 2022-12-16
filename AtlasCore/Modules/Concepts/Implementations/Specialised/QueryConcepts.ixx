@@ -62,4 +62,10 @@ export namespace Atlas::Concept
 
 	template<typename TCollection , typename TPattern>
 	concept IsNoexceptContainPattern = noexcept( ContainPatternAdapter<TCollection , TPattern>::Contain( std::declval<TCollection>( ) , std::declval<TPattern>( ), std::declval<unsigned int>( ) ) );
+
+	template<typename TCollection, typename TPredicate>
+	concept IsNoexceptAny = noexcept( AnyAdapter<TCollection , TPredicate>::Any( std::declval<TCollection>( ) , std::declval<TPredicate>( ) ) );
+
+	template<typename TCollection , typename TPredicate>
+	concept IsNoexceptAll = noexcept( AllAdapter<TCollection , TPredicate>::All( std::declval<TCollection>( ) , std::declval<TPredicate>( ) ) );
 }

@@ -6,12 +6,13 @@ export module AtlasDefinitions:ManipulationAdapters;
 
 export namespace Atlas
 {
-	//The following text block is a code-generation helper.
-	// ClearAdapter<TCollection>-auto Clear(TCollection)
-	// ReplaceFromAdapter<TITerator,TSource>-auto ReplaceFrom(TIterator, TSource, unsigned int)
-	// CopyAdapter<TIteratorSource,TITeratorTarget>-auto Move(TIteratorSource, TIteratorTarget, unsigned int)
-	// ShiftAdapter<TCollection>-auto Shift(T, int, unsigned int)
-	
+	// Code generation helper:
+	// Clear<TCollection>-auto Clear(TCollection)
+	// ReplaceFrom<TITerator,TSource>-auto ReplaceFrom(TIterator, TSource, unsigned int)
+	// Copy<TIteratorSource,TITeratorTarget>-auto Move(TIteratorSource, TIteratorTarget, unsigned int)
+	// Shift<TCollection>-auto Shift(T, int, unsigned int)
+	// Resize<TCollection>-void Resize( T, unsigned int)
+
 	template<typename TCollection>
 	class DLLApi ClearAdapter :
 		public std::false_type
@@ -63,4 +64,15 @@ export namespace Atlas
 		}
 	};
 
+	template<typename TCollection>
+	class DLLApi ResizeAdapter
+	{
+
+	public:
+
+		consteval static inline void Resize( TCollection instance , const unsigned int newSize )
+		{
+			throw "ResizeAdapter::Resize is not implemented for this type";
+		}
+	};
 }

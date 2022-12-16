@@ -6,6 +6,7 @@ export module AtlasTypes:StaticArray;
 
 import AtlasConfiguration;
 import AtlasValidation;
+import AtlasDefinitions;
 import AtlasAPI;
 
 namespace Atlas

@@ -6,7 +6,7 @@ module;
 
 export module AtlasDefinitions:TypeDefinitions;
 
-export namespace Atlas::Definition
+export namespace Atlas
 {
 	template<typename TReturn , typename... TArgs>
 	using StaticFunction = TReturn( * )( TArgs... );

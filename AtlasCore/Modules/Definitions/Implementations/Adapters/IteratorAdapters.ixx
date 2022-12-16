@@ -6,17 +6,34 @@ export module AtlasDefinitions:IteratorAdapters;
 
 export namespace Atlas
 {
-	//The following text block is a code-generation helper.
-	// IterableAdapter<TCollection>-auto At(TCollection, const unsigned int)
-	// IterableAdapter<TCollection>-auto ConstAt(TCollection, const unsigned int)
-	// IterableAdapter<TCollection>-auto Begin(TCollection)
-	// IterableAdapter<TCollection>-auto End(TCollection)
-	// IterableAdapter<TCollection>-auto ConstBegin(TCollection)
-	// IterableAdapter<TCollection>-auto ConstEnd(TCollection)
-	// IteratorAdapter<TIterator>-auto Move(TIterator)
-	// IteratorAdapter<TIterator>-auto Current(TIterator)
-	
-	
+	// Code generation helper:
+	// Iterator<TIterator>-auto Move(TIterator)
+	// Iterator<TIterator>-auto Current(TIterator)
+	// Iterable<TCollection>-auto At(TCollection, const unsigned int)
+	// Iterable<TCollection>-auto ConstAt(TCollection, const unsigned int)
+	// Iterable<TCollection>-auto Begin(TCollection)
+	// Iterable<TCollection>-auto End(TCollection)
+	// Iterable<TCollection>-auto ConstBegin(TCollection)
+	// Iterable<TCollection>-auto ConstEnd(TCollection)
+
+	template<typename TIterator>
+	class DLLApi IteratorAdapter :
+		public std::false_type
+	{
+
+		public:
+
+		consteval static inline auto Move( TIterator iterator , const int step )
+		{
+			throw "IteratorAdapter::Move is not implemented for this type";
+		}
+
+		consteval static inline auto Current( TIterator iterator )
+		{
+			throw"IteratorAdapter::Current is not implemented for this type";
+		}
+	};
+
 	template<typename TCollection>
 	class DLLApi IterableAdapter :
 		public std::false_type
@@ -52,24 +69,6 @@ export namespace Atlas
 		consteval static inline auto ConstEnd( TCollection collection )
 		{
 			throw "IterableAdapter::ConstEnd is not implemented for this type";
-		}
-	};
-
-	template<typename TIterator>
-	class DLLApi IteratorAdapter :
-		public std::false_type
-	{
-
-	public:
-
-		consteval static inline auto Move( TIterator iterator, const int step )
-		{
-			throw "IteratorAdapter::Move is not implemented for this type";
-		}
-
-		consteval static inline auto Current( TIterator iterator )
-		{
-			throw"IteratorAdapter::Current is not implemented for this type";
 		}
 	};
 }

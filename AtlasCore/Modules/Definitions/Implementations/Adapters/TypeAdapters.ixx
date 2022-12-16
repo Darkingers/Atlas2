@@ -6,9 +6,9 @@ export module AtlasDefinitions:TypeAdapters;
 
 export namespace Atlas
 {
-	//The following text block is a code-generation helper.
-	// SizeAdapter<T>-auto Size(T)
-	// HashAdapter<T>-auto Hash(T)
+	// Code generation helper:
+	// Size<T>-auto Size(T)
+	// Hash<T>-auto Hash(T)
 	
 	template<typename T>
 	class DLLApi SizeAdapter :

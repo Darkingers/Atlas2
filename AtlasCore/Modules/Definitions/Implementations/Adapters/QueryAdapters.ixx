@@ -6,10 +6,10 @@ export module AtlasDefinitions:QueryAdapters;
 
 export namespace Atlas
 {
-	//The following text block is a code-generation helper.
-	// ContainAdapter<TITerator,TEleemnt>-auto Contain(TIterator, const unsigned int, TElement)
-	// CountAdapter<TExpected,TActual>-auto Count(TActual)
-	// MatchAdapter<TA,TB>-auto Match(TA, TB, const unsigned int)
+	// Code generation helper:
+	// Contain<TITerator,TEleemnt>-auto Contain(TIterator, const unsigned int, TElement)
+	// Count<TExpected,TActual>-auto Count(TActual)
+	// Match<TA,TB>-auto Match(TA, TB, const unsigned int)
 
 	template<typename TITerator , typename TElement>
 	class DLLApi ContainAdapter :

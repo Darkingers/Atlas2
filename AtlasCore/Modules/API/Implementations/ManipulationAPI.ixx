@@ -40,8 +40,8 @@ export namespace Atlas
 		/// <summary>
 		/// Returns the size of the given object in bytes
 		/// </summary>
-		template<typename TTarget , typename TSource>
-			requires Concept::IsFundamental<TSource>
+		template<typename TTarget , typename TSource> requires
+			Concept::IsFundamental<TSource>
 		constexpr static inline void Copy( const TSource source, TTarget& target, const unsigned int copyLength )
 			noexcept ( Concept::IsNoexceptCopy<const TSource, TTarget&> )
 		{
@@ -66,8 +66,8 @@ export namespace Atlas
 		/// <summary>
 		/// Replaces the values pointed by the iterator with the given arguments
 		/// </summary>
-		template<typename TIterator , typename CurrentSource , typename... TSource>
-			requires Concept::IsFundamental<CurrentSource>
+		template<typename TIterator , typename CurrentSource , typename... TSource> requires 
+			Concept::IsFundamental<CurrentSource>
 		constexpr static inline void ReplaceFrom( TIterator& iterator , CurrentSource current , const TSource&... source )
 			noexcept ( Concept::IsNoexceptReplaceFrom<TIterator& , CurrentSource>&& Concept::IsNoexceptReplaceFrom<TIterator& , const TSource&...> )
 		{

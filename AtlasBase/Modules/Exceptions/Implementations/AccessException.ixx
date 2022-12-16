@@ -11,17 +11,13 @@ export namespace Atlas
 	class DLLApi AccessException :
 		public Exception
 	{
-		public:
+		
+	public:
+		
 		constexpr AccessException( const std::string& message ) noexcept :
-			Exception( message , nullptr )
+			Exception( message )
 		{}
 		
-		public:
-		constexpr AccessException( const std::string& message , const void* source ) noexcept :
-			Exception( message , source )
-		{}
-
-		public:
 		constexpr AccessException( const AccessException& other ) noexcept :
 			Exception( other )
 		{}	

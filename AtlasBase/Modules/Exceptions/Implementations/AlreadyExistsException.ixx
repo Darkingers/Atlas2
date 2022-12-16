@@ -11,17 +11,13 @@ export namespace Atlas
 	class DLLApi AlreadyExistsException :
 		public Exception
 	{
-		public:
+		
+	public:
+		
 		constexpr AlreadyExistsException( const std::string& message ) noexcept :
-			Exception( message , nullptr )
+			Exception( message )
 		{}
 		
-		public:
-		constexpr AlreadyExistsException( const std::string& message , const void* source ) noexcept :
-			Exception( message , source )
-		{}
-
-		public:
 		constexpr AlreadyExistsException( const AlreadyExistsException& other ) noexcept :
 			Exception( other )
 		{}

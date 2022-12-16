@@ -11,17 +11,13 @@ export namespace Atlas
 	class DLLApi AdapterResolveException :
 		public Exception
 	{
-		public:
+		
+	public:
+		
 		constexpr AdapterResolveException( const std::string& message ) noexcept :
-			Exception( message , nullptr )
+			Exception( message  )
 		{}
 		
-		public:
-		constexpr AdapterResolveException( const std::string& message , const void* source ) noexcept :
-			Exception( message , source )
-		{}
-
-		public:
 		constexpr AdapterResolveException( const AdapterResolveException& other ) noexcept :
 			Exception( other )
 		{}

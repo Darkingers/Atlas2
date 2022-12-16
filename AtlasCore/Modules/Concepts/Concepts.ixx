@@ -1,9 +1,10 @@
 export module AtlasConcepts;
 
-export import :IteratorAdapterConcepts;
-export import :QueryAdapterConcepts;
-export import :TypeAdapterConcepts;
-export import :ManipulationAdapterConcepts;
+export import :IteratorConcepts;
+export import :QueryConcepts;
+export import :TypeConcepts;
+export import :ManipulationConcepts;
+export import :StandardConcepts;
 
 export import :BasicConcepts;
 export import :ConverterConcepts;

@@ -6,31 +6,29 @@ export module AtlasDefinitions:IteratorAdapters;
 
 export namespace Atlas
 {
-	// Code generation helper:
-	// Iterator<TIterator>-auto Move(TIterator)
-	// Iterator<TIterator>-auto Current(TIterator)
-	// Iterable<TCollection>-auto At(TCollection, const unsigned int)
-	// Iterable<TCollection>-auto ConstAt(TCollection, const unsigned int)
-	// Iterable<TCollection>-auto Begin(TCollection)
-	// Iterable<TCollection>-auto End(TCollection)
-	// Iterable<TCollection>-auto ConstBegin(TCollection)
-	// Iterable<TCollection>-auto ConstEnd(TCollection)
-
 	template<typename TIterator>
-	class DLLApi IteratorAdapter :
+	class DLLApi IteratorCurrentAdapter :
 		public std::false_type
 	{
 
-		public:
-
-		consteval static inline auto Move( TIterator iterator , const int step )
-		{
-			throw "IteratorAdapter::Move is not implemented for this type";
-		}
+	public:
 
 		consteval static inline auto Current( TIterator iterator )
 		{
 			throw"IteratorAdapter::Current is not implemented for this type";
+		}
+	};
+
+	template<typename TIterator>
+	class DLLApi IteratorMoveAdapter :
+		public std::false_type
+	{
+
+	public:
+
+		consteval static inline auto Move( TIterator iterator , const int step )
+		{
+			throw "IteratorAdapter::Move is not implemented for this type";
 		}
 	};
 

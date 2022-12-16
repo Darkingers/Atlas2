@@ -9,16 +9,18 @@ export module AtlasConverters:UnsignedIntConverter;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
-import AtlasIntegration;
+import AtlasDefinitions;
 
 export namespace Atlas
 {
-	template<typename TSource>
-		requires Concept::IsConvertibleTo<TSource ,unsigned int>
-	class DLLApi Converter<TSource , unsigned int> :
+	template<typename TSource> requires 
+		Concept::IsConvertibleTo<TSource ,unsigned int>
+	class DLLApi TypeConverter<TSource , unsigned int> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline int Convert( const TSource& data )
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource , unsigned int> )
 		{
@@ -27,10 +29,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<std::string , unsigned int> :
+	class DLLApi TypeConverter<std::string , unsigned int> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline int Convert( const std::string& data ) 
 			noexcept( !Configuration::EnableUnsignedIntConverterCheck )
 		{
@@ -46,7 +50,7 @@ export namespace Atlas
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableUnsignedIntConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableUnsignedIntConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
@@ -56,10 +60,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<const char* , unsigned int> :
+	class DLLApi TypeConverter<const char* , unsigned int> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline int Convert( const char* data ) 
 			noexcept( !Configuration::EnableUnsignedIntConverterCheck )
 		{
@@ -70,7 +76,7 @@ export namespace Atlas
 			
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableUnsignedIntConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableUnsignedIntConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}

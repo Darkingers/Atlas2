@@ -7,33 +7,10 @@ module;
 
 export module AtlasConcepts:FunctionalConcepts;
 
+import AtlasDefinitions;
+
 export namespace Atlas::Concept
 {
-	export namespace Standard
-	{
-		template<typename T>
-		concept IsHashable = requires( const T instance )
-		{
-			{
-				std::hash<T>( instance )
-			}->std::convertible_to<size_t>;
-		};
-
-		template<typename TCollection>
-		concept IsClearable = requires ( TCollection instance )
-		{
-			instance.clear( );
-		};
-
-		template<typename TCollection>
-		concept IsCountable = requires ( const TCollection instance )
-		{
-			{
-				instance.size( )
-			}->std::convertible_to<size_t>;
-		};
-	}
-
 	template<typename TReturn , typename TInvokable , typename... TArgs>
 	concept IsInvokable = requires( TInvokable invokable , TArgs... args )
 	{
@@ -114,49 +91,6 @@ export namespace Atlas::Concept
 		} -> std::convertible_to<bool>;
 	};
 
-	template<typename TCollection , typename TElement>
-	concept HasContainFunction = requires ( const TCollection collection , const TElement element )
-	{
-		{
-			collection.Contains( element )
-		}->std::convertible_to<bool>;
-	};
-	template<typename TIterable>
-	concept IsIterable = requires ( TIterable instance )
-	{
-		{
-			instance.begin( )
-		};
-		{
-			instance.end( )
-		};
-	};
-
-	template<typename TIterable , typename TIterated>
-	concept IsIterableWith = requires ( TIterable instance )
-	{
-		{
-			*( instance.begin( ) )
-		} -> std::convertible_to<TIterated>;
-		{
-			*( instance.end( ) )
-		} -> std::convertible_to<TIterated>;
-	};
-
-	template<typename TCollection>
-	concept IsClearable = requires ( TCollection instance )
-	{
-		instance.Clear( );
-	};
-
-	template<typename TCollection>
-	concept IsCountable = requires ( const TCollection instance )
-	{
-		{
-			instance.Count( )
-		}->std::convertible_to<unsigned int>;
-	};
-
 	template<typename T>
 	concept IsHashable = requires( const T instance )
 	{
@@ -164,4 +98,5 @@ export namespace Atlas::Concept
 			instance.GetHash( )
 		}->std::convertible_to<unsigned int>;
 	};
+
 }

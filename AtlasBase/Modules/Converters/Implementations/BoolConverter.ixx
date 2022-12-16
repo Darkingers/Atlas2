@@ -9,16 +9,18 @@ export module AtlasConverters:BoolConverter;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
-import AtlasIntegration;
+import AtlasDefinitions;
 
 export namespace Atlas
 {
-	template<typename TSource>
-		requires Concept::IsConvertibleTo<TSource , bool>
-	class DLLApi Converter<TSource , bool> :
+	template<typename TSource> requires 
+		Concept::IsConvertibleTo<TSource , bool>
+	class DLLApi TypeConverter<TSource , bool> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline bool Convert( const TSource& data )
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource, bool> )
 		{
@@ -27,10 +29,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<std::string , bool> :
+	class DLLApi TypeConverter<std::string , bool> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline bool Convert( const std::string& data ) 
 			noexcept( !Configuration::EnableBoolConverterCheck)
 		{
@@ -40,7 +44,7 @@ export namespace Atlas
 			{
 				if ( !isTrue )
 				{
-					Validate::IsSame( data , Configuration::FalseString );
+					Validate<Configuration::EnableBoolConverterCheck>::IsSame( data , Configuration::FalseString );
 				}
 			}
 
@@ -49,10 +53,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<const char* , bool> :
+	class DLLApi TypeConverter<const char* , bool> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline bool Convert( const char* data )
 			noexcept ( !Configuration::EnableBoolConverterCheck )
 		{
@@ -62,7 +68,7 @@ export namespace Atlas
 			{
 				if(!isTrue )
 				{
-					Validate::IsSame( data , Configuration::FalseString );
+					Validate<Configuration::EnableBoolConverterCheck>::IsSame( data , Configuration::FalseString );
 				}
 			}
 

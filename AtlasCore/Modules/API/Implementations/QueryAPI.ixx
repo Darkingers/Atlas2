@@ -19,15 +19,15 @@ export namespace Atlas
 		/// <summary>
 		/// Check if the collection contains the given element
 		/// </summary>
-		template<typename TITerator , typename TElement, typename... Args>
-		constexpr static inline bool Contains( const TITerator start, const unsigned int step , const TElement& element, const Args&... args )
-			noexcept ( Concept::IsNoexceptContain<const TITerator , const TElement&> )
+		template<typename TCollection , typename TElement, typename... Args>
+		constexpr static inline bool Contains( const TCollection collection, const TElement& element, const Args&... args )
+			noexcept ( Concept::IsNoexceptContain<const TCollection , const TElement&> )
 		{
-			bool contains =  ContainAdapter<const TITerator, const TElement&>::Contains( start, step , element );
+			bool contains =  ContainAdapter<const TCollection , const TElement&>::Contains( collection , element );
 			
 			if constexpr ( sizeof...( args ) > 0 )
 			{
-				return contains && QueryAPI::Contains( start , step , args... );
+				return contains && QueryAPI::Contains( collection , args... );
 			}
 			else
 			{
@@ -38,16 +38,16 @@ export namespace Atlas
 	    /// <summary>
 	    /// Check if the collection contains the given element
 	    /// </summary>
-		template<typename TITerator , typename TElement , typename... Args>
-			requires Concept::IsFundamental<TElement>
-		constexpr static inline bool Contains( const TITerator start , const unsigned int step , const TElement element , const Args&... args )
-			noexcept ( Concept::IsNoexceptContain<const TITerator , const TElement> )
+		template<typename TCollection , typename TElement , typename... Args> requires
+			Concept::IsFundamental<TElement>
+		constexpr static inline bool Contains( const TCollection collection , const TElement element , const Args&... args )
+			noexcept ( Concept::IsNoexceptContain<const TCollection , const TElement> )
 		{
-			bool contains = ContainAdapter<const TITerator , const TElement>::Contains( start , step , element );
+			bool contains = ContainAdapter<const TCollection , const TElement>::Contains( collection , element );
 
 			if constexpr ( sizeof...( args ) > 0 )
 			{
-				return contains && QueryAPI::Contains( start , step , args... );
+				return contains && QueryAPI::Contains( collection ,  args... );
 			}
 			else
 			{
@@ -59,21 +59,42 @@ export namespace Atlas
 		/// Count the elements with TExpected type in the given collection
 		/// </summary>
 		template<typename TExpected, typename TActual>
-		constexpr static inline auto Count( const TActual& data )
-			noexcept ( Concept::IsNoexceptCount<TExpected , const TActual&> )
+		constexpr static inline auto CountType( const TActual& data )
+			noexcept ( Concept::IsNoexceptCountType<TExpected , const TActual&> )
 		{
-			return CountAdapter<TExpected, const TActual&>::Count( data );
+			return CountTypeAdapter<TExpected, const TActual&>::Count( data );
 		}
 
 		/// <summary>
 		/// Count the elements with TExpected type in the given collection
 		/// </summary>
-		template<typename TExpected , typename TActual>
-			requires Concept::IsFundamental<TActual>
-		constexpr static inline auto Count( TActual data )
-			noexcept ( Concept::IsNoexceptCount<TExpected , TActual> )
+		template<typename TExpected , typename TActual> requires 
+			Concept::IsFundamental<TActual>
+		constexpr static inline auto CountType( TActual data )
+			noexcept ( Concept::IsNoexceptCountType<TExpected , TActual> )
 		{
-			return CountAdapter<TExpected ,TActual>::Count( data );
+			return CountTypeAdapter<TExpected ,TActual>::Count( data );
+		}
+
+		/// <summary>
+		/// Count the given elements in the given collection
+		/// <summary>
+		template<typename TIterator, typename TElement>
+		constexpr static inline auto CountElement( const TIterator start , const unsigned int step , const TElement& element )
+			noexcept ( Concept::IsNoexceptCountElement<const TIterator , const TElement&> )
+		{
+			return CountElementAdapter<const TIterator , const TElement&>::Count( start , step , element );
+		}
+
+		/// <summary>
+		/// Count the given elements in the given collection
+		/// <summary>
+		template<typename TIterator , typename TElement> requires 
+			Concept::IsFundamental<TElement>
+		constexpr static inline auto CountElement( const TIterator start , const unsigned int step , const TElement element )
+			noexcept ( Concept::IsNoexceptCountElement<const TIterator , const TElement> )
+		{
+			return CountElementAdapter<const TIterator , const TElement>::Count( start , step , element );
 		}
 
 		/// <summary>
@@ -84,6 +105,16 @@ export namespace Atlas
 			noexcept ( Concept::IsNoexceptMatch<const TA& , const TB&> )
 		{
 			return MatchAdapter<const TA& , const TB&>::Match( a , b , matchLength );
+		}
+
+		/// <summary>
+		/// Checks whether a collection contains a pattern
+		/// </summary>
+		template<typename TCollection , typename TPattern>
+		constexpr static inline auto ContainsPattern( const TCollection& collection , const TPattern& pattern , const unsigned int matchLength )
+			noexcept ( Concept::IsNoexceptContainPattern<const TCollection& , const TPattern&> )
+		{
+			return MatchAdapter<const TCollection& , const TPattern&>::Contains( collection , pattern , matchLength );
 		}
 	};
 }

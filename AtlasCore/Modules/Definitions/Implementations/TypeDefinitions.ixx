@@ -22,10 +22,10 @@ export namespace Atlas
 
 	
 	template<typename TTarget , typename TSource>
-	using ConverterFunction = GeneralFunction<TTarget , TSource>;
+	using Converter = GeneralFunction<TTarget , TSource>;
 
 	template<typename ComparedType>
-	using ComparatorFunction = GeneralFunction<int , const ComparedType&, const ComparedType&>;
+	using Comparator = GeneralFunction<int , const ComparedType&, const ComparedType&>;
 
 	template<typename T>
 	using Predicate = GeneralFunction<bool , const T&>;

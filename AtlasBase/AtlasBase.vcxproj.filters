@@ -21,24 +21,6 @@
     <ClCompile Include="Modules\Adapters\Adapters.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\VariadicHelpers\VariadicsHelpers.ixx">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Adapters\Implementations\SizeAdapter.ixx">
-      <Filter>Modules\Adapters</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Adapters\Implementations\ClearAdapter.ixx">
-      <Filter>Modules\Adapters</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Adapters\Implementations\ContainAdapter.ixx">
-      <Filter>Modules\Adapters</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Adapters\Implementations\ContainAllAdapter.ixx">
-      <Filter>Modules\Adapters</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Adapters\Implementations\HashAdapter.ixx">
-      <Filter>Modules\Adapters</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\Exceptions\Implementations\AbortRequestedException.ixx">
       <Filter>Modules\Exceptions</Filter>
     </ClCompile>
@@ -95,10 +77,13 @@
     <ClCompile Include="Modules\Converters\Implementations\UnsignedLongConverter.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\UnsignedLongLongConverter.ixx" />
     <ClCompile Include="Modules\Extensions\Implementations\Throw.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\StaticString.ixx" />
-    <ClCompile Include="Modules\BaseTypes\BaseTypes.ixx" />
-    <ClCompile Include="Modules\Exceptions\Implementations\ExceptionBase.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\String.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\Span.ixx" />
+    <ClCompile Include="Modules\Exceptions\Implementations\Exception.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\ContainAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\CountElementAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\CountTypeAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\LengthAdapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\MatchAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\ContainPatternAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\IteratorAdapter.ixx" />
   </ItemGroup>
 </Project>

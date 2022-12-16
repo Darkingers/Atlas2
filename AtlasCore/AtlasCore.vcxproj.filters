@@ -73,14 +73,11 @@
     <ClCompile Include="Modules\Definitions\Implementations\Adapters\ManipulationAdapters.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\Adapters\IteratorAdapters.ixx" />
     <ClCompile Include="Modules\Definitions\Implementations\Adapters\TypeAdapters.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\Adapters\IteratorAdaptersConcepts.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\Adapters\ManipulationAdaptersConcepts.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\Adapters\QueryAdaptersConcepts.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\Adapters\TypeAdaptersConcepts.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\IteratorAdapters.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\ManipulationAdapters.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\QueryAdapters.ixx" />
-    <ClCompile Include="Modules\Concepts\Implementations\TypeAdapters.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Specialised\IteratorConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Specialised\ManipulationConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Specialised\QueryConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Specialised\TypeConcepts.ixx" />
+    <ClCompile Include="Modules\Concepts\Implementations\Specialised\Standard.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Macros\Macros.h">

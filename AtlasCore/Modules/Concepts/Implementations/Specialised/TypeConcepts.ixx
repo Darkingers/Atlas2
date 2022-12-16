@@ -2,16 +2,12 @@ module;
 
 #include "../../../../../Macros/Macros.h"
 
-export module AtlasConcepts:TypeAdapterConcepts;
+export module AtlasConcepts:TypeConcepts;
 
 import AtlasDefinitions;
 
 export namespace Atlas::Concept
 {
-	// Code generation helper:
-	// Size<T>-auto Size(T)
-	// Hash<T>-auto Hash(T)
-	
 	template<typename T>
 	concept IsNoexceptSize = noexcept( SizeAdapter<T>::Size( std::declval<T>( ) ) );
 

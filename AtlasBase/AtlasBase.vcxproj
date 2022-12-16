@@ -161,13 +161,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Modules\Adapters\Adapters.ixx" />
-    <ClCompile Include="Modules\BaseTypes\BaseTypes.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\Span.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\String.ixx" />
-    <ClCompile Include="Modules\BaseTypes\Implementations\StaticString.ixx">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <ClCompile Include="Modules\Adapters\Implementations\Query\ContainAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\ContainPatternAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\CountElementAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\CountTypeAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\IteratorAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\LengthAdapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\MatchAdapter.ixx" />
     <ClCompile Include="Modules\Converters\Converters.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\BoolConverter.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\DoubleConverter.ixx" />
@@ -186,7 +186,7 @@
     <ClCompile Include="Modules\Exceptions\Implementations\AlreadyExistsException.ixx" />
     <ClCompile Include="Modules\Exceptions\Implementations\ArgumentException.ixx" />
     <ClCompile Include="Modules\Exceptions\Implementations\DLLException.ixx" />
-    <ClCompile Include="Modules\Exceptions\Implementations\ExceptionBase.ixx" />
+    <ClCompile Include="Modules\Exceptions\Implementations\Exception.ixx" />
     <ClCompile Include="Modules\Exceptions\Implementations\IncompatibleTypeException.ixx" />
     <ClCompile Include="Modules\Exceptions\Implementations\InvalidOperationException.ixx" />
     <ClCompile Include="Modules\Exceptions\Implementations\NotFoundException.ixx" />
@@ -199,12 +199,6 @@
     <ClCompile Include="Modules\Extensions\Implementations\Tuple.ixx" />
     <ClCompile Include="Modules\Extensions\Implementations\Vector.ixx" />
     <ClCompile Include="Modules\Extensions\Extensions.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\ClearAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\ContainAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\ContainAllAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\SizeAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\HashAdapter.ixx" />
-    <ClCompile Include="Modules\VariadicHelpers\VariadicsHelpers.ixx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AtlasCore\AtlasCore.vcxproj">

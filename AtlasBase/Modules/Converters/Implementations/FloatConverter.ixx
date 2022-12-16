@@ -9,16 +9,18 @@ export module AtlasConverters:FloatConverter;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
-import AtlasIntegration;
+import AtlasDefinitions;
 
 export namespace Atlas
 {
-	template<typename TSource>
-		requires Concept::IsConvertibleTo<TSource , float>
-	class DLLApi Converter<TSource , float> :
+	template<typename TSource> requires 
+		Concept::IsConvertibleTo<TSource , float>
+	class DLLApi TypeConverter<TSource , float> :
 		public std::true_type
 	{	
-		public:
+		
+	public:
+		
 		constexpr static inline float Convert( const TSource& data )
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource , float> )
 		{
@@ -27,10 +29,13 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<std::string , float> :
+	class DLLApi TypeConverter<std::string , float> :
 		public std::true_type
 	{
-		private: constexpr static inline float DecimalMultipliers[] = {
+	
+	private:
+
+		constexpr static inline float DecimalMultipliers[] = {
 			0.1f,
 			0.01f,
 			0.001f,
@@ -83,9 +88,9 @@ export namespace Atlas
 			0.00000000000000000000000000000000000000000000000001f,
 			0.000000000000000000000000000000000000000000000000001f
 		};
-		
 			
-		public:
+	public:
+		
 		constexpr static inline float Convert( const std::string& data ) 
 			noexcept( !Configuration::EnableFloatConverterCheck )
 		{
@@ -114,7 +119,7 @@ export namespace Atlas
 				}
 				else
 				{
-					Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
+					Validate<Configuration::EnableFloatConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 					
 					integer = integer * 10 + ( current - '0' );
 				}
@@ -126,7 +131,7 @@ export namespace Atlas
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableFloatConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 				
 				decimal = decimal * 10 + ( current - '0' );
 			}
@@ -136,10 +141,13 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<const char* , float> :
+	class DLLApi TypeConverter<const char* , float> :
 		public std::true_type
 	{
-		private: constexpr static inline float DecimalMultipliers[] = {
+
+	private:
+	
+		constexpr static inline float DecimalMultipliers[] = {
 			0.1f,
 			0.01f,
 			0.001f,
@@ -192,9 +200,9 @@ export namespace Atlas
 			0.00000000000000000000000000000000000000000000000001f,
 			0.000000000000000000000000000000000000000000000000001f
 		};
+					
+	public:
 		
-			
-		public:
 		constexpr static inline float Convert( const char* data )
 			noexcept( !Configuration::EnableFloatConverterCheck )
 		{
@@ -220,7 +228,7 @@ export namespace Atlas
 				}
 				else
 				{
-					Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
+					Validate<Configuration::EnableFloatConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 					
 					integer = integer * 10 + ( current - '0' );
 				}
@@ -230,7 +238,7 @@ export namespace Atlas
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableFloatConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableFloatConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 				
 				decimal = decimal * 10 + ( current - '0' );
 			}

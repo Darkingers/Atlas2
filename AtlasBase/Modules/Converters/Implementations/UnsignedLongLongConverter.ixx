@@ -9,17 +9,18 @@ export module AtlasConverters:UnsignedLongLongConverter;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
-import AtlasIntegration;
+import AtlasDefinitions;
 
 export namespace Atlas
 {
-	template<typename TSource>
-		requires Concept::IsConvertibleTo<TSource , unsigned long long>
-	class DLLApi Converter<TSource , unsigned long long> :
+	template<typename TSource> requires 
+		Concept::IsConvertibleTo<TSource , unsigned long long>
+	class DLLApi TypeConverter<TSource , unsigned long long> :
 		public std::true_type
 	{
 
-		public:
+	public:
+		
 		constexpr static inline unsigned long long Convert( const TSource& data )  
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource ,unsigned long long> )
 		{
@@ -28,10 +29,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<std::string , unsigned long long> :
+	class DLLApi TypeConverter<std::string , unsigned long long> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline unsigned long long Convert( const std::string& data )
 			noexcept( !Configuration::EnableUnsignedLongLongConverterCheck )
 		{
@@ -47,7 +50,7 @@ export namespace Atlas
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
@@ -57,10 +60,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<const char* , unsigned long long> :
+	class DLLApi TypeConverter<const char* , unsigned long long> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline unsigned long long Convert( const char* data ) 
 			noexcept( !Configuration::EnableUnsignedLongLongConverterCheck )
 		{
@@ -71,7 +76,7 @@ export namespace Atlas
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableUnsignedLongLongConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}

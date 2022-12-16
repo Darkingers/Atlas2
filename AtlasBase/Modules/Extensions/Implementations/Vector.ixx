@@ -52,7 +52,7 @@ export namespace Atlas
 		}
 
 		public: template<typename DataType>
-		constexpr static void RemoveIf( std::vector<DataType>& vector , Definition::Condition<DataType> condition )
+		constexpr static void RemoveIf( std::vector<DataType>& vector , Predicate<DataType> condition )
 			noexcept ( IsNoexceptBegin<DataType> && IsNoexceptEnd<DataType> && IsNoexceptErase<DataType> && IsNoexceptFindif<DataType> )
 		{
 			const auto end = std::cend( vector );
@@ -80,15 +80,15 @@ export namespace Atlas
 		}
 
 		public: template<typename DataType>
-		constexpr static void SortBy( std::vector<DataType>& vector , Definition::Comparator<DataType> comparator )
-			noexcept ( IsNoexceptBegin<DataType> && IsNoexceptEnd<DataType>&& IsNoexceptSort<DataType> && noexcept ( std::declval<Definition::Comparator<DataType>>()( DataType( ) ,DataType( ) ) ) )
+		constexpr static void SortBy( std::vector<DataType>& vector , Comparator<DataType> comparator )
+			noexcept ( IsNoexceptBegin<DataType> && IsNoexceptEnd<DataType>&& IsNoexceptSort<DataType> && noexcept ( std::declval<Predicate<DataType>>()( DataType( ) ,DataType( ) ) ) )
 		{
 			std::sort( std::begin( vector ) , std::end( vector ) , comparator );
 		}	
 
 		public: template<typename DataType , typename KeyType>
-		constexpr static auto GroupBy( const std::vector<DataType>& vector , Definition::KeyGenerator<DataType, KeyType> keyGenerator )
-			noexcept ( IsNoexceptBegin<DataType> && IsNoexceptEnd<DataType> && IsNoexceptPushback<DataType> && noexcept ( std::declval<Definition::KeyGenerator<DataType , KeyType>>( )( DataType( ) ) ) && noexcept ( std::declval<std::map<KeyType , std::vector<DataType>>>( ).insert( std::pair<KeyType , std::vector<DataType>>( ) ) ) )
+		constexpr static auto GroupBy( const std::vector<DataType>& vector , KeyGenerator<DataType, KeyType> keyGenerator )
+			noexcept ( IsNoexceptBegin<DataType> && IsNoexceptEnd<DataType> && IsNoexceptPushback<DataType> && noexcept ( std::declval<KeyGenerator<DataType , KeyType>>( )( DataType( ) ) ) && noexcept ( std::declval<std::map<KeyType , std::vector<DataType>>>( ).insert( std::pair<KeyType , std::vector<DataType>>( ) ) ) )
 		{
 			std::map<KeyType , std::vector<DataType>> map;
 
@@ -108,8 +108,8 @@ export namespace Atlas
 		}
 
 		public: template<typename DataType>
-		constexpr static auto CountIf( const std::vector<DataType>& vector , Definition::Condition<DataType> condition )
-			noexcept ( IsNoexceptBegin<DataType> && IsNoexceptEnd<DataType> && noexcept ( std::declval<Definition::Condition<DataType>>( )( DataType( ) ) ) && noexcept ( std::count_if( std::declval<typename std::vector<DataType>::iterator>( ) , std::declval<typename std::vector<DataType>::iterator>( ) , Definition::Condition<DataType>( ) ) ) )
+		constexpr static auto CountIf( const std::vector<DataType>& vector , Predicate<DataType> condition )
+			noexcept ( IsNoexceptBegin<DataType> && IsNoexceptEnd<DataType> && noexcept ( std::declval<Predicate<DataType>>( )( DataType( ) ) ) && noexcept ( std::count_if( std::declval<typename std::vector<DataType>::iterator>( ) , std::declval<typename std::vector<DataType>::iterator>( ) , Predicate<DataType>( ) ) ) )
 		{
 			return std::count_if( std::cbegin( vector ) , std::cend( vector ) , condition );
 		}
@@ -122,8 +122,8 @@ export namespace Atlas
 		}
 
 		public: template<typename DataType>
-		constexpr static auto ContainsIf( const std::vector<DataType>& vector , Definition::Condition<DataType> condition )
-			noexcept ( IsNoexceptBegin<DataType>&& IsNoexceptEnd<DataType> && noexcept ( std::declval<Definition::Condition<DataType>>( ) ( DataType ( ) ) ) && noexcept ( std::find_if( std::declval<typename std::vector<DataType>::iterator>( ) , std::declval<typename std::vector<DataType>::iterator>( ) , Definition::Condition<DataType>( ) ) ) )
+		constexpr static auto ContainsIf( const std::vector<DataType>& vector , Predicate<DataType> condition )
+			noexcept ( IsNoexceptBegin<DataType>&& IsNoexceptEnd<DataType> && noexcept ( std::declval<Predicate<DataType>>( ) ( DataType ( ) ) ) && noexcept ( std::find_if( std::declval<typename std::vector<DataType>::iterator>( ) , std::declval<typename std::vector<DataType>::iterator>( ) , Predicate<DataType>( ) ) ) )
 		{
 			return std::find_if( std::cbegin( vector ) , std::cend( vector ) , condition ) != std::cend( vector );
 		}

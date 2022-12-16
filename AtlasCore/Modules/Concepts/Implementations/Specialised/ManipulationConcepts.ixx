@@ -2,18 +2,18 @@ module;
 
 #include "../../../../../Macros/Macros.h"
 
-export module AtlasConcepts:ManipulationAdapterConcepts;
+export module AtlasConcepts:ManipulationConcepts;
 
 import AtlasDefinitions;
 
 export namespace Atlas::Concept
 {
-	// Code generation helper:
-	// Clear<TCollection>-auto Clear(TCollection)
-	// ReplaceFrom<TITerator,TSource>-auto ReplaceFrom(TIterator, TSource, unsigned int)
-	// Copy<TIteratorSource,TITeratorTarget>-auto Move(TIteratorSource, TIteratorTarget, unsigned int)
-	// Shift<TCollection>-auto Shift(T, int, unsigned int)
-	// Resize<TCollection>-void Resize( T, unsigned int)
+
+	template<typename TCollection>
+	concept HasClearFunction = requires ( TCollection instance )
+	{
+		instance.Clear( );
+	};
 
 	template<typename TCollection>
 	concept IsNoexceptClear = noexcept( ClearAdapter<TCollection>::Clear( std::declval<TCollection>( ) ) );

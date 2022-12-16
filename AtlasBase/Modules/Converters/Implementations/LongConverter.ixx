@@ -9,16 +9,18 @@ export module AtlasConverters:LongConverter;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
-import AtlasIntegration;
+import AtlasDefinitions;
 
 export namespace Atlas
 {
-	template<typename TSource>
-		requires Concept::IsConvertibleTo<TSource , long>
-	class DLLApi Converter<TSource , long> :
+	template<typename TSource> requires 
+		Concept::IsConvertibleTo<TSource , long>
+	class DLLApi TypeConverter<TSource , long> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline long Convert( const TSource& data ) 
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource, long> )
 		{
@@ -27,10 +29,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<std::string , long> :
+	class DLLApi TypeConverter<std::string , long> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline long Convert( const std::string& data )
 			noexcept( !Configuration::EnableLongConverterCheck )
 		{
@@ -53,7 +57,7 @@ export namespace Atlas
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableLongConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableLongConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
@@ -63,13 +67,16 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<const char* , long> :
+	class DLLApi TypeConverter<const char* , long> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableLongConverterCheck;
 		
-
-		public:
+	private: 
+		
+		constexpr static bool IsNoexcept = !Configuration::EnableLongConverterCheck;
+		
+	public:
+		
 		constexpr static inline long Convert( const char* data ) 
 			noexcept( !Configuration::EnableLongConverterCheck )
 		{
@@ -87,7 +94,7 @@ export namespace Atlas
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableLongConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableLongConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}

@@ -7,6 +7,8 @@ module;
 
 export module AtlasConcepts:BasicConcepts;
 
+import AtlasDefinitions;
+
 namespace Atlas::Concept::Implementation
 {
 	template <typename T>
@@ -48,4 +50,16 @@ export namespace Atlas::Concept
 
 	template<typename T>
 	concept IsTuple = Implementation::IsTuple<T>::value;
+
+	template<typename TCollection>
+	concept IsArray = std::is_array<TCollection>::value;
+
+	template<typename TCollection, typename TElement>
+	concept IsArrayOf = IsArray<TCollection> && std::is_same_v<std::remove_all_extents_t<TCollection> , TElement>;
+
+	template<typename TCollection>
+	concept IsCollection = CollectionTraits<TCollection>::value;
+	
+	template<typename TCollection , typename TElement>
+	concept IsCollectionOf = IsCollection<TCollection> && std::is_same_v<typename CollectionTraits<TCollection>::ElementType , TElement>;
 }

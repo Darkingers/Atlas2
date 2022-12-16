@@ -16,7 +16,7 @@ import :Tuple;
 
 export namespace Atlas::Implementation
 {
-	namespace Marker
+	/*namespace Marker
 	{
 		class ExtendedType{};
 	}
@@ -208,5 +208,5 @@ export namespace Atlas
 		{
 			return Implementation::Constructor<BaseType>::Allocate( std::forward<TArgs&&>( args )... );
 		}
-	};
+	};*/
 }

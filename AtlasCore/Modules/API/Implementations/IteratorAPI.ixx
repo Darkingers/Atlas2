@@ -24,17 +24,37 @@ export namespace Atlas
 		constexpr static inline auto Current( const TIterator& iterator )
 			noexcept ( Concept::IsNoexceptCurrent<const TIterator&> )
 		{
-			return IteratorAdapter<const TIterator&>::Current( iterator );
+			return IteratorCurrentAdapter<const TIterator&>::Current( iterator );
 		}
 
 	    /// <summary>
 		///Moves the iterator the specified steps
 		/// </summary>
 		template<typename TIterator>
-		constexpr static inline bool Move( TIterator& iterator ,const int step = 1 )
+		constexpr static inline bool Move( TIterator& iterator ,const int step )
 			noexcept ( Concept::IsNoexceptMove<TIterator&> )
 		{
-			return IteratorAdapter<TIterator&>::Move( iterator , step );
+			return IteratorMoveAdapter<TIterator&>::Move( iterator , step );
+		}
+
+		/// <summary>
+	    /// Moves the iterator to the next element
+	    /// </summary>
+		template<typename TIterator>
+		constexpr static inline bool Next( TIterator& iterator )
+			noexcept ( Concept::IsNoexceptMove<TIterator&> )
+		{
+			return IteratorAPI::Move( iterator , 1 );
+		}
+		
+		/// <summary>
+		/// Moves the iterator to the previous element
+		/// </summary>
+		template<typename TIterator>
+		constexpr static inline bool Previous( TIterator& iterator )
+			noexcept ( Concept::IsNoexceptMove<TIterator&> )
+		{
+			return IteratorAPI::Move( iterator , -1 );
 		}
 		
 		/// <summary>

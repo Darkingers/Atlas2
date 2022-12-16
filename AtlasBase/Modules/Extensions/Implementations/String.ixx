@@ -13,7 +13,7 @@ import AtlasConverters;
 
 export namespace Atlas
 {
-	class String
+	/*class String
 	{	
 		private: template<typename CurrentType , typename... TArgs>
 		struct IsNoexceptConvertible
@@ -336,5 +336,5 @@ export namespace Atlas
 				String::ConvertFrom<Index + 1>( result , std::forward<const TArgs&>( TArgs )... );
 			}
 		}
-	};
+	};*/
 }

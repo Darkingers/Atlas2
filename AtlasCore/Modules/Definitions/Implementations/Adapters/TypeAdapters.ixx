@@ -6,10 +6,6 @@ export module AtlasDefinitions:TypeAdapters;
 
 export namespace Atlas
 {
-	// Code generation helper:
-	// Size<T>-auto Size(T)
-	// Hash<T>-auto Hash(T)
-	
 	template<typename T>
 	class DLLApi SizeAdapter :
 		public std::false_type

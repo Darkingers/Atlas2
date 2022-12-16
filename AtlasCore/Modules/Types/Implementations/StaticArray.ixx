@@ -71,10 +71,10 @@ namespace Atlas
 		/// Checks whether it contains the given data.
 		/// </summary>
 		template<typename T>
-		constexpr bool Contains( const T& data )
+		constexpr bool AnyMatch( const T& data )
 			const noexcept
 		{
-			const auto length = QueryAPI::Count<TElement>( data );
+			const auto length = QueryAPI::Length( data );
 
 			//Length is too big, so return false
 			if ( length > _length || length == 0 )
@@ -82,17 +82,7 @@ namespace Atlas
 				return false;
 			}
 
-			//Iterate over the elements, and if there is a match from the given index, return true
-			for ( unsigned int i = 0; i < _length - length; ++i )
-			{
-				if ( QueryAPI::IsMatch( _data[i] , IteratorAPI::ConstBegin( data ), length ) )
-				{
-					return true;
-				}
-			}
-
-			//No match found, return false
-			return false;
+			return QueryAPI::ContainsPattern( _data , data , length );
 		}
 
 		/// <summary>
@@ -101,17 +91,7 @@ namespace Atlas
 		constexpr bool Contains( const TElement& element )
 			const noexcept
 		{
-			//Iterate over the elements, and if there is a match from the given index, return true
-			for ( unsigned int i = 0; i < _length; ++i )
-			{
-				if ( _data[i] == element )
-				{
-					return true;
-				}
-			}
-
-			//No match found, return false
-			return false;
+			return QueryAPI::Contains( _data , _length , element );
 		}
 
 		/// <summary>
@@ -160,7 +140,7 @@ namespace Atlas
 		constexpr auto Count( const T& data )
 			const noexcept
 		{
-			const auto length = QueryAPI::Count<TElement>( data );
+			const auto length = QueryAPI::CountType<TElement>( data );
 
 			//Length is too big, so return false
 			if ( length > _length || length == 0 )
@@ -328,7 +308,7 @@ namespace Atlas
 		constexpr bool StartsWith( const T data )
 			const noexcept
 		{
-			const auto length = QueryAPI::Count<TElement>( data );
+			const auto length = QueryAPI::CountType<TElement>( data );
 
 			//Length is too big, so return false
 			if ( length > _length || length == 0 )
@@ -347,7 +327,7 @@ namespace Atlas
 		constexpr bool EndsWith( const T data )
 			const noexcept
 		{
-			const auto length = QueryAPI::Count<TElement>( data );
+			const auto length = QueryAPI::CountType<TElement>( data );
 
 			//Length is too big, so return false
 			if ( length > _length || length == 0 )
@@ -413,7 +393,7 @@ namespace Atlas
 		constexpr long int IndexOf( const T& data )
 			const noexcept
 		{
-			const auto subArrayLength = QueryAPI::Count<TElement>( data );
+			const auto subArrayLength = QueryAPI::CountType<TElement>( data );
 
 			//Length is too big, so return -1
 			if ( subArrayLength > _length )
@@ -441,7 +421,7 @@ namespace Atlas
 		constexpr long int LastIndexOf( const T& data )
 			const noexcept
 		{
-			const auto subArrayLength = QueryAPI::Count<char>( data );
+			const auto subArrayLength = QueryAPI::CountType<TElement>( data );
 
 			//Length is too big, so return -1
 			if ( subArrayLength > _length )
@@ -470,8 +450,8 @@ namespace Atlas
 			noexcept( !Configuration::EnableStaticArrayCheck )
 		{
 			// Calculate the length of the old and new data.
-			const auto oldDataLength = QueryAPI::Count<TElement>( oldData );
-			const auto newDataLength = QueryAPI::Count<TElement>( newData );
+			const auto oldDataLength = QueryAPI::CountType<TElement>( oldData );
+			const auto newDataLength = QueryAPI::CountType<TElement>( newData );
 
 			// If the old data is longer than the array, the replace operation is impossible.
 			if ( oldDataLength > _length )
@@ -563,7 +543,7 @@ namespace Atlas
 		template<typename T>
 		constexpr auto Trim( const T& data )
 		{
-			const auto trimDataLength = QueryAPI::Count<TElement>( data );
+			const auto trimDataLength = QueryAPI::CountType<TElement>( data );
 
 			//Trim from end first, in case it results in less shifting later
 			this->TrimEndImpl( data , trimDataLength );
@@ -580,7 +560,7 @@ namespace Atlas
 		template<typename T>
 		constexpr auto TrimStart( const T& data )
 		{
-			const auto trimDataLength = QueryAPI::Count<TElement>( data );
+			const auto trimDataLength = QueryAPI::CountType<TElement>( data );
 
 			this->TrimStartImpl( data , trimDataLength );
 
@@ -607,7 +587,7 @@ namespace Atlas
 		consteval auto Concat(const Args&... args )
 			const noexcept
 		{
-			const auto length = (QueryAPI::Count<TElement>( args ) + ...);
+			const auto length = (QueryAPI::CountType<TElement>( args ) + ...);
 			
 			//Validate that the array will not overflow after the concat operation.
 			Validate<Configuration::EnableStaticArrayCheck>::IsMoreOrEqual( BufferSize , _length + length, "Concatting data would result in an array overflow! Aborting function..." );

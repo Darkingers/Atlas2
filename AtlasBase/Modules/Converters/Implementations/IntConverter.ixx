@@ -9,16 +9,18 @@ export module AtlasConverters:IntConverter;
 import AtlasConcepts;
 import AtlasConfiguration;
 import AtlasValidation;
-import AtlasIntegration;
+import AtlasDefinitions;
 
 export namespace Atlas
 {
-	template<typename TSource>
-		requires Concept::IsConvertibleTo<TSource , int>
-	class DLLApi Converter<TSource , int> :
+	template<typename TSource> requires 
+		Concept::IsConvertibleTo<TSource , int>
+	class DLLApi TypeConverter<TSource , int> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline int Convert( const TSource& data )
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource , int> )
 		{
@@ -27,10 +29,12 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<std::string , int> :
+	class DLLApi TypeConverter<std::string , int> :
 		public std::true_type
 	{
-		public:
+		
+	public:
+		
 		constexpr static inline int Convert( const std::string& data ) 
 			noexcept( !Configuration::EnableIntConverterCheck )
 		{
@@ -53,7 +57,7 @@ export namespace Atlas
 			{
 				current = data[i++];
 				
-				Validate<Configuration::EnableIntConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableIntConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}
@@ -63,13 +67,16 @@ export namespace Atlas
 	};
 
 	template<>
-	class DLLApi Converter<const char* , int> :
+	class DLLApi TypeConverter<const char* , int> :
 		public std::true_type
 	{
-		private: constexpr static bool IsNoexcept = !Configuration::EnableIntConverterCheck;
+	
+	private:
+			
+		constexpr static bool IsNoexcept = !Configuration::EnableIntConverterCheck;
 		
-
-		public:
+	public:
+		
 		constexpr static inline int Convert( const char* data )
 			noexcept( !Configuration::EnableIntConverterCheck )
 		{
@@ -87,7 +94,7 @@ export namespace Atlas
 
 			while ( ( current = data[i++] ) != '\0' )
 			{
-				Validate<Configuration::EnableIntConverterCheck>::InclusiveRange( current , '0' , '9' );
+				Validate<Configuration::EnableIntConverterCheck>::IsInInclusiveRange( current , '0' , '9' );
 
 				integer = integer * 10 + ( current - '0' );
 			}

@@ -7,7 +7,7 @@ export module AtlasDefinitions:ConverterDefinitions;
 export namespace Atlas
 {
 	template<typename TSource , typename TTarget>
-	class DLLApi Converter :
+	class DLLApi TypeConverter :
 		public std::false_type
 	{
 		

@@ -18,7 +18,7 @@ namespace Atlas
 	class DLLApi StaticArray
 	{
 		
-	private: 
+	protected: 
 		
 		TElement _data[BufferSize];
 		unsigned int _length;
@@ -95,10 +95,68 @@ namespace Atlas
 		}
 
 		/// <summary>
+		/// Checks whether it contains the given element.
+		/// </summary>
+		constexpr bool Contains( const TElement& element )
+			const noexcept
+		{
+			//Iterate over the elements, and if there is a match from the given index, return true
+			for ( unsigned int i = 0; i < _length; ++i )
+			{
+				if ( _data[i] == element )
+				{
+					return true;
+				}
+			}
+
+			//No match found, return false
+			return false;
+		}
+
+		/// <summary>
+		/// Checks whether any element satisfies the given predicate
+		/// </summary>
+		constexpr bool Any( const Predicate<TElement>& predicate )
+			const noexcept
+		{
+			//Iterate over the elements, and if there is a match from the given index, return true
+			for ( unsigned int i = 0; i < _length; ++i )
+			{
+				if ( predicate( _data[i] ) )
+				{
+					return true;
+				}
+			}
+
+			//No match found, return false
+			return false;
+		}
+
+		/// <summary>
+		/// Checks whether all element satisfies the given predicate
+		/// </summary>
+		constexpr bool All( const Predicate<TElement>& predicate )
+			const noexcept
+		{
+			//Iterate over the elements, and if there is a match from the given index, return true
+			for ( unsigned int i = 0; i < _length; ++i )
+			{
+				if ( !predicate( _data[i] ) )
+				{
+					return false;
+				}
+			}
+
+			//No match found, return false
+			return true;
+		}
+
+
+		/// <summary>
 		/// Counts the occurence of the given data
 		/// </summary>
 		template<typename T>
-		constexpr unsigned int Count( const T& data )
+		constexpr auto Count( const T& data )
 			const noexcept
 		{
 			const auto length = QueryAPI::Count<TElement>( data );
@@ -123,6 +181,31 @@ namespace Atlas
 			return count;
 		}
 
+		/// <summary>
+		/// Counts the occurence of the given element
+		/// </summary>
+		constexpr auto Count( const TElement& element )
+			const noexcept
+		{
+			unsigned int count = 0;
+
+			//Iterate over the elements, and if there is a match from the given index, increment counter
+			for ( unsigned int i = 0; i < _length; ++i )
+			{
+				if ( _data[i] == element )
+				{
+					count++;
+				}
+			}
+
+			return count;
+		}
+
+		/// <summary>
+		/// Counts how many elements satisfy the given predicate
+		/// </summary>
+
+		
 		/// <summary>
 		/// Clears the array
 		/// </summary>

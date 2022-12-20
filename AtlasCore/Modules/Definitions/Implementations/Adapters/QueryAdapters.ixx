@@ -6,19 +6,6 @@ export module AtlasDefinitions:QueryAdapters;
 
 export namespace Atlas
 {
-	template<typename TCollection , typename TElement>
-	class DLLApi ContainAdapter :
-		public std::false_type
-	{
-
-	public:
-
-		consteval static inline auto Contain( TCollection collection , TElement element )
-		{
-			throw "ContainAdapter::Contain is not implemented for this type";
-		}
-	};
-
 	
 	template<typename TExpected , typename TActual>
 	class DLLApi CountTypeAdapter :
@@ -33,76 +20,101 @@ export namespace Atlas
 		}
 	};
 
-	template<typename TCollection , typename TElement>
+	template<typename... TArgs>
+	class DLLApi LengthAdapter :
+		public std::false_type
+	{
+
+	public:
+
+		consteval static inline auto Length( TArgs... args )
+		{
+			throw "LengthAdapter::Length is not implemented for this type";
+		}
+	};
+
+	template<typename... TArgs>
+	class DLLApi ContainAdapter :
+		public std::false_type
+	{
+
+		public:
+
+		consteval static inline auto Contain( TArgs... args )
+		{
+			throw "ContainAdapter::Contain is not implemented for this type";
+		}
+	};
+
+	template<typename... TArgs>
 	class DLLApi CountElementAdapter :
 		public std::false_type
 	{
 
 	public:
 
-		consteval static inline auto Count( TCollection start , TElement element )
+		consteval static inline auto Count( TArgs... args )
 		{
 			throw "ContainAdapter::Contain is not implemented for this type";
 		}
 	};
 
-	template<typename TCollection>
-	class DLLApi LengthAdapter :
-		public std::false_type
-	{
-
-		public:
-
-		consteval static inline auto Length( TCollection instance )
-		{
-			throw "LengthAdapter::Length is not implemented for this type";
-		}
-	};
-
-	template<typename TA , typename TB>
+	template<typename... TArgs>
 	class DLLApi MatchAdapter :
 		public std::false_type
 	{
 
 	public:
 
-		consteval static inline auto Match( TA a , TB b ,const unsigned int matchLength )
+		consteval static inline auto Match( TArgs... args )
 		{
 			throw "MatchAdapter::Match is not implemented for this type";
 		}
 	};
 
-	template<typename TCollection , typename TPattern>
+	template<typename... TArgs>
 	class DLLApi ContainPatternAdapter :
 		public std::false_type
 	{
 		public:
 
-		consteval static inline auto Contains( TCollection collection , TPattern pattern , const unsigned int matchLength )
+		consteval static inline auto ContainsPattern( TArgs... args )
 		{
-			throw "PatternMatchAdapter::Match is not implemented for this type";
+			throw "ContainPatternAdapter::ContainsPattern is not implemented for this type";
 		}
 	};
 
-	template<typename TCollection, typename TPredicate>
+	template<typename... TArgs>
+	class DLLApi CountPatternAdapter :
+		public std::false_type
+	{
+		public:
+
+		consteval static inline auto CountPattern( TArgs... args )
+		{
+			throw "CountPatternAdapter::CountPattern is not implemented for this type";
+		}
+	};
+
+	template<typename... TArgs>
 	class DLLApi AnyAdapter :
 		public std::false_type
 	{
 		public:
 
-		consteval static inline auto Any( TCollection collection , TPredicate predicate )
+		consteval static inline auto Any( TArgs... args )
 		{
 			throw "AnyAdapter::Any is not implemented for this type";
 		}
 	};
 
-	template<typename TCollection , typename TPredicate>
+	template<typename... TArgs>
 	class DLLApi AllAdapter :
 		public std::false_type
 	{
 		public:
 
-		consteval static inline auto All( TCollection collection , TPredicate predicate )
+		consteval static inline auto All( TArgs... args )
 		{
 			throw "AllAdapter::All is not implemented for this type";
 		}

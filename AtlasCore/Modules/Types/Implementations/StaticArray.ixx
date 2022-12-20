@@ -11,10 +11,6 @@ import AtlasAPI;
 
 namespace Atlas
 {
-	/// <summary>
-	/// A compile-time evaluation compatible array
-	/// </summary>
-	/// <typeparam name="BufferSize">Maximum length of the array</typeparam>
 	template<typename TElement, unsigned int BufferSize = Configuration::StaticArrayBufferSize>
 	class DLLApi StaticArray
 	{
@@ -28,10 +24,9 @@ namespace Atlas
 		
 		template<typename... Args>
 		constexpr StaticArray( const Args&... args )
-			noexcept( !Configuration::EnableStaticArrayCheck ) :
+			noexcept( noexcept( Concat( args... ) ) ) :
 			_length( 0 )
 		{
-			//If there are actual constructor arguments, try to concat them.
 			if constexpr ( sizeof...( args ) > 0 )
 			{
 				this->Concat( args... );
@@ -40,56 +35,36 @@ namespace Atlas
 			
 		constexpr ~StaticArray( ) = default;
 
-		/// <summary>
-		/// Returns the current length of the array
-		/// </summary>
 		constexpr unsigned int Length( ) 
 			const noexcept
 		{
 			return _length;
 		}
 
-		/// <summary>
-		/// Returns the data as const TElement*
-		/// </summary>
 		constexpr const TElement* Data( )
 			const noexcept
 		{
 			return _data;
 		}
 
-		/// <summary>
-		/// Returns the maximum length of the array
-		/// </summary>
 		constexpr unsigned int MaxLength( )
 			const noexcept
 		{
 			return BufferSize;
 		}
 		
-		/// <summary>
-		/// Checks whether it contains the given data.
-		/// </summary>
 		template<typename T>
 		constexpr bool ContainsPattern( const T& data )
-			const noexcept
+			const noexcept( noexcept( QueryAPI::ContainsPattern( *this , data ) ) )
 		{
-			const auto length = QueryAPI::Length( data );
-
-			//Length is too big, so return false
-			if ( length > _length || length == 0 )
-			{
-				return false;
-			}
-
-			return QueryAPI::ContainsPattern( *this , data , length );
+			return QueryAPI::ContainsPattern( *this , data );
 		}
 
 		/// <summary>
 		/// Checks whether it contains the given element.
 		/// </summary>
 		constexpr bool Contains( const TElement& element )
-			const noexcept
+			const noexcept( noexcept( QueryAPI::Contains( *this , element ) ))
 		{
 			return QueryAPI::Contains( *this , element );
 		}
@@ -98,7 +73,7 @@ namespace Atlas
 		/// Checks whether any element satisfies the given predicate
 		/// </summary>
 		constexpr bool Any( const Predicate<TElement>& predicate )
-			const noexcept
+			const noexcept( ( QueryAPI::Any( *this , predicate ) ) )
 		{
 			return QueryAPI::Any( *this , predicate );
 		}
@@ -107,59 +82,23 @@ namespace Atlas
 		/// Checks whether all element satisfies the given predicate
 		/// </summary>
 		constexpr bool All( const Predicate<TElement>& predicate )
-			const noexcept
+			const noexcept( ( QueryAPI::All( *this , predicate ) ) )
 		{
 			return QueryAPI::All( *this , predicate );
 		}
 
 
-		/// <summary>
-		/// Counts the occurence of the given data
-		/// </summary>
 		template<typename T>
 		constexpr auto Count( const T& data )
-			const noexcept
+			const noexcept( noexcept( QueryAPI::Count( *this , data ) ))
 		{
-			const auto length = QueryAPI::CountType<TElement>( data );
-
-			//Length is too big, so return false
-			if ( length > _length || length == 0 )
-			{
-				return 0;
-			}
-
-			unsigned int count = 0;
-
-			//Iterate over the elements, and if there is a match from the given index, increment counter
-			for ( unsigned int i = 0; i < _length - length; ++i )
-			{
-				if ( QueryAPI::IsMatch( _data[i] , IteratorAPI::ConstBegin( data ) , length ) )
-				{
-					count++;
-				}
-			}
-
-			return count;
+			return QueryAPI::Count( *this , data );
 		}
 
-		/// <summary>
-		/// Counts the occurence of the given element
-		/// </summary>
 		constexpr auto Count( const TElement& element )
-			const noexcept
+			const noexcept( noexcept( QueryAPI::CountElement( *this , element ) ))
 		{
-			unsigned int count = 0;
-
-			//Iterate over the elements, and if there is a match from the given index, increment counter
-			for ( unsigned int i = 0; i < _length; ++i )
-			{
-				if ( _data[i] == element )
-				{
-					count++;
-				}
-			}
-
-			return count;
+			return QueryAPI::CountElement( *this , element );
 		}
 
 		/// <summary>

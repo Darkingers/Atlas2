@@ -161,14 +161,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Modules\Adapters\Adapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\ClearAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\CopyAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\ReplaceFromAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\ShiftAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\AllAdapters.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\ContainAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\ContainPatternAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\CountElementAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\CountPatternAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\CountTypeAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\Query\IteratorAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Iterator\IteratorAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\LengthAdapters.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\MatchAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\Query\PredicateAdapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\AnyAdapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Type\Hash.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Type\Size.ixx" />
     <ClCompile Include="Modules\Converters\Converters.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\BoolConverter.ixx" />
     <ClCompile Include="Modules\Converters\Implementations\DoubleConverter.ixx" />

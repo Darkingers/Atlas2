@@ -10,48 +10,69 @@ import AtlasAPI;
 
 export namespace Atlas
 {
+	template<typename TIteratorA , typename TIteratorB> requires
+		Concept::IsIterator<TIteratorA> &&
+		Concept::IsIterator<TIteratorB>&&
+		Concept::IsSame<typename IteratorTraits<TIteratorA>::IteratedType , typename IteratorTraits<TIteratorB>::IteratedType>
+	class DLLApi ContainPatternAdapter<TIteratorA , TIteratorA , TIteratorB, TIteratorB> :
+		public std::true_type
+	{
+
+	public:
+
+		constexpr static inline auto ContainsPattern( TIteratorA startA , TIteratorA endA , TIteratorB startB , TIteratorB endB )
+			noexcept
+			( 
+				Concept::IsNoexceptIterator<TIteratorA> && 
+				Concept::IsNoexceptIterator<TIteratorB> &&
+				Concept::IsNoexceptMatch< TIteratorA ,TIteratorA, TIteratorB, TIteratorB>
+			)
+		{
+			while ( startA != endA )
+			{
+				if( QueryAPI::IsMatch( startA , endA, startB, endB  ) )
+				{
+					return true;
+				}
+				else
+				{
+					IteratorAPI::Next( startA );
+				}
+			}
+			
+			return false;
+		}	
+	};
+	
 	template<typename TCollection , typename TPattern> requires
-		Concept::HasIterator<TCollection>&&
-		Concept::HasIterator<TPattern>&&
-		Concept::IsSame<typename CollectionTraits<TCollection>::ElementType , typename CollectionTraits<TPattern>::ElementType>
+		Concept::HasIterator<TCollection> &&
+		Concept::IsIterableWith<TPattern, typename CollectionTraits<TCollection>::ElementType>
 	class DLLApi ContainPatternAdapter<TCollection, TPattern> :
 		public std::true_type
 	{
 	
+	private:
+		
+		using CollectionIterator = typename CollectionTraits<TCollection>::IteratorType;
+		using PatternIterator = typename CollectionTraits<TPattern>::IteratorType;
+	
 	public:
 
-		constexpr static inline auto Contains( TCollection collection , TPattern pattern , const unsigned int matchLength )
-			noexcept( QueryAPI::IsMatch( IteratorAPI::ConstBegin( collection ) , IteratorAPI::ConstBegin( pattern ) , matchLength ) && Concept::HasNoexceptConstIterator<TCollection>&& Concept::HasNoexceptConstIterator<TPattern> )
+		constexpr static inline auto ContainsPattern( TCollection collection , TPattern pattern )
+			noexcept
+			( 
+				Concept::HasNoexceptIterator<TCollection> && 
+				Concept::HasNoexceptIterator<TPattern> &&
+				Concept::IsNoexceptContainPattern<CollectionIterator , CollectionIterator, PatternIterator, PatternIterator>
+			)
 		{
-			const auto collectionEnd = IteratorAPI::ConstEnd( collection );
-			auto collectionStart = IteratorAPI::ConstBegin( collection );
-
-			while ( collectionStart != collectionEnd )
-			{
-				if ( QueryAPI::IsMatch( collectionStart , IteratorAPI::ConstBegin( pattern ) , matchLength ) )
-				{
-					return true;
-				}
-
-				IteratorAPI::Next( collectionStart );
-			}
-
-			return false;
-		}
-	};
-
-	template<typename TCollection , typename TPattern> requires
-		Concept::HasContainPattern<TCollection , TPattern>
-		class DLLApi ContainPatternAdapter<TCollection , TPattern> :
-		public std::true_type
-	{
-
-	public:
-
-		constexpr static inline auto Contains( TCollection collection , TPattern pattern , const unsigned int matchLength )
-			noexcept( collection.Contains( pattern , matchLength ) )
-		{
-			return collection.Contains( pattern , matchLength );
+			return QueryAPI::ContainsPattern
+			( 
+				IteratorAPI::ConstBegin( collection ) ,
+				IteratorAPI::ConstEnd( collection ) ,
+				IteratorAPI::ConstBegin( pattern ) ,
+				IteratorAPI::ConstEnd( pattern )
+			);
 		}
 	};
 }

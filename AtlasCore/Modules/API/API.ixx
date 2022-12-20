@@ -1,6 +1,6 @@
 export module AtlasAPI;
-export import :CollectionAPI;
+export import :QueryAPI;
 export import :ConverterAPI;
-export import :DataAPI;
+export import :ManipulationAPI;
 export import :IteratorAPI;
 export import :TypeAPI;

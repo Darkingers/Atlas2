@@ -44,7 +44,7 @@ export namespace Atlas
 	public:
 
 		constexpr static inline auto Length( TCollection collection )
-			noexcept( collection.Length() )
+			noexcept( noexcept( collection.Length() ) )
 		{
 			return collection.Length( );
 		}
@@ -59,7 +59,7 @@ export namespace Atlas
 	public:
 
 		constexpr static inline auto Length( TCollection collection )
-			noexcept( collection.size( ) )
+			noexcept( noexcept( collection.size( ) ) )
 		{
 			return collection.size( );
 		}
@@ -67,7 +67,7 @@ export namespace Atlas
 
 	template<typename TCollection> requires 
 		Concept::IsArray<TCollection>
-	class DLLApi LengthAdapter<TCollection> :
+	class DLLApi LengthAdapter<TCollection*> :
 		public std::true_type
 	{
 	

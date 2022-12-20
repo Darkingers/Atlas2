@@ -1,63 +1,25 @@
 module;
 #include "../../../../Macros/Macros.h"
 
-export module AtlasAPI:CollectionAPI;
+export module AtlasAPI:QueryAPI;
 
 import AtlasDefinitions;
 import AtlasConcepts;
 
 export namespace Atlas
 {
-	/// <summary>
-	/// An API that calls the appropriate adapter for the collection.
-	/// </summary>
 	class DLLApi QueryAPI
 	{
 		
 	public:
-
-		/// <summary>
-		/// Check if the collection contains the given element
-		/// </summary>
-		template<typename TCollection , typename TElement, typename... Args>
-		constexpr static inline bool Contains( const TCollection collection , const TElement& element, const Args&... args )
-			noexcept ( Concept::IsNoexceptContain<const TCollection , const TElement&> )
+		
+		template<typename TExpected, typename... TArgs>
+		constexpr static inline auto CountType(const TArgs&&... args )
+			noexcept( noexcept( (QueryAPI::CountType<TExpected>(args) + ...) ) )
 		{
-			bool contains =  ContainAdapter<const TCollection , const TElement&>::Contains( collection , element );
-			
-			if constexpr ( sizeof...( args ) > 0 )
-			{
-				return contains && QueryAPI::Contains( collection, args... );
-			}
-			else
-			{
-				return contains;
-			}
+			return ( QueryAPI::CountType<TExpected>( args ) + ... );
 		}
 
-	    /// <summary>
-	    /// Check if the collection contains the given element
-	    /// </summary>
-		template<typename TCollection , typename TElement , typename... Args> requires
-			Concept::IsFundamental<TElement>
-		constexpr static inline bool Contains( const TCollection collection , const TElement element , const Args&... args )
-			noexcept ( Concept::IsNoexceptContain<const TCollection , const TElement> )
-		{
-			bool contains = ContainAdapter<const TCollection , const TElement>::Contains( collection, element );
-
-			if constexpr ( sizeof...( args ) > 0 )
-			{
-				return contains && QueryAPI::Contains( collection, args... );
-			}
-			else
-			{
-				return contains;
-			}
-		}
-
-		/// <summary>
-		/// Count the elements with TExpected type in the given collection
-		/// </summary>
 		template<typename TExpected, typename TActual>
 		constexpr static inline auto CountType( const TActual& data )
 			noexcept ( Concept::IsNoexceptCountType<TExpected , const TActual&> )
@@ -65,9 +27,6 @@ export namespace Atlas
 			return CountTypeAdapter<TExpected, const TActual&>::Count( data );
 		}
 
-		/// <summary>
-		/// Count the elements with TExpected type in the given collection
-		/// </summary>
 		template<typename TExpected , typename TActual> requires 
 			Concept::IsFundamental<TActual>
 		constexpr static inline auto CountType( TActual data )
@@ -76,76 +35,128 @@ export namespace Atlas
 			return CountTypeAdapter<TExpected ,TActual>::Count( data );
 		}
 
-		/// <summary>
-		/// Count the given elements in the given collection
-		/// <summary>
-		template<typename TIterator, typename TElement>
-		constexpr static inline auto CountElement( const TIterator start , const unsigned int step , const TElement& element )
-			noexcept ( Concept::IsNoexceptCountElement<const TIterator , const TElement&> )
+		template<typename TActual>
+		constexpr static inline auto Length( const TActual& current )
+			noexcept ( Concept::IsNoexceptCountType<const TActual&> )
 		{
-			return CountElementAdapter<const TIterator , const TElement&>::Count( start , step , element );
+			return LengthAdapter<const TActual&>::Length( TActual );
 		}
 
-		/// <summary>
-		/// Count the given elements in the given collection
-		/// <summary>
-		template<typename TIterator , typename TElement> requires 
-			Concept::IsFundamental<TElement>
-		constexpr static inline auto CountElement( const TIterator start , const unsigned int step , const TElement element )
-			noexcept ( Concept::IsNoexceptCountElement<const TIterator , const TElement> )
+		template<typename TActual> requires
+			Concept::IsFundamental<TActual>
+		constexpr static inline auto Length( const TActual current )
+			noexcept ( Concept::IsNoexceptCountType<const TActual> )
 		{
-			return CountElementAdapter<const TIterator , const TElement>::Count( start , step , element );
+			return LengthAdapter<const TActual>::Length( current );
 		}
 
-		/// <summary>
-		/// Matches a collection against another.
-		/// </summary>
-		template<typename TA, typename TB>
-		constexpr static inline auto IsMatch( const TA& a , const TB& b ,const unsigned int matchLength )
-			noexcept ( Concept::IsNoexceptMatch<const TA& , const TB&> )
+		template<typename... TArgs>
+		constexpr static inline bool Contains( const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptContain<const TArgs&&...> )
 		{
-			return MatchAdapter<const TA& , const TB&>::Match( a , b , matchLength );
+			return ContainAdapter<const TArgs&&...>::Contains( std::forward<const TArgs&&>( args )... );
 		}
 
-		/// <summary>
-		/// Checks whether a collection contains a pattern
-		/// </summary>
-		template<typename TCollection , typename TPattern>
-		constexpr static inline auto ContainsPattern( const TCollection& collection , const TPattern& pattern , const unsigned int matchLength )
+		template<typename TCollection, typename... TArgs> requires
+			Concept::IsCollection<TCollection>
+		constexpr static inline bool Contains(const TCollection& collection, const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptContain<const TCollection& , const TArgs&&...> )
+		{
+			return ContainAdapter<const TArgs&&...>::Contains(collection, std::forward<const TArgs&&>( args )... );
+		}
+
+		template<typename... TArgs>
+		constexpr static inline auto CountElement( const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptCountElement<const TArgs&&...> )
+		{
+			return CountElementAdapter<const TArgs&&...>::Count( std::forward<TArgs&&>( args )... );
+		}
+
+		template<typename TCollection , typename... TArgs> requires
+			Concept::IsCollection<TCollection>
+		constexpr static inline auto CountElement( const TCollection& collection , const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptCountElement<const TCollection& , const TArgs&&...> )
+		{
+			return CountElementAdapter<const TCollection& , const TArgs&&...>::Count( collection , std::forward<const TArgs&&>( args )... );
+		}
+
+		template<typename... TArgs>
+		constexpr static inline auto IsMatch( const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptMatch<const TArgs&&...> )
+		{
+			return MatchAdapter<const TArgs&&...>::Match( std::forward<TArgs&&>( args )... );
+		}
+
+		template<typename TCollection , typename... TArgs> requires
+			Concept::IsCollection<TCollection>
+		constexpr static inline auto IsMatch( const TCollection& collection , const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptMatch<const TCollection& , const TArgs&&...> )
+		{
+			return MatchAdapter<const TCollection& , const TArgs&&...>::Match( collection , std::forward<const TArgs&&>( args )... );
+		}
+
+		template<typename... TArgs>
+		constexpr static inline auto ContainsPattern( const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptContainPattern<const TArgs&&...> )
+		{
+			return ContainPatternAdapter<TArgs&&...>::ContainsPattern( std::forward<TArgs&&>( args )... );
+		}
+
+		template<typename TCollection, typename TPattern> requires
+			Concept::IsCollection<TCollection> &&
+			Concept::IsCollection<TPattern> &&
+			Concept::IsSame<typename CollectionTraits<TCollection>::ElementType , typename CollectionTraits<TPattern>::ElementType>
+		constexpr static inline auto ContainsPattern( const TCollection& collection , const TPattern& pattern )
 			noexcept ( Concept::IsNoexceptContainPattern<const TCollection& , const TPattern&> )
 		{
-			return ContainPatternAdapter<const TCollection& , const TPattern&>::Contains( collection , pattern , matchLength );
+			return ContainPatternAdapter<const TCollection& , const TPattern&>::ContainsPattern( collection , pattern );
 		}
 
-		/// <summary>
-		/// Checks whether a collection contains a pattern
-		/// </summary>
+		template<typename... TArgs>
+		constexpr static inline auto CountPattern( const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptCountPattern<const TArgs&&...> )
+		{
+			return CountPatternAdapter<TArgs&&...>::CountPattern( std::forward<TArgs&&>( args )... );
+		}
+
 		template<typename TCollection , typename TPattern> requires
-			Concept::IsFundamental<TPattern>
-		constexpr static inline auto ContainsPattern( const TCollection& collection , const TPattern pattern , const unsigned int matchLength )
-			noexcept ( Concept::IsNoexceptContainPattern<const TCollection& , const TPattern> )
+			Concept::IsCollection<TCollection>&&
+			Concept::IsCollection<TPattern>&&
+			Concept::IsSame<typename CollectionTraits<TCollection>::ElementType , typename CollectionTraits<TPattern>::ElementType>
+		constexpr static inline auto CountPattern( const TCollection& collection , const TPattern& pattern )
+			noexcept ( Concept::IsNoexceptCountPattern<const TCollection& , const TPattern&> )
 		{
-			return ContainPatternAdapter<const TCollection& , const TPattern>::Contains( collection , pattern , matchLength );
+			return CountPatternAdapter<const TCollection& , const TPattern&>::CountPattern( collection , pattern );
 		}
 
-		/// <summary>
-		/// Checks whether any element matches the predicate
-		/// </summary>
-		template<typename TCollection , typename TPredicate>
-		constexpr static inline auto Any( const TCollection& collection , const TPredicate& predicate )
-			noexcept ( Concept::IsNoexceptAny<const TCollection& , const TPredicate&> )
-		{
-			return AnyAdapter<const TCollection& , const TPredicate&>::Any( collection , predicate );
+		template<typename... TArgs>
+		constexpr static inline auto Any( const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptAny<const TArgs&&...> )
+		{		
+			return AnyAdapter<const TArgs&&...>::Any( std::forward<TArgs&&>( args )... );
 		}
 
-		/// <summary>
-		/// Checks whether all elements match the predicate
-		/// </summary>
-		template<typename TCollection , typename TPredicate>
-		constexpr static inline auto All( const TCollection& collection , const TPredicate& predicate )
-			noexcept ( Concept::IsNoexceptAll<const TCollection& , const TPredicate&> )
+		template<typename TCollection , typename... TArgs> requires
+			Concept::IsCollection<TCollection>
+		constexpr static inline auto Any( const TCollection& collection , const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptAny<const TCollection& , const TArgs&&...> )
 		{
-			return AllAdapter<const TCollection& , const TPredicate&>::All( collection , predicate );
+			return AnyAdapter<const TCollection& , const TArgs&&...>::Any( collection , std::forward<const TArgs&&>( args )... );
+		}
+
+		template<typename... TArgs>
+		constexpr static inline auto All( const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptAll<const TArgs&&...> )
+		{
+			return AllAdapter<const TArgs&&...>::All( std::forward<TArgs&&>( args )... );			
+		}
+
+		template<typename TCollection , typename... TArgs> requires
+			Concept::IsCollection<TCollection>
+		constexpr static inline auto All( const TCollection& collection , const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptAll<const TCollection& , const TArgs&&...> )
+		{
+			return AllAdapter<const TCollection& , const TArgs&&...>::All( collection , std::forward<const TArgs&&>( args )... );
 		}
 	};
 }

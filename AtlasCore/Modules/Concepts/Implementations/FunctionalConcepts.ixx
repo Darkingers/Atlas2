@@ -19,6 +19,10 @@ export namespace Atlas::Concept
 		} -> std::convertible_to<TReturn>;
 	};
 
+	template<typename TReturn , typename TInvokable , typename... TArgs>
+	concept IsNoexceptInvokable = noexcept( std::declval<TInvokable>( )( std::declval<TArgs>( )... ) ) &&
+		IsInvokable< TReturn , TInvokable , TArgs...>;
+
 	template<typename TReturn , typename TExecutable>
 	concept IsExecutable = requires( TExecutable executable )
 	{
@@ -99,4 +103,11 @@ export namespace Atlas::Concept
 		}->std::convertible_to<unsigned int>;
 	};
 
+	template<typename T>
+	concept HasSize = requires( const T instance )
+	{
+		{
+			instance.GetSize( )
+		}->std::convertible_to<unsigned int>;
+	};
 }

@@ -19,39 +19,39 @@ export namespace Atlas
 		}
 	};
 
-	template<typename TIterator , typename TSource>
+	template<typename... TArgs>
 	class DLLApi ReplaceFromAdapter :
 		public std::false_type
 	{
 
 	public:
 
-		consteval static inline void ReplaceFrom( TIterator iterator ,TSource source )
+		consteval static inline void ReplaceFrom( TArgs... args )
 		{
 			throw "ReplaceFromAdapter::ReplaceFrom is not implemented for this type";
 		}
 	};
 
-	template<typename TIteratorSource , typename TITeratorTarget>
+	template<typename... TArgs>
 	class DLLApi CopyAdapter :
 		public std::false_type
 	{
 
 	public:
 
-		consteval static inline void Copy( TIteratorSource source , TITeratorTarget target ,const unsigned int copyLength )
+		consteval static inline void Copy( TArgs... args )
 		{
 			throw "CopyAdapter::Copy is not implemented for this type";
 		}
 	};
 
-	template<typename TCollection>
+	template<typename... TArgs>
 	class DLLApi ShiftAdapter
 	{
 
 	public:
 
-		consteval static inline auto Shift( TCollection shifted ,const unsigned int shiftStart , const int shiftOffset, const unsigned int shiftLength )
+		consteval static inline auto Shift( TArgs... args )
 		{
 			throw "ShiftAdapter::Shift is not implemented for this type";
 		}

@@ -40,5 +40,14 @@ export namespace Atlas::Concept
 	concept IsConstructible = std::is_constructible<TActual , TArgs...>::value;
 
 	template<typename TActual , typename... TArgs>
-	concept IsNoexceptConstructible = std::is_nothrow_constructible<TActual , TArgs...>::value;
+	concept IsNoexceptConstructible = noexcept ( TActual( std::declval<TArgs>()... ) );
+
+	template<typename TLeft, typename TRight>
+	concept IsNoexceptAssignable = noexcept ( std::declval<TLeft>( ) = std::declval<TRight>( ) );
+
+	template<typename TLeft , typename TRight>
+	concept IsNoexceptEqual = noexcept ( std::declval<TLeft>( ) == std::declval<TRight>( ) );
+
+	template<typename TLeft , typename TRight>
+	concept IsNoexceptNotEqual = noexcept ( std::declval<TLeft>( ) != std::declval<TRight>( ) );
 }

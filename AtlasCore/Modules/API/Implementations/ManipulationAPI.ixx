@@ -2,24 +2,21 @@ module;
 
 #include "../../../../Macros/Macros.h"
 
-export module AtlasAPI:DataAPI;
+export module AtlasAPI:ManipulationAPI;
 
 import AtlasDefinitions;
 import AtlasConcepts;
+import AtlasConfiguration;
+
+import :QueryAPI;
 
 export namespace Atlas
 {
-	/// <summary>
-	/// Calls the appropriate adapter for given objects
-	/// </summary>
 	class DLLApi ManipulationAPI
 	{
 
 	public:
 
-		/// <summary>
-		/// Clear the given collection.
-		/// </summary>
 		template<typename TCollection>
 		constexpr static inline void Clear( TCollection& collection )
 			noexcept( Concept::IsNoexceptClear<TCollection&> )
@@ -27,66 +24,88 @@ export namespace Atlas
 			ClearAdapter<TCollection&>::Clear( collection );
 		}
 
-		/// <summary>
-		/// Returns the size of the given object in bytes
-		/// </summary>
-		 template<typename TTarget , typename TSource>
-		constexpr static inline void Copy( const TSource& source, TTarget& target, const unsigned int copyLength )
-			noexcept ( Concept::IsNoexceptCopy<const TSource&, TTarget&> )
+		template<typename... TArgs>
+		constexpr static inline void Copy( TArgs&&... args )
+			noexcept ( Concept::IsNoexceptCopy<TArgs&&...> )
 		{
-			CopyAdapter<const TSource& ,TTarget&>::Copy( source ,  target, copyLength );
+			CopyAdapter<TArgs&&...>::Copy( std::forward<TArgs&&>( args )... );
 		}
 
-		/// <summary>
-		/// Returns the size of the given object in bytes
-		/// </summary>
-		template<typename TTarget , typename TSource> requires
-			Concept::IsFundamental<TSource>
-		constexpr static inline void Copy( const TSource source, TTarget& target, const unsigned int copyLength )
-			noexcept ( Concept::IsNoexceptCopy<const TSource, TTarget&> )
+		template<typename... TArgs> 
+		constexpr static inline void ReplaceFrom( TArgs&&... args )
+			noexcept ( Concept::IsNoexceptReplaceFrom<TArgs&&...> )
 		{
-			CopyAdapter<const TSource, TTarget&>::Copy( source , target, copyLength );
+			ReplaceFromAdapter<TArgs&&...>::ReplaceFrom( std::forward<TArgs&&...>( args )... );
 		}
 
-		/// <summary>
-		/// Replaces the values pointed by the iterator with the given arguments
-		/// </summary>
-		template<typename TIterator,typename CurrentSource, typename... TSource>
-		constexpr static inline void ReplaceFrom( TIterator& iterator ,const CurrentSource& current, const TSource&... source )
-			noexcept ( Concept::IsNoexceptReplaceFrom<TIterator& , const CurrentSource&> && Concept::IsNoexceptReplaceFrom<TIterator& , const TSource&...> )
+		template<typename TIterator, typename... TArgs> requires 
+			Concept::IsIterator<TIterator>
+		constexpr static inline void ReplaceFrom( TIterator iterator , const TArgs&&... args )
+			noexcept ( Concept::IsNoexceptReplaceFrom<TIterator, const TArgs&&...> )
 		{
-			ReplaceFromAdapter<TIterator& , const CurrentSource&>::ReplaceFrom( iterator , current );
-
-			if constexpr ( sizeof...( TSource ) > 0 )
-			{
-				ManipulationAPI::ReplaceFrom( iterator , source... );
-			}
+			ReplaceFromAdapter<TIterator , TArgs&&...>::ReplaceFrom
+			( 
+				iterator , 
+				std::forward<TArgs&&>( args )... 
+			);
 		}
 
-		/// <summary>
-		/// Replaces the values pointed by the iterator with the given arguments
-		/// </summary>
-		template<typename TIterator , typename CurrentSource , typename... TSource> requires 
-			Concept::IsFundamental<CurrentSource>
-		constexpr static inline void ReplaceFrom( TIterator& iterator , CurrentSource current , const TSource&... source )
-			noexcept ( Concept::IsNoexceptReplaceFrom<TIterator& , CurrentSource>&& Concept::IsNoexceptReplaceFrom<TIterator& , const TSource&...> )
+		template<typename TCollection , typename... TArgs> requires
+			Concept::IsCollection<TCollection>
+		constexpr static inline void ReplaceFrom( TCollection& collection, const unsigned int start , const TArgs&&... args )
+			noexcept 
+			(
+				!Configuration::EnableManipulationAPIReplaceFromCheck &&
+				Concept::IsNoexceptReplaceFrom<TCollection& , const unsigned int, const TArgs&&...>
+			)
 		{
-			ReplaceFromAdapter<TIterator& , CurrentSource>::ReplaceFrom( iterator , current );
-
-			if constexpr ( sizeof...( TSource ) > 0 )
-			{
-				ManipulationAPI::ReplaceFrom( iterator , source... );
-			}
+			Validate<Configuration::EnableManipulationAPIReplaceFromCheck>::IsMoreOrEqual
+			(
+				QueryAPI::Length( collection ) - start ,
+				QueryAPI::CountType<typename CollectionTraits<TCollection>::ElementType>( args... )
+			);
+				
+			ReplaceFromAdapter<TCollection&, const unsigned int, const TArgs&&...>::ReplaceFrom
+			(
+				collection, 
+				start ,
+				std::forward<TArgs&&>( args )...
+			);
 		}
 
-		/// <summary>
-		/// Shifts elements of collection starting from a step by given offset
-		/// </summary>
-		template<typename TCollection>
+		template<typename... TArgs>
+		constexpr static inline void Shift( TArgs&&... args )
+			noexcept ( Concept::IsNoexceptShift<TArgs&&...> )
+		{
+			ShiftAdapter<TArgs&&...>::Shift( std::forward<TArgs&&>( args )... );
+		}
+
+		template<typename TCollection> requires
+			Concept::IsCollection<TCollection>
 		constexpr static inline void Shift( TCollection& collection , const unsigned int shiftStart , const int shiftOffset,const unsigned int shiftLength )
-			noexcept ( Concept::IsNoexceptShift<TCollection&> )
+			noexcept
+			(	
+				!Configuration::EnableManipulationAPIShiftCheck &&
+				Concept::IsNoexceptShift<TCollection&, const unsigned int, const int, const unsigned int> 
+			)
 		{
-			ShiftAdapter<TCollection&>::Shift( collection , shiftStart , shiftOffset );
-		}
+			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsMoreOrEqual
+			( 
+				QueryAPI::Length( collection ) ,
+				shiftStart + shiftOffset + shiftLength 
+			);
+			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftStart );
+			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftLength );
+			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftLength );
+			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftStart + shiftOffset );
+
+			ShiftAdapter<TCollection& , const unsigned int , const int , const unsigned int>::Shift
+			( 
+				collection , 
+				shiftStart , 
+				shiftOffset , 
+				shiftLength
+			);
+		}	
 	};
 }

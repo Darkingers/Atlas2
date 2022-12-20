@@ -20,7 +20,7 @@ export namespace Atlas::Concept::Standard
 	};
 
 	template<typename TCollection>
-	concept IsClearable = requires ( TCollection instance )
+	concept HasClearFunction = requires ( TCollection instance )
 	{
 		instance.clear( );
 	};

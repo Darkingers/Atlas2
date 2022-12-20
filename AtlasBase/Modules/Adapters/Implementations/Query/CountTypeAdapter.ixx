@@ -16,12 +16,28 @@ export namespace Atlas
 		public std::true_type
 	{
 
-		public:
+	public:
 
 		constexpr static inline auto Count( TCollection collection )
 			noexcept( QueryAPI::Length( collection ) )
 		{
 			return QueryAPI::Length( collection );
+		}
+	};
+
+
+	template<typename TElement , typename TCollection> requires
+		(!Concept::IsCollectionOf<TCollection , TElement>)
+	class DLLApi CountTypeAdapter<TCollection , TElement> :
+		public std::true_type
+	{
+
+	public:
+
+		constexpr static inline auto Count( TCollection collection )
+			noexcept( QueryAPI::Length( collection ) )
+		{
+			return 0;
 		}
 	};
 

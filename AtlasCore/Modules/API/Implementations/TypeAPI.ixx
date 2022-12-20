@@ -9,32 +9,32 @@ import AtlasConcepts;
 
 export namespace Atlas
 {
-	/// <summary>
-	/// Calls the appropriate adapter for given objects
-	/// </summary>
 	class DLLApi TypeAPI
 	{		
 
 	public:
 		
-		/// <summary>
-		/// Returns the size of the given object in bytes
-		/// </summary>
 		template<typename T>
 		constexpr static inline auto Size( const T& data )
 			noexcept ( Concept::IsNoexceptSize<T> )
 		{
-			return SizeAdapter<Deduce::SimpleType<T>>::Size( data );
+			return SizeAdapter<const T&>::Size( data );
 		}
 
-		/// <summary>
-		/// Returns the hash of the given object
-		/// </summary>
-		template<typename T>
-		constexpr static inline unsigned int GetHash( const T& data )
+		template<typename T> requires
+			Concept::IsFundamental<T>
+		constexpr static inline auto Size( T data )
+			noexcept ( Concept::IsNoexceptSize<T> )
+		{
+			return SizeAdapter<T>::Size( data );
+		}
+
+		template<typename T>requires
+			Concept::IsFundamental<T>
+		constexpr static inline unsigned int GetHash( T data )
 			noexcept ( Concept::IsNoexceptHash<T> )
 		{
-			return HashAdapter<Deduce::SimpleType<T>>::GetHash( data );
+			return HashAdapter<T>::Hash( data );
 		}
 	};
 }

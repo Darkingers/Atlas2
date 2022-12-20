@@ -84,7 +84,15 @@
     <ClCompile Include="Modules\Adapters\Implementations\Query\LengthAdapters.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\MatchAdapter.ixx" />
     <ClCompile Include="Modules\Adapters\Implementations\Query\ContainPatternAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\Query\IteratorAdapter.ixx" />
-    <ClCompile Include="Modules\Adapters\Implementations\Query\PredicateAdapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Iterator\IteratorAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\AnyAdapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\ReplaceFromAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\CopyAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\ClearAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Manipulation\ShiftAdapter.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\AllAdapters.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Type\Hash.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Type\Size.ixx" />
+    <ClCompile Include="Modules\Adapters\Implementations\Query\CountPatternAdapter.ixx" />
   </ItemGroup>
 </Project>

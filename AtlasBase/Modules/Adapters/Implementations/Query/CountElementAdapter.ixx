@@ -15,15 +15,43 @@ export namespace Atlas
 	class DLLApi CountElementAdapter<TCollection , TElement> :
 		public std::true_type
 	{
+	private:
+		
+		using IteratorType = typename CollectionTraits<TCollection>::IteratorType;;
 
 	public:
 
 		constexpr static inline auto Count( TCollection collection , TElement element )
-			noexcept( Concept::HasNoexceptConstIterator<TCollection> )
+			noexcept
+			(
+				Concept::HasNoexceptConstIterator<TCollection>&&
+				Concept::IsNoexceptCountElement<IteratorType , IteratorType , TElement>
+			)
 		{
-			auto start = IteratorAPI::ConstBegin( collection );
-			const auto end = IteratorAPI::ConstEnd( collection );
+			return QueryAPI::CountElement
+			(
+				IteratorAPI::ConstBegin( collection ) , 
+				IteratorAPI::ConstEnd( collection ) , 
+				element 
+			);
+		}
+	};
 
+	template<typename TIterator , typename TElement> requires
+		Concept::IsIteratorForType<TIterator , TElement>
+	class DLLApi CountElementAdapter<TIterator , TIterator, TElement> :
+		public std::true_type
+	{
+
+		public:
+
+		constexpr static inline auto Count( TIterator start, TIterator end , TElement element )
+			noexcept
+			(
+				Concept::IsNoexceptIterator<TIterator> && 
+				Concept::IsNoexceptEqual<TElement,TElement>
+			)
+		{
 			auto count = 0;
 
 			while ( start != end )
@@ -34,47 +62,6 @@ export namespace Atlas
 				}
 
 				IteratorAPI::Next( start );
-			}
-
-			return count;
-		}
-	};
-
-	template<typename TCollection , typename TElement> requires 
-		Concept::HasCountFunction<TCollection, TElement>
-	class DLLApi CountElementAdapter<TCollection , TElement> :
-		public std::true_type
-	{
-
-	public:
-
-		constexpr static inline auto Count( TCollection collection , TElement element )
-			noexcept( collection.Count( element ) )
-		{
-			return collection.Count( element );
-		}
-	};
-
-	template<typename TCollection , typename TElement> requires 
-		Concept::IsArrayOf<TCollection , TElement>
-	class DLLApi CountElementAdapter<TCollection , TElement> :
-		public std::true_type
-	{
-
-	public:
-
-		template<unsigned int Size>
-		constexpr static inline auto Count( TCollection( &collection )[Size] , TElement element )
-			noexcept
-		{
-			auto count = 0;
-
-			for ( auto i = 0; i < Size; i++ )
-			{
-				if ( collection[i] == element )
-				{
-					count++;
-				}
 			}
 
 			return count;

@@ -51,7 +51,7 @@ export namespace Atlas
 	public:
 
 		constexpr static inline auto Move( TIterator iterator , const int step )
-			noexcept( iterator+step )
+			noexcept( iterator + step )
 		{
 			return iterator + step;
 		}
@@ -81,7 +81,9 @@ export namespace Atlas
 			noexcept( Concept::HasNoexceptIterator<TCollection> )
 		{
 			auto iterator = IteratorAPI::Begin( collection );
+			
 			IteratorAPI::Move( iterator , step );
+			
 			return IteratorAPI::Current( iterator );
 		}
 
@@ -89,7 +91,9 @@ export namespace Atlas
 			noexcept( Concept::HasNoexceptConstIterator<TCollection> )
 		{
 			auto iterator = IteratorAPI::ConstBegin( collection );
+			
 			IteratorAPI::Move( iterator , step );
+			
 			return IteratorAPI::Current( iterator );
 		}
 

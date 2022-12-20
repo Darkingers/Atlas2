@@ -1,1 +1,1 @@
-Prepare for passing length as argument for adapters.
+Exception handling in adapters

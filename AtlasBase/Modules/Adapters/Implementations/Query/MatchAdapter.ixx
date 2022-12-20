@@ -10,63 +10,119 @@ import AtlasAPI;
 
 export namespace Atlas
 {
-	template<typename TA , typename TB> requires 
-		Concept::HasIterator<TA>&&
-		Concept::HasIterator<TB>&&
-		Concept::IsSame<typename CollectionTraits<TA>::ElementType , typename CollectionTraits<TB>::ElementType>
-	class DLLApi MatchAdapter<TA , TB> :		
+	template<typename TCollectionA , typename TCollectionB> requires 
+		Concept::HasIterator<TCollectionA> &&
+		Concept::IsIterableWith<TCollectionB, typename CollectionTraits<TCollectionA>::ElementType>
+	class DLLApi MatchAdapter<TCollectionA , TCollectionB> :
 		public std::true_type
 	{
+		
+	private:
+
+		using AIteratorType = typename CollectionTraits<TCollectionA>::IteratorType;
+		using BIteratorType = typename CollectionTraits<TCollectionB>::IteratorType;
 
 	public:
 
-		constexpr static inline auto Match( TA a , TB b , const unsigned int matchLength )
-			noexcept( QueryAPI::IsMatch( IteratorAPI::ConstBegin( a ) , IteratorAPI::ConstBegin( b ) , matchLength ) )
+		constexpr static inline auto Match( TCollectionA collectionA , TCollectionB collectionB )
+			noexcept
+			( 
+				Concept::HasNoexceptConstIterator<TCollectionA>&& 
+				Concept::HasNoexceptConstIterator<TCollectionB>&&
+				Concept::IsNoexceptMatch<AIteratorType, AIteratorType , BIteratorType, BIteratorType>
+			)
 		{	
-			return QueryAPI::IsMatch( IteratorAPI::ConstBegin( a ) , IteratorAPI::ConstBegin( b ) , matchLength );
+			return QueryAPI::IsMatch
+			( 
+				IteratorAPI::ConstBegin( collectionA ) ,
+				IteratorAPI::ConstEnd( collectionA ) ,
+				IteratorAPI::ConstBegin( collectionB ) ,
+				IteratorAPI::ConstEnd( collectionB )
+			);
 		}
 	};
 
-	template<typename TA , typename TB> requires
-		Concept::IsIterator<TA>&&
-		Concept::IsIterator<TB>&&
-		Concept::IsSame<typename IteratorTraits<TA>::IteratedType , typename IteratorTraits<TB>::IteratedType>
-		class DLLApi MatchAdapter<TA , TB> :
+	template<typename TIteratorA , typename TIteratorB> requires
+		Concept::IsIterator<TIteratorA>&&
+		Concept::IsIteratorForType<TIteratorB, typename IteratorTraits<TIteratorA>::IteratedType>
+	class DLLApi MatchAdapter<TIteratorA, TIteratorA , TIteratorB, TIteratorB> :
 		public std::true_type
 	{
 
-		public:
+	private:
+		
+		using ElementType = typename IteratorTraits<TIteratorA>::IteratedType;
 
-		constexpr static inline auto Match( TA a , TB b , const unsigned int matchLength )
-			noexcept( Concept::IsNoexceptIterator<TA> && Concept::IsNoexceptIterator<TB> )
+	public:
+
+		constexpr static inline auto Match( TIteratorA startA , TIteratorA endA , TIteratorB startB , TIteratorB endB )
+			noexcept
+			( 
+				Concept::IsNoexceptIterator<TIteratorA>&& 
+				Concept::IsNoexceptIterator<TIteratorB> &&
+				Concept::IsNoexceptNotEqual<ElementType , ElementType>
+			)
 		{
-			for ( unsigned int i = 0; i < matchLength; i++ )
+			while ( startA != endA && startB != endB )
 			{
-				if ( IteratorAPI::Current( a ) != IteratorAPI::Current( b ) )
+				if ( IteratorAPI::Current( startA ) != IteratorAPI::Current( startB ) )
 				{
 					return false;
 				}
-
-				IteratorAPI::Next( a );
-				IteratorAPI::Next( b );
+				else
+				{
+					IteratorAPI::Next( startA );
+					IteratorAPI::Next( startB );
+				}
 			}
 
-			return true;
+			if ( startA != endA )
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 	};
 
-	template<typename TA , typename TB> requires
-		Concept::HasMatch<TA,TB>
-		class DLLApi MatchAdapter<TA , TB> :
+	template<typename TIteratorA , typename TIteratorB> requires
+		Concept::IsIterator<TIteratorA>&&
+		Concept::IsIteratorForType<TIteratorB , typename IteratorTraits<TIteratorA>::IteratedType>
+		class DLLApi MatchAdapter<TIteratorA , TIteratorA , TIteratorB ,const unsigned int> :
 		public std::true_type
 	{
 
+		private:
+
+		using ElementType = typename IteratorTraits<TIteratorA>::IteratedType;
+
 		public:
 
-		constexpr static inline auto Match( TA a , TB b , const unsigned int matchLength )
-			noexcept( a.Match( b , matchLength ) )
+		constexpr static inline auto Match( TIteratorA startA , TIteratorA endA , TIteratorB patternStart ,const unsigned int patternLength )
+			noexcept
+			(
+				Concept::IsNoexceptIterator<TIteratorA>&&
+				Concept::IsNoexceptIterator<TIteratorB>&&
+				Concept::IsNoexceptNotEqual<ElementType , ElementType>
+			)
 		{
-			return a.Match( b , matchLength );
+			int step = 0;
+			while ( startA != endA && step++ < patternLength )
+			{
+				if ( IteratorAPI::Current( startA ) != IteratorAPI::Current( patternStart ) )
+				{
+					return false;
+				}
+				else
+				{
+					IteratorAPI::Next( startA );
+					IteratorAPI::Next( patternStart );
+				}
+			}
+
+			return true;
 		}
 	};
 }

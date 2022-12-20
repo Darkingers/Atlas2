@@ -61,7 +61,7 @@ export namespace Atlas::Configuration
 #ifndef ATLAS_LONGLONG_CONVERTER_CHECK
 #define ATLAS_LONGLONG_CONVERTER_CHECK true
 #endif
-	
+
 #ifndef ATLAS_STRING_CONVERTER_CHECK
 #define ATLAS_STRING_CONVERTER_CHECK true
 #endif
@@ -69,7 +69,7 @@ export namespace Atlas::Configuration
 #ifndef ATLAS_UNSIGNEDINT_CONVERTER_CHECK
 #define ATLAS_UNSIGNEDINT_CONVERTER_CHECK true
 #endif
-	
+
 #ifndef ATLAS_UNSIGNEDLONG_CONVERTER_CHECK
 #define ATLAS_UNSIGNEDLONG_CONVERTER_CHECK true
 #endif
@@ -77,12 +77,12 @@ export namespace Atlas::Configuration
 #ifndef ATLAS_UNSIGNEDLONGLONG_CONVERTER_CHECK
 #define ATLAS_UNSIGNEDLONGLONG_CONVERTER_CHECK true
 #endif
-	
+
 
 #ifndef ATLAS_STATISTICS_CHECK
 #define ATLAS_STATISTICS_CHECK true
 #endif
-	
+
 #ifndef ATLAS_STATISTICS_AVERAGE_CHECK
 #define ATLAS_STATISTICS_AVERAGE_CHECK true
 #endif
@@ -90,19 +90,19 @@ export namespace Atlas::Configuration
 #ifndef ATLAS_STATISTICS_DEVIATION_CHECK
 #define ATLAS_STATISTICS_DEVIATION_CHECK true
 #endif
-	
+
 #ifndef ATLAS_STATISTICS_MAXIMUM_CHECK
 #define ATLAS_STATISTICS_MAXIMUM_CHECK true
 #endif
-	
+
 #ifndef ATLAS_STATISTICS_MINIMUM_CHECK
 #define ATLAS_STATISTICS_MINIMUM_CHECK true
 #endif
-	
+
 #ifndef ATLAS_STATISTICS_SUM_CHECK
 #define ATLAS_STATISTICS_SUM_CHECK true
 #endif
-		
+
 #ifndef ATLAS_STATISTICS_SUMMARY_CHECK
 #define ATLAS_STATISTICS_SUMMARY_CHECK true
 #endif
@@ -114,16 +114,37 @@ export namespace Atlas::Configuration
 #ifndef ATLAS_MATH_SIN_PRECISION
 #define ATLAS_MATH_SIN_PRECISION 1
 #endif
-	
+
+
+#ifndef ATLAS_MANIPULATION_API_CHECK
+#define ATLAS_MANIPULATION_API_CHECK true
+#endif
+
+#ifndef ATLAS_MANIPULATION_API_CLEAR_CHECK
+#define ATLAS_MANIPULATION_API_CLEAR_CHECK true
+#endif
+
+#ifndef ATLAS_MANIPULATION_API_COPY_CHECK
+#define ATLAS_MANIPULATION_API_COPY_CHECK true
+#endif
+
+#ifndef ATLAS_MANIPULATION_API_REPLACEFROM_CHECK
+#define ATLAS_MANIPULATION_API_REPLACEFROM_CHECK true
+#endif
+
+#ifndef ATLAS_MANIPULATION_API_SHIFT_CHECK
+#define ATLAS_MANIPULATION_API_SHIFT_CHECK true
+#endif
+
 	constexpr const char* TrueString = ATLAS_TRUE_STRING;
 	constexpr const char* FalseString = ATLAS_FALSE_STRING;
 	constexpr double PI = ATLAS_MATH_PI;
 	constexpr unsigned int StaticStringBufferSize = ATLAS_STATIC_STRING_BUFFER_SIZE;
 	constexpr unsigned int StaticArrayBufferSize = ATLAS_STATIC_ARRAY_BUFFER_SIZE;
-	
+
 	constexpr bool EnableStaticStringCheck = ATLAS_STATIC_STRING_CHECK;
 	constexpr bool EnableStaticArrayCheck = ATLAS_STATIC_ARRAY_CHECK;
-	
+
 	constexpr bool EnableConverterCheck = ATLAS_CONVERTER_CHECK;
 	constexpr bool EnableBoolConverterCheck = EnableConverterCheck && ATLAS_BOOL_CONVERTER_CHECK;
 	constexpr bool EnableDoubleConverterCheck = EnableConverterCheck && ATLAS_DOUBLE_CONVERTER_CHECK;
@@ -146,6 +167,11 @@ export namespace Atlas::Configuration
 
 	constexpr int CosPrecision = ATLAS_MATH_COS_PRECISION;
 	constexpr int SinPrecision = ATLAS_MATH_SIN_PRECISION;
-	
+
+	constexpr bool EnableManipulationAPICheck = ATLAS_MANIPULATION_API_CHECK;
+	constexpr bool EnableManipulationAPIClearCheck = EnableManipulationAPICheck && ATLAS_MANIPULATION_API_CLEAR_CHECK;
+	constexpr bool EnableManipulationAPICopyCheck = EnableManipulationAPICheck && ATLAS_MANIPULATION_API_COPY_CHECK;
+	constexpr bool EnableManipulationAPIReplaceFromCheck = EnableManipulationAPICheck && ATLAS_MANIPULATION_API_REPLACEFROM_CHECK;
+	constexpr bool EnableManipulationAPIShiftCheck = EnableManipulationAPICheck && ATLAS_MANIPULATION_API_SHIFT_CHECK;
 }
 

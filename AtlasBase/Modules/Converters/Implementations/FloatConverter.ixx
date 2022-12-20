@@ -98,7 +98,7 @@ export namespace Atlas
 			float decimal = 0;
 
 			int i = 0;
-			int decimalLength = 1;
+			unsigned int decimalLength = 1;
 			int sign = 1;
 			auto length = data.length( );
 			char current;

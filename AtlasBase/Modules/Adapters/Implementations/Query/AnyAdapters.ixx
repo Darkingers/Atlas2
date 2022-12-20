@@ -11,6 +11,7 @@ import AtlasAPI;
 export namespace Atlas
 {
 	template<typename TCollection , typename TPredicate> requires 
+		( !Concept::IsIndexable<TCollection> ) &&
 		Concept::HasIterator<TCollection> &&
 		Concept::IsInvokable<bool , TPredicate , typename CollectionTraits<TCollection>::ElementType>
 	class DLLApi AnyAdapter<TCollection, TPredicate> :
@@ -62,6 +63,10 @@ export namespace Atlas
 				if ( predicate( *start ) )
 				{
 					return true;
+				}
+				else
+				{
+					IteratorAPI::Next( start );
 				}
 			}
 

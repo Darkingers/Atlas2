@@ -11,6 +11,7 @@ import AtlasAPI;
 export namespace Atlas
 {
 	template<typename TCollection> requires
+		( !Concept::IsIndexable<TCollection> ) &&
 		Concept::HasIterator<TCollection>
 	class DLLApi ShiftAdapter<TCollection& , const unsigned int , const int , const unsigned int> :
 		public std::true_type

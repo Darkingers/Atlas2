@@ -10,38 +10,8 @@ import AtlasAPI;
 
 export namespace Atlas
 {
-	template<typename TIterator , typename TElement, typename... TArgs> requires
-		Concept::IsIteratorForType<TIterator,TElement>
-	class DLLApi ReplaceFromAdapter<TIterator , TElement, TArgs...> :
-		public std::true_type
-	{
-		
-	public:
-
-		constexpr static inline void ReplaceFrom( TIterator iterator , TElement element, TArgs... args )
-			noexcept
-			( 
-				Concept::IsNoexceptAssignable<TElement , TElement> &&
-				Concept::IsNoexceptIterator<TIterator> && 
-				Concept::IsNoexceptReplaceFrom<TIterator, TArgs...>
-			)
-		{
-			IteratorAPI::Current( iterator ) = element;
-
-			if constexpr ( sizeof...( TArgs ) > 0 )
-			{
-				IteratorAPI::Next( iterator );
-
-				ManipulationAPI::ReplaceFrom
-				( 
-					iterator , 
-					std::forward<TArgs>( args )... 
-				);
-			}
-		}
-	};
-
 	template<typename TCollection, typename... TArgs> requires
+		( !Concept::IsIndexable<TCollection> ) &&
 		Concept::HasIterator<TCollection>
 	class DLLApi ReplaceFromAdapter<TCollection , const unsigned int, TArgs...> :
 		public std::true_type
@@ -70,7 +40,8 @@ export namespace Atlas
 		}
 	};
 
-	template<typename TIterator , typename TCollection , typename... TArgs>requires
+	template<typename TIterator , typename TCollection , typename... TArgs> requires
+		( !Concept::IsIndexable<TCollection> ) &&
 		Concept::IsIteratorForType<TIterator, typename CollectionTraits<TCollection>::ElementType> &&
 		Concept::HasIterator<TCollection>
 	class DLLApi ReplaceFromAdapter<TIterator , TCollection , TArgs...> :
@@ -141,4 +112,36 @@ export namespace Atlas
 			}
 		}
 	};
+
+	template<typename TIterator , typename TElement , typename... TArgs> requires
+		Concept::IsIteratorForType<TIterator , TElement>
+	class DLLApi ReplaceFromAdapter<TIterator , TElement , TArgs...> :
+		public std::true_type
+	{
+
+		public:
+
+		constexpr static inline void ReplaceFrom( TIterator iterator , TElement element , TArgs... args )
+			noexcept
+			(
+				Concept::IsNoexceptAssignable<TElement , TElement>&&
+				Concept::IsNoexceptIterator<TIterator>&&
+				Concept::IsNoexceptReplaceFrom<TIterator , TArgs...>
+			)
+		{
+			IteratorAPI::Current( iterator ) = element;
+
+			if constexpr ( sizeof...( TArgs ) > 0 )
+			{
+				IteratorAPI::Next( iterator );
+
+				ManipulationAPI::ReplaceFrom
+				(
+					iterator ,
+					std::forward<TArgs>( args )...
+				);
+			}
+		}
+	};
+
 }

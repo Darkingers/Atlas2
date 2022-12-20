@@ -11,6 +11,7 @@ import AtlasAPI;
 export namespace Atlas
 {
 	template<typename TCollection , typename TElement> requires 
+		( !Concept::IsIndexable<TCollection> ) &&
 		Concept::IsIterableWith<TCollection , TElement>
 	class DLLApi CountElementAdapter<TCollection , TElement> :
 		public std::true_type

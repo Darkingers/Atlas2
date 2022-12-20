@@ -10,6 +10,39 @@ import AtlasAPI;
 
 export namespace Atlas
 {
+	template<typename TCollection , typename TPattern> requires
+		( !Concept::IsIndexable<TCollection> ) &&
+		Concept::HasIterator<TCollection>&&
+		Concept::IsIterableWith<TPattern , typename CollectionTraits<TCollection>::ElementType>
+	class DLLApi CountPatternAdapter<TCollection , TPattern> :
+		public std::true_type
+	{
+
+		private:
+
+		using CollectionIterator = typename CollectionTraits<TCollection>::IteratorType;
+		using PatternIterator = typename CollectionTraits<TPattern>::IteratorType;
+
+		public:
+
+		constexpr static inline auto CountPattern( TCollection collection , TPattern pattern )
+			noexcept
+			(
+				Concept::HasNoexceptIterator<TCollection>&&
+				Concept::HasNoexceptIterator<TPattern>&&
+				Concept::IsNoexceptContainPattern<CollectionIterator , CollectionIterator , PatternIterator , PatternIterator>
+			)
+		{
+			return QueryAPI::ContainsPattern
+			(
+				IteratorAPI::ConstBegin( collection ) ,
+				IteratorAPI::ConstEnd( collection ) ,
+				IteratorAPI::ConstBegin( pattern ) ,
+				IteratorAPI::ConstEnd( pattern )
+			);
+		}
+	};
+	
 	template<typename TIteratorA , typename TIteratorB> requires
 		Concept::IsIterator<TIteratorA>&&
 		Concept::IsIterator<TIteratorB>&&
@@ -79,38 +112,6 @@ export namespace Atlas
 			}
 
 			return count;
-		}
-	};
-	
-	template<typename TCollection , typename TPattern> requires
-		Concept::HasIterator<TCollection>&&
-		Concept::IsIterableWith<TPattern , typename CollectionTraits<TCollection>::ElementType>
-	class DLLApi CountPatternAdapter<TCollection , TPattern> :
-		public std::true_type
-	{
-
-	private:
-
-		using CollectionIterator = typename CollectionTraits<TCollection>::IteratorType;
-		using PatternIterator = typename CollectionTraits<TPattern>::IteratorType;
-
-	public:
-
-		constexpr static inline auto CountPattern( TCollection collection , TPattern pattern  )
-			noexcept
-			(
-				Concept::HasNoexceptIterator<TCollection>&&
-				Concept::HasNoexceptIterator<TPattern>&&
-				Concept::IsNoexceptContainPattern<CollectionIterator , CollectionIterator , PatternIterator , PatternIterator>
-			)
-		{
-			return QueryAPI::ContainsPattern
-			(
-				IteratorAPI::ConstBegin( collection ) ,
-				IteratorAPI::ConstEnd( collection ) ,
-				IteratorAPI::ConstBegin( pattern ) ,
-				IteratorAPI::ConstEnd( pattern )
-			);
 		}
 	};
 }

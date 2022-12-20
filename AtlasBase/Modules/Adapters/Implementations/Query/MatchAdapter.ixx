@@ -11,6 +11,8 @@ import AtlasAPI;
 export namespace Atlas
 {
 	template<typename TCollectionA , typename TCollectionB> requires 
+		( !Concept::IsIndexable<TCollectionA> ) &&
+		( !Concept::IsIndexable<TCollectionB> ) &&
 		Concept::HasIterator<TCollectionA> &&
 		Concept::IsIterableWith<TCollectionB, typename CollectionTraits<TCollectionA>::ElementType>
 	class DLLApi MatchAdapter<TCollectionA , TCollectionB> :

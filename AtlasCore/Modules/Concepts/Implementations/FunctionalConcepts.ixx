@@ -39,6 +39,14 @@ export namespace Atlas::Concept
 		} -> std::convertible_to<char*>;	
 	};
 
+	template<typename TCollection>
+	concept IsIndexable = requires( TCollection collection , unsigned int index )
+	{
+		{
+			collection[index]
+		} -> std::convertible_to<typename CollectionTraits<TCollection>::ElementType>;
+	};
+
 	template<typename TReturn , typename TIndexed , typename TIndex>
 	concept HasIndexOperator = requires( TIndexed instance , const TIndex index )
 	{

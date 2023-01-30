@@ -208,8 +208,10 @@ namespace Atlas
 		/// <summary>
 		/// Creates a subarray with the specified range
 		/// </summary>
-		constexpr auto SubArray( unsigned int inclusiveStart , unsigned int exclusiveEnd )
-			const noexcept( !Configuration::EnableStaticArrayCheck )
+		constexpr auto SubArray( 
+			unsigned int inclusiveStart, 
+			unsigned int exclusiveEnd 
+		) const noexcept( !Configuration::EnableStaticArrayCheck )
 		{
 			
 			StaticArray<BufferSize> result;

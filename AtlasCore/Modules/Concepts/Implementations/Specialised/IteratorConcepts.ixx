@@ -12,50 +12,100 @@ export namespace Atlas::Concept
 	concept IsIteratorForType = requires( TIterator iterator )
 	{
 		IteratorMoveAdapter<TIterator>::Move( iterator );
-
-		{
-			IteratorCurrentAdapter<TIterator>::Current( iterator )
-		} -> std::same_as<TElement>;
+		{ IteratorCurrentAdapter<TIterator>::Current( iterator ) } -> std::same_as<TElement>;
 	};
 
 	template<typename TIterator>
 	concept IsIterator = IteratorTraits<TIterator>::value;
 
 	template<typename TIterator>
-	concept IsRandomAccessIterator = IsIterator<TIterator> && IteratorTraits<TIterator>::RandomAccess;
+	concept IsRandomAccessIterator = 
+		IsIterator<TIterator> &&
+		IteratorTraits<TIterator>::RandomAccess;
 
 	template<typename TIterator>
-	concept IsNoexceptMove = noexcept( IteratorMoveAdapter<TIterator>::Move( std::declval<TIterator>( ) , std::declval<int>( ) ) );
+	concept IsNoexceptMove = 
+		noexcept( 
+			IteratorMoveAdapter<TIterator>::Move( 
+				std::declval<TIterator>( ) ,
+				std::declval<int>( ) 
+			) 
+		);
 
 	template<typename TIterator>
-	concept IsNoexceptCurrent = noexcept( IteratorCurrentAdapter<TIterator>::Current( std::declval<TIterator>( ) ) );
+	concept IsNoexceptCurrent = 
+		noexcept( 
+			IteratorCurrentAdapter<TIterator>::Current( 
+				std::declval<TIterator>( )
+			) 
+		);
 
 	template<typename TIterator>
-	concept IsNoexceptIterator = IsNoexceptMove<TIterator> && IsNoexceptCurrent<TIterator>;
+	concept IsNoexceptIterator = 
+		IsNoexceptMove<TIterator> && 
+		IsNoexceptCurrent<TIterator>;
 
 	template<typename TCollection>
-	concept IsNoexceptAt = noexcept( IterableAdapter<TCollection>::At( std::declval<TCollection>( ) , std::declval<unsigned int>( ) ) );
+	concept IsNoexceptAt = 
+		noexcept( 
+			IterableAdapter<TCollection>::At( 
+				std::declval<TCollection>( ) , 
+				std::declval<unsigned int>( )
+			) 
+		);
 
 	template<typename TCollection>
-	concept IsNoexceptConstAt = noexcept( IterableAdapter<TCollection>::ConstAt( std::declval<TCollection>( ), std::declval<unsigned int>( ) ) );
+	concept IsNoexceptConstAt = 
+		noexcept( 
+			IterableAdapter<TCollection>::ConstAt( 
+				std::declval<TCollection>( ),
+				std::declval<unsigned int>( )
+			) 
+		);
 
 	template<typename TCollection>
-	concept IsNoexceptBegin = noexcept( IterableAdapter<TCollection>::Begin( std::declval<TCollection>( ) ) );
+	concept IsNoexceptBegin = 
+		noexcept(
+			IterableAdapter<TCollection>::Begin( 
+				std::declval<TCollection>( ) 
+			) 
+		);
 
 	template<typename TCollection>
-	concept IsNoexceptEnd = noexcept( IterableAdapter<TCollection>::End( std::declval<TCollection>( ) ) );
+	concept IsNoexceptEnd = 
+		noexcept( 
+			IterableAdapter<TCollection>::End( 
+				std::declval<TCollection>( )
+			) 
+		);
 
 	template<typename TCollection>
-	concept IsNoexceptConstBegin = noexcept( IterableAdapter<TCollection>::ConstBegin( std::declval<TCollection>( ) ) );
+	concept IsNoexceptConstBegin = 
+		noexcept(
+			IterableAdapter<TCollection>::ConstBegin( 
+				std::declval<TCollection>( )
+			) 
+		);
 
 	template<typename TCollection>
-	concept IsNoexceptConstEnd = noexcept( IterableAdapter<TCollection>::ConstEnd( std::declval<TCollection>( ) ) );
+	concept IsNoexceptConstEnd = 
+		noexcept(
+			IterableAdapter<TCollection>::ConstEnd( 
+				std::declval<TCollection>( ) 
+			)
+		);
 
 	template<typename TCollection>
-	concept HasNoexceptIterator = IsNoexceptBegin<TCollection> && IsNoexceptEnd<TCollection> && IsNoexceptIterator<typename CollectionTraits<TCollection>::IteratorType>;
+	concept HasNoexceptIterator =
+		IsNoexceptBegin<TCollection> && 
+		IsNoexceptEnd<TCollection> && 
+		IsNoexceptIterator<typename CollectionTraits<TCollection>::IteratorType>;
 
 	template<typename TCollection>
-	concept HasNoexceptConstIterator = IsNoexceptConstBegin<TCollection> && IsNoexceptConstEnd<TCollection> && IsNoexceptIterator<typename CollectionTraits<TCollection>::IteratorType>;
+	concept HasNoexceptConstIterator = 
+		IsNoexceptConstBegin<TCollection> && 
+		IsNoexceptConstEnd<TCollection> &&
+		IsNoexceptIterator<typename CollectionTraits<TCollection>::IteratorType>;
 
 	template<typename TCollection>
 	concept HasIterator = CollectionTraits<TCollection>::HasIterator;

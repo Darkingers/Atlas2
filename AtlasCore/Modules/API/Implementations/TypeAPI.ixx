@@ -15,7 +15,9 @@ export namespace Atlas
 	public:
 		
 		template<typename T>
-		constexpr static inline auto Size( const T& data )
+		constexpr static inline auto Size(
+				const T& data
+			)
 			noexcept ( Concept::IsNoexceptSize<T> )
 		{
 			return SizeAdapter<const T&>::Size( data );
@@ -23,7 +25,9 @@ export namespace Atlas
 
 		template<typename T> requires
 			Concept::IsFundamental<T>
-		constexpr static inline auto Size( T data )
+		constexpr static inline auto Size(
+				T data
+			)
 			noexcept ( Concept::IsNoexceptSize<T> )
 		{
 			return SizeAdapter<T>::Size( data );
@@ -31,7 +35,9 @@ export namespace Atlas
 
 		template<typename T>requires
 			Concept::IsFundamental<T>
-		constexpr static inline unsigned int GetHash( T data )
+		constexpr static inline unsigned int GetHash(
+				T data 
+			)
 			noexcept ( Concept::IsNoexceptHash<T> )
 		{
 			return HashAdapter<T>::Hash( data );

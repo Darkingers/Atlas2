@@ -9,6 +9,9 @@ import AtlasDefinitions;
 export namespace Atlas::Concept
 {
 	template<typename TSource , typename TTarget>
+	concept IsConvertible = Converter<Deduce::SimpleType<TSource> , Deduce::SimpleType<TTarget>>::value;
+
+	template<typename TSource , typename TTarget>
 	concept IsNoexceptConvertable = noexcept( Converter<Deduce::SimpleType<TSource> , Deduce::SimpleType<TTarget>>::Convert( std::declval<TSource>( ) ) );
 
 	template <typename TSource , typename TTarget>

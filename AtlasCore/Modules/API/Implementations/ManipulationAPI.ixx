@@ -9,6 +9,8 @@ import AtlasValidation;
 import AtlasConfiguration;
 import AtlasConcepts;
 
+import :QueryAPI;
+
 export namespace Atlas
 {
 	class DLLApi ManipulationAPI
@@ -17,31 +19,31 @@ export namespace Atlas
 	public:
 
 		template<typename TCollection>
-		constexpr static inline void Clear
-			(
-				TCollection& collection
-			)
+		constexpr static inline void Clear( TCollection& collection)
 			noexcept( Concept::IsNoexceptClear<TCollection&> )
 		{
 			ClearAdapter<TCollection&>::Clear( collection );
 		}
 
-		template<typename TCollectionSource , typename TCollectionTarget> requires
-			Concept::AreCompatibleCollections<TCollectionSource , TCollectionTarget>
-		constexpr static inline void Copy
-			(
-					const TCollectionSource& source ,
-					unsigned int sourceStart ,
-					unsigned int sourceEnd ,
-					TCollectionTarget& target ,
-					unsigned int targetStart
-			) 
-			noexcept( Concept::IsNoexceptCopy<const TCollectionSource& , unsigned int , unsigned int , TCollectionTarget& , unsigned int> )
+		template<typename TCollectionA , typename TCollectionB> requires
+			Concept::AreCompatibleCollections<TCollectionA , TCollectionB>
+		constexpr static inline void Copy(
+			const TCollectionA& source ,
+			unsigned int sourceStart ,
+			unsigned int sourceEnd ,
+			TCollectionB& target ,
+			unsigned int targetStart
+		) 
+			noexcept(Concept::IsNoexceptCopyCollectionToCollection<const TCollectionA&, TCollectionB&> )
 		{
 			Validate<Configuration::EnableManipulationAPICopyCheck>::IsPositiveRange( sourceStart , sourceEnd );
 			Validate<Configuration::EnableManipulationAPICopyCheck>::IsPositive( targetStart );
+			Validate<Configuration::EnableManipulationAPICopyCheck>::IsMoreOrEqual(
+				QueryAPI::Length( target ) - targetStart,
+				sourceEnd - sourceStart
+			);
 
-			CopyAdapter<const TCollectionSource& ,unsigned int ,unsigned int ,TCollectionTarget& ,unsigned int>::Copy(
+			CopyCollectionToCollectionAdapter<const TCollectionA& , TCollectionB&>::Copy(
 				source ,
 				sourceStart ,
 				sourceEnd ,
@@ -50,20 +52,43 @@ export namespace Atlas
 			);
 		}
 
-		template<typename TCollectionSource , typename TIteratorTarget> requires
-			Concept::IsCompatibleIteratorFor<TIteratorTarget , TCollectionSource>
-		constexpr static inline void Copy
-			(
-					const TCollectionSource& source ,
-					unsigned int sourceStart ,
-					unsigned int sourceEnd ,
-					TIteratorTarget& target
-			)
-			noexcept( Concept::IsNoexceptCopy<const TCollectionSource& , unsigned int , unsigned int , TIteratorTarget&> )
+		template<typename TCollectionA , typename TCollectionB> requires
+			Concept::AreCompatibleCollections<TCollectionA , TCollectionB>
+		constexpr static inline void Copy(
+			const TCollectionA& source ,
+			TCollectionB& target
+		)
+			noexcept( Concept::IsNoexceptCopyCollectionToCollection<const TCollectionA& , TCollectionB&> )
+		{
+			const auto sourceLength = QueryAPI::Length( source );
+			
+			Validate<Configuration::EnableManipulationAPICopyCheck>::IsMoreOrEqual(
+				QueryAPI::Length( target ) ,
+				sourceLength
+			);
+
+			CopyCollectionToCollectionAdapter<const TCollectionA& , TCollectionB&>::Copy(
+				source ,
+				0,
+				sourceLength,
+				target ,
+				0
+			);
+		}
+
+		template<typename TCollection , typename TIterator> requires
+			Concept::IsCompatibleIteratorFor<TIterator , TCollection>
+		constexpr static inline void Copy(
+			const TCollection& source ,
+			unsigned int sourceStart ,
+			unsigned int sourceEnd ,
+			TIterator& target
+		)
+			noexcept( Concept::IsNoexceptCopyCollectionToIterator<const TCollection& , TIterator&> )
 		{
 			Validate<Configuration::EnableManipulationAPICopyCheck>::IsPositiveRange( sourceStart , sourceEnd );
 
-			CopyAdapter<const TCollectionSource& , unsigned int , unsigned int , TIteratorTarget&>::Copy(
+			CopyCollectionToIteratorAdapter<const TCollection& , TIterator&> ::Copy(
 				source ,
 				sourceStart ,
 				sourceEnd ,
@@ -71,35 +96,34 @@ export namespace Atlas
 			);
 		}	
 
-		template<typename TCollectionSource , typename TCollectionTarget> requires
-			Concept::AreCompatibleCollections<TCollectionSource , TCollectionTarget>
-		constexpr static inline void Copy
-			(
-					const TCollectionSource& source ,
-					TCollectionTarget& target 
-			) 
-			noexcept( Concept::IsNoexceptCopy<const TCollectionSource& , unsigned int , unsigned int , TCollectionTarget& , unsigned int> )
+		template<typename TIterator , typename TCollection> requires
+			Concept::IsCompatibleIteratorFor<TIterator , TCollection>
+		constexpr static inline void Copy(
+			TIterator& sourceStart,
+			const TIterator& sourceEnd,
+			TCollection& destination,
+			unsigned int destinationStart
+		)
+			noexcept( Concept::IsNoexceptCopyIteratorToCollection<const TCollection&, TIterator&> )
 		{
-			CopyAdapter<const TCollectionSource& , unsigned int , unsigned int , TCollectionTarget& , unsigned int>::Copy(
-				source ,
-				0 ,
-				0 ,
-				target ,
-				0
+			CopyIteratorToCollectionAdapter<const TCollection& , TIterator&>  ::Copy(
+				sourceStart ,
+				sourceEnd ,
+				destination,
+				destinationStart
 			);
 		}
 
 		template<typename TIteratorSource , typename TIteratorTarget> requires
 			Concept::AreCompatibleIterators<TIteratorSource , TIteratorTarget>
-		constexpr static inline void Copy
-			(
-					TIteratorSource& sourceStart ,
-					const TIteratorSource& sourceEnd ,
-					TIteratorTarget& target
-			)
-			noexcept( Concept::IsNoexceptCopy<TIteratorSource&, const TIteratorSource&, TIteratorTarget&> )
+		constexpr static inline void Copy(
+			TIteratorSource& sourceStart ,
+			const TIteratorSource& sourceEnd ,
+			TIteratorTarget& target
+		)
+			noexcept( Concept::IsNoexceptCopyIteratorToIterator<TIteratorSource&, TIteratorTarget&> )
 		{
-			CopyAdapter<TIteratorSource& , const TIteratorSource& , TIteratorTarget&>::Copy(
+			CopyIteratorToIteratorAdapter<TIteratorSource& , TIteratorTarget&> ::Copy(
 				sourceStart ,
 				sourceEnd ,
 				target
@@ -107,8 +131,7 @@ export namespace Atlas
 		}
 
 		template<typename... TArgs> 
-		constexpr static inline void ReplaceFrom
-			( 
+		constexpr static inline void ReplaceFrom( 
 				TArgs&&... args
 			)
 			noexcept ( Concept::IsNoexceptReplaceFrom<TArgs&&...> )
@@ -118,8 +141,7 @@ export namespace Atlas
 
 		template<typename TIterator, typename... TArgs> requires 
 			Concept::IsIterator<TIterator>
-		constexpr static inline void ReplaceFrom
-			( 
+		constexpr static inline void ReplaceFrom( 
 				TIterator iterator ,
 				const TArgs&&... args
 			)
@@ -134,14 +156,12 @@ export namespace Atlas
 
 		template<typename TCollection , typename... TArgs> requires
 			Concept::IsCollection<TCollection>
-		constexpr static inline void ReplaceFrom
-			(
+		constexpr static inline void ReplaceFrom(
 				TCollection& collection, 
 				unsigned int start ,
 				const TArgs&&... args
 			)
-			noexcept 
-			(
+			noexcept (
 				!Configuration::EnableManipulationAPIReplaceFromCheck &&
 				Concept::IsNoexceptReplaceFrom<TCollection& , unsigned int, const TArgs&&...>
 			)
@@ -155,8 +175,7 @@ export namespace Atlas
 		}
 
 		template<typename... TArgs>
-		constexpr static inline void Shift
-			( 
+		constexpr static inline void Shift( 
 				TArgs&&... args
 			)
 			noexcept ( Concept::IsNoexceptShift<TArgs&&...> )
@@ -166,15 +185,13 @@ export namespace Atlas
 
 		template<typename TCollection> requires
 			Concept::IsCollection<TCollection>
-		constexpr static inline void Shift
-			(
+		constexpr static inline void Shift(
 				TCollection& collection , 
 				unsigned int shiftStart ,
 				int shiftOffset,
 				unsigned int shiftLength 
 			)
-			noexcept
-			(	
+			noexcept(	
 				!Configuration::EnableManipulationAPIShiftCheck &&
 				Concept::IsNoexceptShift<TCollection&, unsigned int, int, unsigned int> 
 			)

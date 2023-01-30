@@ -32,28 +32,93 @@ export namespace Atlas
 		}
 	};
 
-	template<typename... TArgs>
-	class DLLApi CopyAdapter :
+	template<typename TCollectionA, typename TCollectionB>
+	class DLLApi CopyCollectionToCollectionAdapter :
 		public std::false_type
 	{
 
 	public:
 
-		consteval static inline void Copy( TArgs... args )
+		consteval static inline void Copy( 
+			TCollectionA source , 
+			unsigned int sourceStart,
+			unsigned int sourceEnd,
+			TCollectionB destination,
+			unsigned int destinationStart
+		)
 		{
-			throw "CopyAdapter::Copy is not implemented for this type";
+			throw "CopyCollectionToCollectionAdapter::Copy is not implemented for this type";
 		}
 	};
-
-	template<typename... TArgs>
-	class DLLApi ShiftAdapter
+	
+	template<typename TIterator , typename TCollection>
+	class DLLApi CopyIteratorToCollectionAdapter :
+		public std::false_type
 	{
 
 	public:
 
-		consteval static inline auto Shift( TArgs... args )
+		consteval static inline void Copy(
+			TIterator sourceStart,
+			const TIterator sourceEnd,
+			TCollection destination,
+			unsigned int destinationStart
+		)
 		{
-			throw "ShiftAdapter::Shift is not implemented for this type";
+			throw "CopyIteratorToCollectionAdapter::Copy is not implemented for this type";
+		}
+	};
+
+	template<typename TCollection , typename TIterator>
+	class DLLApi CopyCollectionToIteratorAdapter :
+		public std::false_type
+	{
+
+	public:
+
+		consteval static inline void Copy(
+			TCollection source ,
+			unsigned int sourceStart,
+			unsigned int sourceEnd,
+			TIterator destinationStart
+		)
+		{
+			throw "CopyCollectionToIteratorAdapter::Copy is not implemented for this type";
+		}
+	};
+
+	template<typename TIteratorA , typename TIteratorB>
+	class DLLApi CopyIteratorToIteratorAdapter :
+		public std::false_type
+	{
+
+	public:
+
+		consteval static inline void Copy( 
+			TIteratorA sourceStart ,
+			const TIteratorA sourceEnd ,
+			TIteratorB destinationstart 
+		)
+		{
+			throw "CopyIteratorToIteratorAdapter::Copy is not implemented for this type";
+		}
+	};
+
+	template<typename TCollection>
+	class DLLApi ShiftCollectionAdapter :
+		public std::false_type
+	{
+
+	public:
+
+		consteval static inline auto Shift(
+			TCollection collection, 
+			unsigned int shiftStart,
+			unsigned int shiftOffset,
+			unsigned int shiftSize
+		)
+		{
+			throw "ShiftCollectionAdapter::Shift is not implemented for this type";
 		}
 	};
 

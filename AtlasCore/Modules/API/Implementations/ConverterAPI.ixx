@@ -15,7 +15,10 @@ export namespace Atlas
 	public:
 		
 		template<typename TSource>
-		constexpr static inline TTarget From( const TSource& data )
+		constexpr static inline TTarget From
+			( 
+				const TSource& data 
+			) 
 			noexcept( Concept::IsNoexceptConvertable<const TSource& , TTarget> )
 		{
 			return TypeConverter<const TSource&, TTarget>::Convert( data );
@@ -23,7 +26,10 @@ export namespace Atlas
 
 		template<typename TSource> requires 
 			Concept::IsFundamental<TSource>
-		constexpr static inline TTarget From( TSource data )
+		constexpr static inline TTarget From
+			(
+				TSource data
+			)
 			noexcept( Concept::IsNoexceptConvertable<TSource , TTarget> )
 		{
 			return TypeConverter<TSource, TTarget>::Convert( data );

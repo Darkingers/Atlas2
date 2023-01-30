@@ -23,7 +23,11 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Any( TCollection collection , TPredicate predicate )
+		constexpr static inline auto Any
+			(
+				TCollection collection ,
+				TPredicate predicate
+			)
 			noexcept
 			( 
 				Concept::HasNoexceptConstIterator<TCollection> && 
@@ -51,7 +55,12 @@ export namespace Atlas
 		
 	public:
 
-		constexpr static inline auto Any( TIterator start, TIterator end , TPredicate predicate )
+		constexpr static inline auto Any
+			( 
+				TIterator start,
+				TIterator end ,
+				TPredicate predicate 
+			)
 			noexcept
 			( 
 				Concept::IsNoexceptIterator<TIterator> &&

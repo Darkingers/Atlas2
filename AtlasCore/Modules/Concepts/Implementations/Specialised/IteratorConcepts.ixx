@@ -70,6 +70,19 @@ export namespace Atlas::Concept
 	};
 
 	template<typename TCollection , typename TElement>
-	concept IsIterableWith = std::is_same_v<typename CollectionTraits<TCollection>::ElementType , TElement> && CollectionTraits<TCollection>::HasIterator;
+	concept IsIterableWith =
+		CollectionTraits<TCollection>::HasIterator &&
+		std::is_same_v<typename CollectionTraits<TCollection>::ElementType , TElement>;
+		
 
+	template<typename TIteratorA , typename TIteratorB>
+	concept AreCompatibleIterators = 
+		IsIterator<TIteratorA> &&
+		IsIterator<TIteratorB> &&
+		std::is_same_v<typename IteratorTraits<TIteratorA>::ElementType , typename IteratorTraits<TIteratorB>::ElementType>;
+
+	template<typename TIterator , typename TCollection>
+	concept IsCompatibleIteratorFor =
+		IsIterator<TIterator>&& 
+		std::is_same_v<typename IteratorTraits<TIterator>::CollectionType , TCollection>;
 }

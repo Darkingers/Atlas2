@@ -18,7 +18,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline void Clear( TCollection collection )
+		constexpr static inline void Clear
+			( 
+				TCollection collection 
+			)
 			noexcept( noexcept( collection.Clear( ) ) )
 		{
 			collection.Clear( );
@@ -33,7 +36,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline void Clear( TCollection collection )
+		constexpr static inline void Clear
+			(
+				TCollection collection 
+			)
 			noexcept( noexcept( collection.clear( ) ) )
 		{
 			collection.clear( );

@@ -25,7 +25,11 @@ export namespace Atlas
 
 		public:
 
-		constexpr static inline auto ContainsPattern( TCollection collection , TPattern pattern )
+		constexpr static inline auto ContainsPattern
+			( 
+				TCollection collection ,
+				TPattern pattern 
+			)
 			noexcept
 			(
 				Concept::HasNoexceptIterator<TCollection>&&
@@ -53,7 +57,13 @@ export namespace Atlas
 
 		public:
 
-		constexpr static inline auto ContainsPattern( TIteratorA startA , TIteratorA endA , TIteratorB startB , TIteratorB endB )
+		constexpr static inline auto ContainsPattern
+			(
+				TIteratorA startA ,
+				TIteratorA endA , 
+				TIteratorB startB ,
+				TIteratorB endB 
+			)
 			noexcept
 			(
 				Concept::IsNoexceptIterator<TIteratorA>&&

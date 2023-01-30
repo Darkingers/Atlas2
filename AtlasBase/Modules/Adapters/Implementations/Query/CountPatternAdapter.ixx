@@ -18,14 +18,18 @@ export namespace Atlas
 		public std::true_type
 	{
 
-		private:
+	private:
 
 		using CollectionIterator = typename CollectionTraits<TCollection>::IteratorType;
 		using PatternIterator = typename CollectionTraits<TPattern>::IteratorType;
 
-		public:
+	public:
 
-		constexpr static inline auto CountPattern( TCollection collection , TPattern pattern )
+		constexpr static inline auto CountPattern
+			(
+				TCollection collection , 
+				TPattern pattern 
+			)
 			noexcept
 			(
 				Concept::HasNoexceptIterator<TCollection>&&
@@ -47,13 +51,19 @@ export namespace Atlas
 		Concept::IsIterator<TIteratorA>&&
 		Concept::IsIterator<TIteratorB>&&
 		Concept::IsSame<typename IteratorTraits<TIteratorA>::IteratedType , typename IteratorTraits<TIteratorB>::IteratedType>
-		class DLLApi CountPatternAdapter<TIteratorA , TIteratorA , TIteratorB , TIteratorB> :
+	class DLLApi CountPatternAdapter<TIteratorA , TIteratorA , TIteratorB , TIteratorB> :
 		public std::true_type
 	{
 
-		public:
+	public:
 
-		constexpr static inline auto CountPattern( TIteratorA startA , TIteratorA endA , TIteratorB startB , TIteratorB endB )
+		constexpr static inline auto CountPattern
+			( 
+				TIteratorA startA , 
+				TIteratorA endA ,
+				TIteratorB startB ,
+				TIteratorB endB 
+			)
 			noexcept
 			(
 				Concept::IsNoexceptIterator<TIteratorA>&&
@@ -81,13 +91,19 @@ export namespace Atlas
 		Concept::IsIterator<TIteratorA>&&
 		Concept::IsIterator<TIteratorB>&&
 		Concept::IsSame<typename IteratorTraits<TIteratorA>::IteratedType , typename IteratorTraits<TIteratorB>::IteratedType>
-		class DLLApi CountPatternAdapter<TIteratorA , TIteratorA , TIteratorB , unsigned int> :
+	class DLLApi CountPatternAdapter<TIteratorA , TIteratorA , TIteratorB , unsigned int> :
 		public std::true_type
 	{
 
-		public:
+	public:
 
-		constexpr static inline auto CountPattern( TIteratorA startA , TIteratorA endA , TIteratorB patternStart , const unsigned int patternLength )
+		constexpr static inline auto CountPattern
+			(
+				TIteratorA startA ,
+				TIteratorA endA , 
+				TIteratorB patternStart ,
+				const unsigned int patternLength
+			)
 			noexcept
 			(
 				Concept::IsNoexceptIterator<TIteratorA>&&

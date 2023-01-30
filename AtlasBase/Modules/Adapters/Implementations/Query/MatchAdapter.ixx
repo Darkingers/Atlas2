@@ -26,7 +26,11 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Match( TCollectionA collectionA , TCollectionB collectionB )
+		constexpr static inline auto Match
+			(
+				TCollectionA collectionA ,
+				TCollectionB collectionB
+			)
 			noexcept
 			( 
 				Concept::HasNoexceptConstIterator<TCollectionA>&& 
@@ -57,7 +61,13 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Match( TIteratorA startA , TIteratorA endA , TIteratorB startB , TIteratorB endB )
+		constexpr static inline auto Match
+			(
+				TIteratorA startA , 
+				TIteratorA endA , 
+				TIteratorB startB , 
+				TIteratorB endB 
+			)
 			noexcept
 			( 
 				Concept::IsNoexceptIterator<TIteratorA>&& 
@@ -102,7 +112,13 @@ export namespace Atlas
 
 		public:
 
-		constexpr static inline auto Match( TIteratorA startA , TIteratorA endA , TIteratorB patternStart ,const unsigned int patternLength )
+		constexpr static inline auto Match
+			(
+				TIteratorA startA ,
+				TIteratorA endA ,
+				TIteratorB patternStart ,
+				const unsigned int patternLength
+			)
 			noexcept
 			(
 				Concept::IsNoexceptIterator<TIteratorA>&&

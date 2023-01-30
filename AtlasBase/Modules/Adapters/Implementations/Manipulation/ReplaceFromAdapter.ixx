@@ -23,13 +23,18 @@ export namespace Atlas
 	
 	public:
 
-		constexpr static inline void ReplaceFrom( TCollection collection , const unsigned int start, TArgs... args )
+		constexpr static inline void ReplaceFrom
+			(
+				TCollection collection , 
+				unsigned int start, 
+				TArgs... args 
+			)
 			noexcept
 			(
 				Concept::IsNoexceptIterator<IteratorType> &&
 				Concept::IsNoexceptLength<TCollection>&&
 				Concept::IsNoexceptLength<TArgs...> &&
-				Concept::IsNoexceptReplaceFrom<IteratorType , TArgs...>
+				Concept::IsNoexceptReplaceFrom<IteratorType ,TArgs...>
 			)
 		{
 			ManipulationAPI::ReplaceFrom
@@ -54,7 +59,12 @@ export namespace Atlas
 	
 	public:
 
-		constexpr static inline void ReplaceFrom( TIterator iterator , TCollection collection , TArgs... args )
+		constexpr static inline void ReplaceFrom
+			(
+				TIterator iterator ,
+				TCollection collection ,
+				TArgs... args 
+			)
 			noexcept
 			(
 				Concept::HasNoexceptConstIterator<TCollection>&&
@@ -85,7 +95,13 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline void ReplaceFrom( TIterator iterator , TIteratorSource start, TIteratorSource end , TArgs... args )
+		constexpr static inline void ReplaceFrom
+			(
+				TIterator iterator ,
+				TIteratorSource start, 
+				TIteratorSource end , 
+				TArgs... args
+			)
 			noexcept
 			( 
 				Concept::IsNoexceptAssignable<ElementType , ElementType>&&
@@ -119,9 +135,14 @@ export namespace Atlas
 		public std::true_type
 	{
 
-		public:
+	public:
 
-		constexpr static inline void ReplaceFrom( TIterator iterator , TElement element , TArgs... args )
+		constexpr static inline void ReplaceFrom
+			(
+				TIterator iterator ,
+				TElement element ,
+				TArgs... args
+			)
 			noexcept
 			(
 				Concept::IsNoexceptAssignable<TElement , TElement>&&

@@ -18,7 +18,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Count( TCollection collection )
+		constexpr static inline auto Count
+			( 
+				TCollection collection 
+			)
 			noexcept( QueryAPI::Length( collection ) )
 		{
 			return QueryAPI::Length( collection );
@@ -34,7 +37,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Count( TCollection collection )
+		constexpr static inline auto Count
+			( 
+				TCollection collection
+			)
 			noexcept( QueryAPI::Length( collection ) )
 		{
 			return 0;
@@ -49,7 +55,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Count( TCollection collection  )
+		constexpr static inline auto Count
+			( 
+				TCollection collection 
+			)
 			noexcept
 		{
 			return 1;
@@ -62,9 +71,12 @@ export namespace Atlas
 		public std::true_type
 	{
 
-		public:
+	public:
 
-		constexpr static inline auto Count( TCollection collection )
+		constexpr static inline auto Count
+			(
+				TCollection collection
+			)
 			noexcept
 		{
 			return 0;

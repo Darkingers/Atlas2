@@ -21,7 +21,10 @@ export namespace Atlas
 		
 	public:
 		
-		constexpr static inline bool Convert( const TSource& data )
+		constexpr static inline bool Convert
+			( 
+				const TSource& data
+			)
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource, bool> )
 		{
 			return data;
@@ -35,10 +38,13 @@ export namespace Atlas
 		
 	public:
 		
-		constexpr static inline bool Convert( const std::string& data ) 
+		constexpr static inline bool Convert
+			( 
+				const std::string& data 
+			) 
 			noexcept( !Configuration::EnableBoolConverterCheck)
 		{
-			bool isTrue = data == Configuration::TrueString;
+			const bool isTrue = data == Configuration::TrueString;
 			
 			if constexpr ( Configuration::EnableBoolConverterCheck )
 			{
@@ -59,10 +65,13 @@ export namespace Atlas
 		
 	public:
 		
-		constexpr static inline bool Convert( const char* data )
+		constexpr static inline bool Convert
+			(
+				const char* data
+			)
 			noexcept ( !Configuration::EnableBoolConverterCheck )
 		{
-			bool isTrue = data == Configuration::TrueString;
+			const bool isTrue = data == Configuration::TrueString;
 
 			if constexpr ( Configuration::EnableBoolConverterCheck )
 			{

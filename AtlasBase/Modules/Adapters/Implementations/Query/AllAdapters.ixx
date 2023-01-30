@@ -17,13 +17,17 @@ export namespace Atlas
 	class DLLApi AllAdapter<TCollection , TPredicate> :
 		public std::true_type
 	{
-		private:
+	private:
 
 		using IteratorType = typename CollectionTraits<TCollection>::IteratorType;
 
-		public:
+	public:
 
-		constexpr static inline auto All( TCollection collection , TPredicate predicate )
+		constexpr static inline auto All
+			( 
+				TCollection collection ,
+				TPredicate predicate
+			)
 			noexcept
 			(
 				Concept::HasNoexceptConstIterator<TCollection>&&
@@ -51,7 +55,12 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto All( TIterator start , TIterator end , TPredicate predicate )
+		constexpr static inline auto All
+			(
+				TIterator start , 
+				TIterator end ,
+				TPredicate predicate 
+			)
 			noexcept
 			(
 				Concept::IsNoexceptIterator<TIterator>&&

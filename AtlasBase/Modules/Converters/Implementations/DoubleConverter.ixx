@@ -20,7 +20,10 @@ export namespace Atlas
 		
 	public:
 		
-		constexpr static inline double Convert( const TSource& data ) 
+		constexpr static inline double Convert
+			( 
+				const TSource& data
+			) 
 			noexcept( Concept::IsNoexceptConvertibleTo<TSource , double> )
 		{
 			return data;
@@ -90,7 +93,10 @@ export namespace Atlas
 				
 	public:
 		
-		constexpr static inline double Convert( const std::string& data )
+		constexpr static inline double Convert
+			( 
+				const std::string& data
+			)
 			noexcept( !Configuration::EnableDoubleConverterCheck )
 		{
 			double integer = 0;
@@ -203,7 +209,10 @@ export namespace Atlas
 			
 	public:
 		
-		constexpr static inline double Convert( const char* data )
+		constexpr static inline double Convert
+			(
+				const char* data 
+			)
 			noexcept( !Configuration::EnableDoubleConverterCheck )
 		{
 			double integer = 0;

@@ -47,6 +47,10 @@ export namespace Atlas::Concept
 		} -> std::convertible_to<typename CollectionTraits<TCollection>::ElementType>;
 	};
 
+	template<typename TCollection>
+	concept IsNoexceptIndexable = noexcept( std::declval<TCollection>( )[0] ) &&
+		IsIndexable<TCollection>;
+
 	template<typename TReturn , typename TIndexed , typename TIndex>
 	concept HasIndexOperator = requires( TIndexed instance , const TIndex index )
 	{

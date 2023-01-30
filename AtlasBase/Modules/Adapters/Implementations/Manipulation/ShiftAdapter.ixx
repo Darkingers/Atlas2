@@ -13,7 +13,7 @@ export namespace Atlas
 	template<typename TCollection> requires
 		( !Concept::IsIndexable<TCollection> ) &&
 		Concept::HasIterator<TCollection>
-	class DLLApi ShiftAdapter<TCollection& , const unsigned int , const int , const unsigned int> :
+	class DLLApi ShiftAdapter<TCollection& , unsigned int , int , unsigned int> :
 		public std::true_type
 	{
 		
@@ -24,7 +24,13 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline void Shift( TCollection collection , const unsigned int shiftStart , const int shiftOffset , const unsigned int shiftLength )
+		constexpr static inline void Shift
+			(
+				TCollection collection , 
+				const unsigned int shiftStart ,
+				const int shiftOffset , 
+				const unsigned int shiftLength 
+			)
 			noexcept
 			(  
 				Concept::IsNoexceptLength<TCollection> &&

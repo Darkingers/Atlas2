@@ -20,7 +20,7 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline auto Move( TIterator iterator , const int step )
-			noexcept( noexcept(iterator++) && noexcept(--iterator) )
+			noexcept( noexcept(++iterator) && noexcept(--iterator) )
 		{
 			if ( step > 0 )
 			{

@@ -198,7 +198,7 @@ export namespace Atlas
 		/// <summary>
 		///Checks whether the given values define a valid positive range
 		template<typename TA , typename TB>
-		constexpr static inline void PositiveRange( const TA& from , const TB& to , const char* errorMessage = "Condition: from<=to is not fulfilled!" )
+		constexpr static inline void IsPositiveRange( const TA& from , const TB& to , const char* errorMessage = "Condition: from<=to is not fulfilled!" )
 			noexcept( !IsEnabled )
 		{
 			if constexpr ( !IsEnabled )

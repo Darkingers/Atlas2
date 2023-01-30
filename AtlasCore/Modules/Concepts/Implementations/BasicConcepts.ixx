@@ -62,4 +62,7 @@ export namespace Atlas::Concept
 	
 	template<typename TCollection , typename TElement>
 	concept IsCollectionOf = IsCollection<TCollection> && std::is_same_v<typename CollectionTraits<TCollection>::ElementType , TElement>;
+
+	template<typename TCollectionA , typename TCollectionB>
+	concept AreCompatibleCollections = IsCollection<TCollectionA> && IsCollection<TCollectionB> && std::is_same_v<typename CollectionTraits<TCollectionA>::ElementType , typename CollectionTraits<TCollectionB>::ElementType>;
 }

@@ -23,7 +23,11 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Contain( TCollection collection , TElement element )
+		constexpr static inline auto Contain
+			(
+				TCollection collection ,
+				TElement element
+			)
 			noexcept
 			( 
 				Concept::HasNoexceptConstIterator<TCollection> &&
@@ -47,7 +51,12 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Contain( TIterator start, TIterator end , TElement element )
+		constexpr static inline auto Contain
+			(
+				TIterator start,
+				TIterator end , 
+				TElement element 
+			)
 			noexcept
 			(
 				Concept::IsNoexceptIterator<TIterator>&&

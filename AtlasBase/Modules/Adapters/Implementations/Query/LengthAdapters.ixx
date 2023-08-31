@@ -18,11 +18,7 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Length
-			( 
-				TCollection collection 
-			)
-			noexcept( Concept::HasNoexceptConstIterator<TCollection> )
+		constexpr static inline auto Length( TCollection collection )
 		{
 			auto start = IteratorAPI::ConstBegin( collection );
 			const auto end = IteratorAPI::ConstEnd( collection );
@@ -46,11 +42,7 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Length
-			(
-				TCollection collection
-			)
-			noexcept( noexcept( collection.Length() ) )
+		constexpr static inline auto Length(TCollection collection)
 		{
 			return collection.Length( );
 		}
@@ -64,11 +56,7 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Length
-			(
-				TCollection collection 
-			)
-			noexcept( noexcept( collection.size( ) ) )
+		constexpr static inline auto Length(TCollection collection )
 		{
 			return collection.size( );
 		}
@@ -83,11 +71,7 @@ export namespace Atlas
 	public:
 
 		template<unsigned int Size>
-		constexpr static inline auto Count
-			(
-				TCollection( &collection )[Size] 
-			)
-			noexcept
+		constexpr static inline auto Count(TCollection( &collection )[Size] )
 		{
 			return Size;
 		}
@@ -100,11 +84,7 @@ export namespace Atlas
 	
 	public:
 
-		constexpr static inline auto Length
-			(
-				char* collection 
-			)
-			noexcept
+		constexpr static inline auto Length(char* collection )
 		{
 			if ( collection == nullptr )
 			{

@@ -19,7 +19,6 @@ export namespace Atlas
 	public:
 
 		constexpr static inline auto Size( T instance )
-			noexcept( noexcept( instance.GetSize( ) ) )
 		{
 			return instance.GetSize( );
 		}
@@ -34,7 +33,6 @@ export namespace Atlas
 		public:
 
 		constexpr static inline auto Size( TCollection collection )
-			noexcept( Concept::IsNoexceptLength<TCollection> )
 		{
 			return sizeof( TCollection ) + 
 				   sizeof( typename CollectionTraits<TCollection>::ElementType ) * QueryAPI::Length( collection );
@@ -50,7 +48,6 @@ export namespace Atlas
 	public:
 
 		constexpr static inline auto Size( T instance )
-			noexcept
 		{
 			return sizeof( T );
 		}

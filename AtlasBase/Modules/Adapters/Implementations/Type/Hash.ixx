@@ -16,10 +16,9 @@ export namespace Atlas
 		public std::true_type
 	{
 		
-		public:
+	public:
 
 		constexpr static inline auto Hash( T instance )
-			noexcept( noexcept(instance.GetHash( ) ) )
 		{
 			return instance.GetHash( );
 		}
@@ -38,7 +37,6 @@ export namespace Atlas
 	public:
 
 		constexpr static inline auto Hash( T instance )
-			noexcept( noexcept( _hash(instance) ) )
 		{
 			return _hash( instance );
 		}

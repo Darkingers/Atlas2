@@ -23,16 +23,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Contain
-			(
-				TCollection collection ,
-				TElement element
-			)
-			noexcept
-			( 
-				Concept::HasNoexceptConstIterator<TCollection> &&
-				Concept::IsNoexceptContain<IteratorType, IteratorType, TElement>
-			)
+		constexpr static inline auto Contain(
+			TCollection collection ,
+			TElement element
+		)
 		{
 			return QueryAPI::Contains
 			(
@@ -51,17 +45,11 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Contain
-			(
-				TIterator start,
-				TIterator end , 
-				TElement element 
-			)
-			noexcept
-			(
-				Concept::IsNoexceptIterator<TIterator>&&
-				Concept::IsNoexceptEqual<TElement , TElement>
-			)
+		constexpr static inline auto Contain(
+			TIterator start,
+			TIterator end , 
+			TElement element 
+		)
 		{
 			while ( start != end )
 			{

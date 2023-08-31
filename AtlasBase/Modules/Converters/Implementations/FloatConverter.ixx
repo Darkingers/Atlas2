@@ -22,7 +22,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline float Convert( const TSource& data )
-			noexcept( Concept::IsNoexceptConvertibleTo<TSource , float> )
 		{
 			return data;
 		}
@@ -92,7 +91,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline float Convert( const std::string& data ) 
-			noexcept( !Configuration::EnableFloatConverterCheck )
 		{
 			float integer = 0;
 			float decimal = 0;
@@ -204,7 +202,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline float Convert( const char* data )
-			noexcept( !Configuration::EnableFloatConverterCheck )
 		{
 			float integer = 0;
 			float decimal = 0;

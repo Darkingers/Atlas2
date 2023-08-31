@@ -25,17 +25,10 @@ export namespace Atlas
 
 		public:
 
-		constexpr static inline auto ContainsPattern
-			( 
-				TCollection collection ,
-				TPattern pattern 
-			)
-			noexcept
-			(
-				Concept::HasNoexceptIterator<TCollection>&&
-				Concept::HasNoexceptIterator<TPattern>&&
-				Concept::IsNoexceptContainPattern<CollectionIterator , CollectionIterator , PatternIterator , PatternIterator>
-			)
+		constexpr static inline auto ContainsPattern( 
+			TCollection collection ,
+			TPattern pattern 
+		)
 		{
 			return QueryAPI::ContainsPattern
 			(
@@ -57,19 +50,12 @@ export namespace Atlas
 
 		public:
 
-		constexpr static inline auto ContainsPattern
-			(
-				TIteratorA startA ,
-				TIteratorA endA , 
-				TIteratorB startB ,
-				TIteratorB endB 
-			)
-			noexcept
-			(
-				Concept::IsNoexceptIterator<TIteratorA>&&
-				Concept::IsNoexceptIterator<TIteratorB>&&
-				Concept::IsNoexceptMatch< TIteratorA , TIteratorA , TIteratorB , TIteratorB>
-			)
+		constexpr static inline auto ContainsPattern(
+			TIteratorA startA ,
+			TIteratorA endA , 
+			TIteratorB startB ,
+			TIteratorB endB 
+		)
 		{
 			while ( startA != endA )
 			{

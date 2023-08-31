@@ -6,9 +6,6 @@ export module AtlasCoreInterfaces:IException;
 
 export namespace Atlas
 {
-	/// <summary>
-	/// A base class for all exceptions
-	/// </summary>
 	class DLLApi IException 
 	{
 		
@@ -17,9 +14,6 @@ export namespace Atlas
 		
 		virtual ~IException( ) = default;
 		
-		/// <summary>
-		/// Returns the details of the exception
-		/// </summary>
 		virtual const char* ToString( ) const noexcept = 0;
 	};
 }

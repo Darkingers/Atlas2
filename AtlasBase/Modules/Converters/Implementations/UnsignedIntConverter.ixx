@@ -22,7 +22,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline int Convert( const TSource& data )
-			noexcept( Concept::IsNoexceptConvertibleTo<TSource , unsigned int> )
 		{
 			return data;
 		}
@@ -36,7 +35,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline int Convert( const std::string& data ) 
-			noexcept( !Configuration::EnableUnsignedIntConverterCheck )
 		{
 			unsigned int integer = 0;
 
@@ -67,7 +65,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline int Convert( const char* data ) 
-			noexcept( !Configuration::EnableUnsignedIntConverterCheck )
 		{
 			unsigned int integer = 0;
 

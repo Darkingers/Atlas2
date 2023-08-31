@@ -23,16 +23,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Any
-			(
-				TCollection collection ,
-				TPredicate predicate
-			)
-			noexcept
-			( 
-				Concept::HasNoexceptConstIterator<TCollection> && 
-				Concept::IsNoexceptAny<IteratorType, IteratorType, TPredicate>
-			)
+		constexpr static inline auto Any(
+			TCollection collection ,
+			TPredicate predicate
+		)
 		{
 			return QueryAPI::Any
 			(
@@ -55,17 +49,11 @@ export namespace Atlas
 		
 	public:
 
-		constexpr static inline auto Any
-			( 
-				TIterator start,
-				TIterator end ,
-				TPredicate predicate 
-			)
-			noexcept
-			( 
-				Concept::IsNoexceptIterator<TIterator> &&
-				Concept::IsNoexceptInvokable<bool , TPredicate , TElement>
-			)
+		constexpr static inline auto Any( 
+			TIterator start,
+			TIterator end ,
+			TPredicate predicate 
+		)
 		{
 			while ( start != end )
 			{

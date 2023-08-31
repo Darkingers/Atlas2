@@ -22,7 +22,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline unsigned long Convert( const TSource& data )
-			noexcept( Concept::IsNoexceptConvertibleTo<TSource , unsigned long> )
 		{
 			return data;
 		}
@@ -36,7 +35,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline unsigned long Convert( const std::string& data ) 
-			noexcept( !Configuration::EnableUnsignedLongConverterCheck )
 		{
 			unsigned long integer = 0;
 
@@ -71,7 +69,6 @@ export namespace Atlas
 	public:
 		
 		constexpr static inline unsigned long Convert( const char* data ) 
-			noexcept( !Configuration::EnableUnsignedLongConverterCheck )
 		{
 			unsigned long integer = 0;
 

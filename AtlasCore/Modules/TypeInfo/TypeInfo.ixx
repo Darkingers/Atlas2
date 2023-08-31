@@ -14,9 +14,6 @@ import AtlasDefinitions;
 
 export namespace Atlas
 {
-	/// <summary>
-	/// Compile-time evaulation compatible traits of the given type
-	/// </summary>
 	template<typename T>
 	class DLLApi Type
 	{

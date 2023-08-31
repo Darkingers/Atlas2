@@ -18,7 +18,7 @@ export namespace Atlas
 		Concept::HasIterator<TSource>&&
 		Concept::HasIterator<TTarget>&&
 		Concept::AreCompatibleCollections<TTarget , TSource>
-	class DLLApi CopyAdapter<TSource, unsigned int, unsigned int , TTarget, unsigned int> :
+	class DLLApi CopyCollectionToCollectionAdapter<TSource, TTarget> :
 		public std::true_type
 	{
 
@@ -29,20 +29,13 @@ export namespace Atlas
 		
 	public:
 
-		constexpr static inline void Copy
-			( 
-				TSource source, 
-				unsigned int sourceStart,
-				unsigned int sourceEnd, 
-				TTarget target,
-				unsigned int targetStart
-			)
-			noexcept
-			(
-				Concept::HasNoexceptConstIterator<TSource> &&
-				Concept::HasNoexceptIterator<TTarget>&&
-				Concept::IsNoexceptCopy<SourceIterator, SourceIterator,TargetIterator>
-			)
+		constexpr static inline void Copy( 
+			TSource source, 
+			unsigned int sourceStart,
+			unsigned int sourceEnd, 
+			TTarget target,
+			unsigned int targetStart
+		)
 		{
 			return ManipulationAPI::Copy
 			(
@@ -55,7 +48,7 @@ export namespace Atlas
 		
 	template<typename TIteratorSource , typename TIteratorTarget> requires
 		Concept::AreCompatibleIterators<TIteratorTarget, TIteratorSource>
-	class DLLApi CopyAdapter<TIteratorSource , TIteratorSource, TIteratorTarget> :
+	class DLLApi CopyIteratorToIteratorAdapter<TIteratorSource , TIteratorTarget> :
 		public std::true_type
 	{
 	
@@ -65,18 +58,11 @@ export namespace Atlas
 		
 	public:
 
-		constexpr static inline void Copy
-			( 
-				TIteratorSource start , 
-				TIteratorSource end , 
-				TIteratorTarget target 
-			)
-			noexcept
-			( 
-				Concept::IsNoexceptAssignable<ElementType , ElementType>&&
-				Concept::IsNoexceptIterator<TIteratorSource>&& 
-				Concept::IsNoexceptIterator<TIteratorTarget> 
-			)
+		constexpr static inline void Copy( 
+			TIteratorSource start , 
+			TIteratorSource end , 
+			TIteratorTarget target 
+		)
 		{
 			while ( start != end )
 			{
@@ -90,7 +76,7 @@ export namespace Atlas
 	template<typename TIteratorSource , typename TTargetCollection> requires
 		Concept::IsIndexable<TTargetCollection> &&
 		Concept::IsCompatibleIteratorFor<TIteratorSource , TTargetCollection>
-	class DLLApi CopyAdapter<TIteratorSource , TIteratorSource , TTargetCollection> :
+	class DLLApi CopyIteratorToCollectionAdapter<TIteratorSource , TTargetCollection> :
 		public std::true_type
 	{
 		
@@ -100,18 +86,11 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline void Copy
-			( 
-				TIteratorSource start , 
-				TIteratorSource end , 
-				TTargetCollection target 
-			)
-			noexcept
-			(
-				Concept::IsNoexceptAssignable<ElementType , ElementType>&&
-				Concept::IsNoexceptIterator<TIteratorSource>&&
-				Concept::IsNoexceptIndexable<TTargetCollection>
-			)
+		constexpr static inline void Copy( 
+			TIteratorSource start , 
+			TIteratorSource end , 
+			TTargetCollection target 
+		)
 		{
 			unsigned int i = 0;
 			while ( start != end )
@@ -127,7 +106,7 @@ export namespace Atlas
 		Concept::IsIndexable<TTargetCollection>&&
 		Concept::IsIndexable<TSourceCollection>&&
 		Concept::AreCompatibleCollections<TTargetCollection , TSourceCollection>
-	class DLLApi CopyAdapter<TSourceCollection, unsigned int, unsigned int, TTargetCollection, unsigned int> :
+	class DLLApi CopyCollectionToCollectionAdapter<TSourceCollection, TTargetCollection> :
 		public std::true_type
 	{
 		
@@ -137,20 +116,13 @@ export namespace Atlas
 		
 	public:
 
-		constexpr static inline void Copy
-			( 
-				TSourceCollection source ,
-				unsigned int sourceStart, 
-				unsigned int sourceEnd, 
-				TTargetCollection target,
-				unsigned int targetStart
-			)
-			noexcept
-			(
-				Concept::IsNoexceptAssignable<ElementType , ElementType>&&
-				Concept::IsNoexceptIndexable<TSourceCollection> &&
-				Concept::IsNoexceptIndexable<TTargetCollection>
-			)
+		constexpr static inline void Copy( 
+			TSourceCollection source ,
+			unsigned int sourceStart, 
+			unsigned int sourceEnd, 
+			TTargetCollection target,
+			unsigned int targetStart
+		)
 		{
 			for ( unsigned int i = sourceStart , j = targetStart; i < sourceEnd;  )
 			{
@@ -160,9 +132,9 @@ export namespace Atlas
 	};
 
 	template<typename TSourceCollection , typename TIteratorTarget> requires
-		Concept::IsIndexable<TSourceCollection>&&
+		Concept::IsIndexable<TSourceCollection> &&
 		Concept::IsCompatibleIteratorFor<TIteratorTarget , TSourceCollection>
-		class DLLApi CopyAdapter<TSourceCollection, unsigned int, unsigned int, TIteratorTarget> :
+		class DLLApi CopyCollectionToIteratorAdapter<TSourceCollection, TIteratorTarget> :
 		public std::true_type
 	{
 
@@ -172,19 +144,12 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline void Copy
-		(
+		constexpr static inline void Copy(
 			TSourceCollection source ,
 			unsigned int sourceStart ,
 			unsigned int sourceEnd ,
 			TIteratorTarget target
 		)
-			noexcept
-			(
-				Concept::IsNoexceptAssignable<ElementType , ElementType>&&
-				Concept::IsNoexceptIterator<TIteratorTarget>&&
-				Concept::IsNoexceptIndexable<TSourceCollection>
-			)
 		{
 			for ( unsigned int i = sourceStart; i < sourceEnd; )
 			{

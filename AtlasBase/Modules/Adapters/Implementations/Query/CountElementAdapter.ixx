@@ -22,16 +22,10 @@ export namespace Atlas
 
 	public:
 
-		constexpr static inline auto Count
-			( 
-				TCollection collection , 
-				TElement element 
-			)
-			noexcept
-			(
-				Concept::HasNoexceptConstIterator<TCollection>&&
-				Concept::IsNoexceptCountElement<IteratorType , IteratorType , TElement>
-			)
+		constexpr static inline auto Count( 
+			TCollection collection , 
+			TElement element 
+		)
 		{
 			return QueryAPI::CountElement
 			(
@@ -50,17 +44,11 @@ export namespace Atlas
 
 		public:
 
-		constexpr static inline auto Count
-			(
-				TIterator start, 
-				TIterator end , 
-				TElement element 
-			)
-			noexcept
-			(
-				Concept::IsNoexceptIterator<TIterator> && 
-				Concept::IsNoexceptEqual<TElement,TElement>
-			)
+		constexpr static inline auto Count(
+			TIterator start, 
+			TIterator end , 
+			TElement element 
+		)
 		{
 			auto count = 0;
 

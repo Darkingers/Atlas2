@@ -20,12 +20,11 @@ export namespace Atlas
 
 		template<typename TCollection>
 		constexpr static inline void Clear( TCollection& collection)
-			noexcept( Concept::IsNoexceptClear<TCollection&> )
 		{
 			ClearAdapter<TCollection&>::Clear( collection );
 		}
 
-		template<typename TCollectionA , typename TCollectionB> requires
+		template<typename TCollectionA , typename TCollectionB> requires 
 			Concept::AreCompatibleCollections<TCollectionA , TCollectionB>
 		constexpr static inline void Copy(
 			const TCollectionA& source ,
@@ -33,9 +32,9 @@ export namespace Atlas
 			unsigned int sourceEnd ,
 			TCollectionB& target ,
 			unsigned int targetStart
-		) 
-			noexcept(Concept::IsNoexceptCopyCollectionToCollection<const TCollectionA&, TCollectionB&> )
+		)
 		{
+			
 			Validate<Configuration::EnableManipulationAPICopyCheck>::IsPositiveRange( sourceStart , sourceEnd );
 			Validate<Configuration::EnableManipulationAPICopyCheck>::IsPositive( targetStart );
 			Validate<Configuration::EnableManipulationAPICopyCheck>::IsMoreOrEqual(
@@ -52,13 +51,9 @@ export namespace Atlas
 			);
 		}
 
-		template<typename TCollectionA , typename TCollectionB> requires
+		template<typename TCollectionA , typename TCollectionB> requires 
 			Concept::AreCompatibleCollections<TCollectionA , TCollectionB>
-		constexpr static inline void Copy(
-			const TCollectionA& source ,
-			TCollectionB& target
-		)
-			noexcept( Concept::IsNoexceptCopyCollectionToCollection<const TCollectionA& , TCollectionB&> )
+		constexpr static inline void Copy( const TCollectionA& source ,TCollectionB& target ) 
 		{
 			const auto sourceLength = QueryAPI::Length( source );
 			
@@ -84,7 +79,6 @@ export namespace Atlas
 			unsigned int sourceEnd ,
 			TIterator& target
 		)
-			noexcept( Concept::IsNoexceptCopyCollectionToIterator<const TCollection& , TIterator&> )
 		{
 			Validate<Configuration::EnableManipulationAPICopyCheck>::IsPositiveRange( sourceStart , sourceEnd );
 
@@ -104,7 +98,6 @@ export namespace Atlas
 			TCollection& destination,
 			unsigned int destinationStart
 		)
-			noexcept( Concept::IsNoexceptCopyIteratorToCollection<const TCollection&, TIterator&> )
 		{
 			CopyIteratorToCollectionAdapter<const TCollection& , TIterator&>  ::Copy(
 				sourceStart ,
@@ -121,7 +114,6 @@ export namespace Atlas
 			const TIteratorSource& sourceEnd ,
 			TIteratorTarget& target
 		)
-			noexcept( Concept::IsNoexceptCopyIteratorToIterator<TIteratorSource&, TIteratorTarget&> )
 		{
 			CopyIteratorToIteratorAdapter<TIteratorSource& , TIteratorTarget&> ::Copy(
 				sourceStart ,
@@ -132,9 +124,8 @@ export namespace Atlas
 
 		template<typename... TArgs> 
 		constexpr static inline void ReplaceFrom( 
-				TArgs&&... args
-			)
-			noexcept ( Concept::IsNoexceptReplaceFrom<TArgs&&...> )
+			TArgs&&... args
+		)
 		{
 			ReplaceFromAdapter<TArgs&&...>::ReplaceFrom( std::forward<TArgs&&...>( args )... );
 		}
@@ -142,10 +133,9 @@ export namespace Atlas
 		template<typename TIterator, typename... TArgs> requires 
 			Concept::IsIterator<TIterator>
 		constexpr static inline void ReplaceFrom( 
-				TIterator iterator ,
-				const TArgs&&... args
-			)
-			noexcept ( Concept::IsNoexceptReplaceFrom<TIterator, const TArgs&&...> )
+			TIterator iterator ,
+			const TArgs&&... args
+		)
 		{
 			ReplaceFromAdapter<TIterator , TArgs&&...>::ReplaceFrom
 			( 
@@ -157,14 +147,10 @@ export namespace Atlas
 		template<typename TCollection , typename... TArgs> requires
 			Concept::IsCollection<TCollection>
 		constexpr static inline void ReplaceFrom(
-				TCollection& collection, 
-				unsigned int start ,
-				const TArgs&&... args
-			)
-			noexcept (
-				!Configuration::EnableManipulationAPIReplaceFromCheck &&
-				Concept::IsNoexceptReplaceFrom<TCollection& , unsigned int, const TArgs&&...>
-			)
+			TCollection& collection, 
+			unsigned int start ,
+			const TArgs&&... args
+		)
 		{		
 			ReplaceFromAdapter<TCollection&, unsigned int, const TArgs&&...>::ReplaceFrom
 			(
@@ -176,32 +162,27 @@ export namespace Atlas
 
 		template<typename... TArgs>
 		constexpr static inline void Shift( 
-				TArgs&&... args
-			)
-			noexcept ( Concept::IsNoexceptShift<TArgs&&...> )
+			TArgs&&... args
+		)
 		{
-			ShiftAdapter<TArgs&&...>::Shift( std::forward<TArgs&&>( args )... );
+			ShiftCollectionAdapter<TArgs&&...>::Shift( std::forward<TArgs&&>( args )... );
 		}
 
 		template<typename TCollection> requires
 			Concept::IsCollection<TCollection>
 		constexpr static inline void Shift(
-				TCollection& collection , 
-				unsigned int shiftStart ,
-				int shiftOffset,
-				unsigned int shiftLength 
-			)
-			noexcept(	
-				!Configuration::EnableManipulationAPIShiftCheck &&
-				Concept::IsNoexceptShift<TCollection&, unsigned int, int, unsigned int> 
-			)
+			TCollection& collection , 
+			unsigned int shiftStart ,
+			int shiftOffset,
+			unsigned int shiftLength 
+		)
 		{
 			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftStart );
 			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftLength );
 			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftLength );
 			Validate<Configuration::EnableManipulationAPIShiftCheck>::IsPositive( shiftStart + shiftOffset );
 
-			ShiftAdapter<TCollection& , unsigned int , int , unsigned int>::Shift
+			ShiftCollectionAdapter<TCollection& , unsigned int , int , unsigned int>::Shift
 			( 
 				collection , 
 				shiftStart , 
